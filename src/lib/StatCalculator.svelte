@@ -1,15 +1,22 @@
 <script>
-  import { currentChapter, charactersData } from './store.js';
+  import { currentChapter, activeChapterDetails, charactersData } from './store.js';
   import { Shield, ToggleLeft, ToggleRight, ArrowUp, ArrowDown, Settings, HelpCircle } from 'lucide-svelte';
 
   let selectedCharKey = 'halon';
   let character = charactersData[selectedCharKey];
   let chapter = 5;
+  let activeLvl = 1;
   let combatActive = false;
 
   // React to store changes
   currentChapter.subscribe(val => {
     chapter = val;
+  });
+
+  activeChapterDetails.subscribe(val => {
+    if (val && val.halonLvl !== undefined) {
+      activeLvl = val.halonLvl;
+    }
   });
 
   // Local state for interactive properties of abilities
@@ -145,7 +152,7 @@
       <p class="subtitle">
         Race: {character.race} ({character.raceBase || 'Common'}) | 
         Class: {character.class} ({character.classBase || 'Common'}) | 
-        Lv: {character.level}
+        Lv: {activeLvl}
       </p>
     </div>
 
