@@ -35,21 +35,6 @@
     if (ch) {
       currentChapter.set(ch.index);
     }
-  }
-
-  // Handle Quick Sync Dropdown changes
-  function handleSyncSelect(e) {
-    const val = e.target.value;
-    if (val === 'latest') {
-      currentChapter.set(latestCh);
-    } else if (val === 'reset') {
-      currentChapter.set(1);
-    } else if (val.startsWith('lvl-')) {
-      const targetLvl = parseInt(val.replace('lvl-', ''));
-      syncToLevel(targetLvl);
-    }
-    // Reset dropdown selection visual
-    e.target.value = 'custom';
     showModal = false;
   }
 </script>
@@ -123,7 +108,7 @@
     <span class="logo-text">SLIME</span>
   </div>
 
-  <!-- Center Active Info Details (Simplified: Title removed) -->
+  <!-- Center Active Info Details -->
   <div class="mobile-meta">
     <div class="mobile-stats font-tech">
       <span class="stat"><Clock size={10} /> {chDetails.date}</span>
@@ -149,40 +134,51 @@
       </div>
       <p class="modal-subheader">Sync your timeline or manually pick a chapter below.</p>
       
-      <!-- Quick Sync Dropdown Selector -->
-      <div class="sync-dropdown-wrapper">
-        <label for="modal-sync-select">TIMELINE QUICK SYNC:</label>
-        <select id="modal-sync-select" on:change={handleSyncSelect}>
-          <option value="custom">-- Choose Quick Sync presets --</option>
-          <option value="latest">Sync to Latest Chapter (Ch.{latestCh})</option>
-          <option value="reset">Reset to Chapter 1</option>
-          <optgroup label="SYNC TO CHARACTER LEVEL TARGET">
-            <option value="lvl-5">Sync to Level 5 Reach</option>
-            <option value="lvl-10">Sync to Level 10 Reach</option>
-            <option value="lvl-15">Sync to Level 15 Reach</option>
-            <option value="lvl-20">Sync to Level 20 Reach</option>
-            <option value="lvl-30">Sync to Level 30 Reach</option>
-            <option value="lvl-50">Sync to Level 50 Reach</option>
-            <option value="lvl-75">Sync to Level 75 Reach</option>
-            <option value="lvl-90">Sync to Level 90 Reach</option>
-          </optgroup>
-        </select>
-      </div>
-
-      <!-- Manual Selector Grid -->
-      <div class="chapters-grid">
-        {#each Array(30) as _, i}
-          {@const chNum = i + 1}
-          {@const isSelected = activeCh === chNum}
-          {@const item = chaptersData[i] || {}}
-          <button 
-            class="grid-ch-btn {isSelected ? 'active' : ''}" 
-            on:click={() => selectChapter(chNum)}
+      <div class="dialog-controls-stack">
+        <!-- 1. Chapter Selection Dropdown -->
+        <div class="sync-dropdown-wrapper">
+          <label for="modal-chapter-select">SELECT CHAPTER LOG:</label>
+          <select 
+            id="modal-chapter-select" 
+            value={activeCh} 
+            on:change={(e) => selectChapter(parseInt(e.target.value))}
           >
-            <span class="num">{chNum}</span>
-            <span class="title" title={item.title}>{item.title || 'Log'}</span>
+            {#each chaptersData as ch}
+              <option value={ch.index}>
+                Chapter {ch.index}: {ch.title} (Lv.{ch.halonLvl})
+              </option>
+            {/each}
+          </select>
+        </div>
+
+        <!-- 2. Level sync Dropdown -->
+        <div class="sync-dropdown-wrapper">
+          <label for="modal-level-select">SYNC BY CHARACTER LEVEL milestones:</label>
+          <select 
+            id="modal-level-select" 
+            on:change={(e) => {
+              const val = e.target.value;
+              if (val) {
+                syncToLevel(parseInt(val));
+              }
+            }}
+          >
+            <option value="">-- Choose Level Milestone --</option>
+            {#each [5, 10, 15, 20, 30, 50, 75, 90] as lvl}
+              <option value={lvl}>Level {lvl} Reach</option>
+            {/each}
+          </select>
+        </div>
+
+        <!-- 3. Action Buttons Row -->
+        <div class="modal-actions-row">
+          <button class="modal-btn reset-btn" on:click={() => selectChapter(1)}>
+            RESET PROGRESS
           </button>
-        {/each}
+          <button class="modal-btn latest-btn" on:click={() => selectChapter(latestCh)}>
+            GO TO LATEST
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -478,7 +474,7 @@
 
   .modal-dialog {
     width: 100%;
-    max-width: 440px;
+    max-width: 400px;
     background: rgba(4, 9, 16, 0.98);
     max-height: 80vh;
     overflow-y: auto;
@@ -512,12 +508,17 @@
     line-height: 1.3;
   }
 
+  .dialog-controls-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
   /* Dropdown Styles */
   .sync-dropdown-wrapper {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    margin-bottom: 16px;
     background: rgba(0, 0, 0, 0.2);
     padding: 10px;
     border-radius: 6px;
@@ -548,6 +549,55 @@
     border-color: var(--color-holo-primary);
   }
 
+  .sync-dropdown-wrapper select option {
+    background: #080f1d;
+    color: #fff;
+  }
+
+  .modal-actions-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .modal-btn {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: var(--transition-smooth);
+    outline: none;
+  }
+
+  .modal-btn.reset-btn {
+    border-color: rgba(255, 60, 60, 0.15);
+    color: rgba(255, 100, 100, 0.85);
+  }
+
+  .modal-btn.reset-btn:hover {
+    background: rgba(255, 60, 60, 0.08);
+    border-color: rgba(255, 60, 60, 0.3);
+    box-shadow: 0 0 8px rgba(255, 60, 60, 0.15);
+  }
+
+  .modal-btn.latest-btn {
+    border-color: rgba(0, 240, 255, 0.15);
+    color: var(--color-holo-primary);
+  }
+
+  .modal-btn.latest-btn:hover {
+    background: rgba(0, 240, 255, 0.08);
+    border-color: var(--color-holo-primary);
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.15);
+  }
+
   .close-btn {
     background: none;
     border: none;
@@ -560,64 +610,6 @@
 
   .close-btn:hover {
     color: #fff;
-  }
-
-  .chapters-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-
-  @media (min-width: 400px) {
-    .chapters-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  .grid-ch-btn {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    color: var(--color-holo-muted);
-    padding: 10px 4px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 4px;
-    min-height: 60px;
-  }
-
-  .grid-ch-btn:hover {
-    border-color: rgba(0, 240, 255, 0.3);
-    color: #fff;
-    background: rgba(0, 240, 255, 0.04);
-  }
-
-  .grid-ch-btn.active {
-    background: rgba(0, 240, 255, 0.12);
-    border-color: var(--color-holo-primary);
-    color: var(--color-holo-primary);
-    text-shadow: 0 0 5px var(--color-holo-glow);
-    box-shadow: 0 0 8px rgba(0, 240, 255, 0.15);
-  }
-
-  .grid-ch-btn .num {
-    font-size: 0.95rem;
-    font-weight: 800;
-  }
-
-  .grid-ch-btn .title {
-    font-size: 0.52rem;
-    font-weight: 600;
-    max-width: 90%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-transform: uppercase;
   }
 
   /* --- RESPONSIVE VISIBILITY TWEAKS --- */
