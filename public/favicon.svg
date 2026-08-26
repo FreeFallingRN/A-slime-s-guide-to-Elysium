@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Glowing Slime Body (Hologram Cyan) -->
+  <path d="M50,18 C22,18 12,45 12,65 C12,82 30,88 50,88 C70,88 88,82 88,65 C88,45 78,18 50,18 Z" fill="rgba(0, 240, 255, 0.15)" stroke="#00f0ff" stroke-width="3.5" filter="url(#glow)"/>
+  
+  <!-- Internal Flame Core (Arson Devs Orange) -->
+  <path d="M50,42 C40,42 36,54 36,65 C36,75 42,80 50,80 C58,80 64,75 64,65 C64,52 50,46 50,42 Z" fill="#ff5e00" opacity="0.85" filter="url(#glow)"/>
+  
+  <!-- Slime Face -->
+  <circle cx="42" cy="58" r="3" fill="#00f0ff"/>
+  <circle cx="58" cy="58" r="3" fill="#00f0ff"/>
+  <path d="M47,66 Q50,68 53,66" fill="none" stroke="#00f0ff" stroke-width="2" stroke-linecap="round"/>
+</svg>

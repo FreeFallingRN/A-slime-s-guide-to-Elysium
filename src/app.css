@@ -1,0 +1,203 @@
+:root {
+  /* Common Fonts */
+  --font-serif: 'EB Garamond', Georgia, serif;
+  --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+
+  /* Cosmic / Holographic Palette */
+  --color-space-bg: #070a12;
+  --color-holo-primary: #00f0ff;
+  --color-holo-secondary: #007799;
+  --color-holo-glow: rgba(0, 240, 255, 0.4);
+  --color-holo-bg: rgba(2, 14, 26, 0.75);
+  --color-holo-border: rgba(0, 240, 255, 0.25);
+  --color-holo-text: #e0faff;
+  --color-holo-muted: #79a5b3;
+
+  /* Magical Book Palette */
+  --color-book-bg: #1c130c;
+  --color-book-paper: #f4edd8;
+  --color-book-ink: #2a2218;
+  --color-book-gold: #c29d53;
+  --color-book-gold-glow: rgba(194, 157, 83, 0.3);
+  --color-book-border: #4d3826;
+  --color-book-red: #8f2d2d;
+  
+  /* Brand Accent */
+  --color-arson-fire: #ff5e00;
+  --color-arson-glow: rgba(255, 94, 0, 0.5);
+
+  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Global resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-space-bg);
+  color: var(--color-holo-text);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- HOLOGRAPHIC STYLE UTILITIES --- */
+.hologram-panel {
+  background: var(--color-holo-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-holo-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), 
+              0 0 15px 0 rgba(0, 240, 255, 0.1);
+  border-radius: 8px;
+  color: var(--color-holo-text);
+  transition: var(--transition-smooth);
+}
+
+.hologram-panel:hover {
+  border-color: rgba(0, 240, 255, 0.45);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6), 
+              0 0 20px 0 rgba(0, 240, 255, 0.2);
+}
+
+.hologram-glow-text {
+  color: var(--color-holo-primary);
+  text-shadow: 0 0 8px var(--color-holo-glow);
+}
+
+.hologram-btn {
+  background: rgba(0, 240, 255, 0.05);
+  border: 1px solid var(--color-holo-primary);
+  color: var(--color-holo-primary);
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hologram-btn:hover {
+  background: var(--color-holo-primary);
+  color: #000;
+  box-shadow: 0 0 15px var(--color-holo-primary);
+  transform: translateY(-1px);
+}
+
+.hologram-btn:active {
+  transform: translateY(1px);
+}
+
+.hologram-btn.active {
+  background: var(--color-holo-primary);
+  color: #000;
+  box-shadow: 0 0 10px var(--color-holo-primary);
+}
+
+/* Custom cyber scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-holo-secondary);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-holo-primary);
+}
+
+
+/* --- FANTASY BOOK STYLE UTILITIES --- */
+.book-outer {
+  background: var(--color-book-bg);
+  border: 8px double var(--color-book-gold);
+  border-radius: 12px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8);
+  padding: 16px;
+  position: relative;
+  transition: var(--transition-smooth);
+}
+
+.book-page {
+  background-color: var(--color-book-paper);
+  color: var(--color-book-ink);
+  font-family: var(--font-serif);
+  border-radius: 4px;
+  padding: 32px;
+  min-height: 480px;
+  box-shadow: inset 0 0 40px rgba(40, 30, 20, 0.15), 
+              0 4px 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid #d4cbb3;
+  position: relative;
+  line-height: 1.6;
+}
+
+.book-page h1, .book-page h2, .book-page h3 {
+  font-family: var(--font-serif);
+  color: var(--color-book-red);
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(194, 157, 83, 0.4);
+  padding-bottom: 4px;
+}
+
+.book-page p {
+  font-size: 1.15rem;
+  margin-bottom: 1.2rem;
+  text-indent: 1.5rem;
+}
+
+.book-page p:first-of-type {
+  text-indent: 0;
+}
+
+.book-page p::first-letter {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.book-tab {
+  background: var(--color-book-paper);
+  color: var(--color-book-ink);
+  font-family: var(--font-serif);
+  font-weight: bold;
+  border: 1px solid var(--color-book-gold);
+  border-bottom: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 6px 6px 0 0;
+  transition: var(--transition-smooth);
+}
+
+.book-tab.active {
+  background: var(--color-book-gold);
+  color: var(--color-book-bg);
+  box-shadow: 0 -4px 10px var(--color-book-gold-glow);
+}
+
+/* Animations */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.4; }
+}
+
+.pulsing-grid {
+  background-image: 
+    linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  animation: pulse-slow 8s infinite ease-in-out;
+}
