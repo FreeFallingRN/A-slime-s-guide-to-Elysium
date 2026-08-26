@@ -5,6 +5,8 @@
   let activeCh = 5;
   let chDetails = {};
   let showModal = false;
+  
+  const latestCh = chaptersData[chaptersData.length - 1]?.index || 30;
 
   currentChapter.subscribe(val => {
     activeCh = val;
@@ -25,6 +27,30 @@
 
   function adjustChapter(amount) {
     currentChapter.update(n => Math.max(1, Math.min(30, n + amount)));
+  }
+
+  // Sync to first chapter matching or exceeding target level
+  function syncToLevel(targetLvl) {
+    const ch = chaptersData.find(c => c.halonLvl >= targetLvl);
+    if (ch) {
+      currentChapter.set(ch.index);
+    }
+  }
+
+  // Handle Quick Sync Dropdown changes
+  function handleSyncSelect(e) {
+    const val = e.target.value;
+    if (val === 'latest') {
+      currentChapter.set(latestCh);
+    } else if (val === 'reset') {
+      currentChapter.set(1);
+    } else if (val.startsWith('lvl-')) {
+      const targetLvl = parseInt(val.replace('lvl-', ''));
+      syncToLevel(targetLvl);
+    }
+    // Reset dropdown selection visual
+    e.target.value = 'custom';
+    showModal = false;
   }
 </script>
 
@@ -55,9 +81,9 @@
       <span class="meta-value">{chDetails.date}</span>
     </div>
     <div class="meta-row stats">
-      <span class="meta-label">Levels:</span>
+      <span class="meta-label">Level log:</span>
       <span class="meta-value">
-        Halon (Lv {chDetails.halonLvl}) | Lohan (Lv {chDetails.lohanLvl})
+        Halon (Lv {chDetails.halonLvl})
       </span>
     </div>
   </div>
@@ -97,15 +123,12 @@
     <span class="logo-text">SLIME</span>
   </div>
 
-  <!-- Center Active Info Details -->
+  <!-- Center Active Info Details (Simplified: Title removed) -->
   <div class="mobile-meta">
-    <div class="mobile-title font-tech">Ch.{activeCh}: "{chDetails.title}"</div>
-    <div class="mobile-stats">
+    <div class="mobile-stats font-tech">
       <span class="stat"><Clock size={10} /> {chDetails.date}</span>
-      <span class="stat separator">|</span>
-      <span class="stat"><User size={10} /> Halon Lvl.{chDetails.halonLvl}</span>
-      <span class="stat separator">|</span>
-      <span class="stat"><User size={10} /> Lohan Lvl.{chDetails.lohanLvl}</span>
+      <span class="stat separator">•</span>
+      <span class="stat"><User size={10} /> Halon Lv.{chDetails.halonLvl}</span>
     </div>
   </div>
 
@@ -124,8 +147,29 @@
         <h3 class="hologram-glow-text">CHRONICLE LOG SYNC</h3>
         <button class="close-btn" on:click={() => showModal = false}>&times;</button>
       </div>
-      <p class="modal-subheader">Select your reading progress to lock all future chapters spoiler-free.</p>
+      <p class="modal-subheader">Sync your timeline or manually pick a chapter below.</p>
       
+      <!-- Quick Sync Dropdown Selector -->
+      <div class="sync-dropdown-wrapper">
+        <label for="modal-sync-select">TIMELINE QUICK SYNC:</label>
+        <select id="modal-sync-select" on:change={handleSyncSelect}>
+          <option value="custom">-- Choose Quick Sync presets --</option>
+          <option value="latest">Sync to Latest Chapter (Ch.{latestCh})</option>
+          <option value="reset">Reset to Chapter 1</option>
+          <optgroup label="SYNC TO CHARACTER LEVEL TARGET">
+            <option value="lvl-5">Sync to Level 5 Reach</option>
+            <option value="lvl-10">Sync to Level 10 Reach</option>
+            <option value="lvl-15">Sync to Level 15 Reach</option>
+            <option value="lvl-20">Sync to Level 20 Reach</option>
+            <option value="lvl-30">Sync to Level 30 Reach</option>
+            <option value="lvl-50">Sync to Level 50 Reach</option>
+            <option value="lvl-75">Sync to Level 75 Reach</option>
+            <option value="lvl-90">Sync to Level 90 Reach</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <!-- Manual Selector Grid -->
       <div class="chapters-grid">
         {#each Array(30) as _, i}
           {@const chNum = i + 1}
@@ -136,7 +180,7 @@
             on:click={() => selectChapter(chNum)}
           >
             <span class="num">{chNum}</span>
-            <span class="title">{item.title || 'Log'}</span>
+            <span class="title" title={item.title}>{item.title || 'Log'}</span>
           </button>
         {/each}
       </div>
@@ -353,7 +397,7 @@
     align-items: center;
     gap: 6px;
     font-weight: 900;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: var(--color-arson-fire);
     letter-spacing: 0.1em;
     text-shadow: 0 0 5px var(--color-arson-glow);
@@ -371,37 +415,29 @@
     text-align: center;
     flex-grow: 1;
     margin: 0 10px;
-    max-width: 60%;
-  }
-
-  .mobile-title {
-    font-size: 0.75rem;
-    font-weight: bold;
-    color: #fff;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    width: 100%;
-    letter-spacing: 0.02em;
   }
 
   .mobile-stats {
     display: flex;
     align-items: center;
-    gap: 4px;
-    font-size: 0.55rem;
+    gap: 8px;
+    font-size: 0.72rem;
     color: var(--color-holo-muted);
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .stat {
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
+  }
+
+  .stat :global(svg) {
+    color: var(--color-holo-primary);
   }
 
   .separator {
-    opacity: 0.3;
+    color: rgba(0, 240, 255, 0.2);
   }
 
   .mobile-badge {
@@ -443,7 +479,7 @@
   .modal-dialog {
     width: 100%;
     max-width: 440px;
-    background: rgba(4, 9, 16, 0.96);
+    background: rgba(4, 9, 16, 0.98);
     max-height: 80vh;
     overflow-y: auto;
     display: flex;
@@ -474,6 +510,42 @@
     color: var(--color-holo-muted);
     margin-bottom: 16px;
     line-height: 1.3;
+  }
+
+  /* Dropdown Styles */
+  .sync-dropdown-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 16px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+  }
+
+  .sync-dropdown-wrapper label {
+    font-size: 0.65rem;
+    font-weight: bold;
+    color: var(--color-holo-primary);
+    letter-spacing: 0.05em;
+  }
+
+  .sync-dropdown-wrapper select {
+    background: var(--color-space-bg);
+    border: 1px solid var(--color-holo-border);
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    outline: none;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .sync-dropdown-wrapper select:focus {
+    border-color: var(--color-holo-primary);
   }
 
   .close-btn {

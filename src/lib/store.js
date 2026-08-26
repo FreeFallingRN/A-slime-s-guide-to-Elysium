@@ -5,36 +5,36 @@ export const currentChapter = writable(5);
 
 // Chapters Timeline Database (Dummy metadata)
 export const chaptersData = [
-  { index: 1, title: "Immersion Pod", date: "Aug 26, 2026", halonLvl: 1, lohanLvl: 1 },
-  { index: 2, title: "The First Devour", date: "Aug 27, 2026", halonLvl: 2, lohanLvl: 1 },
-  { index: 3, title: "Hacking Sector 4", date: "Aug 29, 2026", halonLvl: 3, lohanLvl: 2 },
-  { index: 4, title: "Acid Synthesis", date: "Aug 31, 2026", halonLvl: 5, lohanLvl: 2 },
-  { index: 5, title: "The Cave Boss", date: "Sep 02, 2026", halonLvl: 8, lohanLvl: 3 },
-  { index: 6, title: "Oakhaven Borderlands", date: "Sep 04, 2026", halonLvl: 10, lohanLvl: 3 },
-  { index: 7, title: "Neural Boost Hacking", date: "Sep 06, 2026", halonLvl: 12, lohanLvl: 4 },
-  { index: 8, title: "Apex Evolution Milestone", date: "Sep 09, 2026", halonLvl: 15, lohanLvl: 5 },
-  { index: 9, title: "Dungeon Master Raid", date: "Sep 12, 2026", halonLvl: 18, lohanLvl: 5 },
-  { index: 10, title: "Steel Skin Gland", date: "Sep 15, 2026", halonLvl: 20, lohanLvl: 6 },
-  { index: 11, title: "The Guild Invitation", date: "Sep 18, 2026", halonLvl: 22, lohanLvl: 6 },
-  { index: 12, title: "Guardian Core Evolution", date: "Sep 22, 2026", halonLvl: 25, lohanLvl: 7 },
-  { index: 13, title: "Corporate Data Breach", date: "Sep 25, 2026", halonLvl: 28, lohanLvl: 8 },
-  { index: 14, title: "Arson Database Hack", date: "Sep 29, 2026", halonLvl: 30, lohanLvl: 9 },
-  { index: 15, title: "Elysian Imperial Capital", date: "Oct 03, 2026", halonLvl: 35, lohanLvl: 10 },
-  { index: 16, title: "Valeria's Secret Pact", date: "Oct 06, 2026", halonLvl: 38, lohanLvl: 10 },
-  { index: 17, title: "Neon City Skirmish", date: "Oct 10, 2026", halonLvl: 40, lohanLvl: 11 },
-  { index: 18, title: "The Elysian Vanguard", date: "Oct 14, 2026", halonLvl: 45, lohanLvl: 12 },
-  { index: 19, title: "Sub-level 4 Crypts", date: "Oct 18, 2026", halonLvl: 48, lohanLvl: 12 },
-  { index: 20, title: "Deep Server Immersion", date: "Oct 22, 2026", halonLvl: 52, lohanLvl: 13 },
-  { index: 21, title: "Gargoyle Colossus Battle", date: "Oct 26, 2026", halonLvl: 55, lohanLvl: 13 },
-  { index: 22, title: "Crystalline Abyss Gates", date: "Oct 30, 2026", halonLvl: 60, lohanLvl: 14 },
-  { index: 23, title: "Elysian High Rune Crafting", date: "Nov 03, 2026", halonLvl: 63, lohanLvl: 15 },
-  { index: 24, title: "Corporate Hunter Attack", date: "Nov 07, 2026", halonLvl: 66, lohanLvl: 15 },
-  { index: 25, title: "Lord Evolution Ritual", date: "Nov 11, 2026", halonLvl: 72, lohanLvl: 16 },
-  { index: 26, title: "Holo-Terminal Hacking", date: "Nov 15, 2026", halonLvl: 75, lohanLvl: 16 },
-  { index: 27, title: "Valeria's Counterattack", date: "Nov 19, 2026", halonLvl: 78, lohanLvl: 17 },
-  { index: 28, title: "The Forbidden Datacenter", date: "Nov 23, 2026", halonLvl: 82, lohanLvl: 18 },
-  { index: 29, title: "Elysian High Slime Ascent", date: "Nov 27, 2026", halonLvl: 85, lohanLvl: 18 },
-  { index: 30, title: "The Elysium Dawn", date: "Dec 01, 2026", halonLvl: 90, lohanLvl: 20 }
+  { index: 1, title: "Immersion Pod", date: "Aug 26, 2026", halonLvl: 1 },
+  { index: 2, title: "The First Devour", date: "Aug 27, 2026", halonLvl: 2 },
+  { index: 3, title: "Hacking Sector 4", date: "Aug 29, 2026", halonLvl: 3 },
+  { index: 4, title: "Acid Synthesis", date: "Aug 31, 2026", halonLvl: 5 },
+  { index: 5, title: "The Cave Boss", date: "Sep 02, 2026", halonLvl: 8 },
+  { index: 6, title: "Oakhaven Borderlands", date: "Sep 04, 2026", halonLvl: 10 },
+  { index: 7, title: "Neural Boost Hacking", date: "Sep 06, 2026", halonLvl: 12 },
+  { index: 8, title: "Apex Evolution Milestone", date: "Sep 09, 2026", halonLvl: 15 },
+  { index: 9, title: "Dungeon Master Raid", date: "Sep 12, 2026", halonLvl: 18 },
+  { index: 10, title: "Steel Skin Gland", date: "Sep 15, 2026", halonLvl: 20 },
+  { index: 11, title: "The Guild Invitation", date: "Sep 18, 2026", halonLvl: 22 },
+  { index: 12, title: "Guardian Core Evolution", date: "Sep 22, 2026", halonLvl: 25 },
+  { index: 13, title: "Corporate Data Breach", date: "Sep 25, 2026", halonLvl: 28 },
+  { index: 14, title: "Arson Database Hack", date: "Sep 29, 2026", halonLvl: 30 },
+  { index: 15, title: "Elysian Imperial Capital", date: "Oct 03, 2026", halonLvl: 35 },
+  { index: 16, title: "Valeria's Secret Pact", date: "Oct 06, 2026", halonLvl: 38 },
+  { index: 17, title: "Neon City Skirmish", date: "Oct 10, 2026", halonLvl: 40 },
+  { index: 18, title: "The Elysian Vanguard", date: "Oct 14, 2026", halonLvl: 45 },
+  { index: 19, title: "Sub-level 4 Crypts", date: "Oct 18, 2026", halonLvl: 48 },
+  { index: 20, title: "Deep Server Immersion", date: "Oct 22, 2026", halonLvl: 52 },
+  { index: 21, title: "Gargoyle Colossus Battle", date: "Oct 26, 2026", halonLvl: 55 },
+  { index: 22, title: "Crystalline Abyss Gates", date: "Oct 30, 2026", halonLvl: 60 },
+  { index: 23, title: "Elysian High Rune Crafting", date: "Nov 03, 2026", halonLvl: 63 },
+  { index: 24, title: "Corporate Hunter Attack", date: "Nov 07, 2026", halonLvl: 66 },
+  { index: 25, title: "Lord Evolution Ritual", date: "Nov 11, 2026", halonLvl: 72 },
+  { index: 26, title: "Holo-Terminal Hacking", date: "Nov 15, 2026", halonLvl: 75 },
+  { index: 27, title: "Valeria's Counterattack", date: "Nov 19, 2026", halonLvl: 78 },
+  { index: 28, title: "The Forbidden Datacenter", date: "Nov 23, 2026", halonLvl: 82 },
+  { index: 29, title: "Elysian High Slime Ascent", date: "Nov 27, 2026", halonLvl: 85 },
+  { index: 30, title: "The Elysium Dawn", date: "Dec 01, 2026", halonLvl: 90 }
 ];
 
 // Active Chapter Details Store
@@ -45,8 +45,7 @@ export const activeChapterDetails = derived(
       index: $ch,
       title: "Unknown Chapter",
       date: "N/A",
-      halonLvl: "N/A",
-      lohanLvl: "N/A"
+      halonLvl: "N/A"
     };
   }
 );
