@@ -164,9 +164,9 @@
               }
             }}
           >
-            <option value="">-- Choose Level Milestone --</option>
+            <option value="">-- Choose Level --</option>
             {#each uniqueLevels as lvl}
-              <option value={lvl}>Level {lvl} Reach</option>
+              <option value={lvl}>Level {lvl}</option>
             {/each}
           </select>
         </div>
