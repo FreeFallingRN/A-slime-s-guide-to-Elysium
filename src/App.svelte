@@ -354,4 +354,69 @@
   .font-tech {
     font-family: var(--font-sans);
   }
+
+  /* --- RESPONSIVE MOBILE OPTIMIZATIONS --- */
+  @media (max-width: 767px) {
+    .brand-header {
+      display: none !important;
+    }
+
+    .container {
+      padding-bottom: 85px;
+      padding-left: 12px;
+      padding-right: 12px;
+      gap: 16px;
+    }
+
+    .navigation-hub {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(4, 9, 16, 0.96);
+      border-top: 1px solid var(--color-holo-border);
+      border-bottom: none;
+      padding: 8px 10px;
+      gap: 4px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      z-index: 1000;
+      box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .nav-tab {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 6px 2px;
+      font-size: 0.65rem;
+      border: none;
+      background: transparent;
+      border-radius: 6px;
+      color: var(--color-holo-muted);
+      opacity: 0.75;
+    }
+
+    .nav-tab:hover {
+      background: rgba(0, 240, 255, 0.04);
+      color: #fff;
+    }
+
+    .nav-tab.active {
+      background: rgba(0, 240, 255, 0.06);
+      border-color: transparent;
+      color: var(--color-holo-primary);
+      text-shadow: 0 0 5px var(--color-holo-glow);
+      opacity: 1;
+    }
+
+    .app-footer {
+      margin-bottom: 75px;
+      font-size: 0.62rem;
+      padding: 12px;
+    }
+  }
 </style>
