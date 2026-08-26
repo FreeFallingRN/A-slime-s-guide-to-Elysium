@@ -1,6 +1,6 @@
 <script>
   import { currentChapter, activeChapterDetails, charactersData } from './store.js';
-  import { Shield, ToggleLeft, ToggleRight, ArrowUp, ArrowDown, Settings, HelpCircle } from 'lucide-svelte';
+  import { Shield, HelpCircle } from 'lucide-svelte';
 
   let selectedCharKey = 'halon';
   let character = charactersData[selectedCharKey];
@@ -19,14 +19,50 @@
     }
   });
 
-  // Local state for interactive properties of abilities
+  // Calculate the locked level of an ability at a specific chapter based on novel canon
+  function getAbilityLevel(id, ch) {
+    if (ch < 1) return 1;
+    
+    switch (id) {
+      case 'efficient_digestion':
+        if (ch >= 54) return 10;
+        if (ch >= 33) return 7;
+        if (ch >= 23) return 5;
+        if (ch >= 22) return 3;
+        return 1;
+        
+      case 'viscous_flow':
+        if (ch >= 47) return 16;
+        if (ch >= 31) return 13;
+        return 1;
+        
+      case 'hemolymphatic_tissue':
+        if (ch >= 47) return 7;
+        return 1;
+        
+      case 'passive_digestion':
+        if (ch >= 54) return 5;
+        return 1;
+        
+      case 'mass_expansion':
+        if (ch >= 54) return 7;
+        return 1;
+        
+      case 'partial_division':
+        if (ch >= 54) return 3;
+        return 1;
+        
+      case 'magic_core':
+        if (ch >= 26) return 3;
+        return 1;
+        
+      default:
+        return 1;
+    }
+  }
+
+  // Local state for abilities
   let localAbilities = [];
-  
-  // Track active state of abilities
-  let activeAbilitiesMap = {}; // { abilityId: boolean }
-  let abilityLevelsMap = {}; // { abilityId: number }
-  let abilityTypesMap = {}; // { abilityId: string } (additive, multiplicative, exponential)
-  let abilityValuesMap = {}; // { abilityId: number }
 
   // Whenever character or chapter changes, rebuild the local abilities list
   $: {
@@ -35,21 +71,11 @@
     // Filter abilities dynamically based on synchronized chapter lock
     const baseAbilities = (character.abilities || []).filter(ab => ab.chapter <= chapter);
     
-    // Reset or carry over modifications
     localAbilities = baseAbilities.map(ab => {
-      // Initialize mappings if empty
-      if (activeAbilitiesMap[ab.id] === undefined) activeAbilitiesMap[ab.id] = true;
-      if (abilityLevelsMap[ab.id] === undefined) abilityLevelsMap[ab.id] = ab.level || 1;
-      if (abilityTypesMap[ab.id] === undefined) abilityTypesMap[ab.id] = ab.type || 'additive';
-      if (abilityValuesMap[ab.id] === undefined) abilityValuesMap[ab.id] = ab.value || 0.1;
-
+      const currentLvl = getAbilityLevel(ab.id, chapter);
       return {
         ...ab,
-        // Bind to reactive maps
-        active: activeAbilitiesMap[ab.id],
-        level: abilityLevelsMap[ab.id],
-        type: abilityTypesMap[ab.id],
-        value: abilityValuesMap[ab.id]
+        level: currentLvl
       };
     });
   }
@@ -63,76 +89,36 @@
     
     // Run calculations sequentially in the exact array order
     abilities.forEach(ab => {
-      // Only apply if unlocked at current chapter AND toggled active
-      const isUnlocked = ab.chapter <= activeChapter;
-      const isActive = activeAbilitiesMap[ab.id];
+      const statName = ab.target;
+      const baseVal = stats[statName];
+      if (baseVal === undefined || statName === 'none') return;
 
-      if (isUnlocked && isActive) {
-        const statName = ab.target;
-        const baseVal = stats[statName];
-        if (baseVal === undefined) return;
+      const lvl = ab.level;
+      const val = ab.value;
+      const type = ab.type;
 
-        const lvl = abilityLevelsMap[ab.id];
-        const val = abilityValuesMap[ab.id];
-        const type = abilityTypesMap[ab.id];
-
-        let result = baseVal;
-        if (type === 'additive') {
-          result = baseVal + (val * lvl);
-        } else if (type === 'multiplicative') {
-          result = baseVal * (1 + (val * lvl));
-        } else if (type === 'exponential') {
-          result = baseVal * Math.pow(1 + val, lvl);
-        }
-
-        // Round to 2 decimal places
-        stats[statName] = Math.round(result * 100) / 100;
+      let result = baseVal;
+      if (type === 'additive') {
+        result = baseVal + (val * lvl);
+      } else if (type === 'multiplicative') {
+        result = baseVal * (1 + (val * lvl));
+      } else if (type === 'exponential') {
+        result = baseVal * Math.pow(1 + val, lvl);
       }
+
+      // Round to 2 decimal places
+      stats[statName] = Math.round(result * 100) / 100;
     });
 
     if (isCombat) {
       const hemoAbility = abilities.find(a => a.id === 'hemolymphatic_tissue');
-      if (hemoAbility && activeAbilitiesMap[hemoAbility.id]) {
-        const lvl = abilityLevelsMap[hemoAbility.id] || hemoAbility.level;
+      if (hemoAbility) {
+        const lvl = hemoAbility.level;
         stats.digestion = Math.round(stats.digestion * (1 + (0.20 * lvl)) * 100) / 100;
       }
     }
 
     return stats;
-  }
-
-  // Reorder pipeline items
-  function moveItem(index, direction) {
-    const targetIndex = index + direction;
-    if (targetIndex < 0 || targetIndex >= localAbilities.length) return;
-
-    // Swap positions
-    const temp = localAbilities[index];
-    localAbilities[index] = localAbilities[targetIndex];
-    localAbilities[targetIndex] = temp;
-
-    // Reactively trigger updates
-    localAbilities = [...localAbilities];
-  }
-
-  function handleToggle(id) {
-    activeAbilitiesMap[id] = !activeAbilitiesMap[id];
-    localAbilities = [...localAbilities];
-  }
-
-  function handleLevelChange(id, e) {
-    abilityLevelsMap[id] = parseInt(e.target.value);
-    localAbilities = [...localAbilities];
-  }
-
-  function handleTypeChange(id, type) {
-    abilityTypesMap[id] = type;
-    localAbilities = [...localAbilities];
-  }
-
-  function handleValueChange(id, e) {
-    abilityValuesMap[id] = parseFloat(e.target.value);
-    localAbilities = [...localAbilities];
   }
 </script>
 
@@ -206,7 +192,7 @@
     <div class="abilities-list">
       {#each localAbilities as ab, index}
         {@const isUnlocked = ab.chapter <= chapter}
-        <div class="ability-card {isUnlocked ? '' : 'locked'} {!isUnlocked ? '' : activeAbilitiesMap[ab.id] ? 'active' : 'inactive'}">
+        <div class="ability-card {isUnlocked ? 'active' : 'locked'}">
           {#if !isUnlocked}
             <!-- Locked State -->
             <div class="locked-overlay">
@@ -215,88 +201,18 @@
             </div>
           {/if}
 
-          <!-- Normal Active/Inactive State Content -->
+          <!-- Normal Active State Content -->
           <div class="ability-main">
-            <div class="pipeline-controls">
-              <button 
-                class="order-btn" 
-                on:click={() => moveItem(index, -1)} 
-                disabled={index === 0 || !isUnlocked}
-              >
-                <ArrowUp size={16} />
-              </button>
-              <span class="step-num">#{index + 1}</span>
-              <button 
-                class="order-btn" 
-                on:click={() => moveItem(index, 1)} 
-                disabled={index === localAbilities.length - 1 || !isUnlocked}
-              >
-                <ArrowDown size={16} />
-              </button>
-            </div>
-
             <div class="ability-details">
               <div class="title-row">
                 <h4>{ab.name}</h4>
                 {#if isUnlocked}
-                  <button class="toggle-btn" on:click={() => handleToggle(ab.id)}>
-                    {#if activeAbilitiesMap[ab.id]}
-                      <ToggleRight size={28} class="toggle-icon active-glow" />
-                    {:else}
-                      <ToggleLeft size={28} class="toggle-icon muted-glow" />
-                    {/if}
-                  </button>
+                  <span class="active-badge">Lv {ab.level}</span>
                 {/if}
               </div>
               <p class="description">{ab.description}</p>
               
-              {#if isUnlocked}
-                <!-- Parameters sliders and configurations -->
-                <div class="ability-config">
-                  <div class="config-item">
-                    <label for="lvl-{ab.id}">Ability Level: <span class="val-badge">{abilityLevelsMap[ab.id]}</span></label>
-                    <input 
-                      type="range" 
-                      id="lvl-{ab.id}" 
-                      min="1" 
-                      max="10" 
-                      value={abilityLevelsMap[ab.id]} 
-                      on:input={(e) => handleLevelChange(ab.id, e)} 
-                    />
-                  </div>
-
-                  <div class="config-item">
-                    <label for="val-{ab.id}">Growth Weight (V): <span class="val-badge">{abilityValuesMap[ab.id]}</span></label>
-                    <input 
-                      type="number" 
-                      id="val-{ab.id}" 
-                      step="0.01" 
-                      min="0"
-                      value={abilityValuesMap[ab.id]} 
-                      on:input={(e) => handleValueChange(ab.id, e)} 
-                      class="number-input"
-                    />
-                  </div>
-
-                  <div class="config-item type-selector">
-                    <label>Formula Type:</label>
-                    <div class="type-buttons">
-                      <button 
-                        class="type-btn {abilityTypesMap[ab.id] === 'additive' ? 'selected' : ''}" 
-                        on:click={() => handleTypeChange(ab.id, 'additive')}
-                      >Additive</button>
-                      <button 
-                        class="type-btn {abilityTypesMap[ab.id] === 'multiplicative' ? 'selected' : ''}" 
-                        on:click={() => handleTypeChange(ab.id, 'multiplicative')}
-                      >Multi</button>
-                      <button 
-                        class="type-btn {abilityTypesMap[ab.id] === 'exponential' ? 'selected' : ''}" 
-                        on:click={() => handleTypeChange(ab.id, 'exponential')}
-                      >Exponential</button>
-                    </div>
-                  </div>
-                </div>
-
+              {#if isUnlocked && ab.target !== 'none'}
                 <div class="applies-badge">
                   Applies to: <span class="stat-target">{ab.target.toUpperCase()}</span>
                 </div>
@@ -449,10 +365,19 @@
     background: rgba(0, 240, 255, 0.02);
   }
 
-  .ability-card.inactive {
-    opacity: 0.6;
-    border-color: rgba(255, 255, 255, 0.02);
+  .active-badge {
+    background: rgba(0, 240, 255, 0.1);
+    color: var(--color-holo-primary);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-shadow: 0 0 5px var(--color-holo-glow);
+    letter-spacing: 0.05em;
   }
+
+
 
   .ability-card.locked {
     border-color: rgba(255, 94, 0, 0.1);
@@ -487,45 +412,7 @@
     display: flex;
   }
 
-  .pipeline-controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
-    gap: 8px;
-    width: 50px;
-    min-height: 100%;
-  }
 
-  .order-btn {
-    background: none;
-    border: none;
-    color: var(--color-holo-muted);
-    cursor: pointer;
-    transition: var(--transition-smooth);
-    padding: 4px;
-    border-radius: 4px;
-  }
-
-  .order-btn:hover:not(:disabled) {
-    color: var(--color-holo-primary);
-    background: rgba(0, 240, 255, 0.1);
-  }
-
-  .order-btn:disabled {
-    opacity: 0.15;
-    cursor: not-allowed;
-  }
-
-  .step-num {
-    font-size: 0.72rem;
-    font-weight: bold;
-    color: var(--color-holo-primary);
-    font-family: var(--font-sans);
-  }
 
   .ability-details {
     flex-grow: 1;
@@ -546,27 +433,7 @@
     color: #fff;
   }
 
-  .toggle-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-  }
 
-  :global(.toggle-icon) {
-    transition: var(--transition-smooth);
-  }
-
-  :global(.toggle-icon.active-glow) {
-    color: var(--color-holo-primary);
-    filter: drop-shadow(0 0 5px var(--color-holo-glow));
-  }
-
-  :global(.toggle-icon.muted-glow) {
-    color: var(--color-holo-muted);
-    opacity: 0.5;
-  }
 
   .description {
     font-size: 0.8rem;
@@ -574,113 +441,7 @@
     line-height: 1.4;
   }
 
-  .ability-config {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    background: rgba(0, 0, 0, 0.15);
-    padding: 12px;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.02);
-    margin-top: 4px;
-  }
 
-  @media (min-width: 600px) {
-    .ability-config {
-      grid-template-columns: 1fr 1fr;
-    }
-    
-    .type-selector {
-      grid-column: span 2;
-    }
-  }
-
-  .config-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .config-item label {
-    font-size: 0.72rem;
-    font-weight: bold;
-    color: var(--color-holo-muted);
-  }
-
-  .val-badge {
-    color: var(--color-holo-primary);
-    font-weight: 700;
-  }
-
-  .config-item input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 4px;
-    background: rgba(0, 240, 255, 0.15);
-    border-radius: 2px;
-    outline: none;
-  }
-
-  .config-item input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--color-holo-primary);
-    cursor: pointer;
-    box-shadow: 0 0 5px var(--color-holo-primary);
-  }
-
-  .number-input {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--color-holo-border);
-    color: #fff;
-    border-radius: 4px;
-    padding: 4px 8px;
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    outline: none;
-    transition: var(--transition-smooth);
-    width: 80px;
-  }
-
-  .number-input:focus {
-    border-color: var(--color-holo-primary);
-    box-shadow: 0 0 5px var(--color-holo-glow);
-  }
-
-  .type-buttons {
-    display: flex;
-    gap: 6px;
-    margin-top: 2px;
-  }
-
-  .type-btn {
-    flex-grow: 1;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--color-holo-muted);
-    font-size: 0.7rem;
-    padding: 4px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-    font-family: var(--font-sans);
-  }
-
-  .type-btn:hover {
-    border-color: rgba(0, 240, 255, 0.3);
-    color: #fff;
-  }
-
-  .type-btn.selected {
-    background: rgba(0, 240, 255, 0.1);
-    border-color: var(--color-holo-primary);
-    color: var(--color-holo-primary);
-    text-shadow: 0 0 5px var(--color-holo-glow);
-  }
 
   .applies-badge {
     font-size: 0.72rem;
