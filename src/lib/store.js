@@ -192,3 +192,44 @@ export const activeMapNodes = derived(
   [currentChapter],
   ([$ch]) => mapNodesData.filter(node => node.chapter <= $ch)
 );
+
+// Locked skill levels progression milestones configuration
+export const abilityProgression = {
+  efficient_digestion: [
+    { chapter: 22, level: 3 },
+    { chapter: 23, level: 5 },
+    { chapter: 33, level: 7 },
+    { chapter: 54, level: 10 }
+  ],
+  viscous_flow: [
+    { chapter: 31, level: 13 },
+    { chapter: 47, level: 16 }
+  ],
+  hemolymphatic_tissue: [
+    { chapter: 47, level: 7 }
+  ],
+  passive_digestion: [
+    { chapter: 54, level: 5 }
+  ],
+  mass_expansion: [
+    { chapter: 54, level: 7 }
+  ],
+  partial_division: [
+    { chapter: 54, level: 3 }
+  ],
+  magic_core: [
+    { chapter: 26, level: 3 }
+  ]
+};
+
+// Expose a helper to dynamically fetch locked skill level matching current chapter progression
+export function getAbilityLevel(id, ch) {
+  const milestones = abilityProgression[id] || [];
+  let currentLevel = 1;
+  for (const m of milestones) {
+    if (ch >= m.chapter) {
+      currentLevel = m.level;
+    }
+  }
+  return currentLevel;
+}

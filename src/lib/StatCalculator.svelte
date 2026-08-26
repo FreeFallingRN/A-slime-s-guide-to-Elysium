@@ -1,5 +1,5 @@
 <script>
-  import { currentChapter, activeChapterDetails, charactersData } from './store.js';
+  import { currentChapter, activeChapterDetails, charactersData, getAbilityLevel } from './store.js';
   import { Shield, HelpCircle } from 'lucide-svelte';
 
   let selectedCharKey = 'halon';
@@ -18,48 +18,6 @@
       activeLvl = val.halonLvl;
     }
   });
-
-  // Calculate the locked level of an ability at a specific chapter based on novel canon
-  function getAbilityLevel(id, ch) {
-    if (ch < 1) return 1;
-    
-    switch (id) {
-      case 'efficient_digestion':
-        if (ch >= 54) return 10;
-        if (ch >= 33) return 7;
-        if (ch >= 23) return 5;
-        if (ch >= 22) return 3;
-        return 1;
-        
-      case 'viscous_flow':
-        if (ch >= 47) return 16;
-        if (ch >= 31) return 13;
-        return 1;
-        
-      case 'hemolymphatic_tissue':
-        if (ch >= 47) return 7;
-        return 1;
-        
-      case 'passive_digestion':
-        if (ch >= 54) return 5;
-        return 1;
-        
-      case 'mass_expansion':
-        if (ch >= 54) return 7;
-        return 1;
-        
-      case 'partial_division':
-        if (ch >= 54) return 3;
-        return 1;
-        
-      case 'magic_core':
-        if (ch >= 26) return 3;
-        return 1;
-        
-      default:
-        return 1;
-    }
-  }
 
   // Local state for abilities
   let localAbilities = [];
