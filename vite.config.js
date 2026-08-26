@@ -3,7 +3,7 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
-  base: './',
+  base: './A-slime-s-guide-to-Elysium/',
   plugins: [
     svelte(),
     VitePWA({
@@ -16,7 +16,7 @@ export default defineConfig({
         theme_color: '#0a0e17',
         background_color: '#0a0e17',
         display: 'standalone',
-        start_url: '/',
+        start_url: '/A-slime-s-guide-to-Elysium/',
         icons: [
           {
             src: 'favicon.svg',
