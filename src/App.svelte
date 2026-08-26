@@ -22,6 +22,25 @@
         refreshing = true;
         window.location.reload();
       });
+
+      // Register the service worker manually with aggressive update checks
+      const swUrl = `${import.meta.env.BASE_URL}sw.js`;
+      navigator.serviceWorker.register(swUrl).then(reg => {
+        // Force an immediate update check when app mounts
+        reg.update().catch(() => {});
+
+        // Re-check for updates when tab becomes focused (user switches back)
+        window.addEventListener('focus', () => {
+          reg.update().catch(() => {});
+        });
+
+        // Periodically check for updates (every 60 seconds)
+        setInterval(() => {
+          reg.update().catch(() => {});
+        }, 60000);
+      }).catch(err => {
+        console.error('Service worker registration failed:', err);
+      });
     }
 
     window.addEventListener('beforeinstallprompt', (e) => {
