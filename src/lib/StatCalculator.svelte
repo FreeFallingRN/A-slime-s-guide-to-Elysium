@@ -5,6 +5,7 @@
   let selectedCharKey = 'halon';
   let character = charactersData[selectedCharKey];
   let chapter = 5;
+  let combatActive = false;
 
   // React to store changes
   currentChapter.subscribe(val => {
@@ -47,9 +48,10 @@
   }
 
   // Calculate stats dynamically based on custom pipeline
-  $: finalStats = calculateStats(character.baseStats, localAbilities, chapter);
+  $: finalStats = calculateStats(character.baseStats, localAbilities, chapter, combatActive);
 
-  function calculateStats(baseStats, abilities, activeChapter) {
+  function calculateStats(baseStats, abilities, activeChapter, isCombat) {
+    if (!baseStats) return {};
     let stats = { ...baseStats };
     
     // Run calculations sequentially in the exact array order
@@ -69,22 +71,25 @@
 
         let result = baseVal;
         if (type === 'additive') {
-          // e.g. Base + Value * Level
-          // If stat is HP/MP/ATK, check if it's flat scale or percentage. 
-          // We will use standard flat addition for additive
           result = baseVal + (val * lvl);
         } else if (type === 'multiplicative') {
-          // e.g. Base * (1 + Value * Level)
           result = baseVal * (1 + (val * lvl));
         } else if (type === 'exponential') {
-          // e.g. Base * (1 + Value)^Level
           result = baseVal * Math.pow(1 + val, lvl);
         }
 
-        // Round to 2 decimal places for clean layout
+        // Round to 2 decimal places
         stats[statName] = Math.round(result * 100) / 100;
       }
     });
+
+    if (isCombat) {
+      const hemoAbility = abilities.find(a => a.id === 'hemolymphatic_tissue');
+      if (hemoAbility && activeAbilitiesMap[hemoAbility.id]) {
+        const lvl = abilityLevelsMap[hemoAbility.id] || hemoAbility.level;
+        stats.digestion = Math.round(stats.digestion * (1 + (0.20 * lvl)) * 100) / 100;
+      }
+    }
 
     return stats;
   }
@@ -122,31 +127,26 @@
     abilityValuesMap[id] = parseFloat(e.target.value);
     localAbilities = [...localAbilities];
   }
-
-  function switchCharacter(key) {
-    selectedCharKey = key;
-    // Clear mappings to rebuild for new character
-    activeAbilitiesMap = {};
-    abilityLevelsMap = {};
-    abilityTypesMap = {};
-    abilityValuesMap = {};
-  }
 </script>
 
 <div class="stat-calc-layout">
-  <!-- Character Selector & Stats Display -->
+  <!-- Stats Display Panel -->
   <div class="hologram-panel side-panel">
     <div class="panel-header">
-      <h3 class="hologram-glow-text">CHARACTER DIRECTORY</h3>
-      <div class="char-tabs">
-        <button class="hologram-btn {selectedCharKey === 'halon' ? 'active' : ''}" on:click={() => switchCharacter('halon')}>Halon (Slime)</button>
-        <button class="hologram-btn {selectedCharKey === 'lohan' ? 'active' : ''}" on:click={() => switchCharacter('lohan')}>Lohan (IRL)</button>
-      </div>
+      <h3 class="hologram-glow-text">SLIME CHARACTER SHEET</h3>
     </div>
 
     <div class="character-identity">
+      <div class="character-avatar">
+        <img src="mythical_slime_placeholder.jpg" alt="Halon Avatar" class="avatar-img" />
+        <div class="avatar-glow"></div>
+      </div>
       <h2>{character.name}</h2>
-      <p class="subtitle">Race: {character.race} | Class: {character.class} | Lv: {character.level}</p>
+      <p class="subtitle">
+        Race: {character.race} ({character.raceBase || 'Common'}) | 
+        Class: {character.class} ({character.classBase || 'Common'}) | 
+        Lv: {character.level}
+      </p>
     </div>
 
     <div class="stats-comparison">
@@ -157,13 +157,33 @@
       </div>
       {#each Object.keys(character.baseStats) as stat}
         <div class="stat-row">
-          <span class="stat-name">{stat.toUpperCase()}</span>
-          <span class="stat-base">{character.baseStats[stat]}</span>
+          <span class="stat-name">
+            {#if stat === 'speed'}
+              SPEED
+            {:else if stat === 'digestion'}
+              DIGESTION
+            {:else}
+              {stat.toUpperCase()}
+            {/if}
+          </span>
+          <span class="stat-base">
+            {character.baseStats[stat]}
+            {#if stat === 'speed'} m/s{:else if stat === 'digestion'} bio/h{/if}
+          </span>
           <span class="stat-final {finalStats[stat] !== character.baseStats[stat] ? 'buffed' : ''}">
             {finalStats[stat]}
+            {#if stat === 'speed'} m/s{:else if stat === 'digestion'} bio/h{/if}
           </span>
         </div>
       {/each}
+
+      <!-- Combat Intensity Toggle for Hemolymphatic Tissue active combat digestion -->
+      <div class="combat-intensity-toggle">
+        <label class="combat-toggle-label">
+          <input type="checkbox" bind:checked={combatActive} />
+          <span class="toggle-text">Active Combat Digestion</span>
+        </label>
+      </div>
     </div>
   </div>
 
@@ -309,16 +329,6 @@
     font-size: 0.9rem;
     font-weight: 700;
     letter-spacing: 0.1em;
-  }
-
-  .char-tabs {
-    display: flex;
-    gap: 8px;
-  }
-
-  .char-tabs :global(.hologram-btn) {
-    font-size: 0.72rem;
-    padding: 4px 10px;
   }
 
   .side-panel {
@@ -675,5 +685,70 @@
     color: var(--color-book-gold);
     font-weight: bold;
     border-bottom: 1px dotted var(--color-book-gold);
+  }
+
+  /* Character Avatar styling */
+  .character-avatar {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 16px auto;
+    border-radius: 50%;
+    border: 2px solid var(--color-holo-primary);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    overflow: hidden;
+    background: #000;
+  }
+
+  .avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: screen;
+    filter: hue-rotate(180deg) brightness(1.2) contrast(1.1);
+  }
+
+  .avatar-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 50%, rgba(0, 240, 255, 0.2) 100%);
+    pointer-events: none;
+  }
+
+  /* Combat toggle layout */
+  .combat-intensity-toggle {
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--color-holo-border);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .combat-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-holo-muted);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+  }
+
+  .combat-toggle-label:hover {
+    color: var(--color-arson-fire);
+  }
+
+  .combat-toggle-label input {
+    accent-color: var(--color-arson-fire);
+    cursor: pointer;
+  }
+
+  .combat-toggle-label input:checked ~ .toggle-text {
+    color: var(--color-arson-fire);
+    text-shadow: 0 0 5px var(--color-arson-glow);
   }
 </style>

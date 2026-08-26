@@ -53,21 +53,19 @@
 
   <div class="viewer-viewport">
     {#if useFallback}
-      <!-- CSS 3D Rotating Prism Fallback -->
+      <!-- Cyber Hologram Slime Placeholder -->
       <div class="hologram-projection">
         <div class="grid-floor"></div>
         <div class="light-beam"></div>
-        <div class="core-assembly">
-          <div class="prism">
-            <div class="face front"></div>
-            <div class="face back"></div>
-            <div class="face left"></div>
-            <div class="face right"></div>
-            <div class="face top"></div>
-            <div class="face bottom"></div>
-            
-            <div class="inner-core"></div>
-          </div>
+        <div class="hologram-frame">
+          <img src="mythical_slime_placeholder.jpg" alt="Mythical Slime Hologram" class="holo-slime-img" />
+          <div class="holo-scanlines"></div>
+          <div class="holo-ring outer"></div>
+          <div class="holo-ring inner"></div>
+          <div class="holo-marker top-left"></div>
+          <div class="holo-marker top-right"></div>
+          <div class="holo-marker bottom-left"></div>
+          <div class="holo-marker bottom-right"></div>
         </div>
       </div>
     {:else}
@@ -200,67 +198,94 @@
     50% { opacity: 0.3; transform: scaleX(0.9); }
   }
 
-  .core-assembly {
+  .hologram-frame {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -60%);
-    width: 100px;
-    height: 100px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 2px solid var(--color-holo-primary);
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.4), inset 0 0 20px rgba(0, 240, 255, 0.3);
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.4);
+    animation: float-hologram 4s infinite ease-in-out;
   }
 
-  .prism {
+  @keyframes float-hologram {
+    0%, 100% { transform: translate(-50%, -60%) translateY(0); }
+    50% { transform: translate(-50%, -60%) translateY(-10px); }
+  }
+
+  .holo-slime-img {
     width: 100%;
     height: 100%;
-    transform-style: preserve-3d;
-    animation: prism-rotate 12s infinite linear;
-    position: relative;
+    object-fit: cover;
+    mix-blend-mode: screen;
+    filter: hue-rotate(180deg) brightness(1.2) contrast(1.1);
+    opacity: 0.95;
   }
 
-  @keyframes prism-rotate {
-    0% { transform: rotateY(0deg) rotateX(20deg); }
-    100% { transform: rotateY(360deg) rotateX(20deg); }
-  }
-
-  /* Faces of the 3D Cube/Prism Core */
-  .face {
+  .holo-scanlines {
     position: absolute;
-    width: 80px;
-    height: 80px;
-    background: rgba(0, 240, 255, 0.05);
-    border: 1.5px solid var(--color-holo-primary);
-    box-shadow: 0 0 12px rgba(0, 240, 255, 0.3), inset 0 0 8px rgba(0, 240, 255, 0.2);
-    backdrop-filter: blur(1px);
-    opacity: 0.85;
-    left: 10px;
-    top: 10px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      rgba(18, 16, 16, 0) 50%,
+      rgba(0, 240, 255, 0.2) 50%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
   }
 
-  .front  { transform: translateZ(40px); }
-  .back   { transform: rotateY(180deg) translateZ(40px); }
-  .left   { transform: rotateY(-90deg) translateZ(40px); }
-  .right  { transform: rotateY(90deg) translateZ(40px); }
-  .top    { transform: rotateX(90deg) translateZ(40px); height: 80px; }
-  .bottom { transform: rotateX(-90deg) translateZ(40px); height: 80px; }
-
-  /* Inner core sphere */
-  .inner-core {
+  .holo-ring {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    top: 50%;
+    left: 50%;
     border-radius: 50%;
-    background: radial-gradient(circle, #fff 0%, var(--color-arson-fire) 60%, transparent 100%);
-    box-shadow: 0 0 20px var(--color-arson-glow);
-    left: 35px;
-    top: 35px;
-    transform: translateZ(0);
-    animation: float-core 3s infinite ease-in-out;
+    border: 1px dashed var(--color-holo-primary);
+    pointer-events: none;
   }
 
-  @keyframes float-core {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-8px) scale(1.1); }
+  .holo-ring.outer {
+    width: 240px;
+    height: 240px;
+    animation: spin-clockwise 20s infinite linear;
+    border-color: rgba(0, 240, 255, 0.3);
   }
+
+  .holo-ring.inner {
+    width: 200px;
+    height: 200px;
+    animation: spin-counter 15s infinite linear;
+    border-color: rgba(0, 240, 255, 0.5);
+  }
+
+  @keyframes spin-clockwise {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  @keyframes spin-counter {
+    from { transform: translate(-50%, -50%) rotate(360deg); }
+    to { transform: translate(-50%, -50%) rotate(0deg); }
+  }
+
+  .holo-marker {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1.5px solid var(--color-holo-primary);
+    pointer-events: none;
+  }
+
+  .holo-marker.top-left { top: 15px; left: 15px; border-right: none; border-bottom: none; }
+  .holo-marker.top-right { top: 15px; right: 15px; border-left: none; border-bottom: none; }
+  .holo-marker.bottom-left { bottom: 15px; left: 15px; border-right: none; border-top: none; }
+  .holo-marker.bottom-right { bottom: 15px; right: 15px; border-left: none; border-top: none; }
 
   /* Uploader bar styling */
   .uploader-bar {

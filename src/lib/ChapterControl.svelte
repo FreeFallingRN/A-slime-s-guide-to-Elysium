@@ -7,6 +7,7 @@
   let showModal = false;
   
   const latestCh = chaptersData[chaptersData.length - 1]?.index || 30;
+  const uniqueLevels = [...new Set(chaptersData.map(c => c.halonLvl))].sort((a, b) => a - b);
 
   currentChapter.subscribe(val => {
     activeCh = val;
@@ -26,7 +27,7 @@
   }
 
   function adjustChapter(amount) {
-    currentChapter.update(n => Math.max(1, Math.min(30, n + amount)));
+    currentChapter.update(n => Math.max(1, Math.min(latestCh, n + amount)));
   }
 
   // Sync to first chapter matching or exceeding target level
@@ -79,19 +80,19 @@
       <input 
         type="range" 
         min="1" 
-        max="30" 
+        max={latestCh} 
         class="chapter-slider" 
         value={activeCh} 
         on:input={updateChapter} 
       />
       <div class="ticks">
         <span>Ch 1</span>
-        <span>Ch 10</span>
         <span>Ch 20</span>
-        <span>Ch 30</span>
+        <span>Ch 40</span>
+        <span>Ch 60</span>
       </div>
     </div>
-    <button class="hologram-btn-small" on:click={() => adjustChapter(1)} disabled={activeCh >= 30}>+</button>
+    <button class="hologram-btn-small" on:click={() => adjustChapter(1)} disabled={activeCh >= latestCh}>+</button>
   </div>
 
   <div class="spoiler-warning">
@@ -164,7 +165,7 @@
             }}
           >
             <option value="">-- Choose Level Milestone --</option>
-            {#each [5, 10, 15, 20, 30, 50, 75, 90] as lvl}
+            {#each uniqueLevels as lvl}
               <option value={lvl}>Level {lvl} Reach</option>
             {/each}
           </select>

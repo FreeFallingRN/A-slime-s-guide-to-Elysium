@@ -60,6 +60,9 @@
           {#each items.slice(0, Math.ceil(items.length / 2)) as item}
             <div class="entry-card">
               <h3>{item.name}</h3>
+              {#if item.base}
+                <p class="meta-tag">Grade: {item.base}</p>
+              {/if}
               {#if activeTab === 'dungeons'}
                 <p class="meta-tag">Rating: {item.level} | Boss: {item.bosses}</p>
               {/if}
@@ -88,6 +91,9 @@
           {#each items.slice(Math.ceil(items.length / 2)) as item}
             <div class="entry-card">
               <h3>{item.name}</h3>
+              {#if item.base}
+                <p class="meta-tag">Grade: {item.base}</p>
+              {/if}
               {#if activeTab === 'dungeons'}
                 <p class="meta-tag">Rating: {item.level} | Boss: {item.bosses}</p>
               {/if}
