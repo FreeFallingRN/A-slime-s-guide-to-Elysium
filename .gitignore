@@ -17,3 +17,5 @@ dist-ssr/
 Thumbs.db
 *.suo
 *.ntvsca*
+
+chapters/*

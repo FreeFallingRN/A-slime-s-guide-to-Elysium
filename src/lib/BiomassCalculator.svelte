@@ -1,16 +1,29 @@
 <script>
+  import { currentChapter } from './store.js';
   import { Shield, Sparkles, TrendingUp } from 'lucide-svelte';
 
+  let chapter = 5;
+  currentChapter.subscribe(val => {
+    chapter = val;
+  });
+
   // Evolution Tiers
-  const evolutionTiers = [
-    { name: "Stage 1: Common Slime", multiplier: 1.0, base: 50, chapter: 1 },
-    { name: "Stage 2: Acidic Slime", multiplier: 1.8, base: 120, chapter: 3 },
-    { name: "Stage 2: Steel-Skin Slime", multiplier: 2.2, base: 180, chapter: 10 },
-    { name: "Stage 3: Apex Magic Slime", multiplier: 5.0, base: 500, chapter: 15 },
-    { name: "Stage 4: Elysian Lord Slime", multiplier: 12.5, base: 2000, chapter: 25 }
+  const allEvolutionTiers = [
+    { name: "Stage 1: Mythical Slime", multiplier: 1.0, base: 50, chapter: 1 },
+    { name: "Stage 2: Elite Slime", multiplier: 1.8, base: 120, chapter: 13 }
   ];
 
+  // Filter tiers based on active chapter lock
+  $: evolutionTiers = allEvolutionTiers.filter(t => t.chapter <= chapter);
+
   let selectedTierIndex = 0;
+
+  // Safe Index clamp to avoid out-of-bounds when active tiers shrink
+  $: {
+    if (selectedTierIndex >= evolutionTiers.length) {
+      selectedTierIndex = Math.max(0, evolutionTiers.length - 1);
+    }
+  }
   
   // Upgrades
   let coreLvl = 1;

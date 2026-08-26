@@ -2,7 +2,7 @@
   import { currentChapter, encyclopediaData } from './store.js';
   import { BookOpen, ShieldAlert } from 'lucide-svelte';
 
-  let activeTab = 'races'; // 'races', 'classes', 'guilds', 'kingdoms', 'dungeons'
+  let activeTab = 'races'; // 'races', 'classes', 'monsters', 'factions', 'technology'
   let chapter = 5;
 
   currentChapter.subscribe(val => {
@@ -15,9 +15,9 @@
   const tabs = [
     { key: 'races', label: 'Races' },
     { key: 'classes', label: 'Classes' },
-    { key: 'guilds', label: 'Guilds' },
-    { key: 'kingdoms', label: 'Kingdoms' },
-    { key: 'dungeons', label: 'Dungeons' }
+    { key: 'monsters', label: 'Monsters' },
+    { key: 'factions', label: 'Factions' },
+    { key: 'technology', label: 'Technology' }
   ];
 </script>
 
@@ -63,10 +63,10 @@
               {#if activeTab === 'dungeons'}
                 <p class="meta-tag">Rating: {item.level} | Boss: {item.bosses}</p>
               {/if}
-              {#if activeTab === 'kingdoms'}
+              {#if item.ruler}
                 <p class="meta-tag">Lead: {item.ruler}</p>
               {/if}
-              <p class="description">{item.description}</p>
+              <p class="description">{item.description || ''}</p>
               <span class="unlock-milestone">LOGGED: Chapter {item.chapter}</span>
             </div>
           {/each}
@@ -91,10 +91,10 @@
               {#if activeTab === 'dungeons'}
                 <p class="meta-tag">Rating: {item.level} | Boss: {item.bosses}</p>
               {/if}
-              {#if activeTab === 'kingdoms'}
+              {#if item.ruler}
                 <p class="meta-tag">Lead: {item.ruler}</p>
               {/if}
-              <p class="description">{item.description}</p>
+              <p class="description">{item.description || ''}</p>
               <span class="unlock-milestone">LOGGED: Chapter {item.chapter}</span>
             </div>
           {/each}

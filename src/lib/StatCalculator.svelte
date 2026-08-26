@@ -24,8 +24,8 @@
   $: {
     character = charactersData[selectedCharKey];
     
-    // Merge baseline ability metadata with user modifications
-    const baseAbilities = character.abilities || [];
+    // Filter abilities dynamically based on synchronized chapter lock
+    const baseAbilities = (character.abilities || []).filter(ab => ab.chapter <= chapter);
     
     // Reset or carry over modifications
     localAbilities = baseAbilities.map(ab => {
