@@ -362,6 +362,7 @@
     }
 
     .container {
+      padding-top: 70px;
       padding-bottom: 85px;
       padding-left: 12px;
       padding-right: 12px;
