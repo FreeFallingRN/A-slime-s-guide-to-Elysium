@@ -45,7 +45,7 @@
         <Flame size={20} class="brand-flame" />
       </div>
       <div class="title-details">
-        <h1 class="glow-title">A SLIMES GUIDE TO ELYSIUM</h1>
+        <h1 class="glow-title">A SLIME'S GUIDE TO ELYSIUM</h1>
         <span class="pub-tag">PUBLISHED BY ARSON DEVS INC.</span>
       </div>
     </div>

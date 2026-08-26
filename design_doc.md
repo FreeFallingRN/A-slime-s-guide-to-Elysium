@@ -1,4 +1,4 @@
-# A Slimes Guide to Elysium (Design Document)
+# A Slime's Guide to Elysium (Design Document)
 
 *A companion and utility application for the Webnovel **Slime Evolution** by **NunuXD**.*
 **Developed by:** Arson Devs Inc.

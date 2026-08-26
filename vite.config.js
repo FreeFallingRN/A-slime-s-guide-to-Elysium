@@ -10,7 +10,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       injectRegister: 'inline',
       manifest: {
-        name: 'A Slimes Guide to Elysium',
+        name: "A Slime's Guide to Elysium",
         short_name: 'SlimeElysium',
         description: 'Interactive Companion App for Slime Evolution webnovel',
         theme_color: '#0a0e17',
