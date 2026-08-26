@@ -1,7 +1,17 @@
 import { writable, derived } from 'svelte/store';
 
-// Global Chapter Lock Store (Default: Chapter 5, Max: 60)
-export const currentChapter = writable(5);
+// Get saved chapter from localStorage or default to 1
+const savedChapter = typeof window !== 'undefined' ? localStorage.getItem('slime_elysium_chapter') : null;
+const initialChapter = savedChapter ? parseInt(savedChapter, 10) : 1;
+
+// Global Chapter Lock Store (Default: 1 or User's Last Choice)
+export const currentChapter = writable(initialChapter);
+
+if (typeof window !== 'undefined') {
+  currentChapter.subscribe(value => {
+    localStorage.setItem('slime_elysium_chapter', value.toString());
+  });
+}
 
 // Chapters Timeline Database (Canon mapped dates and levels)
 export const chaptersData = [
