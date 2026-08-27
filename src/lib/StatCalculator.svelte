@@ -604,12 +604,12 @@
             <div class="step-card combat-step">
               <div class="step-header">
                 <span class="step-number">COMBAT</span>
-                <span class="step-title">Active Combat Adrenaline Boost (Main Body Only)</span>
+                <span class="step-title">Active Combat Boost (Main Body Only)</span>
               </div>
               <div class="step-subitems">
                 <div class="subitem-row">
                   <span class="subitem-name">+ Hemolymphatic Tissue (Lv {calcData.digestion.hemoLvl}):</span>
-                  <span class="subitem-calc">{calcData.digestion.baseSum} (Main Body Subtotal) × (20% × {calcData.digestion.hemoLvl})</span>
+                  <span class="subitem-calc">{calcData.digestion.baseSum} (Main Body) × (20% × {calcData.digestion.hemoLvl})</span>
                   <span class="subitem-value">+{calcData.digestion.hemoVal} bio/h</span>
                 </div>
               </div>
@@ -650,7 +650,7 @@
           <div class="step-card">
             <div class="step-header">
               <span class="step-number">STEP 1</span>
-              <span class="step-title">Base Mana Core Density</span>
+              <span class="step-title">Base Mana Capacity</span>
             </div>
             <div class="step-subitems">
               <div class="subitem-row">
@@ -669,7 +669,7 @@
             <div class="step-card">
               <div class="step-header">
                 <span class="step-number">STEP 2</span>
-                <span class="step-title">Compounding Magic Core Growth</span>
+                <span class="step-title">Magic Core Growth</span>
               </div>
               <div class="step-subitems">
                 <div class="subitem-row">
@@ -688,7 +688,7 @@
           <div class="step-card final-step">
             <div class="step-header">
               <span class="step-number">FINAL</span>
-              <span class="step-title">Total Synchronized Mana Capacity</span>
+              <span class="step-title">Total Capacity</span>
             </div>
             <div class="step-subitems">
               <div class="subitem-row">
