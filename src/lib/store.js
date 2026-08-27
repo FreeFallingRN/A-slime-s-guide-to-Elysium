@@ -74,7 +74,18 @@ export const chaptersData = [
   { index: 57, title: "Inside Information", date: "Feb 21, 2026", halonLvl: 3 },
   { index: 58, title: "Evolution in the Real World", date: "Feb 21, 2026", halonLvl: 3 },
   { index: 59, title: "Anger", date: "Feb 22, 2026", halonLvl: 3 },
-  { index: 60, title: "Humiliation", date: "Feb 22, 2026", halonLvl: 3 }
+  { index: 60, title: "Humiliation", date: "Feb 22, 2026", halonLvl: 3 },
+  { index: 61, title: "Weaver Spider", date: "Feb 22, 2026", halonLvl: 3 },
+  { index: 62, title: "Oppressive Memories", date: "Feb 22, 2026", halonLvl: 3 },
+  { index: 63, title: "Spider-Slime", date: "Feb 23, 2026", halonLvl: 3 },
+  { index: 64, title: "Valuable Reward", date: "Feb 23, 2026", halonLvl: 3 },
+  { index: 65, title: "Money?!", date: "Feb 23, 2026", halonLvl: 3 },
+  { index: 66, title: "Skipping Class", date: "Feb 24, 2026", halonLvl: 3 },
+  { index: 67, title: "Serpent’s Crevice", date: "Feb 24, 2026", halonLvl: 3 },
+  { index: 68, title: "Many Evolutions", date: "Feb 24, 2026", halonLvl: 3 },
+  { index: 69, title: "Giant Snake", date: "Feb 25, 2026", halonLvl: 3 },
+  { index: 70, title: "Giant Snake 2", date: "Feb 25, 2026", halonLvl: 3 },
+  { index: 71, title: "Level 04!", date: "Feb 25, 2026", halonLvl: 4 }
 ];
 
 // Active Chapter Details Store
@@ -143,8 +154,8 @@ export const encyclopediaData = {
 // Raw Character Data (Base stats & abilities)
 export const charactersData = {
   halon: {
-    name: "Halon (Elysium Slime)",
-    race: "Mythical Slime",
+    name: "Halon",
+    race: "Slime",
     raceBase: "Mythical",
     class: "Devourer",
     classBase: "Mythical",
@@ -155,25 +166,65 @@ export const charactersData = {
       digestion: 10.48
     },
     abilities: [
-      { id: "efficient_digestion", name: "Efficient Digestion", target: "digestion", type: "exponential", value: 0.10, level: 10, chapter: 2, description: "Speeds up dissolving rate. (+10% active and passive gains per level)" },
-      { id: "viscous_flow", name: "Viscous Flow", target: "speed", type: "multiplicative", value: 0.10, level: 8, chapter: 2, description: "Improves motor control of gelatin. (+10% speed per level)" },
-      { id: "structural_stability", name: "Structural Stability", target: "none", type: "additive", value: 1.0, level: 5, chapter: 8, description: "Enables advanced membrane commands, snapping, and shape replication." },
-      { id: "hemolymphatic_tissue", name: "Hemolymphatic Tissue", target: "digestion", type: "multiplicative", value: 0.20, level: 3, chapter: 4, description: "Accelerates absorption during combat or under active damage by +20%." },
-      { id: "passive_digestion", name: "Passive Digestion", target: "digestion", type: "additive", value: 0.10, level: 3, chapter: 5, description: "Generates biomass slowly even when stationary." },
-      { id: "mass_expansion", name: "Mass Expansion", target: "none", type: "multiplicative", value: 0.30, level: 4, chapter: 8, description: "Increases volume, storage limit, and contact area by +30%." },
-      { id: "membrane_reinforcement", name: "Membrane Reinforcement", target: "none", type: "additive", value: 1.0, level: 3, chapter: 2, description: "Strengthens outer layer against impacts and cuts." },
-      { id: "instinctive_perception", name: "Instinctive Perception", target: "mana", type: "additive", value: 2.0, level: 3, chapter: 8, description: "Detects nearby vibrations and movements in detail." },
-      { id: "reinforced_exoskeleton", name: "Reinforced Exoskeleton", target: "none", type: "additive", value: 2.0, level: 2, chapter: 11, description: "Generates a hard shell around the body. (+2 Def per level)" },
-      { id: "body_density", name: "Body Density", target: "none", type: "multiplicative", value: 0.10, level: 3, chapter: 14, description: "Compresses gelatin density. (+10% Def/Atk compression per level)" },
-      { id: "partial_division", name: "Partial Division", target: "digestion", type: "multiplicative", value: 0.30, level: 2, chapter: 16, description: "Expels biomass to create remote gathering clones (+30% gathering speed per level)." },
-      { id: "memory_resonance", name: "Memory Resonance", target: "mana", type: "additive", value: 1.0, level: 1, chapter: 25, description: "Transmits part of the core's memories and instincts from consumed targets." },
-      { id: "magic_core", name: "Magic Core", target: "mana", type: "exponential", value: 0.10, level: 3, chapter: 25, description: "Transmutes vital core to a magical energy engine. (+10% mana exponent per level)" },
-      { id: "ice_spike", name: "Ice Spike", target: "none", type: "multiplicative", value: 0.15, level: 1, chapter: 26, description: "Channels frozen mana to conjure and fire a crystalline ice projectile." },
-      { id: "chemosensory_aptitude", name: "Chemosensory Aptitude", target: "mana", type: "additive", value: 2.0, level: 2, chapter: 31, description: "Allows outer membrane to detect subtle odor particles and mana residues." },
-      { id: "pigmentation_mimicry", name: "Pigmentation Mimicry", target: "speed", type: "multiplicative", value: 0.10, level: 1, chapter: 41, description: "Enables skin to blend with the environment, acting as an active camouflage." },
-      { id: "pack_instinct", name: "Pack Instinct", target: "digestion", type: "multiplicative", value: 0.15, level: 1, chapter: 49, description: "Improves synchronization and coordination speed with remote clones." },
-      { id: "magic_harmonizer", name: "Magic Core Harmonizer", target: "mana", type: "multiplicative", value: 0.20, level: 1, chapter: 54, description: "Synchronizes Magic Core mana output directly with motor actions to reduce latency." },
-      { id: "monocular_vision", name: "Telescopic Vision", target: "speed", type: "additive", value: 0.10, level: 1, chapter: 55, description: "Narrowed peripheral focus allowing long-distance telescopic zoom." }
+      {
+        id: "efficient_digestion",
+        name: "Efficient Digestion",
+        target: "digestion",
+        type: "exponential",
+        value: 0.10,
+        level: 10,
+        chapter: 2,
+        description: "Optimizes the enzymatic breakdown of absorbed matter, accelerating cellular processing.",
+        effect: "Compounds ×1.10 per level on Digestion.",
+        upgrades: [
+          { chapter: 33, name: "Hyper Efficient Digestion", description: "Mastery over dissolving biology, with residual energy spilling into mana.", effect: "Compounds ×1.10 per level on Digestion. Also compounds ×1.01 per level on Mana" }
+        ]
+      },
+      {
+        id: "viscous_flow",
+        name: "Viscous Flow",
+        target: "speed",
+        type: "multiplicative",
+        value: 0.10,
+        level: 8,
+        chapter: 2,
+        description: "Improves motor control of the gelatin body, enabling smoother and faster locomotion.",
+        effect: "Compounds ×1.10 per level on Agility.",
+        upgrades: [
+          { chapter: 68, name: "Liquid Shadow Shift", type: "fusion", absorbs: ["pigmentation_mimicry"], description: "Fuses camouflage instincts with fluid motor control into a single seamless reflex.", effect: "Compounds ×1.12 per level on Agility (upgraded from ×1.10)." }
+        ]
+      },
+      { id: "structural_stability", name: "Structural Stability", target: "none", type: "additive", value: 1.0, level: 5, chapter: 8, description: "Reinforces the internal gelatinous lattice, reducing uncontrolled deformations and slippage." },
+      { id: "hemolymphatic_tissue", name: "Hemolymphatic Tissue", target: "digestion", type: "multiplicative", value: 0.20, level: 3, chapter: 4, description: "During active combat, hemolymph flood accelerates biomass conversion into vital energy.", effect: "(Combat Only) Multiplies Digestion by ×(1 + 0.20 × level)." },
+      { id: "passive_digestion", name: "Passive Digestion", target: "digestion", type: "additive", value: 0.10, level: 3, chapter: 5, description: "Maintains a steady trickle of biomass conversion even while stationary.", effect: "Adds +10% × level to Digestion." },
+      { id: "mass_expansion", name: "Mass Expansion", target: "digestion", type: "multiplicative", value: 0.30, level: 4, chapter: 8, description: "Expands the body's volumetric capacity, creating more surface area for absorption.", effect: "Adds +30% × level to Digestion (additive)." },
+      { id: "membrane_reinforcement", name: "Membrane Reinforcement", target: "none", type: "additive", value: 1.0, level: 3, chapter: 2, description: "Thickens the outer gelatinous membrane, increasing resistance to physical impacts and sharp edges." },
+      { id: "instinctive_perception", name: "Instinctive Perception", target: "mana", type: "additive", value: 2.0, level: 3, chapter: 8, description: "Tunes the membrane to detect ground vibrations and motion disturbances.", effect: "Adds +2 mana per level." },
+      {
+        id: "reinforced_exoskeleton",
+        name: "Reinforced Exoskeleton",
+        target: "none",
+        type: "additive",
+        value: 2.0,
+        level: 2,
+        chapter: 11,
+        description: "Generates a hardened chitinous shell from beetle-derived biomass compounds.",
+        upgrades: [
+          { chapter: 71, name: "Obsidian Exoskeleton", type: "fusion", description: "Consumes biomass reserves to generate a rigid, near-indestructible Obsidian shell." }
+        ]
+      },
+      { id: "body_density", name: "Body Density", target: "none", type: "multiplicative", value: 0.10, level: 3, chapter: 14, description: "Compresses internal gelatin layers to increase structural integrity and impact force." },
+      { id: "partial_division", name: "Partial Division", target: "digestion", type: "multiplicative", value: 0.30, level: 2, chapter: 16, description: "Expels a biomass fragment to form a remote gathering clone.", effect: "Adds +10% × level to Digestion." },
+      { id: "memory_resonance", name: "Memory Resonance", target: "mana", type: "additive", value: 1.0, level: 1, chapter: 25, description: "Absorbs and retransmits instinctual memory imprints from consumed creatures.", effect: "Adds +1 mana per level." },
+      { id: "magic_core", name: "Magic Core", target: "mana", type: "exponential", value: 0.10, level: 3, chapter: 25, description: "Transmutes the vital core into a mana-generating engine that feeds on biological output.", effect: "Compounds ×1.10 per level on Mana." },
+      { id: "ice_spike", name: "Ice Spike", target: "none", type: "multiplicative", value: 0.15, level: 1, chapter: 26, description: "Channels concentrated frozen mana to conjure and launch a crystalline ice projectile." },
+      { id: "chemosensory_aptitude", name: "Chemosensory Aptitude", target: "mana", type: "additive", value: 2.0, level: 2, chapter: 31, description: "Enables the outer membrane to parse subtle chemical gradients and residual mana traces.", effect: "Adds +2 mana per level." },
+      { id: "pigmentation_mimicry", name: "Pigmentation Mimicry", target: "speed", type: "multiplicative", value: 0.10, level: 1, chapter: 41, description: "Rewires skin chromatophores to mirror surrounding textures as active camouflage.", effect: "Multiplies compounded speed by ×(1 + 0.10 × level)." },
+      { id: "pack_instinct", name: "Pack Instinct", target: "digestion", type: "multiplicative", value: 0.15, level: 1, chapter: 49, description: "Tunes synchronization protocols between the main body and remote clones.", effect: "Adds +15% × level of to Digestion." },
+      { id: "magic_harmonizer", name: "Magic Core Harmonizer", target: "mana", type: "multiplicative", value: 0.20, level: 1, chapter: 54, description: "Synchronizes the Magic Core's mana output cadence with physical motor signals to reduce conversion loss.", effect: "Multiplies Mana by ×(1 + 0.20 × level)." },
+      { id: "monocular_vision", name: "Telescopic Vision", target: "speed", type: "additive", value: 0.10, level: 1, chapter: 55, description: "Narrows peripheral focus into a precise long-range zoom, improving spatial reaction time.", effect: "Adds +0.10 m/s per level to Speed." },
+      { id: "thermographic_perception", name: "Thermographic Perception", target: "none", type: "additive", value: 0.0, level: 1, chapter: 68, description: "Maps thermal signatures of living beings through the membrane's infrared sensitivity, detecting hidden or camouflaged targets in total darkness." },
+      { id: "threshold_mimicry", name: "Threshold Mimicry", target: "none", type: "additive", value: 0.0, level: 1, chapter: 68, description: "While in shadowed or dark environments, the body passively absorbs ambient darkness to suppress its own visual signature against low-level detection." }
     ]
   }
 };
@@ -243,3 +294,32 @@ export function getAbilityLevel(id, ch) {
   }
   return currentLevel;
 }
+
+// Chronological Character/Faction Illustrations Gallery Database
+export const visualsData = [
+  { id: "lohan_march12", name: "Lohan", date: "March 12", file: "lohan-march12.png", chapter: 1, desc: "Real-world avatar of Lohan during the early phase of Elysium immersion." },
+  { id: "aeliana_march12", name: "Aeliana", date: "March 12", file: "aeliana-march12.png", chapter: 37, desc: "Elven mage who guides Lohan through the forest border territories." },
+  { id: "astraea_march12", name: "Astraea", date: "March 12", file: "astraea-march12.png", chapter: 40, desc: "A high-ranking Elf sentinel guarding the ancient grove gateways." },
+  { id: "elle_march12", name: "Elle", date: "March 12", file: "elle-march12.png", chapter: 30, desc: "Mysterious traveler met during early dungeon raids." },
+  { id: "isabella_march12", name: "Isabella", date: "March 12", file: "isabella-march12.png", chapter: 20, desc: "Daughter of a corporate director in the Sector dome." },
+  { id: "pip_march12", name: "Pip", date: "March 12", file: "pip-march12.png", chapter: 15, desc: "A small woodland sprite captured during early level grinds." },
+  { id: "yrneha_march12", name: "Yrneha", date: "March 12", file: "yrneha-march12.png", chapter: 45, desc: "Grand Elder of the Elven Council at Thalendor Capital." },
+  { id: "skye_march16", name: "Skye", date: "March 16", file: "skye-march16.png", chapter: 36, desc: "Beast-kin guide who aids in establishing the guild house." },
+  { id: "brynn_march18", name: "Brynn", date: "March 18", file: "brynn-march18.png", chapter: 38, desc: "Corporate contractor managing Sector 4 bus lanes." },
+  { id: "evelyn_march24", name: "Evelyn", date: "March 24", file: "evelyn-march24.png", chapter: 42, desc: "A high-level archer helping the elven refugees." },
+  { id: "hernesto_hogue_april2", name: "Hernesto Hogue", date: "April 02", file: "hernesto_hogue-april2.png", chapter: 40, desc: "Vance Group's lead security inspector for the Lower Zone." },
+  { id: "alice_april6", name: "Alice", date: "April 06", file: "alice-april6.png", chapter: 44, desc: "Lohan's sister who remains in the Sector hospital." },
+  { id: "isabella_april23", name: "Isabella", date: "April 23", file: "isabella-april23.png", chapter: 46, desc: "Isabella in her formal corporate attire during the dome Gala." },
+  { id: "lohan_april24", name: "Lohan", date: "April 24", file: "lohan-april24.png", chapter: 50, desc: "Lohan following his initial physiological modifications in the Sector lab." },
+  { id: "dylan_may1", name: "Dylan", date: "May 01", file: "dylan-may1.png", chapter: 52, desc: "A human mercenary commander contracted by Vance Group." },
+  { id: "halon_may2", name: "Halon", date: "May 02", file: "halon-may2.png", chapter: 54, desc: "Slime avatar after developing dense magical tissue." },
+  { id: "lisa_may4", name: "Lisa", date: "May 04", file: "lisa-may4.png", chapter: 55, desc: "Spirit Fox companion in her standard woodland hunting form." },
+  { id: "lisa_may5", name: "Lisa", date: "May 05", file: "lisa-may5.png", chapter: 56, desc: "Lisa channeling her Spiritual Flame during the cave boss fight." },
+  { id: "elle_may13", name: "Elle", date: "May 13", file: "elle-may13.png", chapter: 58, desc: "Elle wearing full combat plate during the border skirmish." },
+  { id: "pip_may13", name: "Pip", date: "May 13", file: "pip-may13.png", chapter: 58, desc: "Pip in evolved wood-sprite form, radiating natural mana." },
+  { id: "lohan_may20", name: "Lohan", date: "May 20", file: "lohan-may20.png", chapter: 60, desc: "Lohan operating the Sector hacker node." },
+  { id: "lohan_may27", name: "Lohan", date: "May 27", file: "lohan-may27.png", chapter: 62, desc: "Lohan's advanced Sector avatar after purchasing genetic enhancements." },
+  { id: "astralis_base_june6", name: "Astralis Base", date: "June 06", file: "astralis_base-june6.png", chapter: 66, desc: "The external gate of the Astralis Guild sanctuary." },
+  { id: "astralis_banner_june9", name: "Astralis Banner", date: "June 09", file: "astralis_banner-june9.png", chapter: 68, desc: "The glowing holographic banner representing the guild." },
+  { id: "astralis_hall_june9", name: "Astralis Hall", date: "June 09", file: "astralis_hall-june9.png", chapter: 68, desc: "The internal Grand Hall of the Astralis guild branch." }
+];

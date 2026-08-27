@@ -1,19 +1,33 @@
 <script>
-  import { currentChapter, activeChapterDetails, chaptersData } from './store.js';
-  import { Shield, ShieldAlert, LockKeyhole, LockKeyholeOpen, Clock, User, Flame } from 'lucide-svelte';
+  import {
+    currentChapter,
+    activeChapterDetails,
+    chaptersData,
+  } from "./store.js";
+  import {
+    Shield,
+    ShieldAlert,
+    LockKeyhole,
+    LockKeyholeOpen,
+    Clock,
+    User,
+    Flame,
+  } from "lucide-svelte";
 
   let activeCh = 5;
   let chDetails = {};
   let showModal = false;
-  
-  const latestCh = chaptersData[chaptersData.length - 1]?.index || 30;
-  const uniqueLevels = [...new Set(chaptersData.map(c => c.halonLvl))].sort((a, b) => a - b);
 
-  currentChapter.subscribe(val => {
+  const latestCh = chaptersData[chaptersData.length - 1]?.index || 30;
+  const uniqueLevels = [...new Set(chaptersData.map((c) => c.halonLvl))].sort(
+    (a, b) => a - b,
+  );
+
+  currentChapter.subscribe((val) => {
     activeCh = val;
   });
 
-  activeChapterDetails.subscribe(val => {
+  activeChapterDetails.subscribe((val) => {
     chDetails = val;
   });
 
@@ -27,16 +41,29 @@
   }
 
   function adjustChapter(amount) {
-    currentChapter.update(n => Math.max(1, Math.min(latestCh, n + amount)));
+    currentChapter.update((n) => Math.max(1, Math.min(latestCh, n + amount)));
   }
 
   // Sync to first chapter matching or exceeding target level
   function syncToLevel(targetLvl) {
-    const ch = chaptersData.find(c => c.halonLvl >= targetLvl);
+    const ch = chaptersData.find((c) => c.halonLvl >= targetLvl);
     if (ch) {
       currentChapter.set(ch.index);
     }
     showModal = false;
+  }
+
+  // Adjust level sync using unique milestones array
+  function adjustLevelSync(direction) {
+    const currentLvl = chDetails.halonLvl || 1;
+    const currentIndex = uniqueLevels.indexOf(currentLvl);
+    if (currentIndex !== -1) {
+      const nextIndex = Math.max(
+        0,
+        Math.min(uniqueLevels.length - 1, currentIndex + direction),
+      );
+      syncToLevel(uniqueLevels[nextIndex]);
+    }
   }
 </script>
 
@@ -75,32 +102,58 @@
   </div>
 
   <div class="controls">
-    <button class="hologram-btn-small" on:click={() => adjustChapter(-1)} disabled={activeCh <= 1}>−</button>
+    <button
+      class="hologram-btn-small"
+      on:click={() => adjustChapter(-1)}
+      disabled={activeCh <= 1}>−</button
+    >
     <div class="slider-wrapper">
-      <input 
-        type="range" 
-        min="1" 
-        max={latestCh} 
-        class="chapter-slider" 
-        value={activeCh} 
-        on:input={updateChapter} 
+      <input
+        type="range"
+        min="1"
+        max={latestCh}
+        class="chapter-slider"
+        value={activeCh}
+        on:input={updateChapter}
       />
       <div class="ticks">
         <span>Ch 1</span>
-        <span>Ch 20</span>
-        <span>Ch 40</span>
-        <span>Ch 60</span>
+        <span>Ch 18</span>
+        <span>Ch 35</span>
+        <span>Ch 53</span>
+        <span>Ch 71</span>
       </div>
     </div>
-    <button class="hologram-btn-small" on:click={() => adjustChapter(1)} disabled={activeCh >= latestCh}>+</button>
+    <button
+      class="hologram-btn-small"
+      on:click={() => adjustChapter(1)}
+      disabled={activeCh >= latestCh}>+</button
+    >
   </div>
 
-  <div class="spoiler-warning">
-    <ShieldAlert size={14} class="warning-icon" />
-    <span>Content beyond Chapter {activeCh} will be hidden (Spoiler-Free Mode Active)</span>
+  <!-- PC Desktop Level Sync Controls -->
+  <div class="level-sync-desktop font-tech">
+    <span class="sync-label">Sync by Level:</span>
+    <div class="level-sync-controls">
+      <button
+        class="level-sync-adjust-btn"
+        on:click={() => adjustLevelSync(-1)}
+        disabled={uniqueLevels.indexOf(chDetails.halonLvl) <= 0}
+      >
+        −
+      </button>
+      <span class="level-sync-display">Lv {chDetails.halonLvl || 1}</span>
+      <button
+        class="level-sync-adjust-btn"
+        on:click={() => adjustLevelSync(1)}
+        disabled={uniqueLevels.indexOf(chDetails.halonLvl) >=
+          uniqueLevels.length - 1}
+      >
+        +
+      </button>
+    </div>
   </div>
 </div>
-
 
 <!-- MOBILE STICKY HEADER -->
 <div class="mobile-header mobile-only">
@@ -119,29 +172,32 @@
   </div>
 
   <!-- Clickable Trigger Badge -->
-  <button class="mobile-badge" on:click={() => showModal = true}>
+  <button class="mobile-badge" on:click={() => (showModal = true)}>
     CH. {activeCh}
   </button>
 </div>
 
-
 <!-- CHAPTER SELECTOR DIALOG (MODAL) -->
 {#if showModal}
-  <div class="modal-overlay" on:click={() => showModal = false}>
+  <div class="modal-overlay" on:click={() => (showModal = false)}>
     <div class="modal-dialog hologram-panel" on:click|stopPropagation>
       <div class="modal-header">
         <h3 class="hologram-glow-text">CHRONICLE LOG SYNC</h3>
-        <button class="close-btn" on:click={() => showModal = false}>&times;</button>
+        <button class="close-btn" on:click={() => (showModal = false)}
+          >&times;</button
+        >
       </div>
-      <p class="modal-subheader">Sync your timeline or manually pick a chapter below.</p>
-      
+      <p class="modal-subheader">
+        Sync your timeline or manually pick a chapter below.
+      </p>
+
       <div class="dialog-controls-stack">
         <!-- 1. Chapter Selection Dropdown -->
         <div class="sync-dropdown-wrapper">
           <label for="modal-chapter-select">SELECT CHAPTER LOG:</label>
-          <select 
-            id="modal-chapter-select" 
-            value={activeCh} 
+          <select
+            id="modal-chapter-select"
+            value={activeCh}
             on:change={(e) => selectChapter(parseInt(e.target.value))}
           >
             {#each chaptersData as ch}
@@ -154,9 +210,11 @@
 
         <!-- 2. Level sync Dropdown -->
         <div class="sync-dropdown-wrapper">
-          <label for="modal-level-select">SYNC BY CHARACTER LEVEL milestones:</label>
-          <select 
-            id="modal-level-select" 
+          <label for="modal-level-select"
+            >SYNC BY CHARACTER LEVEL milestones:</label
+          >
+          <select
+            id="modal-level-select"
             on:change={(e) => {
               const val = e.target.value;
               if (val) {
@@ -176,7 +234,10 @@
           <button class="modal-btn reset-btn" on:click={() => selectChapter(1)}>
             RESET PROGRESS
           </button>
-          <button class="modal-btn latest-btn" on:click={() => selectChapter(latestCh)}>
+          <button
+            class="modal-btn latest-btn"
+            on:click={() => selectChapter(latestCh)}
+          >
             GO TO LATEST
           </button>
         </div>
@@ -184,7 +245,6 @@
     </div>
   </div>
 {/if}
-
 
 <style>
   /* Base Desktop Styles */
@@ -355,6 +415,70 @@
     cursor: not-allowed;
     border-color: rgba(255, 255, 255, 0.1);
     color: var(--color-holo-muted);
+  }
+
+  /* PC Desktop Level Sync Styles */
+  .level-sync-desktop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 4px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(0, 240, 255, 0.15);
+  }
+
+  .sync-label {
+    font-size: 0.72rem;
+    color: var(--color-holo-muted);
+    font-weight: bold;
+    letter-spacing: 0.05em;
+  }
+
+  .level-sync-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .level-sync-adjust-btn {
+    background: rgba(0, 240, 255, 0.05);
+    border: 1px solid rgba(0, 240, 255, 0.4);
+    color: var(--color-holo-primary);
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: var(--transition-smooth);
+    outline: none;
+  }
+
+  .level-sync-adjust-btn:hover:not(:disabled) {
+    background: var(--color-holo-primary);
+    color: #000;
+    box-shadow: 0 0 5px var(--color-holo-primary);
+  }
+
+  .level-sync-adjust-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-holo-muted);
+  }
+
+  .level-sync-display {
+    font-size: 0.8rem;
+    color: var(--color-book-gold);
+    font-weight: 800;
+    min-width: 32px;
+    text-align: center;
+    text-shadow: 0 0 5px var(--color-holo-glow);
   }
 
   .spoiler-warning {

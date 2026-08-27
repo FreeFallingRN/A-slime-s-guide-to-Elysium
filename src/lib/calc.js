@@ -3,7 +3,7 @@
  * Shared between StatCalculator.svelte and the regression test suite.
  */
 
-export function runCalculation(baseStats, abilities, playerLvl, isCombat) {
+export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapter = 1) {
   if (!baseStats) return {};
   
   const getLvl = (id) => {
@@ -51,7 +51,7 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat) {
   // ----------------------------------------------------
   // 2. MANA PIPELINE
   // ----------------------------------------------------
-  const manaBase = 10;
+  const manaBase = (baseStats.mana || 10) + 0.02 * (playerLvl - 1);
   const perceptionLvl = getLvl('instinctive_perception');
   const resonanceLvl = getLvl('memory_resonance');
   const sensoryLvl = getLvl('chemosensory_aptitude');
@@ -73,6 +73,13 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat) {
     finalMana = Math.round(finalMana * 1.10 * 100) / 100;
   }
   
+  // Apply Ch 33 Hyper Efficient Digestion extra mana bonus (+1% per level)
+  if (chapter >= 33) {
+    const efficientLvl = getLvl('efficient_digestion');
+    const efficientManaMult = 1 + 0.01 * efficientLvl;
+    finalMana = Math.round(finalMana * efficientManaMult * 100) / 100;
+  }
+  
   // ----------------------------------------------------
   // 3. SPEED PIPELINE (Base: 0.25)
   // ----------------------------------------------------
@@ -81,10 +88,11 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat) {
   const speedAdditiveSum = speedBase + 0.10 * monocularLvl;
   
   const viscousLvl = getLvl('viscous_flow');
-  // Viscous Flow compounds step-by-step with 10% per level, rounding to 2 decimals at each step
+  // Viscous Flow compounds step-by-step (12% if fused, 10% normally)
   let speedCompounded = speedAdditiveSum;
+  const viscousFactor = chapter >= 68 ? 1.12 : 1.10;
   for (let i = 0; i < viscousLvl; i++) {
-    speedCompounded = Math.round(speedCompounded * 1.10 * 100) / 100;
+    speedCompounded = Math.round(speedCompounded * viscousFactor * 100) / 100;
   }
   
   const mimicryLvl = getLvl('pigmentation_mimicry');

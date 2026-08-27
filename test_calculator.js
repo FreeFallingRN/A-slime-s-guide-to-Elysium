@@ -1,7 +1,7 @@
 import { runCalculation } from './src/lib/calc.js';
 
 console.log('==================================================');
-console.log('  ELYSIUM SLIME STAT CALCULATOR - REGRESSION TEST');
+console.log('  SLIME STAT CALCULATOR - REGRESSION TEST');
 console.log('==================================================\n');
 
 let passCount = 0;
@@ -97,6 +97,37 @@ const manaCalc = runCalculation({}, manaAbilities, 1, false).mana;
 assertEqual('Mana: Additive sum', manaCalc.additiveSum, 21.00); // 10 + 6 + 1 + 4
 assertEqual('Mana: Multiplied sum (Harmonizer)', manaCalc.multipliedSum, 25.20); // 21 * 1.2
 assertEqual('Mana: Final mana (Magic Core exponent)', manaCalc.final, 33.54); // 25.20 compounded 3 times
+
+// ----------------------------------------------------
+// TEST CASE 5: CHAPTER MILITARY UPGRADES & FUSIONS
+// ----------------------------------------------------
+// 1. Chapter 33 Extra Effect: Efficient Digestion Lv 7 gives +7% mana multiplier
+const ch33ManaAbilities = [
+  { id: 'efficient_digestion', level: 7 }
+];
+const ch33ManaCalc = runCalculation({}, ch33ManaAbilities, 1, false, 33).mana;
+// base: 10, additive: 10, final: 10 compounded by +7% (1.07) -> 10.7
+assertEqual('Mana: Ch33 Hyper Efficient Digestion extra mana check', ch33ManaCalc.final, 10.70);
+
+// 2. Chapter 68 Fusion: Viscous Flow Lv 3 compounds by 12% per level (Liquid Shadow Shift)
+const ch68SpeedAbilities = [
+  { id: 'viscous_flow', level: 3 }
+];
+const ch68SpeedCalc = runCalculation({}, ch68SpeedAbilities, 1, false, 68).speed.final;
+// base: 0.25, compounded 3 times by 12% (1.12) -> 0.25 * 1.12 = 0.28 -> 0.28 * 1.12 = 0.31 -> 0.31 * 1.12 = 0.35
+assertEqual('Speed: Ch68 Liquid Shadow Shift (Viscous Flow Lv 3) check', ch68SpeedCalc, 0.35);
+
+// 3. Chapter 71 Stat Screen Match: player level is 4, baseStats.mana is 10, abilities levels are baseline for Chapter 71.
+const ch71ManaAbilities = [
+  { id: 'instinctive_perception', level: 1 },
+  { id: 'chemosensory_aptitude', level: 1 },
+  { id: 'memory_resonance', level: 1 },
+  { id: 'magic_harmonizer', level: 1 },
+  { id: 'magic_core', level: 3 },
+  { id: 'efficient_digestion', level: 10 }
+];
+const ch71ManaCalc = runCalculation({ mana: 10 }, ch71ManaAbilities, 4, false, 71).mana.final;
+assertEqual('Mana: Ch71 Stat Screen 26.47 check', ch71ManaCalc, 26.47);
 
 console.log('\n--------------------------------------------------');
 console.log(`TEST SUMMARY: ${passCount} PASSED, ${failCount} FAILED`);
