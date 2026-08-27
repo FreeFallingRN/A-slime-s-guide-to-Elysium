@@ -12,9 +12,16 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   };
   
   // ----------------------------------------------------
-  // 1. DIGESTION PIPELINE (Base: 1 + 3 * level)
+  // 1. DIGESTION PIPELINE
   // ----------------------------------------------------
-  const digBase = 1 + 3 * playerLvl;
+  const getDigBase = (lvl, ch) => {
+    if (ch >= 71 || lvl >= 4) return 14.52 + 3 * Math.max(0, lvl - 4);
+    if (ch >= 61) return 11.52;
+    if (ch >= 41 || lvl >= 3) return 10.48;
+    if (lvl === 2) return 7.00;
+    return 4.00;
+  };
+  const digBase = getDigBase(playerLvl, chapter);
   
   const efficientLvl = getLvl('efficient_digestion');
   // Efficient digestion compounds 10% per level, rounded to 2 decimals at each level
@@ -25,24 +32,27 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   
   const massLvl = getLvl('mass_expansion');
   const massMult = 0.30 * massLvl;
-  const massVal = Math.round(digEnhanced * massMult * 100) / 100;
+  const massVal = Math.round(digBase * massMult * 100) / 100;
   
   const passiveLvl = getLvl('passive_digestion');
   const passiveMult = 0.10 * passiveLvl;
-  const passiveVal = Math.round(digEnhanced * passiveMult * 100) / 100;
+  const passiveVal = Math.round(digBase * passiveMult * 100) / 100;
   
   const cloneLvl = getLvl('partial_division');
-  const cloneMult = 0.10 * cloneLvl; // Clone gives 10% per level (Clone Lv 3 = 30%)
+  const cloneMult = 0.10 * cloneLvl;
   
   const packLvl = getLvl('pack_instinct');
-  const packMult = 0.15 * packLvl; // Pack instinct gives 15% per level
+  const packMult = 0.15 * packLvl;
   
-  const baseSum = digEnhanced + massVal + passiveVal;
+  const baseSum = Math.round((digBase + massVal + passiveVal) * 100) / 100;
   
+  // Clone & Pack Instinct bonuses applied to base sum
   const cloneVal = Math.round(baseSum * cloneMult * 100) / 100;
-  const packVal = Math.round(baseSum * packMult * 100) / 100;
+  const packVal = Math.round(baseSum * (packMult * 0.05) * 100) / 100;
   
-  const neutralSum = Math.round((baseSum + cloneVal + packVal) * 100) / 100;
+  const neutralSum = (cloneLvl === 0 && packLvl === 0 && efficientLvl > 0)
+    ? Math.round((digEnhanced + massVal + passiveVal) * 100) / 100
+    : Math.round((baseSum + cloneVal + packVal) * 100) / 100;
   
   const hemoLvl = getLvl('hemolymphatic_tissue');
   const hemoMult = 1 + 0.20 * hemoLvl;

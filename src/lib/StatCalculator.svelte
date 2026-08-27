@@ -4,8 +4,9 @@
     activeChapterDetails,
     charactersData,
     getAbilityLevel,
+    getAbilitiesForChapter
   } from "./store.js";
-  import { Shield, HelpCircle, ArrowRight, Flame } from "lucide-svelte";
+  import { Shield, HelpCircle, ArrowRight, Flame, Sparkles } from "lucide-svelte";
   import { runCalculation } from "./calc.js";
 
   let selectedCharKey = "halon";
@@ -91,51 +92,7 @@
   // Whenever character or chapter changes, rebuild the local abilities list
   $: {
     character = charactersData[selectedCharKey];
-
-    // Filter abilities dynamically based on synchronized chapter lock
-    const baseAbilities = (character.abilities || []).filter((ab) => {
-      // Must be unlocked in/before current chapter
-      if (ab.chapter > chapter) return false;
-
-      // Must not be absorbed/fused by another active fusion
-      const isAbsorbed = (character.abilities || []).some((otherAb) => {
-        if (otherAb.chapter > chapter) return false;
-        if (otherAb.upgrades) {
-          return otherAb.upgrades.some((up) => {
-            return (
-              chapter >= up.chapter &&
-              up.type === "fusion" &&
-              up.absorbs &&
-              up.absorbs.includes(ab.id)
-            );
-          });
-        }
-        return false;
-      });
-
-      return !isAbsorbed;
-    });
-
-    const mappedAbilities = baseAbilities.map((ab) => {
-      const currentLvl = getAbilityLevel(ab.id, chapter);
-      let updatedAb = {
-        ...ab,
-        level: currentLvl,
-      };
-
-      // Apply upgrades if unlocked at or before this chapter
-      if (ab.upgrades) {
-        for (const upgrade of ab.upgrades) {
-          if (chapter >= upgrade.chapter) {
-            updatedAb = {
-              ...updatedAb,
-              ...upgrade,
-            };
-          }
-        }
-      }
-      return updatedAb;
-    });
+    const mappedAbilities = getAbilitiesForChapter(selectedCharKey, chapter);
 
     // Determine dynamic group ordering based on highest ability level within each target group
     const groupMaxLevels = {};
@@ -478,6 +435,20 @@
                             />
                           </svg>
                           <span class="effect-text">{ab.effect}</span>
+                        </div>
+                      {/if}
+
+                      {#if isUnlocked && ab.traits && ab.traits.length > 0}
+                        <div class="traits-container">
+                          {#each ab.traits as trait}
+                            <div class="trait-badge">
+                              <div class="trait-header">
+                                <Sparkles size={13} class="trait-sparkle-icon" />
+                                <span class="trait-title">TRAIT: {trait.name}</span>
+                              </div>
+                              <p class="trait-desc">{trait.description}</p>
+                            </div>
+                          {/each}
                         </div>
                       {/if}
 
@@ -1201,6 +1172,58 @@
     color: var(--color-holo-primary);
     opacity: 0.85;
     line-height: 1.4;
+  }
+
+  /* Unlocked Skill Traits */
+  .traits-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+    width: 100%;
+  }
+
+  .trait-badge {
+    background: linear-gradient(
+      90deg,
+      rgba(178, 77, 255, 0.12) 0%,
+      rgba(178, 77, 255, 0.03) 100%
+    );
+    border: 1px solid rgba(178, 77, 255, 0.35);
+    border-left: 3px solid #b24dff;
+    border-radius: 4px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 0 0 10px rgba(178, 77, 255, 0.15);
+  }
+
+  .trait-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  :global(.trait-sparkle-icon) {
+    color: #d18aff;
+    filter: drop-shadow(0 0 4px #b24dff);
+  }
+
+  .trait-title {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #e4b8ff;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(178, 77, 255, 0.6);
+  }
+
+  .trait-desc {
+    font-size: 0.76rem;
+    color: rgba(235, 215, 255, 0.9);
+    line-height: 1.35;
+    margin: 0;
   }
 
   .effect-current {

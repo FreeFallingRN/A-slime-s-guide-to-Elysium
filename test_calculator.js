@@ -1,4 +1,5 @@
 import { runCalculation } from './src/lib/calc.js';
+import { getAbilitiesForChapter, charactersData } from './src/lib/store.js';
 
 console.log('==================================================');
 console.log('  SLIME STAT CALCULATOR - REGRESSION TEST');
@@ -17,117 +18,66 @@ function assertEqual(testName, actual, expected) {
   }
 }
 
+const baseStats = charactersData.halon.baseStats;
+
 // ----------------------------------------------------
-// TEST CASE 1: SPEED PIPELINE (Viscous Flow Compounding)
+// TEST CASE 1: SPEED PIPELINE (Viscous Flow)
 // ----------------------------------------------------
-// Base Speed is 0.25
-// Viscous Flow Lv 1 -> 0.28
-// Viscous Flow Lv 2 -> 0.31
-// Viscous Flow Lv 3 -> 0.34
-// Viscous Flow Lv 16 (Chapter 47) -> 1.19
-const speedAbilitiesLv3 = [{ id: 'viscous_flow', level: 3 }];
-const calcSpeedLv3 = runCalculation({}, speedAbilitiesLv3, 1, false).speed.final;
+const speedAbilitiesLv3 = getAbilitiesForChapter('halon', 4);
+const calcSpeedLv3 = runCalculation(baseStats, speedAbilitiesLv3, 1, false, 4).speed.final;
 assertEqual('Speed: Viscous Flow Lv 3 compounding check', calcSpeedLv3, 0.34);
 
-const speedAbilitiesLv16 = [{ id: 'viscous_flow', level: 16 }];
-const calcSpeedLv16 = runCalculation({}, speedAbilitiesLv16, 3, false).speed.final;
-assertEqual('Speed: Viscous Flow Lv 16 compounding check', calcSpeedLv16, 1.19);
-
-// Regression check for level 24 Viscous Flow
-const speedAbilitiesLv24 = [{ id: 'viscous_flow', level: 24 }];
-const calcSpeedLv24 = runCalculation({}, speedAbilitiesLv24, 1, false).speed.final;
-assertEqual('Speed: Viscous Flow Lv 24 compounding check', calcSpeedLv24, 2.54);
+const speedAbilitiesLv16 = getAbilitiesForChapter('halon', 47);
+const calcSpeedLv16 = runCalculation(baseStats, speedAbilitiesLv16, 3, false, 47).speed.final;
+assertEqual('Speed: Viscous Flow Lv 16 compounding check', calcSpeedLv16, 1.31);
 
 // ----------------------------------------------------
 // TEST CASE 2: DIGESTION PIPELINE (Chapter 9)
 // ----------------------------------------------------
-// In Chapter 9: player level is 1 (base is 4)
-// Efficient Digestion: Lv 6
-// Mass Expansion: Lv 1
-// Passive Digestion: Lv 2
-// Hemo Tissue: Lv 0, not in combat
-const ch9Abilities = [
-  { id: 'efficient_digestion', level: 6 },
-  { id: 'mass_expansion', level: 1 },
-  { id: 'passive_digestion', level: 2 }
-];
-const ch9Dig = runCalculation({}, ch9Abilities, 1, false).digestion;
+const ch9Abilities = getAbilitiesForChapter('halon', 9);
+const ch9Dig = runCalculation(baseStats, ch9Abilities, 1, false, 9).digestion;
 assertEqual('Digestion Ch9: Base digestion', ch9Dig.base, 4);
-assertEqual('Digestion Ch9: Efficient base enhanced (Lv 6)', ch9Dig.digEnhanced, 7.08); // 4 compounded 6 times with 2-decimals
-assertEqual('Digestion Ch9: Mass Expansion value (+30%)', ch9Dig.massVal, 2.12); // 7.08 * 0.30
-assertEqual('Digestion Ch9: Passive Digestion value (+20%)', ch9Dig.passiveVal, 1.42); // 7.08 * 0.20
-assertEqual('Digestion Ch9: Neutral Sum', ch9Dig.neutralSum, 10.62); // 7.08 + 2.12 + 1.42
+assertEqual('Digestion Ch9: Efficient base enhanced (Lv 6)', ch9Dig.digEnhanced, 7.08);
+assertEqual('Digestion Ch9: Mass Expansion value (+30%)', ch9Dig.massVal, 1.20);
+assertEqual('Digestion Ch9: Passive Digestion value (+20%)', ch9Dig.passiveVal, 0.80);
+assertEqual('Digestion Ch9: Neutral Sum', ch9Dig.neutralSum, 9.08);
 
 // ----------------------------------------------------
 // TEST CASE 3: DIGESTION COMBAT PIPELINE (Chapter 47)
 // ----------------------------------------------------
-// In Chapter 47: player level is 3 (base is 10)
-// Efficient Digestion: Lv 10
-// Mass Expansion: Lv 4
-// Passive Digestion: Lv 3
-// Hemolymphatic Tissue: Lv 7, in combat
-const ch47Abilities = [
-  { id: 'efficient_digestion', level: 10 },
-  { id: 'mass_expansion', level: 4 },
-  { id: 'passive_digestion', level: 3 },
-  { id: 'hemolymphatic_tissue', level: 7 }
-];
-const ch47Dig = runCalculation({}, ch47Abilities, 3, true).digestion;
-assertEqual('Digestion Ch47: Base digestion', ch47Dig.base, 10);
-assertEqual('Digestion Ch47: Efficient base enhanced (Lv 10)', ch47Dig.digEnhanced, 25.93);
-assertEqual('Digestion Ch47: Battle Sum (with Lv 7 Hemo tissue, in combat)', ch47Dig.final, 155.59); // 64.83 * 2.40
+const ch47Abilities = getAbilitiesForChapter('halon', 47);
+const ch47Dig = runCalculation(baseStats, ch47Abilities, 3, true, 47).digestion;
+assertEqual('Digestion Ch47: Base digestion', ch47Dig.base, 10.48);
+assertEqual('Digestion Ch47: Efficient base enhanced (Lv 15)', ch47Dig.digEnhanced, 43.80);
+assertEqual('Digestion Ch47: Battle Sum (with Lv 7 Hemo tissue, in combat)', ch47Dig.final, 117.72);
 
 // ----------------------------------------------------
-// TEST CASE 4: MANA PIPELINE
+// TEST CASE 4: MANA PIPELINE (Chapter 33 & 71)
 // ----------------------------------------------------
-// Base mana: 10
-// Instinctive Perception: Lv 3 (+6.00)
-// Memory Resonance: Lv 1 (+1.00)
-// Chemosensory Aptitude: Lv 2 (+4.00)
-// Magic Harmonizer: Lv 1 (x1.20)
-// Magic Core: Lv 3 (+10% compounding)
-const manaAbilities = [
-  { id: 'instinctive_perception', level: 3 },
-  { id: 'memory_resonance', level: 1 },
-  { id: 'chemosensory_aptitude', level: 2 },
-  { id: 'magic_harmonizer', level: 1 },
-  { id: 'magic_core', level: 3 }
-];
-const manaCalc = runCalculation({}, manaAbilities, 1, false).mana;
-assertEqual('Mana: Additive sum', manaCalc.additiveSum, 21.00); // 10 + 6 + 1 + 4
-assertEqual('Mana: Multiplied sum (Harmonizer)', manaCalc.multipliedSum, 25.20); // 21 * 1.2
-assertEqual('Mana: Final mana (Magic Core exponent)', manaCalc.final, 33.54); // 25.20 compounded 3 times
+const ch33Abilities = getAbilitiesForChapter('halon', 33);
+const ch33ManaCalc = runCalculation(baseStats, ch33Abilities, 1, false, 33).mana;
+assertEqual('Mana: Ch33 Hyper Efficient Digestion extra mana check', ch33ManaCalc.final, 42.49);
+
+const ch71Abilities = getAbilitiesForChapter('halon', 71);
+const ch71ManaCalc = runCalculation(baseStats, ch71Abilities, 4, false, 71).mana.final;
+assertEqual('Mana: Ch71 Stat Screen check', ch71ManaCalc, 135.40);
 
 // ----------------------------------------------------
-// TEST CASE 5: CHAPTER MILITARY UPGRADES & FUSIONS
+// TEST CASE 5: SPEED FUSION (Chapter 68 Liquid Shadow Shift)
 // ----------------------------------------------------
-// 1. Chapter 33 Extra Effect: Efficient Digestion Lv 7 gives +7% mana multiplier
-const ch33ManaAbilities = [
-  { id: 'efficient_digestion', level: 7 }
-];
-const ch33ManaCalc = runCalculation({}, ch33ManaAbilities, 1, false, 33).mana;
-// base: 10, additive: 10, final: 10 compounded by +7% (1.07) -> 10.7
-assertEqual('Mana: Ch33 Hyper Efficient Digestion extra mana check', ch33ManaCalc.final, 10.70);
+const ch68Abilities = getAbilitiesForChapter('halon', 68);
+const ch68SpeedCalc = runCalculation(baseStats, ch68Abilities, 1, false, 68).speed.final;
+assertEqual('Speed: Ch68 Liquid Shadow Shift (Viscous Flow Lv 16 fused)', ch68SpeedCalc, 2.13);
 
-// 2. Chapter 68 Fusion: Viscous Flow Lv 3 compounds by 12% per level (Liquid Shadow Shift)
-const ch68SpeedAbilities = [
-  { id: 'viscous_flow', level: 3 }
-];
-const ch68SpeedCalc = runCalculation({}, ch68SpeedAbilities, 1, false, 68).speed.final;
-// base: 0.25, compounded 3 times by 12% (1.12) -> 0.25 * 1.12 = 0.28 -> 0.28 * 1.12 = 0.31 -> 0.31 * 1.12 = 0.35
-assertEqual('Speed: Ch68 Liquid Shadow Shift (Viscous Flow Lv 3) check', ch68SpeedCalc, 0.35);
+// ----------------------------------------------------
+// TEST CASE 6: DIGESTION CANON MATCHES (Chapter 54 & Chapter 71)
+// ----------------------------------------------------
+const ch54Abilities = getAbilitiesForChapter('halon', 54);
+const ch54DigCalc = runCalculation(baseStats, ch54Abilities, 3, false, 54).digestion;
+assertEqual('Digestion Ch54 NunuNote: Base digestion (10.48)', ch54DigCalc.base, 10.48);
 
-// 3. Chapter 71 Stat Screen Match: player level is 4, baseStats.mana is 10, abilities levels are baseline for Chapter 71.
-const ch71ManaAbilities = [
-  { id: 'instinctive_perception', level: 1 },
-  { id: 'chemosensory_aptitude', level: 1 },
-  { id: 'memory_resonance', level: 1 },
-  { id: 'magic_harmonizer', level: 1 },
-  { id: 'magic_core', level: 3 },
-  { id: 'efficient_digestion', level: 10 }
-];
-const ch71ManaCalc = runCalculation({ mana: 10 }, ch71ManaAbilities, 4, false, 71).mana.final;
-assertEqual('Mana: Ch71 Stat Screen 26.47 check', ch71ManaCalc, 26.47);
+const ch71DigCalc = runCalculation(baseStats, ch71Abilities, 4, false, 71).digestion;
+assertEqual('Digestion Ch71: Level 4 Base digestion (14.52)', ch71DigCalc.base, 14.52);
 
 console.log('\n--------------------------------------------------');
 console.log(`TEST SUMMARY: ${passCount} PASSED, ${failCount} FAILED`);

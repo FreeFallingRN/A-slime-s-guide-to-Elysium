@@ -85,7 +85,8 @@ export const chaptersData = [
   { index: 68, title: "Many Evolutions", date: "Feb 24, 2026", halonLvl: 3 },
   { index: 69, title: "Giant Snake", date: "Feb 25, 2026", halonLvl: 3 },
   { index: 70, title: "Giant Snake 2", date: "Feb 25, 2026", halonLvl: 3 },
-  { index: 71, title: "Level 04!", date: "Feb 25, 2026", halonLvl: 4 }
+  { index: 71, title: "Level 04!", date: "Feb 25, 2026", halonLvl: 4 },
+  { index: 72, title: "Normal Girl", date: "Feb 26, 2026", halonLvl: 4 }
 ];
 
 // Active Chapter Details Store
@@ -194,7 +195,24 @@ export const charactersData = {
           { chapter: 68, name: "Liquid Shadow Shift", type: "fusion", absorbs: ["pigmentation_mimicry"], description: "Fuses camouflage instincts with fluid motor control into a single seamless reflex.", effect: "Compounds ×1.12 per level on Agility (upgraded from ×1.10)." }
         ]
       },
-      { id: "structural_stability", name: "Structural Stability", target: "none", type: "additive", value: 1.0, level: 5, chapter: 8, description: "Reinforces the internal gelatinous lattice, reducing uncontrolled deformations and slippage." },
+      {
+        id: "structural_stability",
+        name: "Structural Stability",
+        target: "none",
+        type: "additive",
+        value: 1.0,
+        level: 5,
+        chapter: 8,
+        description: "Reinforces the internal gelatinous lattice, reducing uncontrolled deformations and slippage.",
+        upgrades: [
+          {
+            chapter: 47,
+            type: "trait",
+            traitName: "Morphological Memory",
+            traitDescription: "After understanding a new physical deformity, it is possible to learn and memorize that shape, reducing biomass cost and energy required to maintain complex body forms."
+          }
+        ]
+      },
       { id: "hemolymphatic_tissue", name: "Hemolymphatic Tissue", target: "digestion", type: "multiplicative", value: 0.20, level: 3, chapter: 4, description: "During active combat, hemolymph flood accelerates biomass conversion into vital energy.", effect: "(Combat Only) Multiplies Digestion by ×(1 + 0.20 × level)." },
       { id: "passive_digestion", name: "Passive Digestion", target: "digestion", type: "additive", value: 0.10, level: 3, chapter: 5, description: "Maintains a steady trickle of biomass conversion even while stationary.", effect: "Adds +10% × level to Digestion." },
       { id: "mass_expansion", name: "Mass Expansion", target: "digestion", type: "multiplicative", value: 0.30, level: 4, chapter: 8, description: "Expands the body's volumetric capacity, creating more surface area for absorption.", effect: "Adds +30% × level to Digestion (additive)." },
@@ -219,10 +237,14 @@ export const charactersData = {
       { id: "magic_core", name: "Magic Core", target: "mana", type: "exponential", value: 0.10, level: 3, chapter: 25, description: "Transmutes the vital core into a mana-generating engine that feeds on biological output.", effect: "Compounds ×1.10 per level on Mana." },
       { id: "ice_spike", name: "Ice Spike", target: "none", type: "multiplicative", value: 0.15, level: 1, chapter: 26, description: "Channels concentrated frozen mana to conjure and launch a crystalline ice projectile." },
       { id: "chemosensory_aptitude", name: "Chemosensory Aptitude", target: "mana", type: "additive", value: 2.0, level: 2, chapter: 31, description: "Enables the outer membrane to parse subtle chemical gradients and residual mana traces.", effect: "Adds +2 mana per level." },
+      { id: "incessant_hunger", name: "Incessant Hunger", target: "none", type: "additive", value: 0.0, level: 1, chapter: 40, description: "Enhances nutrient extraction from any organic material to boost physical vigor at the cost of constant appetite." },
       { id: "pigmentation_mimicry", name: "Pigmentation Mimicry", target: "speed", type: "multiplicative", value: 0.10, level: 1, chapter: 41, description: "Rewires skin chromatophores to mirror surrounding textures as active camouflage.", effect: "Multiplies compounded speed by ×(1 + 0.10 × level)." },
       { id: "pack_instinct", name: "Pack Instinct", target: "digestion", type: "multiplicative", value: 0.15, level: 1, chapter: 49, description: "Tunes synchronization protocols between the main body and remote clones.", effect: "Adds +15% × level of to Digestion." },
       { id: "magic_harmonizer", name: "Magic Core Harmonizer", target: "mana", type: "multiplicative", value: 0.20, level: 1, chapter: 54, description: "Synchronizes the Magic Core's mana output cadence with physical motor signals to reduce conversion loss.", effect: "Multiplies Mana by ×(1 + 0.20 × level)." },
       { id: "monocular_vision", name: "Telescopic Vision", target: "speed", type: "additive", value: 0.10, level: 1, chapter: 55, description: "Narrows peripheral focus into a precise long-range zoom, improving spatial reaction time.", effect: "Adds +0.10 m/s per level to Speed." },
+      { id: "heavy_weapons_affinity", name: "Affinity with Heavy Weapons", target: "none", type: "additive", value: 0.0, level: 1, chapter: 55, description: "Assimilates muscle memory to handle heavy impact weapons and axes with enhanced balance and leverage." },
+      { id: "static_shadow", name: "Static Shadow", target: "none", type: "additive", value: 0.0, level: 1, chapter: 55, description: "Alters body pigmentation and density to blend seamlessly into shadows as long as the user remains completely motionless." },
+      { id: "magic_weaving", name: "Magic Weaving", target: "none", type: "additive", value: 0.0, level: 1, chapter: 61, description: "Produces biological threads fused with mana, creating highly adhesive webs capable of immobilizing targets and siphoning energy." },
       { id: "thermographic_perception", name: "Thermographic Perception", target: "none", type: "additive", value: 0.0, level: 1, chapter: 68, description: "Maps thermal signatures of living beings through the membrane's infrared sensitivity, detecting hidden or camouflaged targets in total darkness." },
       { id: "threshold_mimicry", name: "Threshold Mimicry", target: "none", type: "additive", value: 0.0, level: 1, chapter: 68, description: "While in shadowed or dark environments, the body passively absorbs ambient darkness to suppress its own visual signature against low-level detection." }
     ]
@@ -257,29 +279,155 @@ export const activeMapNodes = derived(
 // Locked skill levels progression milestones configuration
 export const abilityProgression = {
   efficient_digestion: [
-    { chapter: 22, level: 3 },
-    { chapter: 23, level: 5 },
-    { chapter: 33, level: 7 },
-    { chapter: 54, level: 10 }
+    { chapter: 2, level: 1 },
+    { chapter: 4, level: 2 },
+    { chapter: 9, level: 6 },
+    { chapter: 14, level: 7 },
+    { chapter: 15, level: 8 },
+    { chapter: 22, level: 10 },
+    { chapter: 23, level: 11 },
+    { chapter: 27, level: 12 },
+    { chapter: 28, level: 13 },
+    { chapter: 33, level: 14 },
+    { chapter: 47, level: 15 },
+    { chapter: 68, level: 16 }
   ],
   viscous_flow: [
+    { chapter: 2, level: 1 },
+    { chapter: 3, level: 3 },
+    { chapter: 10, level: 8 },
+    { chapter: 22, level: 9 },
+    { chapter: 25, level: 10 },
+    { chapter: 27, level: 11 },
+    { chapter: 28, level: 12 },
     { chapter: 31, level: 13 },
+    { chapter: 41, level: 14 },
     { chapter: 47, level: 16 }
   ],
+  structural_stability: [
+    { chapter: 8, level: 2 },
+    { chapter: 14, level: 3 },
+    { chapter: 16, level: 4 },
+    { chapter: 17, level: 5 },
+    { chapter: 22, level: 6 },
+    { chapter: 30, level: 8 },
+    { chapter: 33, level: 9 },
+    { chapter: 47, level: 11 }
+  ],
   hemolymphatic_tissue: [
+    { chapter: 4, level: 1 },
+    { chapter: 13, level: 2 },
+    { chapter: 14, level: 3 },
+    { chapter: 22, level: 4 },
+    { chapter: 41, level: 5 },
     { chapter: 47, level: 7 }
   ],
   passive_digestion: [
-    { chapter: 54, level: 5 }
+    { chapter: 5, level: 1 },
+    { chapter: 8, level: 2 },
+    { chapter: 15, level: 3 },
+    { chapter: 22, level: 4 },
+    { chapter: 28, level: 5 }
   ],
   mass_expansion: [
-    { chapter: 54, level: 7 }
+    { chapter: 9, level: 1 },
+    { chapter: 12, level: 2 },
+    { chapter: 15, level: 3 },
+    { chapter: 17, level: 4 },
+    { chapter: 22, level: 5 },
+    { chapter: 35, level: 6 },
+    { chapter: 47, level: 7 },
+    { chapter: 55, level: 8 },
+    { chapter: 71, level: 9 }
+  ],
+  membrane_reinforcement: [
+    { chapter: 16, level: 3 },
+    { chapter: 22, level: 6 },
+    { chapter: 30, level: 9 },
+    { chapter: 33, level: 10 }
+  ],
+  instinctive_perception: [
+    { chapter: 12, level: 1 },
+    { chapter: 15, level: 2 },
+    { chapter: 16, level: 3 },
+    { chapter: 22, level: 4 },
+    { chapter: 27, level: 5 },
+    { chapter: 33, level: 6 },
+    { chapter: 55, level: 8 },
+    { chapter: 68, level: 9 }
+  ],
+  reinforced_exoskeleton: [
+    { chapter: 11, level: 1 },
+    { chapter: 15, level: 2 },
+    { chapter: 22, level: 4 },
+    { chapter: 33, level: 5 },
+    { chapter: 55, level: 7 }
+  ],
+  body_density: [
+    { chapter: 14, level: 1 },
+    { chapter: 16, level: 3 },
+    { chapter: 22, level: 4 },
+    { chapter: 33, level: 5 },
+    { chapter: 41, level: 6 },
+    { chapter: 55, level: 7 },
+    { chapter: 68, level: 8 }
   ],
   partial_division: [
-    { chapter: 54, level: 3 }
+    { chapter: 16, level: 2 },
+    { chapter: 40, level: 3 }
+  ],
+  memory_resonance: [
+    { chapter: 25, level: 1 },
+    { chapter: 33, level: 2 },
+    { chapter: 55, level: 5 }
   ],
   magic_core: [
-    { chapter: 26, level: 3 }
+    { chapter: 25, level: 1 },
+    { chapter: 26, level: 3 },
+    { chapter: 40, level: 4 },
+    { chapter: 54, level: 5 },
+    { chapter: 57, level: 6 }
+  ],
+  ice_spike: [
+    { chapter: 26, level: 1 }
+  ],
+  chemosensory_aptitude: [
+    { chapter: 30, level: 1 },
+    { chapter: 33, level: 2 },
+    { chapter: 55, level: 5 },
+    { chapter: 68, level: 7 }
+  ],
+  incessant_hunger: [
+    { chapter: 40, level: 1 }
+  ],
+  pigmentation_mimicry: [
+    { chapter: 41, level: 1 }
+  ],
+  pack_instinct: [
+    { chapter: 49, level: 1 },
+    { chapter: 55, level: 3 }
+  ],
+  magic_harmonizer: [
+    { chapter: 54, level: 2 }
+  ],
+  monocular_vision: [
+    { chapter: 55, level: 1 }
+  ],
+  heavy_weapons_affinity: [
+    { chapter: 55, level: 1 }
+  ],
+  static_shadow: [
+    { chapter: 55, level: 1 }
+  ],
+  magic_weaving: [
+    { chapter: 61, level: 1 }
+  ],
+  thermographic_perception: [
+    { chapter: 68, level: 1 },
+    { chapter: 68, level: 4 }
+  ],
+  threshold_mimicry: [
+    { chapter: 68, level: 1 }
   ]
 };
 
@@ -293,6 +441,67 @@ export function getAbilityLevel(id, ch) {
     }
   }
   return currentLevel;
+}
+
+// Expose a helper to fetch active character abilities mapped with level progression for a given chapter
+export function getAbilitiesForChapter(characterKey, ch) {
+  const character = charactersData[characterKey];
+  if (!character || !character.abilities) return [];
+
+  const baseAbilities = character.abilities.filter((ab) => {
+    if (ab.chapter > ch) return false;
+
+    const isAbsorbed = character.abilities.some((otherAb) => {
+      if (otherAb.chapter > ch) return false;
+      if (otherAb.upgrades) {
+        return otherAb.upgrades.some((up) => {
+          return (
+            ch >= up.chapter &&
+            up.type === "fusion" &&
+            up.absorbs &&
+            up.absorbs.includes(ab.id)
+          );
+        });
+      }
+      return false;
+    });
+
+    return !isAbsorbed;
+  });
+
+  return baseAbilities.map((ab) => {
+    const currentLvl = getAbilityLevel(ab.id, ch);
+    let updatedAb = {
+      ...ab,
+      level: currentLvl,
+      traits: []
+    };
+
+    if (ab.upgrades) {
+      for (const upgrade of ab.upgrades) {
+        if (ch >= upgrade.chapter) {
+          if (upgrade.type === "trait") {
+            updatedAb.traits = [
+              ...updatedAb.traits,
+              {
+                name: upgrade.traitName || upgrade.name,
+                description: upgrade.traitDescription || upgrade.description,
+                chapter: upgrade.chapter
+              }
+            ];
+          } else {
+            updatedAb = {
+              ...updatedAb,
+              ...upgrade,
+              name: upgrade.name || updatedAb.name,
+              traits: updatedAb.traits
+            };
+          }
+        }
+      }
+    }
+    return updatedAb;
+  });
 }
 
 // Chronological Character/Faction Illustrations Gallery Database
