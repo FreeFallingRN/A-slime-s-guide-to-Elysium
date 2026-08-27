@@ -61,7 +61,7 @@ export const chaptersData = [
   { index: 44, title: "Showing Something Cool", date: "Feb 15, 2026", halonLvl: 2 },
   { index: 45, title: "Real World", date: "Feb 15, 2026", halonLvl: 2 },
   { index: 46, title: "Open World", date: "Feb 16, 2026", halonLvl: 2 },
-  { index: 47, title: "Evolutions", date: "Feb 16, 2026", halonLvl: 2 },
+  { index: 47, title: "Evolutions", date: "Feb 16, 2026", halonLvl: 3 },
   { index: 48, title: "10 In Me 40 In You", date: "Feb 16, 2026", halonLvl: 2 },
   { index: 49, title: "Level 03", date: "Feb 17, 2026", halonLvl: 3 },
   { index: 50, title: "Confrontation", date: "Feb 17, 2026", halonLvl: 3 },
@@ -175,7 +175,14 @@ export const charactersData = {
     baseStats: {
       mana: 10,
       speed: 0.25,
-      digestion: 10.48
+      digestion: 4.0,
+      evolutionMultipliers: {
+        1: 1.00,
+        2: 1.75,
+        3: 2.62,
+        4: 3.63,
+        scalingPerLevel: 0.75
+      }
     },
     abilities: [
       {
@@ -187,10 +194,7 @@ export const charactersData = {
         level: 10,
         chapter: 2,
         description: "Optimizes the enzymatic breakdown of absorbed matter, accelerating cellular processing.",
-        effect: "Compounds ×1.10 per level on Digestion.",
-        upgrades: [
-          { chapter: 33, name: "Hyper Efficient Digestion", description: "Mastery over dissolving biology, with residual energy spilling into mana.", effect: "Compounds ×1.10 per level on Digestion. Also compounds ×1.01 per level on Mana" }
-        ]
+        effect: "Compounds ×1.10 per level on Digestion."
       },
       {
         id: "viscous_flow",
@@ -201,10 +205,7 @@ export const charactersData = {
         level: 8,
         chapter: 2,
         description: "Improves motor control of the gelatin body, enabling smoother and faster locomotion.",
-        effect: "Compounds ×1.10 per level on Agility.",
-        upgrades: [
-          { chapter: 68, name: "Liquid Shadow Shift", type: "fusion", absorbs: ["pigmentation_mimicry"], description: "Fuses camouflage instincts with fluid motor control into a single seamless reflex.", effect: "Compounds ×1.12 per level on Agility (upgraded from ×1.10)." }
-        ]
+        effect: "Compounds ×1.10 per level on Agility."
       },
       {
         id: "structural_stability",
@@ -228,31 +229,37 @@ export const charactersData = {
       { id: "passive_digestion", name: "Passive Digestion", target: "digestion", type: "additive", value: 0.10, level: 3, chapter: 5, description: "Maintains a steady trickle of biomass conversion even while stationary.", effect: "Adds +10% × level to Digestion." },
       { id: "mass_expansion", name: "Mass Expansion", target: "digestion", type: "multiplicative", value: 0.30, level: 4, chapter: 8, description: "Expands the body's volumetric capacity, creating more surface area for absorption.", effect: "Adds +30% × level to Digestion (additive)." },
       { id: "membrane_reinforcement", name: "Membrane Reinforcement", target: "none", type: "additive", value: 1.0, level: 3, chapter: 2, description: "Thickens the outer gelatinous membrane, increasing resistance to physical impacts and sharp edges." },
-      { id: "instinctive_perception", name: "Instinctive Perception", target: "mana", type: "additive", value: 2.0, level: 3, chapter: 8, description: "Tunes the membrane to detect ground vibrations and motion disturbances.", effect: "Adds +2 mana per level." },
+      { id: "instinctive_perception", name: "Instinctive Perception", target: "none", type: "additive", value: 0.0, level: 3, chapter: 8, description: "Tunes the membrane to detect ground vibrations and motion disturbances." },
       {
         id: "reinforced_exoskeleton",
         name: "Reinforced Exoskeleton",
         target: "none",
         type: "additive",
         value: 2.0,
-        level: 2,
         chapter: 11,
-        description: "Generates a hardened chitinous shell from beetle-derived biomass compounds.",
-        upgrades: [
-          { chapter: 71, name: "Obsidian Exoskeleton", type: "fusion", description: "Consumes biomass reserves to generate a rigid, near-indestructible Obsidian shell." }
-        ]
+        description: "Generates a hardened chitinous shell from beetle-derived biomass compounds."
+      },
+      {
+        id: "obsidian_exoskeleton",
+        name: "Obsidian Exoskeleton",
+        target: "none",
+        type: "additive",
+        value: 2.0,
+        chapter: 71,
+        replaces: "reinforced_exoskeleton",
+        description: "Consumes biomass reserves to generate a rigid, near-indestructible Obsidian shell."
       },
       { id: "body_density", name: "Body Density", target: "none", type: "multiplicative", value: 0.10, level: 3, chapter: 14, description: "Compresses internal gelatin layers to increase structural integrity and impact force." },
       { id: "partial_division", name: "Partial Division", target: "digestion", type: "multiplicative", value: 0.30, level: 2, chapter: 16, description: "Expels a biomass fragment to form a remote gathering clone.", effect: "Adds +10% × level to Digestion." },
-      { id: "memory_resonance", name: "Memory Resonance", target: "mana", type: "additive", value: 1.0, level: 1, chapter: 25, description: "Absorbs and retransmits instinctual memory imprints from consumed creatures.", effect: "Adds +1 mana per level." },
+      { id: "memory_resonance", name: "Memory Resonance", target: "none", type: "additive", value: 0.0, level: 1, chapter: 25, description: "Absorbs and retransmits instinctual memory imprints from consumed creatures." },
       { id: "magic_core", name: "Magic Core", target: "mana", type: "exponential", value: 0.10, level: 3, chapter: 25, description: "Transmutes the vital core into a mana-generating engine that feeds on biological output.", effect: "Compounds ×1.10 per level on Mana." },
       { id: "ice_spike", name: "Ice Spike", target: "none", type: "multiplicative", value: 0.15, level: 1, chapter: 26, description: "Channels concentrated frozen mana to conjure and launch a crystalline ice projectile." },
-      { id: "chemosensory_aptitude", name: "Chemosensory Aptitude", target: "mana", type: "additive", value: 2.0, level: 2, chapter: 31, description: "Enables the outer membrane to parse subtle chemical gradients and residual mana traces.", effect: "Adds +2 mana per level." },
+      { id: "chemosensory_aptitude", name: "Chemosensory Aptitude", target: "none", type: "additive", value: 0.0, level: 2, chapter: 31, description: "Enables the outer membrane to parse subtle chemical gradients and residual mana traces." },
       { id: "incessant_hunger", name: "Incessant Hunger", target: "none", type: "additive", value: 0.0, level: 1, chapter: 40, description: "Enhances nutrient extraction from any organic material to boost physical vigor at the cost of constant appetite." },
-      { id: "pigmentation_mimicry", name: "Pigmentation Mimicry", target: "speed", type: "multiplicative", value: 0.10, level: 1, chapter: 41, description: "Rewires skin chromatophores to mirror surrounding textures as active camouflage.", effect: "Multiplies compounded speed by ×(1 + 0.10 × level)." },
-      { id: "pack_instinct", name: "Pack Instinct", target: "digestion", type: "multiplicative", value: 0.15, level: 1, chapter: 49, description: "Tunes synchronization protocols between the main body and remote clones.", effect: "Adds +15% × level of to Digestion." },
-      { id: "magic_harmonizer", name: "Magic Core Harmonizer", target: "mana", type: "multiplicative", value: 0.20, level: 1, chapter: 54, description: "Synchronizes the Magic Core's mana output cadence with physical motor signals to reduce conversion loss.", effect: "Multiplies Mana by ×(1 + 0.20 × level)." },
-      { id: "monocular_vision", name: "Telescopic Vision", target: "speed", type: "additive", value: 0.10, level: 1, chapter: 55, description: "Narrows peripheral focus into a precise long-range zoom, improving spatial reaction time.", effect: "Adds +0.10 m/s per level to Speed." },
+      { id: "pigmentation_mimicry", name: "Pigmentation Mimicry", target: "none", type: "additive", value: 0.0, level: 1, chapter: 41, description: "Rewires skin chromatophores to mirror surrounding textures as active camouflage." },
+      { id: "pack_instinct", name: "Pack Instinct", target: "none", type: "additive", value: 0.0, level: 1, chapter: 49, description: "Enhances instinctual coordination and mental communication between the main body and remote clone units." },
+      { id: "magic_harmonizer", name: "Magic Core Harmonizer", target: "none", type: "additive", value: 0.0, level: 1, chapter: 54, description: "Synchronizes the Magic Core's mana output cadence with physical motor signals to reduce conversion loss during active skill usage." },
+      { id: "monocular_vision", name: "Telescopic Vision", target: "none", type: "additive", value: 0.0, level: 1, chapter: 55, description: "Narrows peripheral focus into a precise long-range zoom, improving spatial reaction time." },
       { id: "heavy_weapons_affinity", name: "Affinity with Heavy Weapons", target: "none", type: "additive", value: 0.0, level: 1, chapter: 55, description: "Assimilates muscle memory to handle heavy impact weapons and axes with enhanced balance and leverage." },
       { id: "static_shadow", name: "Static Shadow", target: "none", type: "additive", value: 0.0, level: 1, chapter: 55, description: "Alters body pigmentation and density to blend seamlessly into shadows as long as the user remains completely motionless." },
       { id: "magic_weaving", name: "Magic Weaving", target: "none", type: "additive", value: 0.0, level: 1, chapter: 61, description: "Produces biological threads fused with mana, creating highly adhesive webs capable of immobilizing targets and siphoning energy." },
@@ -374,6 +381,9 @@ export const abilityProgression = {
     { chapter: 33, level: 5 },
     { chapter: 55, level: 7 }
   ],
+  obsidian_exoskeleton: [
+    { chapter: 71, level: 1 }
+  ],
   body_density: [
     { chapter: 14, level: 1 },
     { chapter: 16, level: 3 },
@@ -384,7 +394,8 @@ export const abilityProgression = {
     { chapter: 68, level: 8 }
   ],
   partial_division: [
-    { chapter: 16, level: 2 },
+    { chapter: 16, level: 1 },
+    { chapter: 22, level: 2 },
     { chapter: 40, level: 3 }
   ],
   memory_resonance: [
@@ -396,8 +407,7 @@ export const abilityProgression = {
     { chapter: 25, level: 1 },
     { chapter: 26, level: 3 },
     { chapter: 40, level: 4 },
-    { chapter: 54, level: 5 },
-    { chapter: 57, level: 6 }
+    { chapter: 54, level: 7 }
   ],
   ice_spike: [
     { chapter: 26, level: 1 }
@@ -464,6 +474,12 @@ export function getAbilitiesForChapter(characterKey, ch) {
 
     const isAbsorbed = character.abilities.some((otherAb) => {
       if (otherAb.chapter > ch) return false;
+      if (otherAb.replaces && (otherAb.replaces === ab.id || (Array.isArray(otherAb.replaces) && otherAb.replaces.includes(ab.id)))) {
+        return true;
+      }
+      if (otherAb.absorbs && (otherAb.absorbs === ab.id || (Array.isArray(otherAb.absorbs) && otherAb.absorbs.includes(ab.id)))) {
+        return true;
+      }
       if (otherAb.upgrades) {
         return otherAb.upgrades.some((up) => {
           return (
@@ -505,6 +521,7 @@ export function getAbilitiesForChapter(characterKey, ch) {
               ...updatedAb,
               ...upgrade,
               name: upgrade.name || updatedAb.name,
+              level: upgrade.level !== undefined ? upgrade.level : updatedAb.level,
               traits: updatedAb.traits
             };
           }

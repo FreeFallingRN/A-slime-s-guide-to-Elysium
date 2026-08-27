@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node test_calculator.js"
+    "test": "node tests/test_digestion.js && node tests/test_mana.js && node tests/test_speed.js",
+    "test:digestion": "node tests/test_digestion.js",
+    "test:mana": "node tests/test_mana.js",
+    "test:speed": "node tests/test_speed.js"
   },
   "dependencies": {
     "@google/model-viewer": "^4.0.0",

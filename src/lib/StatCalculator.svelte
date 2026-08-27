@@ -5,9 +5,15 @@
     charactersData,
     getAbilityLevel,
     getAbilitiesForChapter,
-    getRequiredExp
+    getRequiredExp,
   } from "./store.js";
-  import { Shield, HelpCircle, ArrowRight, Flame, Sparkles } from "lucide-svelte";
+  import {
+    Shield,
+    HelpCircle,
+    ArrowRight,
+    Flame,
+    Sparkles,
+  } from "lucide-svelte";
   import { runCalculation } from "./calc.js";
 
   let selectedCharKey = "halon";
@@ -45,13 +51,15 @@
   }
 
   const GROUP_LABELS = {
-    digestion: "Digestion",
     mana: "Mana",
     speed: "Speed",
+    digestion: "Digestion",
     none: "Other",
   };
 
-  // Derive ordered groups from localAbilities
+  const DESIRED_GROUP_ORDER = ["mana", "speed", "digestion", "none"];
+
+  // Derive ordered groups from localAbilities according to explicit order: Mana, Speed, Digestion, Other
   let groupedAbilities = [];
   $: {
     const groupMap = {};
@@ -60,13 +68,10 @@
       if (!groupMap[key]) groupMap[key] = [];
       groupMap[key].push(ab);
     }
-    // Preserve the order from localAbilities (groups already ordered by highest lv)
-    const seen = [];
-    for (const ab of localAbilities) {
-      const key = ab.target || "none";
-      if (!seen.includes(key)) seen.push(key);
-    }
-    groupedAbilities = seen.map((key) => ({
+
+    groupedAbilities = DESIRED_GROUP_ORDER.filter(
+      (key) => groupMap[key] && groupMap[key].length > 0,
+    ).map((key) => ({
       target: key,
       label: GROUP_LABELS[key] || key,
       abilities: groupMap[key],
@@ -97,29 +102,15 @@
     character = charactersData[selectedCharKey];
     const mappedAbilities = getAbilitiesForChapter(selectedCharKey, chapter);
 
-    // Determine dynamic group ordering based on highest ability level within each target group
-    const groupMaxLevels = {};
-    mappedAbilities.forEach((ab) => {
-      const target = ab.target || "none";
-      const currentMax = groupMaxLevels[target] ?? 0;
-      groupMaxLevels[target] = Math.max(currentMax, ab.level);
-    });
-    // Create an ordering map where groups with higher max levels come first
-    const dynamicGroupOrder = Object.entries(groupMaxLevels)
-      .sort(([, maxA], [, maxB]) => maxB - maxA)
-      .map(([target]) => target);
-
-    // Helper to get the order index of a target; defaults to a high index for unknown groups
-    const getGroupOrderIndex = (target) => {
-      const idx = dynamicGroupOrder.indexOf(target);
-      return idx === -1 ? dynamicGroupOrder.length : idx;
-    };
-
     localAbilities = mappedAbilities.sort((a, b) => {
-      const orderA = getGroupOrderIndex(a.target || "none");
-      const orderB = getGroupOrderIndex(b.target || "none");
-      if (orderA !== orderB) {
-        return orderA - orderB; // lower index = higher priority group
+      const orderA = DESIRED_GROUP_ORDER.indexOf(a.target || "none");
+      const orderB = DESIRED_GROUP_ORDER.indexOf(b.target || "none");
+
+      const priorityA = orderA === -1 ? DESIRED_GROUP_ORDER.length : orderA;
+      const priorityB = orderB === -1 ? DESIRED_GROUP_ORDER.length : orderB;
+
+      if (priorityA !== priorityB) {
+        return priorityA - priorityB; // lower index = higher priority group
       }
       // Within the same group, sort by level descending
       if (b.level !== a.level) {
@@ -164,17 +155,11 @@
       hemolymphatic_tissue: combatActive
         ? `+${d.hemoVal} bio/h`
         : `Toggle combat to view`,
+      viscous_flow: `+${Math.round((s.final - s.base) * 100) / 100} m/s`,
       passive_digestion: `+${d.passiveVal} bio/h`,
       mass_expansion: `+${d.massVal} bio/h`,
-      instinctive_perception: `+${m.perceptionVal} mana`,
       partial_division: `+${d.cloneVal} bio/h`,
-      memory_resonance: `+${m.resonanceVal} mana`,
-      magic_core: `+${Math.round(m.multipliedSum * (m.coreMult - 1) * 100) / 100} mana`,
-      chemosensory_aptitude: `+${m.sensoryVal} mana`,
-      pigmentation_mimicry: `+${Math.round((s.final - s.viscousVal) * 100) / 100} m/s`,
-      pack_instinct: `+${d.packVal} bio/h`,
-      magic_harmonizer: `+${Math.round((m.multipliedSum - m.additiveSum) * 100) / 100} mana`,
-      monocular_vision: `+${s.monocularVal.toFixed(2)} m/s`,
+      magic_core: `+${Math.round((m.final - m.base) * 100) / 100} mana`,
     };
   })();
 </script>
@@ -223,7 +208,8 @@
       </div>
       <h2>{character.name}</h2>
       <p class="subtitle">
-        Race: {character.race} ({character.raceBase || "Common"}) | Class: {character.class} ({character.classBase || "Common"})
+        Race: {character.race} ({character.raceBase || "Common"}) | Class: {character.class}
+        ({character.classBase || "Common"})
       </p>
 
       <div class="level-exp-container">
@@ -233,32 +219,44 @@
     </div>
 
     <div class="stats-comparison">
-      {#each Object.keys(character.baseStats) as stat}
+      {#each ["mana", "speed", "digestion"] as stat}
         {@const isDigestionInCombat = stat === "digestion" && combatActive}
-        <div class="stat-row {isDigestionInCombat ? 'combat-highlight' : ''}">
-          <span
-            class="stat-name {isDigestionInCombat ? 'stat-name-combat' : ''}"
-          >
-            {#if stat === "speed"}
-              SPEED
-            {:else if stat === "digestion"}
-              DIGESTION {#if combatActive}<span class="boost-tag"
-                  >🔥 BOOSTED</span
-                >{/if}
-            {:else}
-              {stat.toUpperCase()}
-            {/if}
-          </span>
-          <span
-            class="stat-final {isDigestionInCombat
-              ? 'stat-final-combat'
-              : 'buffed'}"
-          >
-            {finalStats[stat]}
-            {#if stat === "speed"}
-              m/s{:else if stat === "digestion"}
-              bio/h{/if}
-          </span>
+        <div class="stat-row-group">
+          <div class="stat-row {isDigestionInCombat ? 'combat-highlight' : ''}">
+            <span
+              class="stat-name {isDigestionInCombat ? 'stat-name-combat' : ''}"
+            >
+              {#if stat === "speed"}
+                SPEED
+              {:else if stat === "digestion"}
+                DIGESTION {#if combatActive}<span class="boost-tag"
+                    >🔥 BOOSTED</span
+                  >{/if}
+              {:else}
+                {stat.toUpperCase()}
+              {/if}
+            </span>
+            <span
+              class="stat-final {isDigestionInCombat
+                ? 'stat-final-combat'
+                : 'buffed'}"
+            >
+              {finalStats[stat]}
+              {#if stat === "speed"}
+                m/s{:else if stat === "digestion"}
+                bio/h{/if}
+            </span>
+          </div>
+          {#if stat === "digestion" && calcData.digestion && calcData.digestion.cloneLvl > 0}
+            <div class="clone-split-subrow">
+              <span class="subrow-pill"
+                >Body: {calcData.digestion.mainBody} bio/h</span
+              >
+              <span class="subrow-pill clone-pill"
+                >Clone: +{calcData.digestion.cloneOutput} bio/h</span
+              >
+            </div>
+          {/if}
         </div>
       {/each}
 
@@ -450,8 +448,13 @@
                           {#each ab.traits as trait}
                             <div class="trait-badge">
                               <div class="trait-header">
-                                <Sparkles size={13} class="trait-sparkle-icon" />
-                                <span class="trait-title">TRAIT: {trait.name}</span>
+                                <Sparkles
+                                  size={13}
+                                  class="trait-sparkle-icon"
+                                />
+                                <span class="trait-title"
+                                  >TRAIT: {trait.name}</span
+                                >
                               </div>
                               <p class="trait-desc">{trait.description}</p>
                             </div>
@@ -475,375 +478,293 @@
         {/each}
       </div>
     {:else if activeTab === "digestion"}
-      <!-- Digestion Flowchart -->
-      <div class="flowchart-container">
-        <div class="flowchart-grid digestion-grid-vertical">
-          <!-- Row 1: Enhanced Digestion Base Box (Spans 2 columns) -->
-          <div class="flowchart-box-group span-cols-2">
-            <div class="flowchart-group-title">Enhanced Digestion</div>
-            <div class="flowchart-node">
-              <span class="node-label">Base Digestion</span>
-              <span class="node-value">{calcData.digestion.base} bio/h</span>
-            </div>
-            {#if calcData.digestion.efficientLvl > 0}
-              <div class="mini-arrow">▼</div>
-              <div class="flowchart-node active-buff">
-                <span class="node-label"
-                  >Efficient Dig (Lv {calcData.digestion.efficientLvl})</span
-                >
-                <span class="node-value"
-                  >+{Math.round((calcData.digestion.efficientMult - 1) * 100)}%
-                  Comp.</span
-                >
-              </div>
-            {/if}
-            <div class="mini-arrow">▼</div>
-            <div class="flowchart-node final-subnode">
-              <span class="node-label">Enhanced Base</span>
-              <span class="node-value"
-                >{calcData.digestion.digEnhanced} bio/h</span
-              >
-            </div>
-          </div>
-
-          <!-- Branching/Stepping Logic for Multipliers -->
-          {#if calcData.digestion.massLvl > 0 && calcData.digestion.passiveLvl > 0}
-            <!-- BOTH are active: Show double branching layout -->
-            <!-- Row 2: Branching Connectors -->
-            <div class="connector-cell span-cols-2">
-              <svg
-                viewBox="0 0 100 40"
-                class="connector-svg vertical-branch-svg"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M 50 0 C 50 20, 25 20, 25 40"
-                  fill="none"
-                  stroke="var(--color-holo-primary)"
-                  stroke-width="2"
-                  marker-end="url(#arrow)"
-                />
-                <path
-                  d="M 50 0 C 50 20, 75 20, 75 40"
-                  fill="none"
-                  stroke="var(--color-holo-primary)"
-                  stroke-width="2"
-                  marker-end="url(#arrow)"
-                />
-              </svg>
-            </div>
-
-            <!-- Row 3: Multipliers (Side by side) -->
-            <div
-              class="flowchart-node active-buff justify-self-end width-node"
-              style="grid-column: 1;"
-            >
-              <span class="node-label"
-                >Mass Expansion (Lv {calcData.digestion.massLvl})</span
-              >
-              <span class="node-value"
-                >+{Math.round(calcData.digestion.massMult * 100)}% (+{calcData
-                  .digestion.massVal} bio/h)</span
-              >
-            </div>
-
-            <div
-              class="flowchart-node active-buff justify-self-start width-node"
-              style="grid-column: 2;"
-            >
-              <span class="node-label"
-                >Passive Digestion (Lv {calcData.digestion.passiveLvl})</span
-              >
-              <span class="node-value"
-                >+{Math.round(calcData.digestion.passiveMult * 100)}% (+{calcData
-                  .digestion.passiveVal} bio/h)</span
-              >
-            </div>
-
-            <!-- Row 4: Merging Connectors -->
-            <div class="connector-cell span-cols-2">
-              <svg
-                viewBox="0 0 100 40"
-                class="connector-svg vertical-merge-svg"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M 25 0 C 25 20, 50 20, 50 40"
-                  fill="none"
-                  stroke="var(--color-holo-primary)"
-                  stroke-width="2"
-                  marker-end="url(#arrow)"
-                />
-                <path
-                  d="M 75 0 C 75 20, 50 20, 50 40"
-                  fill="none"
-                  stroke="var(--color-holo-primary)"
-                  stroke-width="2"
-                  marker-end="url(#arrow)"
-                />
-              </svg>
-            </div>
-          {:else if calcData.digestion.massLvl > 0}
-            <!-- ONLY Mass Expansion is active: Single centered path -->
-            <div class="flowchart-arrow span-cols-2">▼</div>
-            <div class="flowchart-node active-buff span-cols-2 width-node">
-              <span class="node-label"
-                >Mass Expansion (Lv {calcData.digestion.massLvl})</span
-              >
-              <span class="node-value"
-                >+{Math.round(calcData.digestion.massMult * 100)}% (+{calcData
-                  .digestion.massVal} bio/h)</span
-              >
-            </div>
-            <div class="flowchart-arrow span-cols-2">▼</div>
-          {:else if calcData.digestion.passiveLvl > 0}
-            <!-- ONLY Passive Digestion is active: Single centered path -->
-            <div class="flowchart-arrow span-cols-2">▼</div>
-            <div class="flowchart-node active-buff span-cols-2 width-node">
-              <span class="node-label"
-                >Passive Digestion (Lv {calcData.digestion.passiveLvl})</span
-              >
-              <span class="node-value"
-                >+{Math.round(calcData.digestion.passiveMult * 100)}% (+{calcData
-                  .digestion.passiveVal} bio/h)</span
-              >
-            </div>
-            <div class="flowchart-arrow span-cols-2">▼</div>
-          {:else}
-            <!-- NEITHER is active: Simple arrow straight down -->
-            <div class="flowchart-arrow span-cols-2">▼</div>
-          {/if}
-
-          <!-- Row 5: Neutral Sum (Spans 2 columns) -->
-          <div
-            class="flowchart-node card-stack span-cols-2 glow-node width-large {!combatActive
-              ? 'final-node'
-              : ''}"
+      <!-- Ultra-Clear Step-by-Step Digestion Breakdown -->
+      <div class="calc-breakdown-container">
+        <div class="breakdown-header">
+          <h4>DIGESTION SPEED MATHEMATICAL BREAKDOWN</h4>
+          <span class="breakdown-subtitle"
+            >Step-by-step formula tracing how Lohan's biomass processing is
+            computed</span
           >
-            <span class="node-label">Neutral Sum</span>
-            <span class="node-value">{calcData.digestion.neutralSum} bio/h</span
-            >
-            {#if calcData.digestion.cloneLvl > 0 || calcData.digestion.packLvl > 0}
-              <div class="mini-bonuses">
-                {#if calcData.digestion.cloneLvl > 0}
-                  <span class="mini-bonus-text"
-                    >Clone: +{Math.round(calcData.digestion.cloneMult * 100)}%
-                    (+{calcData.digestion.cloneVal})</span
-                  >
-                {/if}
-                {#if calcData.digestion.packLvl > 0}
-                  <span class="mini-bonus-text"
-                    >Pack: +{Math.round(calcData.digestion.packMult * 100)}% (+{calcData
-                      .digestion.packVal})</span
-                  >
-                {/if}
+        </div>
+
+        <div class="breakdown-steps-list">
+          <!-- Step 1: Base Absorption Rate -->
+          <div class="step-card">
+            <div class="step-header">
+              <span class="step-number">STEP 1</span>
+              <span class="step-title">Base Digestion Speed</span>
+            </div>
+            <div class="step-subitems">
+              <div class="subitem-row">
+                <span class="subitem-name"
+                  >Base Digestion Rate (Level {activeLvl}):</span
+                >
+                <span class="subitem-calc"
+                  >4.00 × (Level {activeLvl} Volumetric Multiplier)</span
+                >
+                <span class="subitem-value"
+                  >{calcData.digestion.base} bio/h</span
+                >
               </div>
-            {/if}
+            </div>
           </div>
 
-          {#if combatActive && calcData.digestion.hemoLvl > 0}
-            <!-- Row 6: Connector (Spans 2 columns) -->
-            <div class="flowchart-arrow span-cols-2">▼</div>
-
-            <!-- Row 7: Hemo Multiplier (Spans 2 columns) -->
-            <div class="flowchart-node active-combat span-cols-2 width-large">
-              <span class="node-label"
-                >Hemo Tissue (Lv {calcData.digestion.hemoLvl})</span
-              >
-              <span class="node-value"
-                >x{calcData.digestion.hemoMult.toFixed(1)}</span
-              >
-            </div>
-
-            <!-- Row 8: Connector (Spans 2 columns) -->
-            <div class="flowchart-arrow span-cols-2">▼</div>
-
-            <!-- Row 9: Battle Sum (Spans 2 columns) -->
-            <div
-              class="flowchart-node card-stack span-cols-2 final-node glow-node-battle width-large"
-            >
-              <span class="node-label">Battle Sum</span>
-              <span class="node-value">{calcData.digestion.final} bio/h</span>
+          <!-- Step 2: Additive Ability Bonuses -->
+          {#if calcData.digestion.massLvl > 0 || calcData.digestion.passiveLvl > 0}
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-number">STEP 2</span>
+                <span class="step-title">Additive Ability Bonuses</span>
+              </div>
+              <div class="step-subitems">
+                {#if calcData.digestion.massLvl > 0}
+                  <div class="subitem-row">
+                    <span class="subitem-name"
+                      >+ Mass Expansion (Lv {calcData.digestion.massLvl}):</span
+                    >
+                    <span class="subitem-calc"
+                      >{calcData.digestion.base} × (30% × {calcData.digestion
+                        .massLvl})</span
+                    >
+                    <span class="subitem-value"
+                      >+{calcData.digestion.massVal} bio/h</span
+                    >
+                  </div>
+                {/if}
+                {#if calcData.digestion.passiveLvl > 0}
+                  <div class="subitem-row">
+                    <span class="subitem-name"
+                      >+ Passive Digestion (Lv {calcData.digestion
+                        .passiveLvl}):</span
+                    >
+                    <span class="subitem-calc"
+                      >{calcData.digestion.base} × (10% × {calcData.digestion
+                        .passiveLvl})</span
+                    >
+                    <span class="subitem-value"
+                      >+{calcData.digestion.passiveVal} bio/h</span
+                    >
+                  </div>
+                {/if}
+              </div>
             </div>
           {/if}
+
+          <!-- Step 3: Main Body Digestion Subtotal -->
+          <div class="step-card highlight-step">
+            <div class="step-header">
+              <span class="step-number">STEP 3</span>
+              <span class="step-title">Main Body Subtotal</span>
+            </div>
+            <div class="step-subitems">
+              <div class="subitem-row">
+                <span class="subitem-name"></span>
+                <span class="subitem-calc">
+                  {calcData.digestion.base} (Base)
+                  {#if calcData.digestion.massLvl > 0}
+                    + {calcData.digestion.massVal} (Mass){/if}
+                  {#if calcData.digestion.passiveLvl > 0}
+                    + {calcData.digestion.passiveVal} (Passive){/if}
+                </span>
+                <span class="subitem-value"
+                  >{calcData.digestion.baseSum} bio/h</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4: Remote Division Clone Gathering Output -->
+          {#if calcData.digestion.cloneLvl > 0}
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-number">STEP 4</span>
+                <span class="step-title">Clone Output</span>
+              </div>
+              <div class="step-subitems">
+                <div class="subitem-row">
+                  <span class="subitem-name"
+                    >+ Partial Division (Lv {calcData.digestion
+                      .cloneLvl}):</span
+                  >
+                  <span class="subitem-calc"
+                    >{calcData.digestion.baseSum} (Subtotal) × (10% × {calcData
+                      .digestion.cloneLvl} Clones)</span
+                  >
+                  <span class="subitem-value"
+                    >+{calcData.digestion.cloneOutput} bio/h</span
+                  >
+                </div>
+              </div>
+            </div>
+          {/if}
+
+          <!-- Combat Bonus Step if active -->
+          {#if combatActive && calcData.digestion.hemoLvl > 0}
+            <div class="step-card combat-step">
+              <div class="step-header">
+                <span class="step-number">COMBAT</span>
+                <span class="step-title">Active Combat Adrenaline Boost (Main Body Only)</span>
+              </div>
+              <div class="step-subitems">
+                <div class="subitem-row">
+                  <span class="subitem-name">+ Hemolymphatic Tissue (Lv {calcData.digestion.hemoLvl}):</span>
+                  <span class="subitem-calc">{calcData.digestion.baseSum} (Main Body Subtotal) × (20% × {calcData.digestion.hemoLvl})</span>
+                  <span class="subitem-value">+{calcData.digestion.hemoVal} bio/h</span>
+                </div>
+              </div>
+            </div>
+          {/if}
+
+          <!-- Final Total Digestion Speed Step -->
+          <div class="step-card final-step">
+            <div class="step-header">
+              <span class="step-number">FINAL</span>
+              <span class="step-title">Total Digestion Speed</span>
+            </div>
+            <div class="step-subitems">
+              <div class="subitem-row">
+                <span class="subitem-name">Total Combined Output:</span>
+                <span class="subitem-calc">
+                  {calcData.digestion.mainBody} (Main Body{#if combatActive} Combat Rate{/if})
+                  {#if calcData.digestion.cloneLvl > 0}
+                    + {calcData.digestion.cloneOutput} (Clones){/if}
+                </span>
+                <span class="subitem-value final-value">{calcData.digestion.final} bio/h</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     {:else if activeTab === "mana"}
-      <!-- Mana Flowchart -->
-      <div class="flowchart-container">
-        <div class="flowchart-grid mana-grid-vertical">
-          <!-- Base Mana -->
-          <div class="flowchart-node width-large">
-            <span class="node-label">Base Mana</span>
-            <span class="node-value">{calcData.mana.base}</span>
-          </div>
-
-          <!-- Connector -->
-          <div class="flowchart-arrow">▼</div>
-
-          <!-- Additive Bonuses group box -->
-          {#if calcData.mana.perceptionLvl > 0 || calcData.mana.resonanceLvl > 0 || calcData.mana.sensoryLvl > 0}
-            {@const activeNodes = [
-              {
-                lvl: calcData.mana.perceptionLvl,
-                label: `Instinctive Perc (Lv ${calcData.mana.perceptionLvl})`,
-                val: `+${calcData.mana.perceptionVal}`,
-              },
-              {
-                lvl: calcData.mana.resonanceLvl,
-                label: `Memory Res (Lv ${calcData.mana.resonanceLvl})`,
-                val: `+${calcData.mana.resonanceVal}`,
-              },
-              {
-                lvl: calcData.mana.sensoryLvl,
-                label: `Chemosensory Apt (Lv ${calcData.mana.sensoryLvl})`,
-                val: `+${calcData.mana.sensoryVal}`,
-              },
-            ].filter((n) => n.lvl > 0)}
-            <div class="flowchart-box-group width-large">
-              <div class="flowchart-group-title">Additive Bonuses</div>
-
-              {#each activeNodes as node, i}
-                {#if i > 0}
-                  <div class="mini-arrow">▼</div>
-                {/if}
-                <div class="flowchart-node active-buff">
-                  <span class="node-label">{node.label}</span>
-                  <span class="node-value">{node.val}</span>
-                </div>
-              {/each}
-            </div>
-
-            <!-- Connector -->
-            <div class="flowchart-arrow">▼</div>
-          {/if}
-
-          <!-- Additive Sum -->
-          <div class="flowchart-node glow-node width-large">
-            <span class="node-label">Additive Sum</span>
-            <span class="node-value">{calcData.mana.additiveSum}</span>
-          </div>
-
-          <!-- Connector -->
-          <div class="flowchart-arrow">▼</div>
-
-          {#if calcData.mana.harmonizerLvl > 0}
-            <!-- Magic Harmonizer (Multiplier) -->
-            <div class="flowchart-node active-buff width-large">
-              <span class="node-label"
-                >Magic Harmonizer (Lv {calcData.mana.harmonizerLvl})</span
-              >
-              <span class="node-value"
-                >x{calcData.mana.harmonizerMult.toFixed(1)}</span
-              >
-            </div>
-
-            <!-- Connector -->
-            <div class="flowchart-arrow">▼</div>
-          {/if}
-
-          {#if calcData.mana.coreLvl > 0}
-            <!-- Magic Core (Exponential) -->
-            <div class="flowchart-node active-buff width-large">
-              <span class="node-label"
-                >Magic Core (Lv {calcData.mana.coreLvl})</span
-              >
-              <span class="node-value"
-                >+{Math.round((calcData.mana.coreMult - 1) * 100)}% Comp.</span
-              >
-            </div>
-
-            <!-- Connector -->
-            <div class="flowchart-arrow">▼</div>
-          {/if}
-
-          <!-- Final Mana -->
-          <div
-            class="flowchart-node card-stack final-node glow-node-battle width-large"
+      <!-- Ultra-Clear Step-by-Step Mana Breakdown -->
+      <div class="calc-breakdown-container">
+        <div class="breakdown-header">
+          <h4>MANA CAPACITY MATHEMATICAL BREAKDOWN</h4>
+          <span class="breakdown-subtitle"
+            >Step-by-step formula tracing Lohan's Mana Core compounding</span
           >
-            <span class="node-label">Final Mana</span>
-            <span class="node-value">{calcData.mana.final}</span>
+        </div>
+
+        <div class="breakdown-steps-list">
+          <div class="step-card">
+            <div class="step-header">
+              <span class="step-number">STEP 1</span>
+              <span class="step-title">Base Mana Core Density</span>
+            </div>
+            <div class="step-subitems">
+              <div class="subitem-row">
+                <span class="subitem-name">Magic Core Baseline:</span>
+                <span class="subitem-calc"
+                  >{calcData.mana.coreLvl > 0
+                    ? "15.00 Mana (Magic Core Lv 1 Unlocked)"
+                    : "10.00 Base Mana"}</span
+                >
+                <span class="subitem-value">{calcData.mana.base} Mana</span>
+              </div>
+            </div>
+          </div>
+
+          {#if calcData.mana.coreLvl > 1}
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-number">STEP 2</span>
+                <span class="step-title">Compounding Magic Core Growth</span>
+              </div>
+              <div class="step-subitems">
+                <div class="subitem-row">
+                  <span class="subitem-name"
+                    >⚡ Magic Core (Lv {calcData.mana.coreLvl}):</span
+                  >
+                  <span class="subitem-calc"
+                    >15.00 × (1.10 ^ {calcData.mana.coreLvl - 1})</span
+                  >
+                  <span class="subitem-value">{calcData.mana.final} Mana</span>
+                </div>
+              </div>
+            </div>
+          {/if}
+
+          <div class="step-card final-step">
+            <div class="step-header">
+              <span class="step-number">FINAL</span>
+              <span class="step-title">Total Synchronized Mana Capacity</span>
+            </div>
+            <div class="step-subitems">
+              <div class="subitem-row">
+                <span class="subitem-name">Total Current Mana Pool:</span>
+                <span class="subitem-calc">Synchronized Core Density</span>
+                <span class="subitem-value final-value"
+                  >{calcData.mana.final} Mana</span
+                >
+              </div>
+            </div>
           </div>
         </div>
       </div>
     {:else if activeTab === "speed"}
-      <!-- Speed Flowchart -->
-      <div class="flowchart-container">
-        <div class="flowchart-grid speed-grid-vertical">
-          <!-- Base Speed -->
-          <div class="flowchart-node width-large">
-            <span class="node-label">Base Speed</span>
-            <span class="node-value">{calcData.speed.base} m/s</span>
-          </div>
+      <!-- Ultra-Clear Single-Skill Speed Formula -->
+      <div class="calc-breakdown-container">
+        <div class="breakdown-header">
+          <h4>MOVEMENT SPEED FORMULA</h4>
+          <span class="breakdown-subtitle"
+            >Single-skill locomotion velocity computed from Viscous Flow
+            compounding</span
+          >
+        </div>
 
-          <!-- Connector -->
-          <div class="flowchart-arrow">▼</div>
-
-          {#if calcData.speed.monocularLvl > 0}
-            <!-- Monocular Vision (Additive) -->
-            <div class="flowchart-node active-buff width-large">
-              <span class="node-label"
-                >Telescopic Vision (Lv {calcData.speed.monocularLvl})</span
-              >
-              <span class="node-value"
-                >+{calcData.speed.monocularVal.toFixed(2)} m/s</span
-              >
+        <div class="breakdown-steps-list">
+          <div class="step-card">
+            <div class="step-header">
+              <span class="step-number">BASE</span>
+              <span class="step-title">Baseline Locomotion Speed</span>
             </div>
-
-            <!-- Connector -->
-            <div class="flowchart-arrow">▼</div>
-          {/if}
-
-          <!-- Additive Sum -->
-          <div class="flowchart-node glow-node width-large">
-            <span class="node-label">Agility Sum</span>
-            <span class="node-value"
-              >{calcData.speed.additiveSum.toFixed(2)} m/s</span
-            >
+            <div class="step-subitems">
+              <div class="subitem-row">
+                <span class="subitem-name">Base Slime Velocity:</span>
+                <span class="subitem-calc">Unmodified Baseline</span>
+                <span class="subitem-value">{calcData.speed.base} m/s</span>
+              </div>
+            </div>
           </div>
-
-          <!-- Connector -->
-          <div class="flowchart-arrow">▼</div>
 
           {#if calcData.speed.viscousLvl > 0}
-            <!-- Viscous Flow (Compounded Multiplier) -->
-            <div class="flowchart-node active-buff width-large">
-              <span class="node-label"
-                >Viscous Flow (Lv {calcData.speed.viscousLvl})</span
-              >
-              <span class="node-value"
-                >+{Math.round((calcData.speed.viscousMult - 1) * 100)}% Comp. ({calcData.speed.viscousVal.toFixed(
-                  2,
-                )} m/s)</span
-              >
+            <div class="step-card highlight-step">
+              <div class="step-header">
+                <span class="step-number">MULTIPLIER</span>
+                <span class="step-title"
+                  >Viscous Flow (Level {calcData.speed.viscousLvl})</span
+                >
+              </div>
+              <div class="step-subitems">
+                <div class="subitem-row">
+                  <span class="subitem-name">Viscous Flow Compounding:</span>
+                  <span class="subitem-calc"
+                    >{calcData.speed.base} (Base) × (1.10 ^ {calcData.speed
+                      .viscousLvl})</span
+                  >
+                  <span class="subitem-value"
+                    >{calcData.speed.final.toFixed(2)} m/s</span
+                  >
+                </div>
+              </div>
             </div>
-
-            <!-- Connector -->
-            <div class="flowchart-arrow">▼</div>
           {/if}
 
-          {#if calcData.speed.mimicryLvl > 0}
-            <!-- Pigmentation Mimicry (Camouflage Multiplier) -->
-            <div class="flowchart-node active-buff width-large">
-              <span class="node-label"
-                >Camouflage (Lv {calcData.speed.mimicryLvl})</span
-              >
-              <span class="node-value"
-                >x{calcData.speed.mimicryMult.toFixed(2)}</span
-              >
+          <div class="step-card final-step">
+            <div class="step-header">
+              <span class="step-number">FINAL</span>
+              <span class="step-title">Total Locomotion Movement Speed</span>
             </div>
-
-            <!-- Connector -->
-            <div class="flowchart-arrow">▼</div>
-          {/if}
-
-          <!-- Final Speed -->
-          <div
-            class="flowchart-node card-stack final-node glow-node-battle width-large"
-          >
-            <span class="node-label">Final Speed</span>
-            <span class="node-value">{calcData.speed.final.toFixed(2)} m/s</span
-            >
+            <div class="step-subitems">
+              <div class="subitem-row">
+                <span class="subitem-name">Total Maximum Velocity:</span>
+                <span class="subitem-calc">Locomotion Output</span>
+                <span class="subitem-value final-value"
+                  >{calcData.speed.final.toFixed(2)} m/s</span
+                >
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -990,11 +911,55 @@
     padding: 16px 20px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
     min-width: 0;
+  }
+
+  .stat-row-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+  }
+
+  .clone-split-subrow {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    padding: 0 10px 4px 10px;
+  }
+
+  .subrow-pill {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-holo-primary);
+    background: rgba(0, 240, 255, 0.08);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 4px;
+    padding: 2px 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .subrow-pill.clone-pill {
+    color: #00ffaa;
+    background: rgba(0, 255, 170, 0.08);
+    border-color: rgba(0, 255, 170, 0.25);
+  }
+
+  .mini-bonus-pill {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #00f0ff;
+    background: rgba(0, 240, 255, 0.06);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-top: 6px;
+    text-align: center;
+    letter-spacing: 0.02em;
   }
 
   .stat-row {
@@ -1026,6 +991,162 @@
     color: var(--color-holo-primary);
     text-shadow: 0 0 8px var(--color-holo-glow);
     transition: var(--transition-smooth);
+  }
+
+  /* Breakdown Container Styling */
+  .calc-breakdown-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    color: #fff;
+  }
+
+  .breakdown-header h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-holo-primary);
+    letter-spacing: 0.05em;
+    margin: 0 0 4px 0;
+  }
+
+  .breakdown-subtitle {
+    font-size: 0.8rem;
+    color: var(--color-holo-muted);
+  }
+
+  .breakdown-steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .step-card {
+    background: rgba(10, 20, 35, 0.6);
+    border: 1px solid rgba(0, 240, 255, 0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .step-card.highlight-step {
+    border-color: rgba(0, 240, 255, 0.35);
+    background: rgba(0, 240, 255, 0.04);
+  }
+
+  .step-card.final-step {
+    border-color: rgba(255, 200, 0, 0.5);
+    background: rgba(255, 200, 0, 0.05);
+    box-shadow: 0 0 15px rgba(255, 200, 0, 0.1);
+  }
+
+  .step-card.combat-step {
+    border-color: rgba(255, 75, 75, 0.5);
+    background: rgba(255, 30, 30, 0.05);
+    box-shadow: 0 0 15px rgba(255, 75, 75, 0.1);
+  }
+
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .step-number {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #000;
+    background: var(--color-holo-primary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .final-step .step-number {
+    background: #ffc800;
+  }
+
+  .combat-step .step-number {
+    background: #ff4b4b;
+    color: #fff;
+  }
+
+  .step-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--color-holo-primary);
+  }
+
+  .final-step .step-title {
+    color: #ffc800;
+  }
+
+  .combat-step .step-title {
+    color: #ff4b4b;
+  }
+
+  .step-formula {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-family: monospace, sans-serif;
+  }
+
+  .formula-label {
+    color: var(--color-holo-muted);
+  }
+
+  .formula-value,
+  .formula-result {
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .final-value {
+    font-size: 1.1rem;
+    color: #00ffaa;
+  }
+
+  .step-note {
+    font-size: 0.78rem;
+    color: #00f0ff;
+    background: rgba(0, 240, 255, 0.06);
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+
+  .step-subitems {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-left: 8px;
+  }
+
+  .subitem-row {
+    display: grid;
+    grid-template-columns: 220px 1fr auto;
+    align-items: center;
+    font-size: 0.85rem;
+    gap: 8px;
+  }
+
+  .subitem-name {
+    color: var(--color-holo-muted);
+  }
+
+  .subitem-calc {
+    font-family: monospace;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+  }
+
+  .subitem-value {
+    font-weight: 700;
+    color: #00ffaa;
   }
 
   /* Abilities Panel */
