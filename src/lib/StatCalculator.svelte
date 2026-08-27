@@ -854,13 +854,16 @@
 <style>
   .stat-calc-layout {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   @media (min-width: 900px) {
     .stat-calc-layout {
-      grid-template-columns: 320px 1fr;
+      grid-template-columns: 320px minmax(0, 1fr);
     }
   }
 
@@ -933,6 +936,10 @@
     justify-content: space-between;
     align-items: center;
     gap: 12px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
   }
 
   .tab-selector-wrap {
@@ -950,12 +957,20 @@
     display: flex;
     flex-direction: column;
     padding-bottom: 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
   }
 
   .character-identity {
     padding: 20px;
     text-align: center;
     border-bottom: 1px dashed var(--color-holo-border);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
   }
 
   .character-identity h2 {
@@ -968,6 +983,7 @@
   .character-identity .subtitle {
     font-size: 0.78rem;
     color: var(--color-holo-muted);
+    word-break: break-word;
   }
 
   .stats-comparison {
@@ -975,6 +991,10 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
   }
 
   .stat-row {

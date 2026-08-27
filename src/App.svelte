@@ -320,10 +320,15 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    box-sizing: border-box;
+    min-width: 0;
   }
 
   .global-controls {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   /* Navigation Hub Tabs */
@@ -335,6 +340,7 @@
     scrollbar-width: none;
     padding-bottom: 4px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    max-width: 100%;
   }
 
   .navigation-hub::-webkit-scrollbar {
@@ -375,6 +381,10 @@
 
   .viewport-area {
     flex-grow: 1;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .fade-in-wrapper {
