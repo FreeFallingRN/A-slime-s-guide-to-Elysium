@@ -6,7 +6,6 @@
   import BiomassCalculator from "./lib/BiomassCalculator.svelte";
   import Map from "./lib/Map.svelte";
   import Visual3D from "./lib/Visual3D.svelte";
-  import Gallery from "./lib/Gallery.svelte";
 
   import {
     BookOpen,
@@ -100,7 +99,7 @@
       {/if}
       <div class="system-status">
         <div class="status-pulse"></div>
-        <span class="status-text font-tech">SYS SYNC: SECURE</span>
+        <span class="status-text font-tech">SYN CONNECTION: SECURE</span>
       </div>
     </div>
   </header>
@@ -152,14 +151,6 @@
         <BookOpen size={16} />
         <span>Elysian Lore</span>
       </button>
-
-      <button
-        class="nav-tab {currentTab === 'gallery' ? 'active' : ''}"
-        on:click={() => (currentTab = "gallery")}
-      >
-        <ImageIcon size={16} />
-        <span>Visual Archives</span>
-      </button>
     </nav>
 
     <!-- Main Viewport Router -->
@@ -176,8 +167,6 @@
             <Visual3D />
           {:else if currentTab === "book"}
             <Book />
-          {:else if currentTab === "gallery"}
-            <Gallery />
           {/if}
         </div>
       {/if}

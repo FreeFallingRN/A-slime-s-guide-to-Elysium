@@ -1,6 +1,6 @@
 <script>
-  import { onMount } from 'svelte';
-  import { Shield, UploadCloud, Rotate3d, Layers } from 'lucide-svelte';
+  import { onMount } from "svelte";
+  import { Shield, UploadCloud, Rotate3d, Layers } from "lucide-svelte";
 
   let glbFile = null;
   let glbUrl = null;
@@ -9,11 +9,12 @@
 
   onMount(() => {
     // Dynamically load Google's model-viewer script if it hasn't been loaded yet
-    if (!document.getElementById('model-viewer-script')) {
-      const script = document.createElement('script');
-      script.id = 'model-viewer-script';
-      script.type = 'module';
-      script.src = 'https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js';
+    if (!document.getElementById("model-viewer-script")) {
+      const script = document.createElement("script");
+      script.id = "model-viewer-script";
+      script.type = "module";
+      script.src =
+        "https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
       document.head.appendChild(script);
     }
     hasModelViewer = true;
@@ -21,7 +22,7 @@
 
   function handleFileChange(e) {
     const file = e.target.files[0];
-    if (file && (file.name.endsWith('.glb') || file.name.endsWith('.gltf'))) {
+    if (file && (file.name.endsWith(".glb") || file.name.endsWith(".gltf"))) {
       glbFile = file;
       if (glbUrl) URL.revokeObjectURL(glbUrl);
       glbUrl = URL.createObjectURL(file);
@@ -46,8 +47,17 @@
       <h3 class="hologram-glow-text">3D EVOLUTION CORE VIEWER</h3>
     </div>
     <div class="mode-toggles">
-      <button class="hologram-btn {useFallback ? 'active' : ''}" on:click={() => useFallback = true}>CSS Core</button>
-      <button class="hologram-btn {!useFallback ? 'active' : ''}" on:click={() => { if (glbUrl) useFallback = false; }} disabled={!glbUrl}>GLB File</button>
+      <button
+        class="hologram-btn {useFallback ? 'active' : ''}"
+        on:click={() => (useFallback = true)}>CSS Core</button
+      >
+      <button
+        class="hologram-btn {!useFallback ? 'active' : ''}"
+        on:click={() => {
+          if (glbUrl) useFallback = false;
+        }}
+        disabled={!glbUrl}>GLB File</button
+      >
     </div>
   </div>
 
@@ -58,7 +68,11 @@
         <div class="grid-floor"></div>
         <div class="light-beam"></div>
         <div class="hologram-frame">
-          <img src="mythical_slime_placeholder.jpg" alt="Mythical Slime Hologram" class="holo-slime-img" />
+          <img
+            src="halon-avatar.png"
+            alt="Slime Hologram"
+            class="holo-slime-img"
+          />
           <div class="holo-scanlines"></div>
           <div class="holo-ring outer"></div>
           <div class="holo-ring inner"></div>
@@ -147,7 +161,11 @@
     height: 350px;
     position: relative;
     overflow: hidden;
-    background: radial-gradient(circle, rgba(1, 15, 30, 0.4) 0%, rgba(0, 5, 10, 0.8) 100%);
+    background: radial-gradient(
+      circle,
+      rgba(1, 15, 30, 0.4) 0%,
+      rgba(0, 5, 10, 0.8) 100%
+    );
     display: flex;
     align-items: center;
     justify-content: center;
@@ -175,7 +193,11 @@
     bottom: 20px;
     width: 200px;
     height: 200px;
-    background-image: radial-gradient(circle, rgba(0, 240, 255, 0.15) 1px, transparent 1px);
+    background-image: radial-gradient(
+      circle,
+      rgba(0, 240, 255, 0.15) 1px,
+      transparent 1px
+    );
     background-size: 16px 16px;
     transform: rotateX(80deg);
     opacity: 0.6;
@@ -194,8 +216,15 @@
   }
 
   @keyframes beam-flicker {
-    0%, 100% { opacity: 0.6; transform: scaleX(1); }
-    50% { opacity: 0.3; transform: scaleX(0.9); }
+    0%,
+    100% {
+      opacity: 0.6;
+      transform: scaleX(1);
+    }
+    50% {
+      opacity: 0.3;
+      transform: scaleX(0.9);
+    }
   }
 
   .hologram-frame {
@@ -207,15 +236,22 @@
     height: 220px;
     border-radius: 50%;
     border: 2px solid var(--color-holo-primary);
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.4), inset 0 0 20px rgba(0, 240, 255, 0.3);
+    box-shadow:
+      0 0 25px rgba(0, 240, 255, 0.4),
+      inset 0 0 20px rgba(0, 240, 255, 0.3);
     overflow: hidden;
     background: rgba(0, 0, 0, 0.4);
     animation: float-hologram 4s infinite ease-in-out;
   }
 
   @keyframes float-hologram {
-    0%, 100% { transform: translate(-50%, -60%) translateY(0); }
-    50% { transform: translate(-50%, -60%) translateY(-10px); }
+    0%,
+    100% {
+      transform: translate(-50%, -60%) translateY(0);
+    }
+    50% {
+      transform: translate(-50%, -60%) translateY(-10px);
+    }
   }
 
   .holo-slime-img {
@@ -223,7 +259,6 @@
     height: 100%;
     object-fit: cover;
     mix-blend-mode: screen;
-    filter: hue-rotate(180deg) brightness(1.2) contrast(1.1);
     opacity: 0.95;
   }
 
@@ -265,13 +300,21 @@
   }
 
   @keyframes spin-clockwise {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to { transform: translate(-50%, -50%) rotate(360deg); }
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
   }
 
   @keyframes spin-counter {
-    from { transform: translate(-50%, -50%) rotate(360deg); }
-    to { transform: translate(-50%, -50%) rotate(0deg); }
+    from {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+    to {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
   }
 
   .holo-marker {
@@ -282,10 +325,30 @@
     pointer-events: none;
   }
 
-  .holo-marker.top-left { top: 15px; left: 15px; border-right: none; border-bottom: none; }
-  .holo-marker.top-right { top: 15px; right: 15px; border-left: none; border-bottom: none; }
-  .holo-marker.bottom-left { bottom: 15px; left: 15px; border-right: none; border-top: none; }
-  .holo-marker.bottom-right { bottom: 15px; right: 15px; border-left: none; border-top: none; }
+  .holo-marker.top-left {
+    top: 15px;
+    left: 15px;
+    border-right: none;
+    border-bottom: none;
+  }
+  .holo-marker.top-right {
+    top: 15px;
+    right: 15px;
+    border-left: none;
+    border-bottom: none;
+  }
+  .holo-marker.bottom-left {
+    bottom: 15px;
+    left: 15px;
+    border-right: none;
+    border-top: none;
+  }
+  .holo-marker.bottom-right {
+    bottom: 15px;
+    right: 15px;
+    border-left: none;
+    border-top: none;
+  }
 
   /* Uploader bar styling */
   .uploader-bar {

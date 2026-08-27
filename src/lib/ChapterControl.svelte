@@ -76,7 +76,7 @@
       {:else}
         <LockKeyholeOpen size={18} class="lock-icon unlocked" />
       {/if}
-      <span class="hologram-glow-text font-tech">SYSTEM CHRONICLE SYNC</span>
+      <span class="hologram-glow-text font-tech">SYSTEM CHAPTER SYNC</span>
     </div>
     <div class="chapter-badge">
       CH. {activeCh}
@@ -182,7 +182,7 @@
   <div class="modal-overlay" on:click={() => (showModal = false)}>
     <div class="modal-dialog hologram-panel" on:click|stopPropagation>
       <div class="modal-header">
-        <h3 class="hologram-glow-text">CHRONICLE LOG SYNC</h3>
+        <h3 class="hologram-glow-text">SYSTEM CHAPTER SYNC</h3>
         <button class="close-btn" on:click={() => (showModal = false)}
           >&times;</button
         >
