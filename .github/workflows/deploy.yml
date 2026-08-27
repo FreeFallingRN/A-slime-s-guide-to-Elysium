@@ -36,6 +36,9 @@ jobs:
       - name: Install dependencies 🔧
         run: npm ci
 
+      - name: Run regression tests 🧪
+        run: npm run test
+
       - name: Build static files 📦
         run: npm run build
 
