@@ -61,7 +61,7 @@ export const chaptersData = [
   { index: 44, title: "Showing Something Cool", date: "Feb 15, 2026", halonLvl: 2 },
   { index: 45, title: "Real World", date: "Feb 15, 2026", halonLvl: 2 },
   { index: 46, title: "Open World", date: "Feb 16, 2026", halonLvl: 2 },
-  { index: 47, title: "Evolutions", date: "Feb 16, 2026", halonLvl: 3 },
+  { index: 47, title: "Evolutions", date: "Feb 16, 2026", halonLvl: 2 },
   { index: 48, title: "10 In Me 40 In You", date: "Feb 16, 2026", halonLvl: 2 },
   { index: 49, title: "Level 03", date: "Feb 17, 2026", halonLvl: 3 },
   { index: 50, title: "Confrontation", date: "Feb 17, 2026", halonLvl: 3 },
