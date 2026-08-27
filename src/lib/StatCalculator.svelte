@@ -4,7 +4,8 @@
     activeChapterDetails,
     charactersData,
     getAbilityLevel,
-    getAbilitiesForChapter
+    getAbilitiesForChapter,
+    getRequiredExp
   } from "./store.js";
   import { Shield, HelpCircle, ArrowRight, Flame, Sparkles } from "lucide-svelte";
   import { runCalculation } from "./calc.js";
@@ -13,6 +14,7 @@
   let character = charactersData[selectedCharKey];
   let chapter = 5;
   let activeLvl = 1;
+  let activeReqExp = 100;
   let combatActive = false;
   let activeTab = "pipeline"; // 'pipeline', 'digestion', 'mana', 'speed'
 
@@ -24,6 +26,7 @@
   activeChapterDetails.subscribe((val) => {
     if (val && val.halonLvl !== undefined) {
       activeLvl = val.halonLvl;
+      activeReqExp = val.reqExp || getRequiredExp(val.halonLvl);
     }
   });
 
@@ -220,9 +223,13 @@
       </div>
       <h2>{character.name}</h2>
       <p class="subtitle">
-        Race: {character.race} ({character.raceBase || "Common"}) | Class: {character.class}
-        ({character.classBase || "Common"}) | Lv: {activeLvl}
+        Race: {character.race} ({character.raceBase || "Common"}) | Class: {character.class} ({character.classBase || "Common"})
       </p>
+
+      <div class="level-exp-container">
+        <span class="level-badge">Lv {activeLvl}</span>
+        <span class="req-exp-badge">REQ EXP: {activeReqExp}</span>
+      </div>
     </div>
 
     <div class="stats-comparison">
@@ -1238,6 +1245,43 @@
     color: var(--color-book-gold);
     font-weight: bold;
     border-bottom: 1px dotted var(--color-book-gold);
+  }
+
+  /* Level & Required EXP Display */
+  .level-exp-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .level-badge {
+    background: rgba(0, 240, 255, 0.12);
+    border: 1px solid var(--color-holo-primary);
+    color: var(--color-holo-primary);
+    font-weight: 800;
+    font-size: 0.82rem;
+    padding: 3px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 6px var(--color-holo-glow);
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+  }
+
+  .req-exp-badge {
+    background: rgba(194, 157, 83, 0.12);
+    border: 1px solid var(--color-book-gold);
+    color: var(--color-book-gold);
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 3px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.04em;
+    text-shadow: 0 0 6px var(--color-book-gold-glow);
+    box-shadow: 0 0 8px rgba(194, 157, 83, 0.15);
   }
 
   /* --- COMBAT MODE THEME STYLES --- */

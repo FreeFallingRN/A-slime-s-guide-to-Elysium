@@ -1,5 +1,5 @@
 import { runCalculation } from './src/lib/calc.js';
-import { getAbilitiesForChapter, charactersData } from './src/lib/store.js';
+import { getAbilitiesForChapter, charactersData, getRequiredExp } from './src/lib/store.js';
 
 console.log('==================================================');
 console.log('  SLIME STAT CALCULATOR - REGRESSION TEST');
@@ -19,6 +19,14 @@ function assertEqual(testName, actual, expected) {
 }
 
 const baseStats = charactersData.halon.baseStats;
+
+// ----------------------------------------------------
+// TEST CASE 0: REQUIRED EXP FORMULA (Doubles per level: 100 * 2^(Lvl - 1))
+// ----------------------------------------------------
+assertEqual('EXP Formula: Level 1 required EXP', getRequiredExp(1), 100);
+assertEqual('EXP Formula: Level 2 required EXP', getRequiredExp(2), 200);
+assertEqual('EXP Formula: Level 3 required EXP', getRequiredExp(3), 400);
+assertEqual('EXP Formula: Level 4 required EXP', getRequiredExp(4), 800);
 
 // ----------------------------------------------------
 // TEST CASE 1: SPEED PIPELINE (Viscous Flow)

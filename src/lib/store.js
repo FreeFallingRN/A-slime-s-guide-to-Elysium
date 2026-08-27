@@ -89,15 +89,26 @@ export const chaptersData = [
   { index: 72, title: "Normal Girl", date: "Feb 26, 2026", halonLvl: 4 }
 ];
 
+// Helper to calculate required EXP for a given level (doubles every level: 100 * 2^(level - 1))
+export function getRequiredExp(level) {
+  const lvl = parseInt(level, 10) || 1;
+  return 100 * Math.pow(2, Math.max(0, lvl - 1));
+}
+
 // Active Chapter Details Store
 export const activeChapterDetails = derived(
   [currentChapter],
   ([$ch]) => {
-    return chaptersData.find(c => c.index === $ch) || {
+    const chObj = chaptersData.find(c => c.index === $ch);
+    const lvl = chObj ? chObj.halonLvl : 1;
+    const reqExp = getRequiredExp(lvl);
+    
+    return {
       index: $ch,
-      title: "Unknown Chapter",
-      date: "N/A",
-      halonLvl: "N/A"
+      title: chObj ? chObj.title : "Unknown Chapter",
+      date: chObj ? chObj.date : "N/A",
+      halonLvl: lvl,
+      reqExp: reqExp
     };
   }
 );
