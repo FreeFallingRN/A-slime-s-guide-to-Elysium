@@ -5,7 +5,7 @@
     charactersData,
     getAbilityLevel,
   } from "./store.js";
-  import { Shield, HelpCircle, ArrowRight } from "lucide-svelte";
+  import { Shield, HelpCircle, ArrowRight, Flame } from "lucide-svelte";
   import { runCalculation } from "./calc.js";
 
   let selectedCharKey = "halon";
@@ -238,19 +238,28 @@
 
 <div class="stat-calc-layout">
   <!-- Stats Display Panel -->
-  <div class="hologram-panel side-panel">
+  <div class="hologram-panel side-panel {combatActive ? 'in-combat' : ''}">
     <div class="panel-header">
-      <h3 class="hologram-glow-text">CHARACTER SHEET</h3>
+      <h3 class="hologram-glow-text {combatActive ? 'combat-glow' : ''}">
+        CHARACTER SHEET
+      </h3>
+      {#if combatActive}
+        <span class="combat-mode-badge">
+          <Flame size={12} class="combat-flame-icon" /> COMBAT ACTIVE
+        </span>
+      {/if}
     </div>
 
     <div class="character-identity">
-      <div class="character-avatar">
+      <div class="character-avatar {combatActive ? 'in-combat' : ''}">
         <img
-          src="halon-avatar.png"
-          alt="Halon Avatar"
+          src={combatActive
+            ? "halon-avatar-battle.png"
+            : "halon-avatar-neutral.png"}
+          alt="{character.name} {combatActive ? 'Battle' : 'Neutral'} Avatar"
           class="avatar-img"
         />
-        <div class="avatar-glow"></div>
+        <div class="avatar-glow {combatActive ? 'combat-glow' : ''}"></div>
       </div>
       <h2>{character.name}</h2>
       <p class="subtitle">
@@ -261,17 +270,26 @@
 
     <div class="stats-comparison">
       {#each Object.keys(character.baseStats) as stat}
-        <div class="stat-row">
-          <span class="stat-name">
+        {@const isDigestionInCombat = stat === "digestion" && combatActive}
+        <div class="stat-row {isDigestionInCombat ? 'combat-highlight' : ''}">
+          <span
+            class="stat-name {isDigestionInCombat ? 'stat-name-combat' : ''}"
+          >
             {#if stat === "speed"}
               SPEED
             {:else if stat === "digestion"}
-              DIGESTION
+              DIGESTION {#if combatActive}<span class="boost-tag"
+                  >🔥 BOOSTED</span
+                >{/if}
             {:else}
               {stat.toUpperCase()}
             {/if}
           </span>
-          <span class="stat-final buffed">
+          <span
+            class="stat-final {isDigestionInCombat
+              ? 'stat-final-combat'
+              : 'buffed'}"
+          >
             {finalStats[stat]}
             {#if stat === "speed"}
               m/s{:else if stat === "digestion"}
@@ -280,12 +298,27 @@
         </div>
       {/each}
 
-      <!-- Combat Intensity Toggle for Hemolymphatic Tissue active combat digestion -->
+      <!-- Cybernetic Holographic Combat Switch -->
       <div class="combat-intensity-toggle">
-        <label class="combat-toggle-label">
-          <input type="checkbox" bind:checked={combatActive} />
-          <span class="toggle-text">Active Combat</span>
-        </label>
+        <button
+          type="button"
+          class="cyber-toggle-btn {combatActive ? 'active' : ''}"
+          on:click={() => (combatActive = !combatActive)}
+          aria-pressed={combatActive}
+        >
+          <div class="toggle-left">
+            <Flame
+              size={15}
+              class="toggle-flame-icon {combatActive ? 'active' : ''}"
+            />
+            <span class="toggle-label-text">
+              {combatActive ? "COMBAT INTENSITY HIGH" : "COMBAT MODE"}
+            </span>
+          </div>
+          <div class="cyber-switch-track {combatActive ? 'active' : ''}">
+            <div class="cyber-switch-thumb"></div>
+          </div>
+        </button>
       </div>
     </div>
   </div>
@@ -293,31 +326,37 @@
   <!-- Abilities Pipeline Editor / Visual graphs -->
   <div class="hologram-panel main-panel">
     <div class="panel-header">
-      <div class="tab-selector">
-        <button
-          class="tab-btn {activeTab === 'pipeline' ? 'active' : ''}"
-          on:click={() => (activeTab = "pipeline")}
-        >
-          Abilities & Evolutions
-        </button>
-        <button
-          class="tab-btn {activeTab === 'digestion' ? 'active' : ''}"
-          on:click={() => (activeTab = "digestion")}
-        >
-          Digestion Calculator
-        </button>
-        <button
-          class="tab-btn {activeTab === 'mana' ? 'active' : ''}"
-          on:click={() => (activeTab = "mana")}
-        >
-          Mana Calculator
-        </button>
-        <button
-          class="tab-btn {activeTab === 'speed' ? 'active' : ''}"
-          on:click={() => (activeTab = "speed")}
-        >
-          Speed Calculator
-        </button>
+      <div class="tab-selector-wrap">
+        <div class="tab-selector">
+          <button
+            class="tab-btn {activeTab === 'pipeline' ? 'active' : ''}"
+            on:click={() => (activeTab = "pipeline")}
+          >
+            <span class="tab-label-full">Abilities & Evolutions</span>
+            <span class="tab-label-short">Abilities</span>
+          </button>
+          <button
+            class="tab-btn {activeTab === 'digestion' ? 'active' : ''}"
+            on:click={() => (activeTab = "digestion")}
+          >
+            <span class="tab-label-full">Digestion Calculator</span>
+            <span class="tab-label-short">Digestion</span>
+          </button>
+          <button
+            class="tab-btn {activeTab === 'mana' ? 'active' : ''}"
+            on:click={() => (activeTab = "mana")}
+          >
+            <span class="tab-label-full">Mana Calculator</span>
+            <span class="tab-label-short">Mana</span>
+          </button>
+          <button
+            class="tab-btn {activeTab === 'speed' ? 'active' : ''}"
+            on:click={() => (activeTab = "speed")}
+          >
+            <span class="tab-label-full">Speed Calculator</span>
+            <span class="tab-label-short">Speed</span>
+          </button>
+        </div>
       </div>
       <span
         class="help-tooltip"
@@ -847,14 +886,80 @@
     }
   }
 
+  @media (max-width: 767px) {
+    .panel-header {
+      padding: 10px;
+      gap: 8px;
+    }
+
+    .tab-selector {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+      width: 100%;
+    }
+
+    .tab-btn {
+      padding: 7px 4px;
+      font-size: 0.75rem;
+      width: 100%;
+    }
+
+    .tab-label-full {
+      display: none;
+    }
+
+    .tab-label-short {
+      display: inline;
+    }
+
+    .abilities-list {
+      padding: 12px 8px;
+      gap: 12px;
+    }
+
+    .group-body {
+      padding-left: 6px;
+      margin-left: 2px;
+      gap: 8px;
+    }
+
+    .ability-details {
+      padding: 12px 10px;
+    }
+
+    .title-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .title-badges {
+      justify-content: flex-start;
+      width: 100%;
+    }
+
+    .bonus-badge {
+      font-size: 0.65rem;
+    }
+
+    .flowchart-container {
+      padding: 12px 6px;
+    }
+  }
+
   .panel-header {
     border-bottom: 1px solid var(--color-holo-border);
-    padding: 14px 20px;
+    padding: 12px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .tab-selector-wrap {
+    flex-grow: 1;
+    min-width: 0;
   }
 
   .panel-header h3 {
@@ -888,19 +993,28 @@
   }
 
   .stats-comparison {
-    padding: 20px;
+    padding: 16px 20px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 6px;
   }
 
   .stat-row {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
-    font-size: 0.95rem;
-    padding: 6px 0;
+    font-size: 0.92rem;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    border-left: 4px solid transparent;
     border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+    box-sizing: border-box;
+    min-height: 42px;
+    transition:
+      background 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   .stat-name {
@@ -1001,6 +1115,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    min-width: 0;
   }
 
   .title-row {
@@ -1008,15 +1123,17 @@
     justify-content: space-between;
     align-items: flex-start;
     gap: 8px;
+    flex-wrap: wrap;
   }
 
   .title-badges {
     display: flex;
     align-items: center;
     gap: 6px;
-    flex-shrink: 0;
+    flex-shrink: 1;
     flex-wrap: wrap;
     justify-content: flex-end;
+    max-width: 100%;
   }
 
   .bonus-badge {
@@ -1029,18 +1146,22 @@
     border-radius: 4px;
     text-shadow: 0 0 5px var(--color-book-gold-glow);
     letter-spacing: 0.03em;
-    white-space: nowrap;
+    white-space: normal;
+    word-break: break-word;
+    max-width: 100%;
   }
 
   .title-row h4 {
     font-size: 1.1rem;
     color: #fff;
+    word-break: break-word;
   }
 
   .description {
     font-size: 0.8rem;
     color: var(--color-holo-muted);
     line-height: 1.4;
+    word-break: break-word;
   }
 
   .applies-badge {
@@ -1096,6 +1217,45 @@
     border-bottom: 1px dotted var(--color-book-gold);
   }
 
+  /* --- COMBAT MODE THEME STYLES --- */
+  .side-panel.in-combat {
+    border-color: rgba(255, 94, 0, 0.45);
+    box-shadow:
+      0 8px 32px 0 rgba(0, 0, 0, 0.6),
+      0 0 25px 0 var(--color-arson-glow);
+    background: linear-gradient(
+      180deg,
+      rgba(22, 8, 4, 0.85) 0%,
+      rgba(2, 14, 26, 0.75) 100%
+    );
+  }
+
+  .hologram-glow-text.combat-glow {
+    color: var(--color-arson-fire);
+    text-shadow: 0 0 10px var(--color-arson-glow);
+  }
+
+  .combat-mode-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255, 94, 0, 0.15);
+    border: 1px solid var(--color-arson-fire);
+    color: var(--color-arson-fire);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-shadow: 0 0 5px var(--color-arson-glow);
+    animation: pulse-slow 2s infinite ease-in-out;
+  }
+
+  :global(.combat-flame-icon) {
+    color: var(--color-arson-fire);
+    filter: drop-shadow(0 0 4px var(--color-arson-fire));
+  }
+
   /* Character Avatar styling */
   .character-avatar {
     position: relative;
@@ -1107,6 +1267,14 @@
     box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
     overflow: hidden;
     background: #000;
+    transition: var(--transition-smooth);
+  }
+
+  .character-avatar.in-combat {
+    border-color: var(--color-arson-fire);
+    box-shadow:
+      0 0 25px var(--color-arson-glow),
+      0 0 45px rgba(255, 94, 0, 0.35);
   }
 
   .avatar-img {
@@ -1114,6 +1282,9 @@
     height: 100%;
     object-fit: cover;
     mix-blend-mode: screen;
+    transition:
+      opacity 0.4s ease-in-out,
+      transform 0.4s ease-in-out;
   }
 
   .avatar-glow {
@@ -1128,26 +1299,159 @@
       rgba(0, 240, 255, 0.2) 100%
     );
     pointer-events: none;
+    transition: var(--transition-smooth);
   }
 
-  /* Combat toggle layout */
+  .avatar-glow.combat-glow {
+    background: radial-gradient(
+      circle,
+      transparent 40%,
+      rgba(255, 94, 0, 0.4) 100%
+    );
+  }
+
+  /* Digestion Combat Highlight */
+  .stat-row.combat-highlight {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 94, 0, 0.18) 0%,
+      rgba(255, 94, 0, 0.04) 100%
+    );
+    border-color: rgba(255, 94, 0, 0.45);
+    border-left-color: var(--color-arson-fire);
+    box-shadow: 0 0 14px rgba(255, 94, 0, 0.2);
+  }
+
+  .stat-name-combat {
+    color: var(--color-arson-fire) !important;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .boost-tag {
+    font-size: 0.6rem;
+    font-weight: 800;
+    background: rgba(255, 94, 0, 0.2);
+    color: var(--color-arson-fire);
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 4px var(--color-arson-glow);
+  }
+
+  .stat-final-combat {
+    color: var(--color-arson-fire) !important;
+    font-size: 1.05rem;
+    font-weight: 900;
+    text-shadow: 0 0 10px var(--color-arson-glow);
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  /* Cybernetic Holographic Switch Toggle */
   .combat-intensity-toggle {
-    margin-top: 14px;
-    padding-top: 10px;
+    margin-top: 10px;
+    padding-top: 12px;
     border-top: 1px dashed var(--color-holo-border);
-    display: flex;
-    justify-content: flex-end;
   }
 
-  .combat-toggle-label {
+  .cyber-toggle-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 240, 255, 0.03);
+    border: 1px solid rgba(0, 240, 255, 0.15);
+    padding: 9px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    font-family: var(--font-sans);
+  }
+
+  .cyber-toggle-btn:hover {
+    background: rgba(0, 240, 255, 0.07);
+    border-color: rgba(0, 240, 255, 0.3);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+  }
+
+  .cyber-toggle-btn.active {
+    background: rgba(255, 94, 0, 0.12);
+    border-color: var(--color-arson-fire);
+    box-shadow: 0 0 14px rgba(255, 94, 0, 0.25);
+  }
+
+  .toggle-left {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.72rem;
-    font-weight: 700;
+  }
+
+  :global(.toggle-flame-icon) {
     color: var(--color-holo-muted);
-    cursor: pointer;
     transition: var(--transition-smooth);
+  }
+
+  :global(.toggle-flame-icon.active) {
+    color: var(--color-arson-fire);
+    filter: drop-shadow(0 0 6px var(--color-arson-fire));
+    animation: pulse-slow 1.5s infinite ease-in-out;
+  }
+
+  .toggle-label-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--color-holo-muted);
+    transition: var(--transition-smooth);
+  }
+
+  .cyber-toggle-btn.active .toggle-label-text {
+    color: var(--color-arson-fire);
+    text-shadow: 0 0 6px var(--color-arson-glow);
+  }
+
+  .cyber-switch-track {
+    width: 40px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    position: relative;
+    transition: var(--transition-smooth);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+  }
+
+  .cyber-switch-track.active {
+    background: rgba(255, 94, 0, 0.3);
+    border-color: var(--color-arson-fire);
+    box-shadow: 0 0 8px var(--color-arson-glow);
+  }
+
+  .cyber-switch-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--color-holo-muted);
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition:
+      transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+      background-color 0.3s;
+  }
+
+  .cyber-switch-track.active .cyber-switch-thumb {
+    transform: translateX(20px);
+    background: var(--color-arson-fire);
+    box-shadow: 0 0 8px var(--color-arson-fire);
+  }
+
+  :global(.toggle-flame) {
+    color: var(--color-arson-fire);
+    filter: drop-shadow(0 0 4px var(--color-arson-fire));
+    animation: pulse-slow 1.5s infinite;
   }
 
   .combat-toggle-label:hover {
@@ -1546,35 +1850,61 @@
     margin-left: 4px;
   }
 
-  /* Tab selection styling */
+  /* Segmented Pill Navigation Bar */
   .tab-selector {
     display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    background: rgba(2, 14, 26, 0.6);
+    border: 1px solid rgba(0, 240, 255, 0.18);
+    padding: 4px;
+    border-radius: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tab-selector::-webkit-scrollbar {
+    display: none;
   }
 
   .tab-btn {
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid transparent;
     color: var(--color-holo-muted);
     font-family: var(--font-sans);
     padding: 6px 14px;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 600;
     transition: var(--transition-smooth);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .tab-label-full {
+    display: inline;
+  }
+
+  .tab-label-short {
+    display: none;
   }
 
   .tab-btn:hover {
-    border-color: var(--color-holo-border);
-    color: var(--color-holo-primary);
+    border-color: rgba(0, 240, 255, 0.2);
+    color: #fff;
+    background: rgba(0, 240, 255, 0.05);
   }
 
   .tab-btn.active {
-    background: rgba(0, 240, 255, 0.08);
+    background: rgba(0, 240, 255, 0.15);
     border-color: var(--color-holo-primary);
     color: var(--color-holo-primary);
-    text-shadow: 0 0 5px var(--color-holo-glow);
+    font-weight: 700;
+    text-shadow: 0 0 8px var(--color-holo-glow);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
   }
 </style>

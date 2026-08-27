@@ -9,7 +9,7 @@
 
   import {
     BookOpen,
-    Calculator,
+    Gauge,
     MapIcon,
     Sparkles,
     Shield,
@@ -116,7 +116,7 @@
         class="nav-tab {currentTab === 'stats' ? 'active' : ''}"
         on:click={() => (currentTab = "stats")}
       >
-        <Calculator size={16} />
+        <Gauge size={16} />
         <span>Stat Breakdown</span>
       </button>
 
@@ -191,6 +191,8 @@
     flex-direction: column;
     background: radial-gradient(circle at center, #0e1422 0%, #07090f 100%);
     padding: 0;
+    overflow-x: hidden;
+    max-width: 100%;
   }
 
   .brand-header {
@@ -327,6 +329,7 @@
   /* Navigation Hub Tabs */
   .navigation-hub {
     display: flex;
+    justify-content: center;
     gap: 8px;
     overflow-x: auto;
     scrollbar-width: none;
@@ -428,7 +431,9 @@
       padding: 8px 10px;
       gap: 4px;
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(5, 1fr);
+      justify-items: center;
+      align-items: center;
       z-index: 1000;
       box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(12px);
@@ -436,6 +441,7 @@
     }
 
     .nav-tab {
+      width: 100%;
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -447,6 +453,7 @@
       border-radius: 6px;
       color: var(--color-holo-muted);
       opacity: 0.75;
+      text-align: center;
     }
 
     .nav-tab:hover {
