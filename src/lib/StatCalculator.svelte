@@ -166,9 +166,9 @@
     {:else if activeTab === 'digestion'}
       <!-- Digestion Flowchart -->
       <div class="flowchart-container">
-        <div class="flowchart-grid digestion-grid">
-          <!-- Col 1: Enhanced Digestion Base Box -->
-          <div class="flowchart-box-group span-rows-2">
+        <div class="flowchart-grid digestion-grid-vertical">
+          <!-- Row 1: Enhanced Digestion Base Box (Spans 2 columns) -->
+          <div class="flowchart-box-group span-cols-2">
             <div class="flowchart-group-title">Enhanced Digestion</div>
             <div class="flowchart-node">
               <span class="node-label">Base Digestion</span>
@@ -186,35 +186,35 @@
             </div>
           </div>
 
-          <!-- Col 2: Branching Connectors -->
-          <div class="connector-cell span-rows-2">
-            <svg viewBox="0 0 40 100" class="connector-svg" preserveAspectRatio="none">
-              <path d="M 0 50 C 20 50, 20 25, 40 25" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
-              <path d="M 0 50 C 20 50, 20 75, 40 75" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+          <!-- Row 2: Branching Connectors (Spans 2 columns) -->
+          <div class="connector-cell span-cols-2">
+            <svg viewBox="0 0 100 40" class="connector-svg vertical-branch-svg" preserveAspectRatio="none">
+              <path d="M 50 0 C 50 20, 25 20, 25 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+              <path d="M 50 0 C 50 20, 75 20, 75 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
             </svg>
           </div>
 
-          <!-- Col 3: Multipliers (Mass and Passive) -->
-          <div class="flowchart-node {calcData.digestion.massLvl > 0 ? 'active-buff' : 'inactive-buff'}">
+          <!-- Row 3: Multipliers (Mass and Passive) -->
+          <div class="flowchart-node {calcData.digestion.massLvl > 0 ? 'active-buff' : 'inactive-buff'} justify-self-end width-node">
             <span class="node-label">Mass Expansion (Lv {calcData.digestion.massLvl})</span>
             <span class="node-value">+{Math.round(calcData.digestion.massMult * 100)}% (+{calcData.digestion.massVal} bio/h)</span>
           </div>
           
-          <div class="flowchart-node {calcData.digestion.passiveLvl > 0 ? 'active-buff' : 'inactive-buff'}" style="grid-row: 2;">
+          <div class="flowchart-node {calcData.digestion.passiveLvl > 0 ? 'active-buff' : 'inactive-buff'} justify-self-start width-node">
             <span class="node-label">Passive Digestion (Lv {calcData.digestion.passiveLvl})</span>
             <span class="node-value">+{Math.round(calcData.digestion.passiveMult * 100)}% (+{calcData.digestion.passiveVal} bio/h)</span>
           </div>
 
-          <!-- Col 4: Merging Connectors -->
-          <div class="connector-cell span-rows-2">
-            <svg viewBox="0 0 40 100" class="connector-svg" preserveAspectRatio="none">
-              <path d="M 0 25 C 20 25, 20 50, 40 50" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
-              <path d="M 0 75 C 20 75, 20 50, 40 50" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+          <!-- Row 4: Merging Connectors (Spans 2 columns) -->
+          <div class="connector-cell span-cols-2">
+            <svg viewBox="0 0 100 40" class="connector-svg vertical-merge-svg" preserveAspectRatio="none">
+              <path d="M 25 0 C 25 20, 50 20, 50 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+              <path d="M 75 0 C 75 20, 50 20, 50 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
             </svg>
           </div>
 
-          <!-- Col 5: Neutral Sum (Stacked Card style!) -->
-          <div class="flowchart-node card-stack span-rows-2 glow-node">
+          <!-- Row 5: Neutral Sum (Spans 2 columns) -->
+          <div class="flowchart-node card-stack span-cols-2 glow-node width-large">
             <span class="node-label">Neutral Sum</span>
             <span class="node-value">{calcData.digestion.neutralSum} bio/h</span>
             {#if calcData.digestion.cloneLvl > 0 || calcData.digestion.packLvl > 0}
@@ -229,28 +229,28 @@
             {/if}
           </div>
 
-          <!-- Col 6: Connector -->
-          <div class="connector-cell span-rows-2">
-            <svg viewBox="0 0 40 100" class="connector-svg" preserveAspectRatio="none">
-              <path d="M 0 50 L 40 50" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+          <!-- Row 6: Connector (Spans 2 columns) -->
+          <div class="connector-cell span-cols-2">
+            <svg viewBox="0 0 20 40" class="connector-svg vertical-straight-svg" preserveAspectRatio="none">
+              <path d="M 10 0 L 10 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
             </svg>
           </div>
 
-          <!-- Col 7: Hemo Multiplier -->
-          <div class="flowchart-node {combatActive && calcData.digestion.hemoLvl > 0 ? 'active-combat' : 'inactive-buff'} span-rows-2">
+          <!-- Row 7: Hemo Multiplier (Spans 2 columns) -->
+          <div class="flowchart-node {combatActive && calcData.digestion.hemoLvl > 0 ? 'active-combat' : 'inactive-buff'} span-cols-2 width-large">
             <span class="node-label">Hemo Tissue (Lv {calcData.digestion.hemoLvl})</span>
             <span class="node-value">{combatActive ? 'x' + calcData.digestion.hemoMult.toFixed(1) : 'x1.0 (Combat Off)'}</span>
           </div>
 
-          <!-- Col 8: Connector -->
-          <div class="connector-cell span-rows-2">
-            <svg viewBox="0 0 40 100" class="connector-svg" preserveAspectRatio="none">
-              <path d="M 0 50 L 40 50" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+          <!-- Row 8: Connector (Spans 2 columns) -->
+          <div class="connector-cell span-cols-2">
+            <svg viewBox="0 0 20 40" class="connector-svg vertical-straight-svg" preserveAspectRatio="none">
+              <path d="M 10 0 L 10 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
             </svg>
           </div>
 
-          <!-- Col 9: Battle Sum (Stacked Card style!) -->
-          <div class="flowchart-node card-stack span-rows-2 final-node glow-node-battle">
+          <!-- Row 9: Battle Sum (Spans 2 columns) -->
+          <div class="flowchart-node card-stack span-cols-2 final-node glow-node-battle width-large">
             <span class="node-label">Battle Sum</span>
             <span class="node-value">{calcData.digestion.final} bio/h</span>
           </div>
@@ -259,31 +259,33 @@
     {:else if activeTab === 'mana'}
       <!-- Mana Flowchart -->
       <div class="flowchart-container">
-        <div class="flowchart-grid mana-grid">
+        <div class="flowchart-grid mana-grid-vertical">
           <!-- Base Mana -->
-          <div class="flowchart-node">
+          <div class="flowchart-node width-large">
             <span class="node-label">Base Mana</span>
             <span class="node-value">{calcData.mana.base}</span>
           </div>
 
           <!-- Connector -->
           <div class="connector-cell">
-            <svg viewBox="0 0 40 40" class="connector-svg" preserveAspectRatio="none">
-              <path d="M 0 20 L 40 20" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+            <svg viewBox="0 0 20 40" class="connector-svg vertical-straight-svg" preserveAspectRatio="none">
+              <path d="M 10 0 L 10 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
             </svg>
           </div>
 
           <!-- Additive Bonuses group box -->
-          <div class="flowchart-box-group">
+          <div class="flowchart-box-group width-large">
             <div class="flowchart-group-title">Additive Bonuses</div>
             <div class="flowchart-node {calcData.mana.perceptionLvl > 0 ? 'active-buff' : 'inactive-buff'}">
               <span class="node-label">Instinctive Perc (Lv {calcData.mana.perceptionLvl})</span>
               <span class="node-value">+{calcData.mana.perceptionVal}</span>
             </div>
+            <div class="mini-arrow">▼</div>
             <div class="flowchart-node {calcData.mana.resonanceLvl > 0 ? 'active-buff' : 'inactive-buff'}">
               <span class="node-label">Memory Res (Lv {calcData.mana.resonanceLvl})</span>
               <span class="node-value">+{calcData.mana.resonanceVal}</span>
             </div>
+            <div class="mini-arrow">▼</div>
             <div class="flowchart-node {calcData.mana.sensoryLvl > 0 ? 'active-buff' : 'inactive-buff'}">
               <span class="node-label">Chemosensory Apt (Lv {calcData.mana.sensoryLvl})</span>
               <span class="node-value">+{calcData.mana.sensoryVal}</span>
@@ -292,52 +294,52 @@
 
           <!-- Connector -->
           <div class="connector-cell">
-            <svg viewBox="0 0 40 40" class="connector-svg" preserveAspectRatio="none">
-              <path d="M 0 20 L 40 20" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+            <svg viewBox="0 0 20 40" class="connector-svg vertical-straight-svg" preserveAspectRatio="none">
+              <path d="M 10 0 L 10 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
             </svg>
           </div>
 
           <!-- Additive Sum -->
-          <div class="flowchart-node glow-node">
+          <div class="flowchart-node glow-node width-large">
             <span class="node-label">Additive Sum</span>
             <span class="node-value">{calcData.mana.additiveSum}</span>
           </div>
 
           <!-- Connector -->
           <div class="connector-cell">
-            <svg viewBox="0 0 40 40" class="connector-svg" preserveAspectRatio="none">
-              <path d="M 0 20 L 40 20" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+            <svg viewBox="0 0 20 40" class="connector-svg vertical-straight-svg" preserveAspectRatio="none">
+              <path d="M 10 0 L 10 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
             </svg>
           </div>
 
           <!-- Magic Harmonizer (Multiplier) -->
-          <div class="flowchart-node {calcData.mana.harmonizerLvl > 0 ? 'active-buff' : 'inactive-buff'}">
+          <div class="flowchart-node {calcData.mana.harmonizerLvl > 0 ? 'active-buff' : 'inactive-buff'} width-large">
             <span class="node-label">Magic Harmonizer (Lv {calcData.mana.harmonizerLvl})</span>
             <span class="node-value">x{calcData.mana.harmonizerMult.toFixed(1)}</span>
           </div>
 
           <!-- Connector -->
           <div class="connector-cell">
-            <svg viewBox="0 0 40 40" class="connector-svg" preserveAspectRatio="none">
-              <path d="M 0 20 L 40 20" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+            <svg viewBox="0 0 20 40" class="connector-svg vertical-straight-svg" preserveAspectRatio="none">
+              <path d="M 10 0 L 10 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
             </svg>
           </div>
 
           <!-- Magic Core (Exponential) -->
-          <div class="flowchart-node {calcData.mana.coreLvl > 0 ? 'active-buff' : 'inactive-buff'}">
+          <div class="flowchart-node {calcData.mana.coreLvl > 0 ? 'active-buff' : 'inactive-buff'} width-large">
             <span class="node-label">Magic Core (Lv {calcData.mana.coreLvl})</span>
             <span class="node-value">+{Math.round((calcData.mana.coreMult - 1) * 100)}% Comp.</span>
           </div>
 
           <!-- Connector -->
           <div class="connector-cell">
-            <svg viewBox="0 0 40 40" class="connector-svg" preserveAspectRatio="none">
-              <path d="M 0 20 L 40 20" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+            <svg viewBox="0 0 20 40" class="connector-svg vertical-straight-svg" preserveAspectRatio="none">
+              <path d="M 10 0 L 10 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
             </svg>
           </div>
 
           <!-- Final Mana -->
-          <div class="flowchart-node card-stack final-node glow-node-battle">
+          <div class="flowchart-node card-stack final-node glow-node-battle width-large">
             <span class="node-label">Final Mana</span>
             <span class="node-value">{calcData.mana.final}</span>
           </div>
@@ -346,74 +348,74 @@
     {:else if activeTab === 'speed'}
       <!-- Speed Flowchart -->
       <div class="flowchart-container">
-        <div class="flowchart-grid speed-grid">
+        <div class="flowchart-grid speed-grid-vertical">
           <!-- Base Speed -->
-          <div class="flowchart-node">
+          <div class="flowchart-node width-large">
             <span class="node-label">Base Speed</span>
             <span class="node-value">{calcData.speed.base} m/s</span>
           </div>
 
           <!-- Connector -->
           <div class="connector-cell">
-            <svg viewBox="0 0 40 40" class="connector-svg" preserveAspectRatio="none">
-              <path d="M 0 20 L 40 20" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+            <svg viewBox="0 0 20 40" class="connector-svg vertical-straight-svg" preserveAspectRatio="none">
+              <path d="M 10 0 L 10 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
             </svg>
           </div>
 
           <!-- Monocular Vision (Additive) -->
-          <div class="flowchart-node {calcData.speed.monocularLvl > 0 ? 'active-buff' : 'inactive-buff'}">
+          <div class="flowchart-node {calcData.speed.monocularLvl > 0 ? 'active-buff' : 'inactive-buff'} width-large">
             <span class="node-label">Telescopic Vision (Lv {calcData.speed.monocularLvl})</span>
             <span class="node-value">+{calcData.speed.monocularVal.toFixed(2)} m/s</span>
           </div>
 
           <!-- Connector -->
           <div class="connector-cell">
-            <svg viewBox="0 0 40 40" class="connector-svg" preserveAspectRatio="none">
-              <path d="M 0 20 L 40 20" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+            <svg viewBox="0 0 20 40" class="connector-svg vertical-straight-svg" preserveAspectRatio="none">
+              <path d="M 10 0 L 10 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
             </svg>
           </div>
 
           <!-- Additive Sum -->
-          <div class="flowchart-node glow-node">
+          <div class="flowchart-node glow-node width-large">
             <span class="node-label">Agility Sum</span>
             <span class="node-value">{calcData.speed.additiveSum.toFixed(2)} m/s</span>
           </div>
 
           <!-- Connector -->
           <div class="connector-cell">
-            <svg viewBox="0 0 40 40" class="connector-svg" preserveAspectRatio="none">
-              <path d="M 0 20 L 40 20" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+            <svg viewBox="0 0 20 40" class="connector-svg vertical-straight-svg" preserveAspectRatio="none">
+              <path d="M 10 0 L 10 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
             </svg>
           </div>
 
           <!-- Viscous Flow (Compounded Multiplier) -->
-          <div class="flowchart-node {calcData.speed.viscousLvl > 0 ? 'active-buff' : 'inactive-buff'}">
+          <div class="flowchart-node {calcData.speed.viscousLvl > 0 ? 'active-buff' : 'inactive-buff'} width-large">
             <span class="node-label">Viscous Flow (Lv {calcData.speed.viscousLvl})</span>
             <span class="node-value">+{Math.round((calcData.speed.viscousMult - 1) * 100)}% Comp. ({calcData.speed.viscousVal.toFixed(2)} m/s)</span>
           </div>
 
           <!-- Connector -->
           <div class="connector-cell">
-            <svg viewBox="0 0 40 40" class="connector-svg" preserveAspectRatio="none">
-              <path d="M 0 20 L 40 20" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+            <svg viewBox="0 0 20 40" class="connector-svg vertical-straight-svg" preserveAspectRatio="none">
+              <path d="M 10 0 L 10 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
             </svg>
           </div>
 
           <!-- Pigmentation Mimicry (Camouflage Multiplier) -->
-          <div class="flowchart-node {calcData.speed.mimicryLvl > 0 ? 'active-buff' : 'inactive-buff'}">
+          <div class="flowchart-node {calcData.speed.mimicryLvl > 0 ? 'active-buff' : 'inactive-buff'} width-large">
             <span class="node-label">Camouflage (Lv {calcData.speed.mimicryLvl})</span>
             <span class="node-value">x{calcData.speed.mimicryMult.toFixed(2)}</span>
           </div>
 
           <!-- Connector -->
           <div class="connector-cell">
-            <svg viewBox="0 0 40 40" class="connector-svg" preserveAspectRatio="none">
-              <path d="M 0 20 L 40 20" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
+            <svg viewBox="0 0 20 40" class="connector-svg vertical-straight-svg" preserveAspectRatio="none">
+              <path d="M 10 0 L 10 40" fill="none" stroke="var(--color-holo-primary)" stroke-width="2" marker-end="url(#arrow)" />
             </svg>
           </div>
 
           <!-- Final Speed -->
-          <div class="flowchart-node card-stack final-node glow-node-battle">
+          <div class="flowchart-node card-stack final-node glow-node-battle width-large">
             <span class="node-label">Final Speed</span>
             <span class="node-value">{calcData.speed.final.toFixed(2)} m/s</span>
           </div>
@@ -689,38 +691,66 @@
   /* --- VISUAL GRAPH / FLOWCHART STYLES --- */
   .flowchart-container {
     width: 100%;
-    overflow-x: auto;
-    padding: 30px 20px;
+    padding: 20px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   .flowchart-grid {
     display: grid;
     align-items: center;
     gap: 12px;
-    min-width: max-content;
+    width: 100%;
   }
 
-  .digestion-grid {
-    grid-template-columns: 180px 45px 240px 45px 160px 45px 180px 45px 160px;
-    grid-template-rows: auto auto;
+  .digestion-grid-vertical {
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
   }
 
-  .mana-grid {
-    grid-template-columns: 130px 45px 260px 45px 130px 45px 190px 45px 190px 45px 130px;
-  }
-
-  .speed-grid {
-    grid-template-columns: 130px 45px 190px 45px 130px 45px 230px 45px 190px 45px 130px;
-  }
-
-  .span-rows-2 {
-    grid-row: span 2;
-    align-self: stretch;
+  .mana-grid-vertical,
+  .speed-grid-vertical {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .span-cols-2 {
+    grid-column: span 2;
+    justify-self: center;
+  }
+
+  .justify-self-end {
+    justify-self: end;
+  }
+
+  .justify-self-start {
+    justify-self: start;
+  }
+
+  .width-node {
+    width: 100%;
+    max-width: 190px;
+  }
+
+  .width-large {
+    width: 100%;
+    max-width: 220px;
+  }
+
+  .vertical-branch-svg,
+  .vertical-merge-svg {
+    width: 200px;
+    height: 40px;
+  }
+
+  .vertical-straight-svg {
+    width: 20px;
+    height: 40px;
   }
 
   .flowchart-box-group {
