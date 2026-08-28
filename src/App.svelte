@@ -6,6 +6,7 @@
   import BiomassCalculator from "./lib/BiomassCalculator.svelte";
   import Map from "./lib/Map.svelte";
   import Visual3D from "./lib/Visual3D.svelte";
+  import Characters from "./lib/Characters.svelte";
 
   import {
     BookOpen,
@@ -15,6 +16,7 @@
     Shield,
     Flame,
     Download,
+    Users,
     Image as ImageIcon,
   } from "lucide-svelte";
 
@@ -121,35 +123,11 @@
       </button>
 
       <button
-        class="nav-tab {currentTab === 'biomass' ? 'active' : ''}"
-        on:click={() => (currentTab = "biomass")}
+        class="nav-tab {currentTab === 'characters' ? 'active' : ''}"
+        on:click={() => (currentTab = "characters")}
       >
-        <Sparkles size={16} />
-        <span>Biomass Core</span>
-      </button>
-
-      <button
-        class="nav-tab {currentTab === 'map' ? 'active' : ''}"
-        on:click={() => (currentTab = "map")}
-      >
-        <MapIcon size={16} />
-        <span>Radar Map</span>
-      </button>
-
-      <button
-        class="nav-tab {currentTab === '3d' ? 'active' : ''}"
-        on:click={() => (currentTab = "3d")}
-      >
-        <Shield size={16} />
-        <span>3D Evolution</span>
-      </button>
-
-      <button
-        class="nav-tab {currentTab === 'book' ? 'active' : ''}"
-        on:click={() => (currentTab = "book")}
-      >
-        <BookOpen size={16} />
-        <span>Elysian Lore</span>
+        <Users size={16} />
+        <span>Characters</span>
       </button>
     </nav>
 
@@ -157,17 +135,9 @@
     <section class="viewport-area">
       {#if currentTab === "stats"}
         <StatCalculator />
-      {:else}
+      {:else if currentTab === "characters"}
         <div class="fade-in-wrapper">
-          {#if currentTab === "biomass"}
-            <BiomassCalculator />
-          {:else if currentTab === "map"}
-            <Map />
-          {:else if currentTab === "3d"}
-            <Visual3D />
-          {:else if currentTab === "book"}
-            <Book />
-          {/if}
+          <Characters />
         </div>
       {/if}
     </section>
@@ -441,7 +411,7 @@
       padding: 8px 10px;
       gap: 4px;
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       justify-items: center;
       align-items: center;
       z-index: 1000;

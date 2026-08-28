@@ -56,5 +56,23 @@ suite.addTest({
     expected: 3.78
 });
 
+suite.addTest(12, 5.67, false);
+suite.addTest(14, 6.22, false);
+suite.addTest(15, 8.38, false);
+suite.addTest(15, 8.38, false);
+suite.addTest(16, 10.05, false);
+suite.addTest(22, 13.2, false, "Update body", "stage5")
+suite.addTest(22, 15.84, false, "Update clones")
+suite.addTest(23, 14.64, false, "Trait Digestive Filter", "stage5");
+suite.addTest(23, 17.56, false, "Trait Digestive Filter");
+suite.addTest(27, 19.32, false);
+suite.addTest(28, 28.54, false);
+suite.addTest(33, 31.40, false);
+suite.addTest(47, 39.67, false)
+suite.addTest(47, 95.2, true)
+suite.addTest(54, 10.48, false, "", "enhanced");
+suite.addTest(54, 37.72, false, "", "subtotal");
+suite.addTest(54, 49.03, false);
+
 // Run digestion tests if executed directly
 suite.run('DIGESTION');

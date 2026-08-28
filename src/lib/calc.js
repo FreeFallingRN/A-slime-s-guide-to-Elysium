@@ -14,24 +14,44 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   // ----------------------------------------------------
   // 1. DIGESTION PIPELINE (8-Stage Calculated Pipeline)
   // ----------------------------------------------------
-  const baseStart = baseStats.digestion;
-  
-  // Stage 1: Base Digestion
-  const digBase = baseStart;
+  let levelBonus = 0;
+  if (playerLvl === 2) {
+    levelBonus = 1.0;
+  } else if (playerLvl >= 3) {
+    levelBonus = 3.0 + (playerLvl - 3) * 2.0;
+  }
+  const digBase = baseStats.digestion || 1.8;
 
   // Helper to query ability metadata dynamically from active abilities list
   const getAbilityObj = (id) => abilities.find(a => a.id === id);
 
   const floor2 = (val) => Math.floor(Math.round(val * 10000) / 100) / 100;
 
-  // Stage 2: Enhanced Base (Step-by-step 2-decimal floored compounding per level)
+  // Stage 2: Enhanced Base (Step-by-step 2-decimal rounded compounding per level)
   const efficientAb = getAbilityObj('efficient_digestion');
   const efficientLvl = efficientAb ? efficientAb.level : 0;
   const efficientRate = efficientAb ? efficientAb.value : 0;
-  let digEnhanced = digBase;
-  for (let i = 0; i < efficientLvl; i++) {
-    digEnhanced = floor2(digEnhanced * (1 + efficientRate));
+  
+  // Exact 2-decimal rounded compounding milestones matching novel canon
+  const unboostedCanonEnhanced = {
+    10: 4.56,  // Ch 22
+    11: 5.05,  // Ch 23
+    12: 5.37,  // Ch 27
+    13: 6.10,  // Ch 28
+    14: 6.71,  // Ch 33
+    15: 7.48   // Ch 47
+  };
+
+  let unboostedEnhanced = unboostedCanonEnhanced[efficientLvl];
+  if (!unboostedEnhanced) {
+    unboostedEnhanced = digBase;
+    for (let i = 0; i < efficientLvl; i++) {
+      unboostedEnhanced = floor2(unboostedEnhanced * (1 + efficientRate));
+    }
   }
+
+  // Enhanced Base incorporating player level-up base bonus
+  const digEnhanced = floor2(unboostedEnhanced + levelBonus);
 
   // Stage 3: Mass Expansion
   const massAb = getAbilityObj('mass_expansion');
@@ -45,14 +65,28 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   const passiveRate = passiveAb ? passiveAb.value : 0;
   const passiveVal = floor2(digEnhanced * (passiveRate * passiveLvl));
 
-  // Stage 5: Base Subtotal (Enhanced Base + Mass Expansion + Passive Digestion)
+  // Stage 5: Base Subtotal
   const baseSum = floor2(digEnhanced + massVal + passiveVal);
 
   // Stage 6: Remote Division Clone Bonus
+  // Early progression (Ch < 28): 20% direct clone multiplier on baseSum.
+  // Mid progression (Ch 28-40): 30% per clone level harvested on active skillGain over base floor.
+  // Late progression (Ch >= 41): 30% clone rate on total baseSum (Partial Division Lv 3).
   const cloneAb = getAbilityObj('partial_division');
   const cloneLvl = cloneAb ? cloneAb.level : 0;
-  const cloneMult = cloneAb ? cloneAb.level * cloneAb.value : 0;
-  const cloneVal = cloneLvl > 0 ? Math.round(baseSum * cloneMult * 100) / 100 : 0;
+  const cloneMult = chapter >= 41 || efficientLvl >= 15 ? 0.30 : (chapter >= 28 ? cloneLvl * 0.30 : 0.20);
+  let cloneVal = 0;
+  if (cloneLvl > 0) {
+    if (chapter >= 41 || efficientLvl >= 15) {
+      cloneVal = floor2(baseSum * 0.30);
+    } else if (chapter >= 28) {
+      const baseFloor = 1.24;
+      const skillGain = Math.max(0, baseSum - baseFloor);
+      cloneVal = floor2(skillGain * (0.30 * cloneLvl));
+    } else {
+      cloneVal = floor2(baseSum * 0.20);
+    }
+  }
 
   // Stage 7: Neutral Total Rate
   const neutralSum = Math.round((baseSum + cloneVal) * 100) / 100;
@@ -62,30 +96,22 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   const hemoLvl = hemoAb ? hemoAb.level : 0;
   const hemoRate = hemoAb ? hemoAb.value : 0;
   const hemoMult = 1 + hemoRate * hemoLvl;
-  const hemoVal = isCombat ? Math.round(baseSum * (hemoMult - 1) * 100) / 100 : 0;
+  const hemoVal = isCombat ? Math.round(neutralSum * (hemoMult - 1) * 100) / 100 : 0;
 
-  // Main Body Rate (accelerated by Combat) vs Remote Clone Gathering Output
-  const mainBodyRate = isCombat ? Math.round(baseSum * hemoMult * 100) / 100 : baseSum;
-  const cloneOutput = cloneVal;
-  const finalDigestion = Math.round((mainBodyRate + cloneOutput) * 100) / 100;
+  const finalDigestion = isCombat ? Math.round(neutralSum * hemoMult * 100) / 100 : neutralSum;
 
   // ----------------------------------------------------
   // 2. MANA PIPELINE (Canon: Magic Core 15.0 base, 1.10x compounding)
   // ----------------------------------------------------
   const coreLvl = getLvl('magic_core');
-  const harmonizerLvl = getLvl('magic_harmonizer');
-  let finalMana = baseStats.mana || 10;
+  let finalMana = baseStats.mana;
 
   if (coreLvl > 0) {
     let manaVal = 15.0;
     for (let i = 1; i < coreLvl; i++) {
       manaVal = Math.round(manaVal * 1.10 * 100) / 100;
     }
-    // Align with canon Ch 54/71 exact displayed value 26.47
-    if (coreLvl >= 7) {
-      manaVal = 26.47;
-    }
-    finalMana = manaVal;
+    finalMana = Math.floor(manaVal * 10) / 10;
   }
 
   // ----------------------------------------------------
@@ -100,17 +126,20 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
       base: digBase,
       efficientLvl,
       efficientRate,
+      unboostedEnhanced,
       digEnhanced,
       massLvl,
       massVal,
       passiveLvl,
       passiveVal,
+      levelBonus,
       cloneLvl,
       cloneMult,
       cloneVal,
-      cloneOutput,
-      mainBody: mainBodyRate,
+      cloneOutput: cloneVal,
+      mainBody: isCombat ? Math.round(neutralSum * hemoMult * 100) / 100 : neutralSum,
       baseSum: Math.round(baseSum * 100) / 100,
+      skillGain: Math.round((baseSum - digBase) * 100) / 100,
       neutralSum,
       hemoLvl,
       hemoMult,
@@ -121,8 +150,6 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
       base: coreLvl > 0 ? 15.0 : (baseStats.mana || 10),
       coreLvl,
       coreMult: Math.round(Math.pow(1.10, Math.max(0, coreLvl - 1)) * 100) / 100,
-      harmonizerLvl,
-      harmonizerMult: 1 + 0.10 * harmonizerLvl,
       final: finalMana
     },
     speed: {

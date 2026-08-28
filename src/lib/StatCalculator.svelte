@@ -470,7 +470,7 @@
                         </div>
                       {/if}
 
-                      {#if isUnlocked && ab.target !== "none"}
+                      {#if isUnlocked && ab.target && ab.target !== "none"}
                         <div class="applies-badge">
                           Applies to: <span class="stat-target"
                             >{ab.target.toUpperCase()}</span
@@ -532,9 +532,20 @@
                       .efficientLvl})</span
                   >
                   <span class="subitem-value"
-                    >{calcData.digestion.digEnhanced} bio/h</span
+                    >{calcData.digestion.unboostedEnhanced || calcData.digestion.digEnhanced} bio/h</span
                   >
                 </div>
+                {#if calcData.digestion.levelBonus > 0}
+                  <div class="subitem-row">
+                    <span class="subitem-name"
+                      >+ Halon Level-Up Bonus (Lv {activeLvl}):</span
+                    >
+                    <span class="subitem-calc">+(Level - 1) × 1.0 bio/h</span>
+                    <span class="subitem-value"
+                      >+{calcData.digestion.levelBonus} bio/h</span
+                    >
+                  </div>
+                {/if}
               </div>
             </div>
           {/if}
@@ -544,7 +555,7 @@
             <div class="step-card">
               <div class="step-header">
                 <span class="step-number">ADDITIVE</span>
-                <span class="step-title">Passive skills</span>
+                <span class="step-title">Passive Skills</span>
               </div>
               <div class="step-subitems">
                 {#if calcData.digestion.massLvl > 0}
@@ -553,7 +564,7 @@
                       >+ Mass Expansion (Lv {calcData.digestion.massLvl}):</span
                     >
                     <span class="subitem-calc"
-                      >{calcData.digestion.digEnhanced} × (30% × {calcData
+                      >{calcData.digestion.unboostedEnhanced || calcData.digestion.digEnhanced} × (30% × {calcData
                         .digestion.massLvl})</span
                     >
                     <span class="subitem-value"
@@ -568,7 +579,7 @@
                         .passiveLvl}):</span
                     >
                     <span class="subitem-calc"
-                      >{calcData.digestion.digEnhanced} × (10% × {calcData
+                      >{calcData.digestion.unboostedEnhanced || calcData.digestion.digEnhanced} × (10% × {calcData
                         .digestion.passiveLvl})</span
                     >
                     <span class="subitem-value"
@@ -591,11 +602,13 @@
                 <div class="subitem-row">
                   <span class="subitem-name">Main Body Base Sum:</span>
                   <span class="subitem-calc">
-                    {calcData.digestion.digEnhanced} (Enhanced Base)
+                    {calcData.digestion.unboostedEnhanced || calcData.digestion.digEnhanced} (Enhanced Base)
                     {#if calcData.digestion.massLvl > 0}
                       + {calcData.digestion.massVal} (Mass){/if}
                     {#if calcData.digestion.passiveLvl > 0}
                       + {calcData.digestion.passiveVal} (Passive){/if}
+                    {#if calcData.digestion.levelBonus > 0}
+                      + {calcData.digestion.levelBonus} (Level Bonus){/if}
                   </span>
                   <span class="subitem-value"
                     >{calcData.digestion.baseSum} bio/h</span
@@ -618,10 +631,15 @@
                     >+ Partial Division (Lv {calcData.digestion
                       .cloneLvl}):</span
                   >
-                  <span class="subitem-calc"
-                    >{calcData.digestion.baseSum} (Base Subtotal) × (10% × {calcData
-                      .digestion.cloneLvl})</span
-                  >
+                  <span class="subitem-calc">
+                    {#if chapter >= 41 || calcData.digestion.efficientLvl >= 15}
+                      {calcData.digestion.baseSum} (Main Body) × 30%
+                    {:else if chapter >= 28}
+                      {calcData.digestion.skillGain} (Skill Gain) × ({Math.round(calcData.digestion.cloneMult * 100)}%)
+                    {:else}
+                      {calcData.digestion.baseSum} (Main Body) × 20%
+                    {/if}
+                  </span>
                   <span class="subitem-value"
                     >+{calcData.digestion.cloneVal} bio/h</span
                   >
@@ -688,7 +706,7 @@
               <div class="subitem-row">
                 <span class="subitem-name">Total Combined Output:</span>
                 <span class="subitem-calc">
-                  {calcData.digestion.mainBody} (Main Body{#if combatActive}
+                  {calcData.digestion.baseSum} (Main Body{#if combatActive}
                     Combat Rate{/if})
                   {#if calcData.digestion.cloneLvl > 0}
                     + {calcData.digestion.cloneOutput} (Clones){/if}
@@ -912,6 +930,83 @@
 
     .flowchart-container {
       padding: 12px 6px;
+    }
+
+    .calc-breakdown-container {
+      padding: 12px 6px;
+      gap: 10px;
+    }
+
+    .breakdown-header h4 {
+      font-size: 0.88rem;
+      line-height: 1.3;
+    }
+
+    .breakdown-subtitle {
+      font-size: 0.72rem;
+      line-height: 1.3;
+    }
+
+    .step-card {
+      padding: 10px 10px;
+      gap: 8px;
+    }
+
+    .step-header {
+      gap: 8px;
+    }
+
+    .step-subitems {
+      padding-left: 0;
+      gap: 6px;
+    }
+
+    .subitem-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "name value"
+        "calc calc";
+      gap: 4px 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      align-items: baseline;
+    }
+
+    .subitem-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .subitem-name {
+      grid-area: name;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-holo-muted);
+      line-height: 1.25;
+    }
+
+    .subitem-value {
+      grid-area: value;
+      font-size: 0.84rem;
+      font-weight: 700;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .subitem-calc {
+      grid-area: calc;
+      font-size: 0.73rem;
+      color: rgba(255, 255, 255, 0.65);
+      background: rgba(0, 0, 0, 0.25);
+      padding: 3px 6px;
+      border-radius: 4px;
+      word-break: break-word;
+      line-height: 1.3;
+    }
+
+    .final-value {
+      font-size: 0.95rem;
     }
   }
 

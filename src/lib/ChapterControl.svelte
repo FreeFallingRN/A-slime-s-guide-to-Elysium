@@ -202,7 +202,7 @@
           >
             {#each chaptersData as ch}
               <option value={ch.index}>
-                Chapter {ch.index}: {ch.title} (Lv.{ch.halonLvl})
+                Ch {ch.index}: {ch.title}
               </option>
             {/each}
           </select>

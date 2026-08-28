@@ -183,8 +183,16 @@ export const characterData = {
       target: "digestion",
       value: 0.10,
       chapter: 2,
-      description: "Optimizes the enzymatic breakdown of absorbed matter, accelerating cellular processing.",
-      effect: "Compounds ×1.10 per level on Digestion."
+      description: "Increases the speed at which organic matter is dissolved.",
+      effect: "+10% to current Digestion rate.",
+      upgrades: [
+        {
+          chapter: 23,
+          type: "trait",
+          traitName: "Digestive Filter",
+          traitDescription: "The organism is now able to identify and isolate specific components during molecular breakdown. It can choose not to digest certain parts of an object or creature, keeping them intact inside its body or expelling them after cleaning."
+        }
+      ]
     },
     {
       id: "viscous_flow",
@@ -192,8 +200,16 @@ export const characterData = {
       target: "speed",
       value: 0.10,
       chapter: 2,
-      description: "Improves motor control of the gelatin body, enabling smoother and faster locomotion.",
-      effect: "Compounds ×1.10 per level on Agility."
+      description: "Increases agility in controlling one’s own body.",
+      effect: "+10% of current agility and controls.",
+      upgrades: [
+        {
+          chapter: 27,
+          type: "trait",
+          traitName: "Selective Viscosity",
+          traitDescription: "The organism can now alter the viscosity of the part of the body in contact with the ground to become perfectly slippery or extremely adhesive at will."
+        }
+      ]
     },
     {
       id: "structural_stability",
@@ -201,7 +217,7 @@ export const characterData = {
       target: "none",
       value: 1.0,
       chapter: 8,
-      description: "Reinforces the internal gelatinous lattice, reducing uncontrolled deformations and slippage.",
+      description: "Improves basic body control.",
       upgrades: [
         {
           chapter: 47,
@@ -211,37 +227,34 @@ export const characterData = {
         }
       ]
     },
-    { id: "hemolymphatic_tissue", name: "Hemolymphatic Tissue", target: "digestion", value: 0.20, chapter: 4, description: "During active combat, hemolymph flood accelerates biomass conversion into vital energy.", effect: "(Combat Only) Multiplies Digestion by ×(1 + 0.20 × level)." },
-    { id: "passive_digestion", name: "Passive Digestion", target: "digestion", value: 0.10, chapter: 5, description: "Maintains a steady trickle of biomass conversion even while stationary.", effect: "Adds +10% × level to Digestion." },
-    { id: "mass_expansion", name: "Mass Expansion", target: "digestion", value: 0.30, chapter: 9, description: "Expands the body's volumetric capacity, creating more surface area for absorption.", effect: "Adds +30% × level to Digestion (additive)." },
+    { id: "hemolymphatic_tissue", name: "Hemolymphatic Tissue", target: "digestion", value: 0.20, chapter: 4, description: "Pulsating channels adapted from the larva react to pain and stress stimuli. During combat or under active damage, the conversion of absorbed matter into vital energy is accelerated.", effect: "(Combat Only) Multiplies Digestion by additional 20% × level." },
+    { id: "passive_digestion", name: "Passive Digestion", target: "digestion", value: 0.10, chapter: 5, description: "The body develops autonomous microprocesses of energy conversion, absorbing traces of mana and matter from the environment. It slowly generates Biomass even at rest.", effect: "Adds +10% × level to Digestion." },
+    { id: "mass_expansion", name: "Mass Expansion", target: "digestion", value: 0.30, chapter: 9, description: "Increases maximum Bio-Mass capacity and body volume proportionally.", effect: "Adds +30% × level to Digestion (additive)." },
     { id: "membrane_reinforcement", name: "Membrane Reinforcement", target: "none", value: 1.0, chapter: 2, description: "Thickens the outer gelatinous membrane, increasing resistance to physical impacts and sharp edges." },
-    { id: "instinctive_perception", name: "Instinctive Perception", target: "none", value: 0.0, chapter: 8, description: "Tunes the membrane to detect ground vibrations and motion disturbances." },
+    { id: "instinctive_perception", name: "Instinctive Perception", target: "none", value: 0.0, chapter: 8, description: "Detects nearby vibrations and movements." },
     {
       id: "reinforced_exoskeleton",
       name: "Reinforced Exoskeleton",
       target: "none",
-      value: 2.0,
       chapter: 11,
-      description: "Generates a hardened chitinous shell from beetle-derived biomass compounds."
+      description: "Consumes Biomass to generate a resistant Exoskeleton around the body."
     },
     {
       id: "obsidian_exoskeleton",
       name: "Obsidian Exoskeleton",
       target: "none",
-      value: 2.0,
       chapter: 71,
       replaces: "reinforced_exoskeleton",
       description: "Consumes biomass reserves to generate a rigid, near-indestructible Obsidian shell."
     },
-    { id: "body_density", name: "Body Density", target: "none", value: 0.10, chapter: 14, description: "Compresses internal gelatin layers to increase structural integrity and impact force." },
-    { id: "partial_division", name: "Partial Division", target: "digestion", value: 0.10, chapter: 16, description: "Expels a biomass fragment to form a remote gathering clone.", effect: "Adds +10% × level to Digestion." },
-    { id: "memory_resonance", name: "Memory Resonance", target: "none", value: 0.0, chapter: 25, description: "Absorbs and retransmits instinctual memory imprints from consumed creatures." },
-    { id: "magic_core", name: "Magic Core", target: "mana", value: 0.10, chapter: 25, description: "Transmutes the vital core into a mana-generating engine that feeds on biological output.", effect: "Compounds ×1.10 per level on Mana." },
+    { id: "body_density", name: "Body Density", target: "none", value: 0.10, chapter: 14, description: "Consumes Biomass to increase body density.", effect: "+10% × level to Body Density." },
+    { id: "partial_division", name: "Partial Division", target: "digestion", value: 0.30, chapter: 16, description: "Consumes biomass to create a small extension to collect nearby matter.", effect: "Adds +10% × level to Digestion." },
+    { id: "memory_resonance", name: "Memory Resonance", target: "none", value: 0.0, chapter: 25, description: "By absorbing another creature’s brain or core, Memory Fragments and the creature’s instincts can be absorbed." },
+    { id: "magic_core", name: "Magic Core", target: "mana", value: 0.10, chapter: 25, description: "The vital core undergoes a qualitative transmutation, becoming a magical energy engine. It emits constant pulses that saturate the cellular structure, forcing the opening of conductivity channels (Mana Paths) through the biomass to support, filter, and circulate raw energy throughout the organism.", effect: "Compounds ×1.10 per level on Mana." },
     { id: "ice_spike", name: "Ice Spike", target: "none", value: 0.15, chapter: 26, description: "Channels concentrated frozen mana to conjure and launch a crystalline ice projectile." },
-    { id: "chemosensory_aptitude", name: "Chemosensory Aptitude", target: "none", value: 0.0, chapter: 31, description: "Enables the outer membrane to parse subtle chemical gradients and residual mana traces." },
-    { id: "incessant_hunger", name: "Incessant Hunger", target: "none", value: 0.0, chapter: 40, description: "Enhances nutrient extraction from any organic material to boost physical vigor at the cost of constant appetite." },
+    { id: "chemosensory_aptitude", name: "Chemosensory Aptitude", target: "none", value: 0.0, chapter: 31, description: "The outer membrane can detect odor particles and mana residues in a much more refined way." },
     { id: "pigmentation_mimicry", name: "Pigmentation Mimicry", target: "none", value: 0.0, chapter: 41, description: "Rewires skin chromatophores to mirror surrounding textures as active camouflage." },
-    { id: "pack_instinct", name: "Pack Instinct", target: "none", value: 0.0, chapter: 49, description: "Enhances instinctual coordination and mental communication between the main body and remote clone units." },
+    { id: "pack_instinct", name: "Pack Instinct", target: "none", value: 0.0, chapter: 49, description: "The user’s consciousness projects beyond the main core, establishing a sensory and motor link with allied or subordinate units." },
     { id: "magic_harmonizer", name: "Magic Core Harmonizer", target: "none", value: 0.0, chapter: 54, description: "Synchronizes the Magic Core's mana output cadence with physical motor signals to reduce conversion loss during active skill usage." },
     { id: "monocular_vision", name: "Telescopic Vision", target: "none", value: 0.0, chapter: 55, description: "Narrows peripheral focus into a precise long-range zoom, improving spatial reaction time." },
     { id: "heavy_weapons_affinity", name: "Affinity with Heavy Weapons", target: "none", value: 0.0, chapter: 55, description: "Assimilates muscle memory to handle heavy impact weapons and axes with enhanced balance and leverage." },
@@ -289,7 +302,7 @@ export const abilityProgression = {
     { chapter: 9, level: 6 },
     { chapter: 14, level: 7 },
     { chapter: 15, level: 8 },
-    { chapter: 22, level: 10 },
+    { chapter: 20, level: 10 },
     { chapter: 23, level: 11 },
     { chapter: 27, level: 12 },
     { chapter: 28, level: 13 },
@@ -332,7 +345,7 @@ export const abilityProgression = {
     { chapter: 9, level: 2 },
     { chapter: 15, level: 3 },
     { chapter: 22, level: 4 },
-    { chapter: 28, level: 5 }
+    { chapter: 27, level: 5 }
   ],
   mass_expansion: [
     { chapter: 9, level: 1 },
@@ -404,9 +417,6 @@ export const abilityProgression = {
     { chapter: 33, level: 2 },
     { chapter: 55, level: 5 },
     { chapter: 68, level: 7 }
-  ],
-  incessant_hunger: [
-    { chapter: 40, level: 1 }
   ],
   pigmentation_mimicry: [
     { chapter: 41, level: 1 }
