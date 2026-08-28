@@ -14,65 +14,57 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   // ----------------------------------------------------
   // 1. DIGESTION PIPELINE (8-Stage Calculated Pipeline)
   // ----------------------------------------------------
-  const baseStart = baseStats.digestion || 4.0;
-  const getDigBase = (lvl) => {
-    const mults = baseStats.evolutionMultipliers || {};
-    if (lvl in mults) return Math.round(baseStart * mults[lvl] * 100) / 100;
-    if (lvl > 4) {
-      const extra = (lvl - 4) * (mults.scalingPerLevel || 0.75);
-      return Math.round(baseStart * ((mults[4] || 3.63) + extra) * 100) / 100;
-    }
-    return baseStart;
-  };
+  const baseStart = baseStats.digestion;
   
-  // Stage 1: Base Digestion (Volumetric Absorption Capacity)
-  const digBase = getDigBase(playerLvl);
+  // Stage 1: Base Digestion
+  const digBase = baseStart;
 
   // Helper to query ability metadata dynamically from active abilities list
   const getAbilityObj = (id) => abilities.find(a => a.id === id);
 
-  // Stage 2: Mass Expansion
-  const massAb = getAbilityObj('mass_expansion');
-  const massLvl = massAb ? massAb.level : 0;
-  const massRate = massAb ? (massAb.value || 0.30) : 0.30;
-  const massVal = Math.round(digBase * (massRate * massLvl) * 100) / 100;
+  const floor2 = (val) => Math.floor(Math.round(val * 10000) / 100) / 100;
 
-  // Stage 3: Passive Digestion
-  const passiveAb = getAbilityObj('passive_digestion');
-  const passiveLvl = passiveAb ? passiveAb.level : 0;
-  const passiveRate = passiveAb ? (passiveAb.value || 0.10) : 0.10;
-  const passiveVal = Math.round(digBase * (passiveRate * passiveLvl) * 100) / 100;
-
-  // Stage 4: Exponential Enhancement (Efficient Digestion)
+  // Stage 2: Enhanced Base (Step-by-step 2-decimal floored compounding per level)
   const efficientAb = getAbilityObj('efficient_digestion');
   const efficientLvl = efficientAb ? efficientAb.level : 0;
-  const efficientRate = efficientAb ? (efficientAb.value || 0.10) : 0.10;
+  const efficientRate = efficientAb ? efficientAb.value : 0;
   let digEnhanced = digBase;
   for (let i = 0; i < efficientLvl; i++) {
-    digEnhanced = Math.round(digEnhanced * (1 + efficientRate) * 100) / 100;
+    digEnhanced = floor2(digEnhanced * (1 + efficientRate));
   }
 
-  // Stage 5: Base Subtotal (Base + Mass Expansion + Passive Digestion)
-  const baseSum = Math.round((digBase + massVal + passiveVal) * 100) / 100;
+  // Stage 3: Mass Expansion
+  const massAb = getAbilityObj('mass_expansion');
+  const massLvl = massAb ? massAb.level : 0;
+  const massRate = massAb ? massAb.value : 0;
+  const massVal = floor2(digEnhanced * (massRate * massLvl));
+
+  // Stage 4: Passive Digestion
+  const passiveAb = getAbilityObj('passive_digestion');
+  const passiveLvl = passiveAb ? passiveAb.level : 0;
+  const passiveRate = passiveAb ? passiveAb.value : 0;
+  const passiveVal = floor2(digEnhanced * (passiveRate * passiveLvl));
+
+  // Stage 5: Base Subtotal (Enhanced Base + Mass Expansion + Passive Digestion)
+  const baseSum = floor2(digEnhanced + massVal + passiveVal);
 
   // Stage 6: Remote Division Clone Bonus
   const cloneAb = getAbilityObj('partial_division');
   const cloneLvl = cloneAb ? cloneAb.level : 0;
-  const cloneMult = 0.10 * cloneLvl;
+  const cloneMult = cloneAb ? cloneAb.level * cloneAb.value : 0;
   const cloneVal = cloneLvl > 0 ? Math.round(baseSum * cloneMult * 100) / 100 : 0;
 
   // Stage 7: Neutral Total Rate
   const neutralSum = Math.round((baseSum + cloneVal) * 100) / 100;
 
   // Stage 8: Active Combat Flood Multiplier (Hemolymphatic Tissue)
-  // Stage 8: Active Combat Flood Multiplier (Hemolymphatic Tissue)
   const hemoAb = getAbilityObj('hemolymphatic_tissue');
   const hemoLvl = hemoAb ? hemoAb.level : 0;
-  const hemoRate = hemoAb ? (hemoAb.value || 0.20) : 0.20;
+  const hemoRate = hemoAb ? hemoAb.value : 0;
   const hemoMult = 1 + hemoRate * hemoLvl;
   const hemoVal = isCombat ? Math.round(baseSum * (hemoMult - 1) * 100) / 100 : 0;
 
-  // Main Body Rate (accelerated by Combat Flood) vs Remote Clone Gathering Output
+  // Main Body Rate (accelerated by Combat) vs Remote Clone Gathering Output
   const mainBodyRate = isCombat ? Math.round(baseSum * hemoMult * 100) / 100 : baseSum;
   const cloneOutput = cloneVal;
   const finalDigestion = Math.round((mainBodyRate + cloneOutput) * 100) / 100;
@@ -101,7 +93,7 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   // ----------------------------------------------------
   const speedStart = baseStats.speed || 0.25;
   const speedEvolutionMult = playerLvl >= 2 ? 1.133 : 1.0;
-  const speedBase = Math.round(speedStart * speedEvolutionMult * 1000) / 1000;
+  const speedBase = Math.round(speedStart * speedEvolutionMult * 100) / 100;
   const viscousLvl = getLvl('viscous_flow');
   let speedCompounded = speedBase;
   for (let i = 0; i < viscousLvl; i++) {

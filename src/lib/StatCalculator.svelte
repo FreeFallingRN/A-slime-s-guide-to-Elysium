@@ -2,7 +2,7 @@
   import {
     currentChapter,
     activeChapterDetails,
-    charactersData,
+    characterData,
     getAbilityLevel,
     getAbilitiesForChapter,
     getRequiredExp,
@@ -16,8 +16,7 @@
   } from "lucide-svelte";
   import { runCalculation } from "./calc.js";
 
-  let selectedCharKey = "halon";
-  let character = charactersData[selectedCharKey];
+  let character = characterData;
   let chapter = 5;
   let activeLvl = 1;
   let activeReqExp = 100;
@@ -99,8 +98,8 @@
 
   // Whenever character or chapter changes, rebuild the local abilities list
   $: {
-    character = charactersData[selectedCharKey];
-    const mappedAbilities = getAbilitiesForChapter(selectedCharKey, chapter);
+    character = characterData;
+    const mappedAbilities = getAbilitiesForChapter(chapter);
 
     localAbilities = mappedAbilities.sort((a, b) => {
       const orderA = DESIRED_GROUP_ORDER.indexOf(a.target || "none");
@@ -489,20 +488,16 @@
         </div>
 
         <div class="breakdown-steps-list">
-          <!-- Step 1: Base Absorption Rate -->
+          <!-- Stage 1: Base Digestion -->
           <div class="step-card">
             <div class="step-header">
-              <span class="step-number">STEP 1</span>
+              <span class="step-number">BASE</span>
               <span class="step-title">Base Digestion Speed</span>
             </div>
             <div class="step-subitems">
               <div class="subitem-row">
-                <span class="subitem-name"
-                  >Base Digestion Rate (Level {activeLvl}):</span
-                >
-                <span class="subitem-calc"
-                  >4.00 × (Level {activeLvl} Volumetric Multiplier)</span
-                >
+                <span class="subitem-name">Base Absorption Capacity:</span>
+                <span class="subitem-calc">Base Stat</span>
                 <span class="subitem-value"
                   >{calcData.digestion.base} bio/h</span
                 >
@@ -510,12 +505,37 @@
             </div>
           </div>
 
-          <!-- Step 2: Additive Ability Bonuses -->
+          <!-- Stage 2: Enhanced Base -->
+          {#if calcData.digestion.efficientLvl > 0}
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-number">MULTIPLIER</span>
+                <span class="step-title">Enhanced Base</span>
+              </div>
+              <div class="step-subitems">
+                <div class="subitem-row">
+                  <span class="subitem-name"
+                    >Efficient Digestion (Lv {calcData.digestion
+                      .efficientLvl}):</span
+                  >
+                  <span class="subitem-calc"
+                    >{calcData.digestion.base} × (1 + 10% ^ {calcData.digestion
+                      .efficientLvl})</span
+                  >
+                  <span class="subitem-value"
+                    >{calcData.digestion.digEnhanced} bio/h</span
+                  >
+                </div>
+              </div>
+            </div>
+          {/if}
+
+          <!-- Stage 3 & 4: Mass Expansion & Passive Digestion Multipliers -->
           {#if calcData.digestion.massLvl > 0 || calcData.digestion.passiveLvl > 0}
             <div class="step-card">
               <div class="step-header">
-                <span class="step-number">STEP 2</span>
-                <span class="step-title">Additive Ability Bonuses</span>
+                <span class="step-number">ADDITIVE</span>
+                <span class="step-title">Passive skills</span>
               </div>
               <div class="step-subitems">
                 {#if calcData.digestion.massLvl > 0}
@@ -524,8 +544,8 @@
                       >+ Mass Expansion (Lv {calcData.digestion.massLvl}):</span
                     >
                     <span class="subitem-calc"
-                      >{calcData.digestion.base} × (30% × {calcData.digestion
-                        .massLvl})</span
+                      >{calcData.digestion.digEnhanced} × (30% × {calcData
+                        .digestion.massLvl})</span
                     >
                     <span class="subitem-value"
                       >+{calcData.digestion.massVal} bio/h</span
@@ -539,8 +559,8 @@
                         .passiveLvl}):</span
                     >
                     <span class="subitem-calc"
-                      >{calcData.digestion.base} × (10% × {calcData.digestion
-                        .passiveLvl})</span
+                      >{calcData.digestion.digEnhanced} × (10% × {calcData
+                        .digestion.passiveLvl})</span
                     >
                     <span class="subitem-value"
                       >+{calcData.digestion.passiveVal} bio/h</span
@@ -551,35 +571,37 @@
             </div>
           {/if}
 
-          <!-- Step 3: Main Body Digestion Subtotal -->
-          <div class="step-card highlight-step">
-            <div class="step-header">
-              <span class="step-number">STEP 3</span>
-              <span class="step-title">Main Body Subtotal</span>
-            </div>
-            <div class="step-subitems">
-              <div class="subitem-row">
-                <span class="subitem-name"></span>
-                <span class="subitem-calc">
-                  {calcData.digestion.base} (Base)
-                  {#if calcData.digestion.massLvl > 0}
-                    + {calcData.digestion.massVal} (Mass){/if}
-                  {#if calcData.digestion.passiveLvl > 0}
-                    + {calcData.digestion.passiveVal} (Passive){/if}
-                </span>
-                <span class="subitem-value"
-                  >{calcData.digestion.baseSum} bio/h</span
-                >
+          <!-- Stage 5: Base Subtotal (Shown when clones or combat add further stages) -->
+          {#if calcData.digestion.cloneLvl > 0 || (combatActive && calcData.digestion.hemoLvl > 0)}
+            <div class="step-card highlight-step">
+              <div class="step-header">
+                <span class="step-number">SUM</span>
+                <span class="step-title">Main Body Rate</span>
+              </div>
+              <div class="step-subitems">
+                <div class="subitem-row">
+                  <span class="subitem-name">Main Body Base Sum:</span>
+                  <span class="subitem-calc">
+                    {calcData.digestion.digEnhanced} (Enhanced Base)
+                    {#if calcData.digestion.massLvl > 0}
+                      + {calcData.digestion.massVal} (Mass){/if}
+                    {#if calcData.digestion.passiveLvl > 0}
+                      + {calcData.digestion.passiveVal} (Passive){/if}
+                  </span>
+                  <span class="subitem-value"
+                    >{calcData.digestion.baseSum} bio/h</span
+                  >
+                </div>
               </div>
             </div>
-          </div>
+          {/if}
 
-          <!-- Step 4: Remote Division Clone Gathering Output -->
+          <!-- Stage 6: Remote Division Clone Bonus -->
           {#if calcData.digestion.cloneLvl > 0}
             <div class="step-card">
               <div class="step-header">
-                <span class="step-number">STEP 4</span>
-                <span class="step-title">Clone Output</span>
+                <span class="step-number">ADDITIVE</span>
+                <span class="step-title">Clone Harvest Rate</span>
               </div>
               <div class="step-subitems">
                 <div class="subitem-row">
@@ -588,49 +610,83 @@
                       .cloneLvl}):</span
                   >
                   <span class="subitem-calc"
-                    >{calcData.digestion.baseSum} (Subtotal) × (10% × {calcData
-                      .digestion.cloneLvl} Clones)</span
+                    >{calcData.digestion.baseSum} (Base Subtotal) × (10% × {calcData
+                      .digestion.cloneLvl})</span
                   >
                   <span class="subitem-value"
-                    >+{calcData.digestion.cloneOutput} bio/h</span
+                    >+{calcData.digestion.cloneVal} bio/h</span
                   >
                 </div>
               </div>
             </div>
           {/if}
 
-          <!-- Combat Bonus Step if active -->
-          {#if combatActive && calcData.digestion.hemoLvl > 0}
-            <div class="step-card combat-step">
+          <!-- Stage 7: Neutral Total Rate (Shown when clones are active) -->
+          {#if calcData.digestion.cloneLvl > 0}
+            <div class="step-card">
               <div class="step-header">
-                <span class="step-number">COMBAT</span>
-                <span class="step-title">Active Combat Boost (Main Body Only)</span>
+                <span class="step-number">SUM</span>
+                <span class="step-title">Combined Rate</span>
               </div>
               <div class="step-subitems">
                 <div class="subitem-row">
-                  <span class="subitem-name">+ Hemolymphatic Tissue (Lv {calcData.digestion.hemoLvl}):</span>
-                  <span class="subitem-calc">{calcData.digestion.baseSum} (Main Body) × (20% × {calcData.digestion.hemoLvl})</span>
-                  <span class="subitem-value">+{calcData.digestion.hemoVal} bio/h</span>
+                  <span class="subitem-name">Passive / Out-of-Combat Rate:</span
+                  >
+                  <span class="subitem-calc"
+                    >{calcData.digestion.baseSum} (Subtotal) + {calcData
+                      .digestion.cloneVal} (Clones)</span
+                  >
+                  <span class="subitem-value"
+                    >{calcData.digestion.neutralSum} bio/h</span
+                  >
                 </div>
               </div>
             </div>
           {/if}
 
-          <!-- Final Total Digestion Speed Step -->
+          <!-- Stage 8: Active Combat Flood Multiplier -->
+          {#if combatActive && calcData.digestion.hemoLvl > 0}
+            <div class="step-card combat-step">
+              <div class="step-header">
+                <span class="step-number">ADDITIVE</span>
+                <span class="step-title">Active Combat</span>
+              </div>
+              <div class="step-subitems">
+                <div class="subitem-row">
+                  <span class="subitem-name"
+                    >+ Hemolymphatic Tissue (Lv {calcData.digestion
+                      .hemoLvl}):</span
+                  >
+                  <span class="subitem-calc"
+                    >{calcData.digestion.baseSum} (Main Body) × (20% × {calcData
+                      .digestion.hemoLvl})</span
+                  >
+                  <span class="subitem-value"
+                    >+{calcData.digestion.hemoVal} bio/h</span
+                  >
+                </div>
+              </div>
+            </div>
+          {/if}
+
+          <!-- Final Output -->
           <div class="step-card final-step">
             <div class="step-header">
               <span class="step-number">FINAL</span>
-              <span class="step-title">Total Digestion Speed</span>
+              <span class="step-title">Total Digestion Rate</span>
             </div>
             <div class="step-subitems">
               <div class="subitem-row">
                 <span class="subitem-name">Total Combined Output:</span>
                 <span class="subitem-calc">
-                  {calcData.digestion.mainBody} (Main Body{#if combatActive} Combat Rate{/if})
+                  {calcData.digestion.mainBody} (Main Body{#if combatActive}
+                    Combat Rate{/if})
                   {#if calcData.digestion.cloneLvl > 0}
                     + {calcData.digestion.cloneOutput} (Clones){/if}
                 </span>
-                <span class="subitem-value final-value">{calcData.digestion.final} bio/h</span>
+                <span class="subitem-value final-value"
+                  >{calcData.digestion.final} bio/h</span
+                >
               </div>
             </div>
           </div>
