@@ -871,144 +871,7 @@
     }
   }
 
-  @media (max-width: 767px) {
-    .panel-header {
-      padding: 10px;
-      gap: 8px;
-    }
 
-    .tab-selector {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 4px;
-      width: 100%;
-    }
-
-    .tab-btn {
-      padding: 7px 4px;
-      font-size: 0.75rem;
-      width: 100%;
-    }
-
-    .tab-label-full {
-      display: none;
-    }
-
-    .tab-label-short {
-      display: inline;
-    }
-
-    .abilities-list {
-      padding: 12px 8px;
-      gap: 12px;
-    }
-
-    .group-body {
-      padding-left: 6px;
-      margin-left: 2px;
-      gap: 8px;
-    }
-
-    .ability-details {
-      padding: 12px 10px;
-    }
-
-    .title-row {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
-    }
-
-    .title-badges {
-      justify-content: flex-start;
-      width: 100%;
-    }
-
-    .bonus-badge {
-      font-size: 0.65rem;
-    }
-
-    .flowchart-container {
-      padding: 12px 6px;
-    }
-
-    .calc-breakdown-container {
-      padding: 12px 6px;
-      gap: 10px;
-    }
-
-    .breakdown-header h4 {
-      font-size: 0.88rem;
-      line-height: 1.3;
-    }
-
-    .breakdown-subtitle {
-      font-size: 0.72rem;
-      line-height: 1.3;
-    }
-
-    .step-card {
-      padding: 10px 10px;
-      gap: 8px;
-    }
-
-    .step-header {
-      gap: 8px;
-    }
-
-    .step-subitems {
-      padding-left: 0;
-      gap: 6px;
-    }
-
-    .subitem-row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      grid-template-areas:
-        "name value"
-        "calc calc";
-      gap: 4px 8px;
-      padding: 6px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      align-items: baseline;
-    }
-
-    .subitem-row:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .subitem-name {
-      grid-area: name;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--color-holo-muted);
-      line-height: 1.25;
-    }
-
-    .subitem-value {
-      grid-area: value;
-      font-size: 0.84rem;
-      font-weight: 700;
-      text-align: right;
-      white-space: nowrap;
-    }
-
-    .subitem-calc {
-      grid-area: calc;
-      font-size: 0.73rem;
-      color: rgba(255, 255, 255, 0.65);
-      background: rgba(0, 0, 0, 0.25);
-      padding: 3px 6px;
-      border-radius: 4px;
-      word-break: break-word;
-      line-height: 1.3;
-    }
-
-    .final-value {
-      font-size: 0.95rem;
-    }
-  }
 
   .panel-header {
     border-bottom: 1px solid var(--color-holo-border);
@@ -2274,5 +2137,165 @@
     font-weight: 700;
     text-shadow: 0 0 8px var(--color-holo-glow);
     box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+  }
+
+  /* --- RESPONSIVE MOBILE CALCULATOR LAYOUT --- */
+  @media (max-width: 767px) {
+    .panel-header {
+      padding: 10px 8px;
+      gap: 8px;
+    }
+
+    .tab-selector {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+      width: 100%;
+    }
+
+    .tab-btn {
+      padding: 7px 4px;
+      font-size: 0.75rem;
+      width: 100%;
+    }
+
+    .tab-label-full {
+      display: none;
+    }
+
+    .tab-label-short {
+      display: inline;
+    }
+
+    .abilities-list {
+      padding: 12px 8px;
+      gap: 12px;
+    }
+
+    .group-body {
+      padding-left: 6px;
+      margin-left: 2px;
+      gap: 8px;
+    }
+
+    .ability-details {
+      padding: 12px 10px;
+    }
+
+    .title-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .title-badges {
+      justify-content: flex-start;
+      width: 100%;
+    }
+
+    .bonus-badge {
+      font-size: 0.65rem;
+    }
+
+    .flowchart-container {
+      padding: 12px 6px;
+    }
+
+    .calc-breakdown-container {
+      padding: 12px 6px;
+      gap: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      min-width: 0;
+    }
+
+    .breakdown-header h4 {
+      font-size: 0.88rem;
+      line-height: 1.3;
+    }
+
+    .breakdown-subtitle {
+      font-size: 0.72rem;
+      line-height: 1.3;
+    }
+
+    .step-card {
+      padding: 10px 10px;
+      gap: 8px;
+      width: 100%;
+      box-sizing: border-box;
+      min-width: 0;
+    }
+
+    .step-header {
+      gap: 8px;
+    }
+
+    .step-subitems {
+      padding-left: 0;
+      gap: 6px;
+      width: 100%;
+      box-sizing: border-box;
+      min-width: 0;
+    }
+
+    .subitem-row {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      grid-template-areas:
+        "name value"
+        "calc calc" !important;
+      gap: 4px 6px !important;
+      padding: 6px 0 !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+      align-items: baseline !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      min-width: 0 !important;
+    }
+
+    .subitem-row:last-child {
+      border-bottom: none !important;
+      padding-bottom: 0 !important;
+    }
+
+    .subitem-name {
+      grid-area: name !important;
+      font-size: 0.8rem !important;
+      font-weight: 600 !important;
+      color: var(--color-holo-muted) !important;
+      line-height: 1.25 !important;
+      min-width: 0 !important;
+      word-break: break-word !important;
+    }
+
+    .subitem-value {
+      grid-area: value !important;
+      font-size: 0.84rem !important;
+      font-weight: 700 !important;
+      color: #00ffaa !important;
+      text-align: right !important;
+      white-space: nowrap !important;
+      padding-left: 4px !important;
+    }
+
+    .subitem-calc {
+      grid-area: calc !important;
+      font-size: 0.73rem !important;
+      color: rgba(255, 255, 255, 0.7) !important;
+      background: rgba(0, 0, 0, 0.35) !important;
+      border: 1px solid rgba(255, 255, 255, 0.06) !important;
+      padding: 4px 8px !important;
+      border-radius: 4px !important;
+      word-break: break-word !important;
+      line-height: 1.35 !important;
+      min-width: 0 !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    .final-value {
+      font-size: 0.95rem !important;
+    }
   }
 </style>
