@@ -89,17 +89,11 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   }
 
   // ----------------------------------------------------
-  // 3. SPEED PIPELINE (Viscous Flow compounding on Evolution Base)
+  // 3. SPEED PIPELINE (Viscous Flow compounding effect)
   // ----------------------------------------------------
-  const speedStart = baseStats.speed || 0.25;
-  const speedEvolutionMult = playerLvl >= 2 ? 1.133 : 1.0;
-  const speedBase = Math.round(speedStart * speedEvolutionMult * 100) / 100;
+  const speedBase = baseStats.speed || 0.25;
   const viscousLvl = getLvl('viscous_flow');
-  let speedCompounded = speedBase;
-  for (let i = 0; i < viscousLvl; i++) {
-    speedCompounded = Math.round(speedCompounded * 1.10 * 100) / 100;
-  }
-  const finalSpeed = Math.round(speedCompounded * 100) / 100;
+  const finalSpeed = Math.round(speedBase * Math.pow(1.10, viscousLvl) * 100) / 100;
 
   return {
     digestion: {
