@@ -128,6 +128,13 @@
     combatActive,
     chapter,
   );
+  $: isManaUnlocked = calcData.mana && calcData.mana.coreLvl > 0;
+  $: {
+    if (!isManaUnlocked && activeTab === 'mana') {
+      activeTab = 'pipeline';
+    }
+  }
+
   $: finalStats = {
     digestion: calcData.digestion.final,
     mana: calcData.mana.final,
@@ -218,7 +225,7 @@
     </div>
 
     <div class="stats-comparison">
-      {#each ["mana", "speed", "digestion"] as stat}
+      {#each (isManaUnlocked ? ["mana", "speed", "digestion"] : ["speed", "digestion"]) as stat}
         {@const isDigestionInCombat = stat === "digestion" && combatActive}
         <div class="stat-row-group">
           <div class="stat-row {isDigestionInCombat ? 'combat-highlight' : ''}">
@@ -303,13 +310,15 @@
             <span class="tab-label-full">Digestion Calculator</span>
             <span class="tab-label-short">Digestion</span>
           </button>
-          <button
-            class="tab-btn {activeTab === 'mana' ? 'active' : ''}"
-            on:click={() => (activeTab = "mana")}
-          >
-            <span class="tab-label-full">Mana Calculator</span>
-            <span class="tab-label-short">Mana</span>
-          </button>
+          {#if isManaUnlocked}
+            <button
+              class="tab-btn {activeTab === 'mana' ? 'active' : ''}"
+              on:click={() => (activeTab = "mana")}
+            >
+              <span class="tab-label-full">Mana Calculator</span>
+              <span class="tab-label-short">Mana</span>
+            </button>
+          {/if}
           <button
             class="tab-btn {activeTab === 'speed' ? 'active' : ''}"
             on:click={() => (activeTab = "speed")}
@@ -692,7 +701,7 @@
           </div>
         </div>
       </div>
-    {:else if activeTab === "mana"}
+    {:else if activeTab === "mana" && isManaUnlocked}
       <!-- Ultra-Clear Step-by-Step Mana Breakdown -->
       <div class="calc-breakdown-container">
         <div class="breakdown-header">
