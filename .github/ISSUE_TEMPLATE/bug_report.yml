@@ -1,0 +1,71 @@
+name: "🐛 Bug Report"
+description: File a bug or unexpected behavior in the application
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report an issue! Please provide as much context as possible.
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: A clear and concise summary of the bug.
+      placeholder: e.g., Speed stat calculation does not account for Combat State toggle
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this behavior?
+      placeholder: |
+        1. Go to 'Stat Breakdown'
+        2. Set Chapter Lock to 'Chapter 15'
+        3. Toggle 'Slime Resiliency' on
+        4. Observe the calculation output
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+    validations:
+      required: true
+  - type: input
+    id: chapter
+    attributes:
+      label: Chapter Context / Setting
+      description: What chapter was selected on the Chrono-Controller when this occurred?
+      placeholder: e.g., Chapter 12
+    validations:
+      required: false
+  - type: dropdown
+    id: device
+    attributes:
+      label: Platform / Browser
+      description: What platform were you using?
+      options:
+        - Chrome (Desktop)
+        - Firefox (Desktop)
+        - Safari (Desktop)
+        - Edge (Desktop)
+        - Android (Chrome / PWA)
+        - iOS (Safari / PWA)
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Screenshots or Additional Context
+      description: Add any screenshots, logs, or extra context if applicable.

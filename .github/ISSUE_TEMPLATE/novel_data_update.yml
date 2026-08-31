@@ -1,0 +1,47 @@
+name: "📖 Novel Data / Lore / Stat Update"
+description: Propose updates or corrections for chapter milestones, character lore, or ability scaling
+title: "[Data Update]: Chapter "
+labels: ["novel-data", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to propose additions or corrections to novel data (stats, abilities, character lore, chapter unlocks).
+  - type: dropdown
+    id: category
+    attributes:
+      label: Data Category
+      description: What type of data update is this?
+      options:
+        - New Chapter Milestone / Level Entry
+        - Stat Calculation / Ability Formula Correction
+        - New Character / Evolution Stage Entry
+        - Lore / Faction / Relationship Update
+        - Typo / Citation Correction
+    validations:
+      required: true
+  - type: input
+    id: chapter_num
+    attributes:
+      label: Chapter Number / Citation
+      description: Which chapter(s) in *Slime Evolution* contain this information?
+      placeholder: e.g., Chapter 28
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Proposed Data / Changes
+      description: Provide the exact numbers, ability descriptions, or lore details to add/modify.
+      placeholder: |
+        - Character: Halon
+        - New Ability: Acid Lance (Unlocked Ch 28)
+        - Base Mana: 120 -> 145
+        - Scaling Formula: Additive (+5/lvl)
+    validations:
+      required: true
+  - type: textarea
+    id: source_quote
+    attributes:
+      label: Novel Reference / Excerpt (Optional)
+      description: Relevant passage or quote from the chapter supporting this change (please keep excerpts concise to respect copyright).

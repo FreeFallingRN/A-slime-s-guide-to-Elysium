@@ -109,9 +109,9 @@ If you'd like to add or update content from latest novel chapters:
    ```bash
    git commit -m "Add Chapter 31 stat milestones and character updates"
    ```
-3. **Push** to your fork and submit a **Pull Request** to the `master` branch.
+3. **Push** to your fork and submit a **Pull Request** targeting the `dev` branch.
 
-Automated GitHub Actions will test and deploy updates to GitHub Pages upon merge to `master`.
+Releases from `dev` are merged to `master`, which triggers automated testing and deployment to GitHub Pages.
 
 ---
 
