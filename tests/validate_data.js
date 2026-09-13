@@ -65,6 +65,9 @@ for (const ability of characterData.abilities) {
       fail(`ability ${ability.id} has upgrade before unlock`);
     }
   }
+  if (ability.aliases && !Array.isArray(ability.aliases)) {
+    fail(`ability ${ability.id} aliases must be an array`);
+  }
 }
 
 for (const [id, milestones] of Object.entries(abilityProgression)) {
