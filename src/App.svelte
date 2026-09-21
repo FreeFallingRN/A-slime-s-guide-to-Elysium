@@ -27,6 +27,9 @@
   let deferredPrompt = null;
   let installable = false;
 
+  // Discord server invite URL (customize when ready)
+  const DISCORD_INVITE_URL = "https://discord.gg/nunuxd";
+
   // Onboarding state
   let showOnboarding = false;
   let onboardingSlide = 0;
@@ -209,6 +212,13 @@
         <button class="footer-link-btn" on:click={() => openGuide(3)}>INSTALL PWA</button>
         <span class="sep">•</span>
         <a
+          href={DISCORD_INVITE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer-link-a discord-link">DISCORD</a
+        >
+        <span class="sep">•</span>
+        <a
           href="https://github.com/FreeFallingRN/A-slime-s-guide-to-Elysium"
           target="_blank"
           rel="noopener noreferrer"
@@ -223,6 +233,7 @@
     bind:isOpen={showOnboarding}
     {deferredPrompt}
     initialSlide={onboardingSlide}
+    discordUrl={DISCORD_INVITE_URL}
     on:installed={() => {
       installable = false;
       deferredPrompt = null;
@@ -550,6 +561,10 @@
 
   .footer-link-a:hover {
     color: #ff5e00;
+  }
+
+  .footer-link-a.discord-link:hover {
+    color: #5865F2;
   }
 
   .sep {
