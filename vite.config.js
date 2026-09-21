@@ -2,13 +2,23 @@ import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import { VitePWA } from 'vite-plugin-pwa'
 
+const basePath = process.env.BASE_PATH || (process.env.VERCEL ? '/' : '/A-slime-s-guide-to-Elysium/')
+
 export default defineConfig({
-  base: '/A-slime-s-guide-to-Elysium/',
+  base: basePath,
   plugins: [
     svelte(),
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: false,
+      includeAssets: [
+        'favicon.svg',
+        'favicon.png',
+        'apple-touch-icon.png',
+        'pwa-192x192.png',
+        'pwa-512x512.png',
+        'pwa-maskable-512x512.png'
+      ],
       workbox: {
         cleanupOutdatedCaches: true,
         skipWaiting: true,
@@ -16,21 +26,44 @@ export default defineConfig({
       },
       manifest: {
         name: "A Slime's Guide to Elysium",
-        short_name: 'SlimeElysium',
-        description: 'Interactive Companion App for Slime Evolution webnovel',
-        theme_color: '#0a0e17',
-        background_color: '#0a0e17',
-        display: 'standalone',
-        start_url: '/A-slime-s-guide-to-Elysium/',
-        scope: '/A-slime-s-guide-to-Elysium/',
+        short_name: "Slime Elysium",
+        description: "Interactive Companion & Chrono-Tracker for the Slime Evolution Webnovel",
+        theme_color: "#07090f",
+        background_color: "#07090f",
+        display: "standalone",
+        orientation: "any",
+        start_url: basePath,
+        scope: basePath,
+        id: basePath,
+        categories: ["books", "entertainment", "utilities"],
         icons: [
           {
-            src: 'favicon.svg',
-            sizes: 'any',
-            type: 'image/svg+xml'
+            src: "pwa-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+            purpose: "any"
+          },
+          {
+            src: "pwa-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any"
+          },
+          {
+            src: "pwa-maskable-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable"
+          },
+          {
+            src: "favicon.svg",
+            sizes: "any",
+            type: "image/svg+xml",
+            purpose: "any"
           }
         ]
       }
     })
   ]
 })
+

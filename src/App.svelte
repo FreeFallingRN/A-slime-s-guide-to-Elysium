@@ -7,6 +7,7 @@
   import Map from "./lib/Map.svelte";
   import Visual3D from "./lib/Visual3D.svelte";
   import Characters from "./lib/Characters.svelte";
+  import OnboardingModal from "./lib/OnboardingModal.svelte";
 
   import {
     BookOpen,
@@ -18,13 +19,30 @@
     Download,
     Users,
     Image as ImageIcon,
+    HelpCircle,
+    Github
   } from "lucide-svelte";
 
   let currentTab = "stats"; // 'book', 'stats', 'biomass', 'map', '3d'
   let deferredPrompt = null;
   let installable = false;
 
+  // Onboarding state
+  let showOnboarding = false;
+  let onboardingSlide = 0;
+
   onMount(() => {
+    // Check if user has seen the onboarding tutorial
+    try {
+      const completed = localStorage.getItem("slime_elysium_onboarding_completed");
+      if (!completed) {
+        showOnboarding = true;
+        onboardingSlide = 0;
+      }
+    } catch (e) {
+      console.warn("Could not read localStorage:", e);
+    }
+
     // Auto-reload the app when a new service worker takes over control
     if ("serviceWorker" in navigator) {
       let refreshing = false;
@@ -70,20 +88,33 @@
   });
 
   async function installApp() {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === "accepted") {
-      installable = false;
-      deferredPrompt = null;
+    if (deferredPrompt) {
+      try {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === "accepted") {
+          installable = false;
+          deferredPrompt = null;
+        }
+      } catch (e) {
+        console.error("Error triggering install prompt:", e);
+      }
+    } else {
+      // Fallback: Open the PWA installation guide step in the modal
+      openGuide(3);
     }
+  }
+
+  function openGuide(slide = 0) {
+    onboardingSlide = slide;
+    showOnboarding = true;
   }
 </script>
 
 <main class="app-layout">
   <!-- Brand Header -->
   <header class="brand-header">
-    <div class="logo-area">
+    <div class="logo-area" on:click={() => openGuide(0)} title="View System Overview">
       <div class="logo-box">
         <Flame size={20} class="brand-flame" />
       </div>
@@ -92,16 +123,35 @@
         <span class="pub-tag">PUBLISHED BY ARSON DEVS INC.</span>
       </div>
     </div>
+
     <div class="header-actions">
-      {#if installable}
-        <button class="install-btn" on:click={installApp}>
-          <Download size={12} />
-          <span>INSTALL APP</span>
-        </button>
-      {/if}
+      <!-- Guide / Help Button -->
+      <button class="header-btn guide-btn font-tech" on:click={() => openGuide(0)} title="Open Guide & Tutorial">
+        <HelpCircle size={14} />
+        <span class="btn-text">GUIDE</span>
+      </button>
+
+      <!-- Install App Button -->
+      <button class="header-btn install-btn font-tech" on:click={installApp} title="Install Progressive Web App">
+        <Download size={14} />
+        <span class="btn-text">INSTALL APP</span>
+      </button>
+
+      <!-- GitHub Repository Link -->
+      <a
+        href="https://github.com/FreeFallingRN/A-slime-s-guide-to-Elysium"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="header-btn github-btn"
+        title="GitHub Repository"
+      >
+        <Github size={15} />
+      </a>
+
+      <!-- Status Indicator -->
       <div class="system-status">
         <div class="status-pulse"></div>
-        <span class="status-text font-tech">SYN CONNECTION: SECURE</span>
+        <span class="status-text font-tech">SYN: SECURE</span>
       </div>
     </div>
   </header>
@@ -145,14 +195,41 @@
 
   <!-- App Footer -->
   <footer class="app-footer">
-    <p>
-      © 2026 Arson Devs Inc. | Inspired by the webnovel <a
-        href="https://www.webnovel.com/book/35006015000821605"
-        target="_blank">Slime Evolution</a
-      > by NunuXD.
-    </p>
+    <div class="footer-content">
+      <p class="copyright-line">
+        © 2026 Arson Devs Inc. | Inspired by the webnovel <a
+          href="https://www.webnovel.com/book/35006015000821605"
+          target="_blank"
+          rel="noopener noreferrer">Slime Evolution</a
+        > by NunuXD.
+      </p>
+      <div class="footer-links font-tech">
+        <button class="footer-link-btn" on:click={() => openGuide(0)}>SYSTEM GUIDE</button>
+        <span class="sep">•</span>
+        <button class="footer-link-btn" on:click={() => openGuide(3)}>INSTALL PWA</button>
+        <span class="sep">•</span>
+        <a
+          href="https://github.com/FreeFallingRN/A-slime-s-guide-to-Elysium"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer-link-a">GITHUB REPO</a
+        >
+      </div>
+    </div>
   </footer>
+
+  <!-- Onboarding & User Guide Modal -->
+  <OnboardingModal
+    bind:isOpen={showOnboarding}
+    {deferredPrompt}
+    initialSlide={onboardingSlide}
+    on:installed={() => {
+      installable = false;
+      deferredPrompt = null;
+    }}
+  />
 </main>
+
 
 <style>
   .app-layout {
@@ -166,11 +243,11 @@
   }
 
   .brand-header {
-    background: rgba(7, 9, 15, 0.85);
+    background: rgba(7, 9, 15, 0.9);
     border-bottom: 1px solid var(--color-holo-border);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 16px 24px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 14px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -183,6 +260,13 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    transition: opacity 0.2s;
+  }
+
+  .logo-area:hover {
+    opacity: 0.9;
   }
 
   .logo-box {
@@ -197,7 +281,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 10px var(--color-arson-glow);
+    box-shadow: 0 0 12px var(--color-arson-glow);
   }
 
   .brand-flame {
@@ -211,11 +295,12 @@
   }
 
   .glow-title {
-    font-size: 1.15rem;
+    font-size: 1.12rem;
     font-weight: 900;
     letter-spacing: 0.1em;
     color: #fff;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    margin: 0;
   }
 
   .pub-tag {
@@ -229,45 +314,76 @@
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
   }
 
-  .install-btn {
-    background: rgba(0, 240, 255, 0.08);
-    border: 1px solid var(--color-holo-primary);
-    color: var(--color-holo-primary);
-    font-size: 0.65rem;
-    font-weight: bold;
-    letter-spacing: 0.05em;
-    padding: 5px 10px;
-    border-radius: 4px;
+  .header-btn {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    padding: 6px 12px;
+    border-radius: 6px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 6px;
-    transition: var(--transition-smooth);
+    transition: all 0.2s;
     font-family: var(--font-sans);
+    outline: none;
+    text-decoration: none;
+  }
+
+  .guide-btn {
+    background: rgba(0, 240, 255, 0.08);
+    border: 1px solid rgba(0, 240, 255, 0.35);
+    color: #00f0ff;
+  }
+
+  .guide-btn:hover {
+    background: rgba(0, 240, 255, 0.2);
+    border-color: #00f0ff;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+  }
+
+  .install-btn {
+    background: linear-gradient(135deg, rgba(255, 94, 0, 0.15), rgba(255, 0, 0, 0.15));
+    border: 1px solid rgba(255, 94, 0, 0.4);
+    color: #ff8438;
   }
 
   .install-btn:hover {
-    background: var(--color-holo-primary);
-    color: #000;
-    box-shadow: 0 0 10px var(--color-holo-primary);
+    background: linear-gradient(135deg, #ff5e00, #ff0000);
+    border-color: #ff5e00;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(255, 94, 0, 0.5);
+  }
+
+  .github-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #cbd5e1;
+    padding: 6px 8px;
+  }
+
+  .github-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
   }
 
   .system-status {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     background: rgba(0, 240, 255, 0.05);
     border: 1px solid rgba(0, 240, 255, 0.2);
-    padding: 4px 10px;
-    border-radius: 4px;
+    padding: 6px 10px;
+    border-radius: 6px;
   }
 
   .status-pulse {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background-color: var(--color-holo-primary);
     box-shadow: 0 0 8px var(--color-holo-primary);
@@ -275,7 +391,7 @@
   }
 
   .status-text {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: bold;
     color: var(--color-holo-primary);
     letter-spacing: 0.05em;
@@ -375,11 +491,69 @@
   .app-footer {
     background: rgba(7, 9, 15, 0.95);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 16px;
+    padding: 16px 20px;
     text-align: center;
     color: var(--color-holo-muted);
     font-size: 0.72rem;
     margin-top: auto;
+  }
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .copyright-line {
+    margin: 0;
+  }
+
+  .copyright-line a {
+    color: #00f0ff;
+    text-decoration: none;
+  }
+
+  .copyright-line a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.65rem;
+    font-weight: 700;
+  }
+
+  .footer-link-btn {
+    background: none;
+    border: none;
+    color: #7a8c9e;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    transition: color 0.2s;
+  }
+
+  .footer-link-btn:hover {
+    color: #00f0ff;
+  }
+
+  .footer-link-a {
+    color: #7a8c9e;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-link-a:hover {
+    color: #ff5e00;
+  }
+
+  .sep {
+    color: rgba(255, 255, 255, 0.2);
   }
 
   .font-tech {
@@ -389,15 +563,49 @@
   /* --- RESPONSIVE MOBILE OPTIMIZATIONS --- */
   @media (max-width: 767px) {
     .brand-header {
-      display: none !important;
+      padding: 10px 12px;
+      gap: 6px;
+    }
+
+    .logo-area {
+      gap: 8px;
+    }
+
+    .logo-box {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+    }
+
+    .glow-title {
+      font-size: 0.82rem;
+      letter-spacing: 0.05em;
+    }
+
+    .pub-tag {
+      display: none;
+    }
+
+    .system-status {
+      display: none;
+    }
+
+    .header-actions {
+      gap: 5px;
+    }
+
+    .header-btn {
+      padding: 5px 8px;
+      font-size: 0.6rem;
+      gap: 4px;
     }
 
     .container {
-      padding-top: 70px;
+      padding-top: 10px;
       padding-bottom: 85px;
-      padding-left: 12px;
-      padding-right: 12px;
-      gap: 16px;
+      padding-left: 10px;
+      padding-right: 10px;
+      gap: 14px;
     }
 
     .navigation-hub {
@@ -456,3 +664,4 @@
     }
   }
 </style>
+
