@@ -88,9 +88,10 @@
       filteredGroupedAbilities = groupedAbilities
         .map((g) => ({
           ...g,
-          abilities: g.abilities.filter((ab) =>
-            ab.name.toLowerCase().includes(q),
-          ),
+          abilities: g.abilities.filter((ab) => {
+            const aliasText = (ab.aliases || []).join(" ").toLowerCase();
+            return ab.name.toLowerCase().includes(q) || aliasText.includes(q);
+          }),
         }))
         .filter((g) => g.abilities.length > 0);
     }

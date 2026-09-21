@@ -3,7 +3,14 @@
     currentChapter,
     activeChapterDetails,
     chaptersData,
+    chapterRange,
   } from "./store.js";
+  import {
+    clampChapter,
+    getLevelMilestoneIndex,
+    getLevelMilestones,
+    getTimelineMarkers,
+  } from "./chapterUtils.js";
   import {
     Shield,
     ShieldAlert,
@@ -18,9 +25,14 @@
   let chDetails = {};
   let showModal = false;
 
-  const latestCh = chaptersData[chaptersData.length - 1]?.index || 30;
-  const uniqueLevels = [...new Set(chaptersData.map((c) => c.halonLvl))].sort(
-    (a, b) => a - b,
+  const minChapter = chapterRange.minChapter;
+  const latestCh = chapterRange.maxChapter;
+  const timelineMarkers = getTimelineMarkers(minChapter, latestCh, 5);
+  const levelMilestones = getLevelMilestones(chaptersData);
+
+  $: currentLevelMilestoneIndex = getLevelMilestoneIndex(
+    levelMilestones,
+    chDetails.halonLvl,
   );
 
   currentChapter.subscribe((val) => {
@@ -32,37 +44,36 @@
   });
 
   function selectChapter(ch) {
-    currentChapter.set(ch);
+    currentChapter.set(clampChapter(ch, chaptersData));
     showModal = false;
   }
 
   function updateChapter(e) {
-    currentChapter.set(parseInt(e.target.value));
+    currentChapter.set(clampChapter(e.target.value, chaptersData));
   }
 
   function adjustChapter(amount) {
-    currentChapter.update((n) => Math.max(1, Math.min(latestCh, n + amount)));
+    currentChapter.update((n) => clampChapter(n + amount, chaptersData));
   }
 
-  // Sync to first chapter matching or exceeding target level
-  function syncToLevel(targetLvl) {
-    const ch = chaptersData.find((c) => c.halonLvl >= targetLvl);
-    if (ch) {
-      currentChapter.set(ch.index);
+  function syncToLevel(level) {
+    const milestone = levelMilestones.find((item) => item.level === level);
+    if (milestone) {
+      currentChapter.set(milestone.chapter);
     }
     showModal = false;
   }
 
-  // Adjust level sync using unique milestones array
   function adjustLevelSync(direction) {
-    const currentLvl = chDetails.halonLvl || 1;
-    const currentIndex = uniqueLevels.indexOf(currentLvl);
-    if (currentIndex !== -1) {
+    if (currentLevelMilestoneIndex !== -1) {
       const nextIndex = Math.max(
         0,
-        Math.min(uniqueLevels.length - 1, currentIndex + direction),
+        Math.min(
+          levelMilestones.length - 1,
+          currentLevelMilestoneIndex + direction,
+        ),
       );
-      syncToLevel(uniqueLevels[nextIndex]);
+      syncToLevel(levelMilestones[nextIndex].level);
     }
   }
 </script>
@@ -105,23 +116,21 @@
     <button
       class="hologram-btn-small"
       on:click={() => adjustChapter(-1)}
-      disabled={activeCh <= 1}>−</button
+      disabled={activeCh <= minChapter}>−</button
     >
     <div class="slider-wrapper">
       <input
         type="range"
-        min="1"
+        min={minChapter}
         max={latestCh}
         class="chapter-slider"
         value={activeCh}
         on:input={updateChapter}
       />
       <div class="ticks">
-        <span>Ch 1</span>
-        <span>Ch 18</span>
-        <span>Ch 35</span>
-        <span>Ch 53</span>
-        <span>Ch 71</span>
+        {#each timelineMarkers as marker}
+          <span>Ch {marker}</span>
+        {/each}
       </div>
     </div>
     <button
@@ -138,7 +147,7 @@
       <button
         class="level-sync-adjust-btn"
         on:click={() => adjustLevelSync(-1)}
-        disabled={uniqueLevels.indexOf(chDetails.halonLvl) <= 0}
+        disabled={currentLevelMilestoneIndex <= 0}
       >
         −
       </button>
@@ -146,8 +155,7 @@
       <button
         class="level-sync-adjust-btn"
         on:click={() => adjustLevelSync(1)}
-        disabled={uniqueLevels.indexOf(chDetails.halonLvl) >=
-          uniqueLevels.length - 1}
+        disabled={currentLevelMilestoneIndex >= levelMilestones.length - 1}
       >
         +
       </button>
@@ -223,15 +231,20 @@
             }}
           >
             <option value="">-- Choose Level --</option>
-            {#each uniqueLevels as lvl}
-              <option value={lvl}>Level {lvl}</option>
+            {#each levelMilestones as milestone}
+              <option value={milestone.level}>
+                Level {milestone.level} — Ch {milestone.chapter}
+              </option>
             {/each}
           </select>
         </div>
 
         <!-- 3. Action Buttons Row -->
         <div class="modal-actions-row">
-          <button class="modal-btn reset-btn" on:click={() => selectChapter(1)}>
+          <button
+            class="modal-btn reset-btn"
+            on:click={() => selectChapter(minChapter)}
+          >
             RESET PROGRESS
           </button>
           <button

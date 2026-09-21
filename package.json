@@ -7,10 +7,13 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node tests/test_digestion.js && node tests/test_mana.js && node tests/test_speed.js",
+    "test": "node tests/test_digestion.js && node tests/test_mana.js && node tests/test_speed.js && node tests/test_chapter_utils.js && node tests/test_ability_aliases.js",
     "test:digestion": "node tests/test_digestion.js",
     "test:mana": "node tests/test_mana.js",
-    "test:speed": "node tests/test_speed.js"
+    "test:speed": "node tests/test_speed.js",
+    "validate:data": "node tests/validate_data.js",
+    "test:chapter-control": "node tests/test_chapter_utils.js",
+    "test:ability-aliases": "node tests/test_ability_aliases.js"
   },
   "dependencies": {
     "@google/model-viewer": "^4.0.0",

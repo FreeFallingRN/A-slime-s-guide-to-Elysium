@@ -329,7 +329,9 @@ export const charactersCompendium = [
     linkedCharacterId: null,
     isPlayer: false,
     defaultWorld: "Elysium",
-    images: [],
+    images: [
+      { file: "yrneha-march12.png", chapter: 53  }
+    ],
     stages: [
       {
         chapter: 53,
@@ -342,6 +344,142 @@ export const charactersCompendium = [
         classRarity: "Epic",
         age: null,
         bio: "A renowned High Elven Archmage residing in the capital of Thalendor. Revered for her supreme mastery over arcana, she serves as the strict, exacting master and magic teacher to Aeliana, imposing rigorous lessons and endless homework infamous among Thalendor's nobility.",
+        revealLink: false
+      },
+      {
+        chapter: 74,
+        name: "Yrneha",
+        world: "Elysium",
+        role: "High Elven Archmage & Researcher",
+        race: "Elf",
+        raceRarity: "Rare",
+        class: "Elven Archmage",
+        classRarity: "Epic",
+        age: null,
+        bio: "Yrneha meets Halon directly and recognizes that the intelligent, mana-dense Slime is unusual enough to tempt scholarly investigation.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "intervar",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 76,
+        name: "Intervar",
+        world: "Elysium",
+        role: "Silver Crucible Merchant",
+        race: "Elf",
+        raceRarity: "Unknown",
+        class: "Merchant",
+        classRarity: "Unknown",
+        age: null,
+        bio: "An elven merchant at the Silver Crucible in Thalendor who evaluates and negotiates for Shadow Serpent Digestive Acid and other alchemical materials.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "gribbit",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 83,
+        name: "Gribbit",
+        world: "Elysium",
+        role: "Kroak Village Elder",
+        race: "Swamp Toad",
+        raceRarity: "Unknown",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "The elder of Kroak Village, first presenting himself as a grateful guide able to lead Halon and Lisa toward Swamp Slugs.",
+        revealLink: false
+      },
+      {
+        chapter: 85,
+        name: "Gribbit",
+        world: "Elysium",
+        role: "Kroak Village Ambusher",
+        race: "Swamp Toad",
+        raceRarity: "Unknown",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "Gribbit reveals that his friendly guide act was a lure, using Swamp Slug poison and his village's scouts to try to trap Halon and Lisa as prey.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "edgar",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 89,
+        name: "Edgar",
+        world: "Elysium",
+        role: "Mana Stone Seller",
+        race: "Unknown",
+        raceRarity: "Unknown",
+        class: "Merchant",
+        classRarity: "Unknown",
+        age: null,
+        bio: "A polite Mana Stone shopkeeper in Thalendor's Horizon Bazaar who treats Halon and Lisa as customers and becomes interested in monster absorption results.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "valerius",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 91,
+        name: "Valerius",
+        world: "Elysium",
+        role: "Elite Tamer",
+        race: "Elf",
+        raceRarity: "Unknown",
+        class: "Elite Tamer",
+        classRarity: "Unknown",
+        age: null,
+        bio: "A young noble elf and Elite Tamer who insults Halon and Lisa while visiting Edgar's Mana Stone shop.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "nero",
+    linkedCharacterId: "valerius",
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 91,
+        name: "Nero",
+        world: "Elysium",
+        role: "Shadow Cougar Familiar",
+        race: "Shadow Cougar",
+        raceRarity: "Unknown",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "Valerius's elite Shadow Cougar familiar, initially arrogant toward Lisa before reacting fearfully to her legendary aura.",
         revealLink: false
       }
     ]

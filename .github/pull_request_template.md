@@ -1,36 +1,68 @@
-## 📝 Description
+## Summary
 
-<!-- Briefly describe the changes made in this pull request and the rationale behind them. -->
+Describe the change in a few sentences.
 
-## 🎯 Target Branch
+## Files Changed
 
-> **Note**: All feature and data pull requests should target the `dev` branch. Releases to `master` are handled periodically.
+| File | Added / Changed / Removed | Reason |
+| --- | --- | --- |
+|  |  |  |
 
-- [ ] Targeting `dev` (or hotfix targeting `master` directly with maintainer approval)
+## Novel Data / Spoiler Gates
 
-## 📌 Type of Change
+- [ ] No canonical novel data changed.
+- [ ] Canonical data changed and each change is listed below with its chapter source.
+- [ ] Spoiler-sensitive entries unlock no earlier than their source chapter.
+- [ ] Chapter N-1 / Chapter N visibility was checked for major reveals.
 
-- [ ] 🐛 Bug fix (non-breaking change fixing an issue)
-- [ ] ✨ New feature (non-breaking change adding functionality or UI tools)
-- [ ] 📖 Novel Data / Lore update (adding chapter milestones, stat scaling, abilities, or character profiles)
-- [ ] 🧪 Tests / CI (adding or updating test suites, workflows)
-- [ ] 📚 Documentation (updating README, guides, etc.)
-- [ ] 🔨 Refactor / Chore (code cleanup without behavior change)
+Data changes, if any:
 
-## 📖 Novel Citation / Chapter Context (if applicable)
+| Chapter | Category | Change | Source / Review Status |
+| --- | --- | --- | --- |
+|  |  |  |  |
 
-<!-- List chapters or relevant excerpts referenced for stat numbers, ability unlocks, or character lore -->
-- Chapter(s): 
+## Chapter Controller / Data Coverage
 
-## ✅ Checklist
+- [ ] `chaptersData` remains the source of truth for chapter bounds.
+- [ ] New chapter entries require no controller logic changes.
+- [ ] Level milestones are derived from chapter data.
 
-- [ ] My code follows the repository's code style and conventions.
-- [ ] I have executed `npm test` locally and all regression tests pass.
-- [ ] I have verified the project builds with `npm run build`.
-- [ ] Spoiler integrity is maintained (no future chapter lore is revealed before its locked chapter).
-- [ ] I have tested this change manually across different chapter scrubber positions.
-- [ ] I have linked any related issue(s) below.
+Current coverage:
 
-## 🔗 Related Issues
+| Area | Highest Chapter | Notes |
+| --- | ---: | --- |
+| Timeline |  |  |
+| Abilities |  |  |
+| Ability Progression |  |  |
+| Character Stages |  |  |
+| Character Images |  |  |
+| Encyclopedia |  |  |
+| Map |  |  |
+| Visuals |  |  |
 
-<!-- Closes #123 -->
+## Validation
+
+- [ ] `npm run validate:data`
+- [ ] `npm test`
+- [ ] `npm run test:digestion`
+- [ ] `npm run test:mana`
+- [ ] `npm run test:speed`
+- [ ] `npm run build`
+
+Warnings or failures:
+
+```text
+
+```
+
+## Scope Check
+
+- [ ] No framework migration.
+- [ ] No broad redesign.
+- [ ] No unrelated dependency upgrades.
+- [ ] No generated or copied chapter prose added to the app.
+- [ ] PWA behavior remains compatible with the existing Vite/vite-plugin-pwa setup.
+
+## Reviewer Notes
+
+Call out any ambiguous source facts, intentional warnings, or items needing human review.
