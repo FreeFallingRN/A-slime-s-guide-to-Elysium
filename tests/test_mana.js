@@ -12,6 +12,7 @@ suite.addTest(25,  15,  false, "Magic Core Lv 1");
 suite.addTest(26,  18.1,  false, "Magic Core Lv 3");
 suite.addTest(40,  19.9,  false, "Lv 4");
 suite.addTest(54,  26.47,  false, "Lv 7");
+suite.addTest(100, 38.9,  false, "Magic Core Lv 11");
 
 // Run mana tests if executed directly
 suite.run('MANA');

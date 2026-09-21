@@ -89,9 +89,7 @@ export const charactersCompendium = [
     isPlayer: true,
     defaultWorld: "Elysium",
     images: [
-      { file: "lisa-16.png", chapter: 16 },
-      { file: "lisa-may5.png", chapter: 80 },
-      { file: "lisa-may4.png", chapter: 80 }
+      { file: "lisa-16.png", chapter: 16 }
     ],
     stages: [
       {
@@ -330,7 +328,7 @@ export const charactersCompendium = [
     isPlayer: false,
     defaultWorld: "Elysium",
     images: [
-      { file: "yrneha-march12.png", chapter: 53  }
+      { file: "yrneha-march12.png", chapter: 53 }
     ],
     stages: [
       {
@@ -480,6 +478,54 @@ export const charactersCompendium = [
         classRarity: "Unknown",
         age: null,
         bio: "Valerius's elite Shadow Cougar familiar, initially arrogant toward Lisa before reacting fearfully to her legendary aura.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "elle_fairy",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [
+      { file: "elle-march12.png", chapter: 95 }
+    ],
+    stages: [
+      {
+        chapter: 95,
+        name: "Elle",
+        world: "Elysium",
+        role: "Mythlorien Gardener / Wood Sprite",
+        race: "Fairy",
+        raceRarity: "Uncommon",
+        class: "Gardener",
+        classRarity: "Common",
+        age: null,
+        bio: "A gentle, palm-sized fairy from Petal Village with translucent butterfly wings resembling flower petals. Responsible for painting rare flora and maintaining forest mana balance, she seeks Halon and Lisa's help to rescue her captured brother Pip from the Fossilized Amber Tree.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "pip_fairy",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [
+      { file: "pip-march12.png", chapter: 95 }
+    ],
+    stages: [
+      {
+        chapter: 95,
+        name: "Pip",
+        world: "Elysium",
+        role: "Petal Village Sprite",
+        race: "Fairy",
+        raceRarity: "Uncommon",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "Elle's younger brother, a playful and carefree fairy who was ambushed by Glass Beetles while polishing seeds of light near the Amber Tree and trapped in a mana cocoon.",
         revealLink: false
       }
     ]

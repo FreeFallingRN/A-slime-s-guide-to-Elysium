@@ -39,7 +39,8 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
     12: 5.37,  // Ch 27
     13: 6.10,  // Ch 28
     14: 6.71,  // Ch 33
-    15: 7.48   // Ch 47
+    15: 7.48,  // Ch 47
+    16: chapter >= 93 ? 23.52 : 8.23  // Ch 93 Lv 8 milestone (Base Digestion: 36.52)
   };
 
   let unboostedEnhanced = unboostedCanonEnhanced[efficientLvl];
@@ -71,19 +72,26 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   // Stage 6: Remote Division Clone Bonus
   // Early progression (Ch < 28): 20% direct clone multiplier on baseSum.
   // Mid progression (Ch 28-40): 30% per clone level harvested on active skillGain over base floor.
-  // Late progression (Ch >= 41): 30% clone rate on total baseSum (Partial Division Lv 3).
+  // Late progression (Ch 41-92): 30% clone rate on total baseSum (Partial Division Lv 3).
+  // Guild Base progression (Ch >= 93): Partial Division Lv 7 (3 multi-clones) yields 260 Bio/h neutral sum.
   const cloneAb = getAbilityObj('partial_division');
   const cloneLvl = cloneAb ? cloneAb.level : 0;
-  const cloneMult = chapter >= 41 || efficientLvl >= 15 ? 0.30 : (chapter >= 28 ? cloneLvl * 0.30 : 0.20);
   let cloneVal = 0;
+  let cloneMult = 0;
   if (cloneLvl > 0) {
-    if (chapter >= 41 || efficientLvl >= 15) {
+    if (chapter >= 93) {
+      cloneVal = floor2(260.0 - baseSum);
+      cloneMult = Math.round((cloneVal / baseSum) * 100) / 100;
+    } else if (chapter >= 41 || efficientLvl >= 15) {
+      cloneMult = 0.30;
       cloneVal = floor2(baseSum * 0.30);
     } else if (chapter >= 28) {
       const baseFloor = 1.24;
       const skillGain = Math.max(0, baseSum - baseFloor);
+      cloneMult = cloneLvl * 0.30;
       cloneVal = floor2(skillGain * (0.30 * cloneLvl));
     } else {
+      cloneMult = 0.20;
       cloneVal = floor2(baseSum * 0.20);
     }
   }
@@ -119,7 +127,14 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   // ----------------------------------------------------
   const speedBase = baseStats.speed || 0.25;
   const viscousLvl = getLvl('viscous_flow');
-  const finalSpeed = Math.round(speedBase * Math.pow(1.10, viscousLvl) * 100) / 100;
+  const speedCanonMilestones = {
+    18: 1.18,
+    23: 1.90,
+    24: 2.09
+  };
+  const finalSpeed = speedCanonMilestones[viscousLvl] !== undefined
+    ? speedCanonMilestones[viscousLvl]
+    : Math.round(speedBase * Math.pow(1.10, viscousLvl) * 100) / 100;
 
   return {
     digestion: {
