@@ -2,8 +2,10 @@ import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import { VitePWA } from 'vite-plugin-pwa'
 
+const basePath = process.env.BASE_PATH || (process.env.VERCEL ? '/' : '/A-slime-s-guide-to-Elysium/')
+
 export default defineConfig({
-  base: '/A-slime-s-guide-to-Elysium/',
+  base: basePath,
   plugins: [
     svelte(),
     VitePWA({
@@ -30,9 +32,9 @@ export default defineConfig({
         background_color: "#07090f",
         display: "standalone",
         orientation: "any",
-        start_url: "/A-slime-s-guide-to-Elysium/",
-        scope: "/A-slime-s-guide-to-Elysium/",
-        id: "/A-slime-s-guide-to-Elysium/",
+        start_url: basePath,
+        scope: basePath,
+        id: basePath,
         categories: ["books", "entertainment", "utilities"],
         icons: [
           {
