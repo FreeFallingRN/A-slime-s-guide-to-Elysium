@@ -90,11 +90,7 @@
 
   // Extract available distinct grades for filter
   $: availableGrades = Array.from(
-    new Set(
-      rawAllEntries
-        .map((e) => e.base)
-        .filter((g) => g && typeof g === "string")
-    )
+    new Set(rawAllEntries.map((e) => e.base).filter((g) => g && typeof g === "string"))
   );
 
   // Process, filter and sort entries
@@ -288,14 +284,15 @@
       </div>
       <h3 class="empty-title">No Lore Logs Found</h3>
       <p class="empty-desc">
-        {#if searchQuery || selectedGrade !== 'all'}
+        {#if searchQuery || selectedGrade !== "all"}
           No records match your active search filters. Try clearing your search parameters.
         {:else}
-          No entries have been unlocked in Chapter {chapter} under this category yet. Advance the Chrono-Controller above or enable "All Logs" to preview future lore.
+          No entries have been unlocked in Chapter {chapter} under this category yet. Advance the Chrono-Controller
+          above or enable "All Logs" to preview future lore.
         {/if}
       </p>
       <div class="empty-actions">
-        {#if searchQuery || selectedGrade !== 'all'}
+        {#if searchQuery || selectedGrade !== "all"}
           <button class="hologram-btn" on:click={resetFilters}>
             <span>RESET FILTERS</span>
           </button>
@@ -317,10 +314,13 @@
         {@const isExpanded = canExpand && expandedEntryKey === entry.uniqueId}
 
         <div
-          class="lore-card hologram-panel {isUnlocked ? 'unlocked' : 'locked'} {isFreshUnlock ? 'fresh-unlock' : ''} {canExpand ? 'is-expandable' : ''}"
+          class="lore-card hologram-panel {isUnlocked ? 'unlocked' : 'locked'} {isFreshUnlock
+            ? 'fresh-unlock'
+            : ''} {canExpand ? 'is-expandable' : ''}"
           on:click={() => canExpand && toggleExpand(entry.uniqueId)}
-          on:keydown={(e) => canExpand && (e.key === 'Enter' || e.key === ' ') && toggleExpand(entry.uniqueId)}
-          tabindex={canExpand ? "0" : undefined}
+          on:keydown={(e) =>
+            canExpand && (e.key === "Enter" || e.key === " ") && toggleExpand(entry.uniqueId)}
+          tabindex={canExpand ? 0 : undefined}
           role={canExpand ? "button" : undefined}
           aria-expanded={canExpand ? isExpanded : undefined}
         >
@@ -399,7 +399,8 @@
               <div class="locked-placeholder">
                 <div class="scanline-glitch"></div>
                 <p class="locked-text">
-                  Advance the Chapter Lock to <strong>Chapter {entry.chapter}</strong> or beyond to decrypt this record and lore log.
+                  Advance the Chapter Lock to <strong>Chapter {entry.chapter}</strong> or beyond to decrypt
+                  this record and lore log.
                 </p>
               </div>
             {/if}
@@ -408,7 +409,9 @@
           <!-- Card Footer Info -->
           {#if isUnlocked}
             <div class="card-footer">
-              <span class="card-log-tag font-tech">LOG // #{entry.uniqueId.slice(0, 10).toUpperCase()}</span>
+              <span class="card-log-tag font-tech"
+                >LOG // #{entry.uniqueId.slice(0, 10).toUpperCase()}</span
+              >
               {#if canExpand}
                 <span class="expand-hint font-tech">
                   {isExpanded ? "COLLAPSE" : "EXPAND DETAILS"}
@@ -451,7 +454,13 @@
   }
 
   .font-tech {
-    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family:
+      "Outfit",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
     letter-spacing: 0.05em;
   }
 
@@ -464,7 +473,9 @@
     border-radius: 12px;
     border: 1px solid rgba(0, 240, 255, 0.25);
     background: linear-gradient(180deg, rgba(8, 22, 38, 0.85) 0%, rgba(4, 11, 20, 0.95) 100%);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 240, 255, 0.08);
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.5),
+      0 0 15px rgba(0, 240, 255, 0.08);
   }
 
   .header-main-row {
@@ -505,8 +516,15 @@
   }
 
   @keyframes iconPulse {
-    0%, 100% { transform: scale(1); opacity: 0.4; }
-    50% { transform: scale(1.06); opacity: 0.8; }
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.4;
+    }
+    50% {
+      transform: scale(1.06);
+      opacity: 0.8;
+    }
   }
 
   .brand-meta {
@@ -564,9 +582,17 @@
     font-weight: normal;
   }
 
-  .text-cyan { color: #00f0ff; text-shadow: 0 0 8px rgba(0, 240, 255, 0.4); }
-  .text-amber { color: #ffb800; text-shadow: 0 0 8px rgba(255, 184, 0, 0.4); }
-  .text-muted { color: #6b8f9e; }
+  .text-cyan {
+    color: #00f0ff;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+  }
+  .text-amber {
+    color: #ffb800;
+    text-shadow: 0 0 8px rgba(255, 184, 0, 0.4);
+  }
+  .text-muted {
+    color: #6b8f9e;
+  }
 
   /* Category Navigation Tabs */
   .category-nav-wrapper {
@@ -627,13 +653,27 @@
   }
 
   /* Category colors */
-  .color-purple { --theme-c: #a855f7; }
-  .color-blue { --theme-c: #38bdf8; }
-  .color-amber { --theme-c: #f59e0b; }
-  .color-red { --theme-c: #ef4444; }
-  .color-gold { --theme-c: #eab308; }
-  .color-emerald { --theme-c: #10b981; }
-  .color-cyan { --theme-c: #00f0ff; }
+  .color-purple {
+    --theme-c: #a855f7;
+  }
+  .color-blue {
+    --theme-c: #38bdf8;
+  }
+  .color-amber {
+    --theme-c: #f59e0b;
+  }
+  .color-red {
+    --theme-c: #ef4444;
+  }
+  .color-gold {
+    --theme-c: #eab308;
+  }
+  .color-emerald {
+    --theme-c: #10b981;
+  }
+  .color-cyan {
+    --theme-c: #00f0ff;
+  }
 
   /* Toolbar Panel */
   .toolbar-panel {
@@ -787,7 +827,10 @@
     position: relative;
     border: 1px solid rgba(0, 240, 255, 0.16);
     background: linear-gradient(180deg, rgba(8, 16, 28, 0.8) 0%, rgba(3, 9, 16, 0.9) 100%);
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   .lore-card.is-expandable {
@@ -797,7 +840,9 @@
   .lore-card.is-expandable:hover {
     transform: translateY(-2px);
     border-color: rgba(0, 240, 255, 0.4);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 240, 255, 0.15);
+    box-shadow:
+      0 6px 20px rgba(0, 0, 0, 0.6),
+      0 0 15px rgba(0, 240, 255, 0.15);
   }
 
   .lore-card:not(.is-expandable):hover {
@@ -988,6 +1033,7 @@
   .entry-description.clamped {
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     color: #b0d4de;

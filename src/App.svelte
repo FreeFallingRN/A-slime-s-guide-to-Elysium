@@ -9,21 +9,9 @@
   import Characters from "./lib/Characters.svelte";
   import OnboardingModal from "./lib/OnboardingModal.svelte";
 
-  import {
-    BookOpen,
-    Gauge,
-    MapIcon,
-    Sparkles,
-    Shield,
-    Flame,
-    Download,
-    Users,
-    Image as ImageIcon,
-    HelpCircle,
-    Github
-  } from "lucide-svelte";
+  import { BookOpen, Gauge, Flame, Download, Users, HelpCircle, Github } from "lucide-svelte";
 
-  let currentTab = "stats"; // 'book', 'stats', 'biomass', 'map', '3d'
+  let currentTab = "stats"; // 'stats', 'characters', 'lore'
   let deferredPrompt = null;
   let installable = false;
 
@@ -129,13 +117,21 @@
 
     <div class="header-actions">
       <!-- Guide / Help Button -->
-      <button class="header-btn guide-btn font-tech" on:click={() => openGuide(0)} title="Open Guide & Tutorial">
+      <button
+        class="header-btn guide-btn font-tech"
+        on:click={() => openGuide(0)}
+        title="Open Guide & Tutorial"
+      >
         <HelpCircle size={14} />
         <span class="btn-text">GUIDE</span>
       </button>
 
       <!-- Install App Button -->
-      <button class="header-btn install-btn font-tech" on:click={installApp} title="Install Progressive Web App">
+      <button
+        class="header-btn install-btn font-tech"
+        on:click={installApp}
+        title="Install Progressive Web App"
+      >
         <Download size={14} />
         <span class="btn-text">INSTALL APP</span>
       </button>
@@ -253,7 +249,6 @@
   />
 </main>
 
-
 <style>
   .app-layout {
     min-height: 100vh;
@@ -293,11 +288,7 @@
   }
 
   .logo-box {
-    background: linear-gradient(
-      135deg,
-      var(--color-arson-fire) 0%,
-      #ff0000 100%
-    );
+    background: linear-gradient(135deg, var(--color-arson-fire) 0%, #ff0000 100%);
     width: 36px;
     height: 36px;
     border-radius: 8px;
@@ -576,7 +567,7 @@
   }
 
   .footer-link-a.discord-link:hover {
-    color: #5865F2;
+    color: #5865f2;
   }
 
   .sep {
@@ -691,4 +682,3 @@
     }
   }
 </style>
-

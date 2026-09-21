@@ -1,13 +1,13 @@
 <script>
-  import { currentChapter, activeMapNodes } from './store.js';
-  import { MapPin, EyeOff, Radio, Locate, Compass } from 'lucide-svelte';
+  import { currentChapter, activeMapNodes } from "./store.js";
+  import { MapPin, EyeOff, Radio, Locate, Compass } from "lucide-svelte";
 
-  let activeWorld = 'Elysium'; // 'Elysium' or 'Sectors'
+  let activeWorld = "Elysium"; // 'Elysium' or 'Sectors'
   let selectedNode = null;
   let chapter = 5;
 
   // Track chapter changes to adjust fog and reset selection if needed
-  currentChapter.subscribe(val => {
+  currentChapter.subscribe((val) => {
     chapter = val;
     if (selectedNode && selectedNode.chapter > val) {
       selectedNode = null;
@@ -21,17 +21,17 @@
     { row: 1, col: 2, chapter: 4, label: "Zone A-2" },
     { row: 1, col: 3, chapter: 8, label: "Zone A-3" },
     { row: 1, col: 4, chapter: 15, label: "Zone A-4" },
-    
+
     { row: 2, col: 1, chapter: 2, label: "Zone B-1" },
     { row: 2, col: 2, chapter: 5, label: "Zone B-2" },
     { row: 2, col: 3, chapter: 10, label: "Zone B-3" },
     { row: 2, col: 4, chapter: 18, label: "Zone B-4" },
-    
+
     { row: 3, col: 1, chapter: 6, label: "Zone C-1" },
     { row: 3, col: 2, chapter: 7, label: "Zone C-2" },
     { row: 3, col: 3, chapter: 12, label: "Zone C-3" },
     { row: 3, col: 4, chapter: 22, label: "Zone C-4" },
-    
+
     { row: 4, col: 1, chapter: 14, label: "Zone D-1" },
     { row: 4, col: 2, chapter: 16, label: "Zone D-2" },
     { row: 4, col: 3, chapter: 20, label: "Zone D-3" },
@@ -57,8 +57,14 @@
         <h3 class="hologram-glow-text">TACTICAL HOLO-GEOGRAPHY</h3>
       </div>
       <div class="world-selectors">
-        <button class="hologram-btn {activeWorld === 'Elysium' ? 'active' : ''}" on:click={() => handleWorldChange('Elysium')}>Elysium</button>
-        <button class="hologram-btn {activeWorld === 'Sectors' ? 'active' : ''}" on:click={() => handleWorldChange('Sectors')}>Real World Sectors</button>
+        <button
+          class="hologram-btn {activeWorld === 'Elysium' ? 'active' : ''}"
+          on:click={() => handleWorldChange("Elysium")}>Elysium</button
+        >
+        <button
+          class="hologram-btn {activeWorld === 'Sectors' ? 'active' : ''}"
+          on:click={() => handleWorldChange("Sectors")}>Real World Sectors</button
+        >
       </div>
     </div>
 
@@ -68,7 +74,7 @@
       <div class="fog-overlay-grid">
         {#each fogGrid as cell}
           {@const isFoggy = cell.chapter > chapter}
-          <div 
+          <div
             class="fog-cell {isFoggy ? 'foggy' : 'cleared'}"
             style="grid-row: {cell.row}; grid-column: {cell.col};"
           >
@@ -88,7 +94,7 @@
       <!-- Plotted Map Pins -->
       {#each $activeMapNodes as node}
         {#if node.world === activeWorld}
-          <button 
+          <button
             class="map-pin-btn {selectedNode && selectedNode.id === node.id ? 'selected' : ''}"
             style="left: {node.x}%; top: {node.y}%;"
             on:click={() => selectNode(node)}
@@ -133,7 +139,9 @@
         <div class="empty-intel">
           <Radio size={24} class="ping-icon" />
           <p>NO ACTIVE PIN SELECTED</p>
-          <p class="sub">Click on an active map node to query geographical data and radar coordinates.</p>
+          <p class="sub">
+            Click on an active map node to query geographical data and radar coordinates.
+          </p>
         </div>
       {/if}
     </div>
@@ -273,8 +281,12 @@
   }
 
   @keyframes radar-sweep {
-    0% { top: 0%; }
-    100% { top: 100%; }
+    0% {
+      top: 0%;
+    }
+    100% {
+      top: 100%;
+    }
   }
 
   /* Pins */
@@ -342,8 +354,14 @@
   }
 
   @keyframes ping-pulse {
-    0% { transform: scale(0.3); opacity: 0.8; }
-    100% { transform: scale(1.5); opacity: 0; }
+    0% {
+      transform: scale(0.3);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
   }
 
   /* Node Intel Panel */

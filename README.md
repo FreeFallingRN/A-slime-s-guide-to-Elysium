@@ -1,6 +1,6 @@
 # A Slime's Guide to Elysium
 
-An interactive Progressive Web App (PWA) companion tool for the webnovel *Slime Evolution* by NunuXD.  
+An interactive Progressive Web App (PWA) companion tool for the webnovel _Slime Evolution_ by NunuXD.  
 Developed and published by **Arson Devs Inc.**
 
 ---
@@ -18,26 +18,29 @@ You can access and use the latest version of the companion tool directly in your
 ## 🌟 Currently Accessible Features
 
 ### 1. Global Chrono-Controller (Chapter Lock & Sync)
-* **Spoiler-Free Progression:** Scrub through chapters or jump directly to character level milestones.
-* **Universal Synchronization:** All stat values, unlocked abilities, active buffs, and character lore dynamically adjust based on your current reading progress.
+
+- **Spoiler-Free Progression:** Scrub through chapters or jump directly to character level milestones.
+- **Universal Synchronization:** All stat values, unlocked abilities, active buffs, and character lore dynamically adjust based on your current reading progress.
 
 ### 2. Dynamic Stat & Ability Simulator
-* **Interactive Skill Toggles:** Activate or deactivate abilities (e.g., *Corrosive Acid*, *Slime Resiliency*, *Combat State*) in real time to compare base versus buffed attributes.
-* **Math Scaling Pipeline:** Configurable base growth values and calculation pipelines supporting Additive, Multiplicative, and Exponential scaling.
-* **Buff Pipeline Reordering:** Adjust calculation order and priority to see how compounding multipliers affect final stats.
-* **Dedicated Stat Breakdowns:**
-  * **Overall Pipeline:** Comprehensive step-by-step breakdown from base stats to final values.
-  * **Digestion Rate Breakdown:** Base digestion speeds, tier bonuses, skills, and target digestion thresholds.
-  * **Mana Capacity & Regeneration:** Core mana pools, regeneration rates, and passive scaling.
-  * **Speed & Velocity Scaling:** Movement speed multipliers and agility boosts.
-* **Ability Filter & Search:** Quickly find abilities by name, target stat, or scaling type.
+
+- **Interactive Skill Toggles:** Activate or deactivate abilities (e.g., _Corrosive Acid_, _Slime Resiliency_, _Combat State_) in real time to compare base versus buffed attributes.
+- **Math Scaling Pipeline:** Configurable base growth values and calculation pipelines supporting Additive, Multiplicative, and Exponential scaling.
+- **Buff Pipeline Reordering:** Adjust calculation order and priority to see how compounding multipliers affect final stats.
+- **Dedicated Stat Breakdowns:**
+  - **Overall Pipeline:** Comprehensive step-by-step breakdown from base stats to final values.
+  - **Digestion Rate Breakdown:** Base digestion speeds, tier bonuses, skills, and target digestion thresholds.
+  - **Mana Capacity & Regeneration:** Core mana pools, regeneration rates, and passive scaling.
+  - **Speed & Velocity Scaling:** Movement speed multipliers and agility boosts.
+- **Ability Filter & Search:** Quickly find abilities by name, target stat, or scaling type.
 
 ### 3. Interactive Character Compendium
-* **Chapter-Synced Encounters:** Characters and their details only appear once encountered in the story.
-* **Faction & Origin Categorization:** Filter across Elysium natives, futuristic Sectors, Players, and other factions.
-* **Evolutionary Profiles:** Track character forms, status conditions, affiliations, and appearance timelines.
-* **Artwork & Gallery Lightbox:** View character illustrations and portraits with full-size lightbox zoom.
-* **Character Links:** Explore connections and relationships between key characters.
+
+- **Chapter-Synced Encounters:** Characters and their details only appear once encountered in the story.
+- **Faction & Origin Categorization:** Filter across Elysium natives, futuristic Sectors, Players, and other factions.
+- **Evolutionary Profiles:** Track character forms, status conditions, affiliations, and appearance timelines.
+- **Artwork & Gallery Lightbox:** View character illustrations and portraits with full-size lightbox zoom.
+- **Character Links:** Explore connections and relationships between key characters.
 
 ---
 
@@ -48,6 +51,7 @@ We welcome contributions, bug reports, and lore/stat data updates from readers a
 ### 🛠️ Local Development Setup
 
 #### Option A: Node.js & npm (Recommended)
+
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/FreeFallingRN/A-slime-s-guide-to-Elysium.git
@@ -64,10 +68,13 @@ We welcome contributions, bug reports, and lore/stat data updates from readers a
    Open **[http://localhost:5173](http://localhost:5173)** in your browser.
 
 #### Option B: Docker Compose
+
 If you prefer running in a containerized environment:
+
 ```bash
 docker compose up
 ```
+
 Open **[http://localhost:5173](http://localhost:5173)** in your browser.
 
 ---
@@ -92,30 +99,31 @@ npm run test:speed
 
 If you'd like to add or update content from latest novel chapters:
 
-* **Chapters & Stat Formulas:** `src/lib/store.js`
-* **Calculation Engine:** `src/lib/calc.js`
-* **Character Data & Lore:** `src/lib/charactersData.js`
-* **Regression Tests:** `tests/`
+- **Chapters & Stat Formulas:** `src/lib/store.js`
+- **Calculation Engine:** `src/lib/calc.js`
+- **Character Data & Lore:** `src/lib/charactersData.js`
+- **Regression Tests:** `tests/`
 
 ---
 
 ### 🚀 Submitting Your Changes
 
-1. **Fork** the repository and create a new branch for your feature or data update:
+1. **Fork** the repository and create a new feature branch from `dev`:
    ```bash
-   git checkout -b feature/chapter-update
+   git switch dev
+   git switch -c feature/chapter-update
    ```
 2. **Commit** your changes with a clear message:
    ```bash
    git commit -m "Add Chapter 31 stat milestones and character updates"
    ```
-3. **Push** to your fork and submit a **Pull Request** to the `master` branch.
+3. **Push** to your fork and submit a **Pull Request** targeting the **`dev`** branch.
 
-Automated GitHub Actions will test and deploy updates to GitHub Pages upon merge to `master`.
+For full architectural guidelines, branching strategy, and data schemas, see [CONTRIBUTING.md](CONTRIBUTING.md). Automated GitHub Actions will test all PRs before merging.
 
 ---
 
 ## 📜 Credits & License
 
-* Inspired by the webnovel **[Slime Evolution](https://www.webnovel.com/book/35006015000821605)** by **NunuXD**.
-* Developed and maintained by **Arson Devs Inc.**
+- Inspired by the webnovel **[Slime Evolution](https://www.webnovel.com/book/35006015000821605)** by **NunuXD**.
+- Developed and maintained by **Arson Devs Inc.**

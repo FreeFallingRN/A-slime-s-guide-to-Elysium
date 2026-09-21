@@ -11,9 +11,7 @@ export const charactersCompendium = [
     linkedCharacterId: "lohan_human",
     isPlayer: true,
     defaultWorld: "Elysium",
-    images: [
-      { file: "halon-avatar-neutral.png", chapter: 1 }
-    ],
+    images: [{ file: "halon-avatar-neutral.png", chapter: 1 }],
     stages: [
       {
         chapter: 1,
@@ -48,9 +46,7 @@ export const charactersCompendium = [
     linkedCharacterId: "halon_slime",
     isPlayer: true,
     defaultWorld: "Sectors",
-    images: [
-      { file: "lohan-ch1.png", chapter: 1 },
-    ],
+    images: [{ file: "lohan-ch1.png", chapter: 1 }],
     stages: [
       {
         chapter: 1,
@@ -68,9 +64,7 @@ export const charactersCompendium = [
     linkedCharacterId: null,
     isPlayer: false,
     defaultWorld: "Sectors",
-    images: [
-      { file: "oscar-ch1.png", chapter: 1 }
-    ],
+    images: [{ file: "oscar-ch1.png", chapter: 1 }],
     stages: [
       {
         chapter: 1,
@@ -88,9 +82,7 @@ export const charactersCompendium = [
     linkedCharacterId: "isabella_vance",
     isPlayer: true,
     defaultWorld: "Elysium",
-    images: [
-      { file: "lisa-16.png", chapter: 16 }
-    ],
+    images: [{ file: "lisa-16.png", chapter: 16 }],
     stages: [
       {
         chapter: 16,
@@ -172,9 +164,7 @@ export const charactersCompendium = [
     linkedCharacterId: null,
     isPlayer: false,
     defaultWorld: "Elysium",
-    images: [
-      { file: "aeliana-march12.png", chapter: 18 }
-    ],
+    images: [{ file: "aeliana-march12.png", chapter: 18 }],
     stages: [
       {
         chapter: 18,
@@ -235,9 +225,7 @@ export const charactersCompendium = [
     linkedCharacterId: null,
     isPlayer: false,
     defaultWorld: "Elysium",
-    images: [
-      { file: "vulre-ch50.png", chapter: 50 }
-    ],
+    images: [{ file: "vulre-ch50.png", chapter: 50 }],
     stages: [
       {
         chapter: 50,
@@ -259,9 +247,7 @@ export const charactersCompendium = [
     linkedCharacterId: null,
     isPlayer: false,
     defaultWorld: "Elysium",
-    images: [
-      { file: "elara-ch50.png", chapter: 50 }
-    ],
+    images: [{ file: "elara-ch50.png", chapter: 50 }],
     stages: [
       {
         chapter: 50,
@@ -327,9 +313,7 @@ export const charactersCompendium = [
     linkedCharacterId: null,
     isPlayer: false,
     defaultWorld: "Elysium",
-    images: [
-      { file: "yrneha-march12.png", chapter: 53 }
-    ],
+    images: [{ file: "yrneha-march12.png", chapter: 53 }],
     stages: [
       {
         chapter: 53,
@@ -487,9 +471,7 @@ export const charactersCompendium = [
     linkedCharacterId: null,
     isPlayer: false,
     defaultWorld: "Elysium",
-    images: [
-      { file: "elle-march12.png", chapter: 95 }
-    ],
+    images: [{ file: "elle-march12.png", chapter: 95 }],
     stages: [
       {
         chapter: 95,
@@ -511,9 +493,7 @@ export const charactersCompendium = [
     linkedCharacterId: null,
     isPlayer: false,
     defaultWorld: "Elysium",
-    images: [
-      { file: "pip-march12.png", chapter: 95 }
-    ],
+    images: [{ file: "pip-march12.png", chapter: 95 }],
     stages: [
       {
         chapter: 95,

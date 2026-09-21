@@ -5,8 +5,8 @@ Describe the change in a few sentences.
 ## Files Changed
 
 | File | Added / Changed / Removed | Reason |
-| --- | --- | --- |
-|  |  |  |
+| ---- | ------------------------- | ------ |
+|      |                           |        |
 
 ## Novel Data / Spoiler Gates
 
@@ -18,8 +18,8 @@ Describe the change in a few sentences.
 Data changes, if any:
 
 | Chapter | Category | Change | Source / Review Status |
-| --- | --- | --- | --- |
-|  |  |  |  |
+| ------- | -------- | ------ | ---------------------- |
+|         |          |        |                        |
 
 ## Chapter Controller / Data Coverage
 
@@ -29,16 +29,16 @@ Data changes, if any:
 
 Current coverage:
 
-| Area | Highest Chapter | Notes |
-| --- | ---: | --- |
-| Timeline |  |  |
-| Abilities |  |  |
-| Ability Progression |  |  |
-| Character Stages |  |  |
-| Character Images |  |  |
-| Encyclopedia |  |  |
-| Map |  |  |
-| Visuals |  |  |
+| Area                | Highest Chapter | Notes |
+| ------------------- | --------------: | ----- |
+| Timeline            |                 |       |
+| Abilities           |                 |       |
+| Ability Progression |                 |       |
+| Character Stages    |                 |       |
+| Character Images    |                 |       |
+| Encyclopedia        |                 |       |
+| Map                 |                 |       |
+| Visuals             |                 |       |
 
 ## Validation
 

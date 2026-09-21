@@ -7,7 +7,7 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   if (!baseStats) return {};
 
   const getLvl = (id) => {
-    const ab = abilities.find(a => a.id === id);
+    const ab = abilities.find((a) => a.id === id);
     return ab ? ab.level : 0;
   };
 
@@ -23,24 +23,24 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   const digBase = baseStats.digestion || 1.8;
 
   // Helper to query ability metadata dynamically from active abilities list
-  const getAbilityObj = (id) => abilities.find(a => a.id === id);
+  const getAbilityObj = (id) => abilities.find((a) => a.id === id);
 
   const floor2 = (val) => Math.floor(Math.round(val * 10000) / 100) / 100;
 
   // Stage 2: Enhanced Base (Step-by-step 2-decimal rounded compounding per level)
-  const efficientAb = getAbilityObj('efficient_digestion');
+  const efficientAb = getAbilityObj("efficient_digestion");
   const efficientLvl = efficientAb ? efficientAb.level : 0;
   const efficientRate = efficientAb ? efficientAb.value : 0;
-  
+
   // Exact 2-decimal rounded compounding milestones matching novel canon
   const unboostedCanonEnhanced = {
-    10: 4.56,  // Ch 22
-    11: 5.05,  // Ch 23
-    12: 5.37,  // Ch 27
-    13: 6.10,  // Ch 28
-    14: 6.71,  // Ch 33
-    15: 7.48,  // Ch 47
-    16: chapter >= 93 ? 23.52 : 8.23  // Ch 93 Lv 8 milestone (Base Digestion: 36.52)
+    10: 4.56, // Ch 22
+    11: 5.05, // Ch 23
+    12: 5.37, // Ch 27
+    13: 6.1, // Ch 28
+    14: 6.71, // Ch 33
+    15: 7.48, // Ch 47
+    16: chapter >= 93 ? 23.52 : 8.23 // Ch 93 Lv 8 milestone (Base Digestion: 36.52)
   };
 
   let unboostedEnhanced = unboostedCanonEnhanced[efficientLvl];
@@ -55,13 +55,13 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   const digEnhanced = floor2(unboostedEnhanced + levelBonus);
 
   // Stage 3: Mass Expansion
-  const massAb = getAbilityObj('mass_expansion');
+  const massAb = getAbilityObj("mass_expansion");
   const massLvl = massAb ? massAb.level : 0;
   const massRate = massAb ? massAb.value : 0;
   const massVal = floor2(digEnhanced * (massRate * massLvl));
 
   // Stage 4: Passive Digestion
-  const passiveAb = getAbilityObj('passive_digestion');
+  const passiveAb = getAbilityObj("passive_digestion");
   const passiveLvl = passiveAb ? passiveAb.level : 0;
   const passiveRate = passiveAb ? passiveAb.value : 0;
   const passiveVal = floor2(digEnhanced * (passiveRate * passiveLvl));
@@ -74,7 +74,7 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   // Mid progression (Ch 28-40): 30% per clone level harvested on active skillGain over base floor.
   // Late progression (Ch 41-92): 30% clone rate on total baseSum (Partial Division Lv 3).
   // Guild Base progression (Ch >= 93): Partial Division Lv 7 (3 multi-clones) yields 260 Bio/h neutral sum.
-  const cloneAb = getAbilityObj('partial_division');
+  const cloneAb = getAbilityObj("partial_division");
   const cloneLvl = cloneAb ? cloneAb.level : 0;
   let cloneVal = 0;
   let cloneMult = 0;
@@ -83,16 +83,16 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
       cloneVal = floor2(260.0 - baseSum);
       cloneMult = Math.round((cloneVal / baseSum) * 100) / 100;
     } else if (chapter >= 41 || efficientLvl >= 15) {
-      cloneMult = 0.30;
-      cloneVal = floor2(baseSum * 0.30);
+      cloneMult = 0.3;
+      cloneVal = floor2(baseSum * 0.3);
     } else if (chapter >= 28) {
       const baseFloor = 1.24;
       const skillGain = Math.max(0, baseSum - baseFloor);
-      cloneMult = cloneLvl * 0.30;
-      cloneVal = floor2(skillGain * (0.30 * cloneLvl));
+      cloneMult = cloneLvl * 0.3;
+      cloneVal = floor2(skillGain * (0.3 * cloneLvl));
     } else {
-      cloneMult = 0.20;
-      cloneVal = floor2(baseSum * 0.20);
+      cloneMult = 0.2;
+      cloneVal = floor2(baseSum * 0.2);
     }
   }
 
@@ -100,7 +100,7 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   const neutralSum = Math.round((baseSum + cloneVal) * 100) / 100;
 
   // Stage 8: Active Combat Flood Multiplier (Hemolymphatic Tissue)
-  const hemoAb = getAbilityObj('hemolymphatic_tissue');
+  const hemoAb = getAbilityObj("hemolymphatic_tissue");
   const hemoLvl = hemoAb ? hemoAb.level : 0;
   const hemoRate = hemoAb ? hemoAb.value : 0;
   const hemoMult = 1 + hemoRate * hemoLvl;
@@ -111,13 +111,13 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   // ----------------------------------------------------
   // 2. MANA PIPELINE (Canon: Magic Core 15.0 base, 1.10x compounding)
   // ----------------------------------------------------
-  const coreLvl = getLvl('magic_core');
+  const coreLvl = getLvl("magic_core");
   let finalMana = baseStats.mana;
 
   if (coreLvl > 0) {
     let manaVal = 15.0;
     for (let i = 1; i < coreLvl; i++) {
-      manaVal = Math.round(manaVal * 1.10 * 100) / 100;
+      manaVal = Math.round(manaVal * 1.1 * 100) / 100;
     }
     finalMana = Math.floor(manaVal * 10) / 10;
   }
@@ -126,15 +126,16 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   // 3. SPEED PIPELINE (Viscous Flow compounding effect)
   // ----------------------------------------------------
   const speedBase = baseStats.speed || 0.25;
-  const viscousLvl = getLvl('viscous_flow');
+  const viscousLvl = getLvl("viscous_flow");
   const speedCanonMilestones = {
     18: 1.18,
-    23: 1.90,
+    23: 1.9,
     24: 2.09
   };
-  const finalSpeed = speedCanonMilestones[viscousLvl] !== undefined
-    ? speedCanonMilestones[viscousLvl]
-    : Math.round(speedBase * Math.pow(1.10, viscousLvl) * 100) / 100;
+  const finalSpeed =
+    speedCanonMilestones[viscousLvl] !== undefined
+      ? speedCanonMilestones[viscousLvl]
+      : Math.round(speedBase * Math.pow(1.1, viscousLvl) * 100) / 100;
 
   return {
     digestion: {
@@ -162,9 +163,9 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
       final: finalDigestion
     },
     mana: {
-      base: coreLvl > 0 ? 15.0 : (baseStats.mana || 10),
+      base: coreLvl > 0 ? 15.0 : baseStats.mana || 10,
       coreLvl,
-      coreMult: Math.round(Math.pow(1.10, Math.max(0, coreLvl - 1)) * 100) / 100,
+      coreMult: Math.round(Math.pow(1.1, Math.max(0, coreLvl - 1)) * 100) / 100,
       final: finalMana
     },
     speed: {

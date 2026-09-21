@@ -1,0 +1,6 @@
+node_modules
+dist
+.svelte-kit
+public
+package-lock.json
+.system_generated

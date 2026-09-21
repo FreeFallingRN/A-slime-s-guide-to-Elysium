@@ -1,6 +1,6 @@
-import { createRunner } from './test_runner_base.js';
+import { createRunner } from "./test_runner_base.js";
 
-const suite = createRunner('digestion');
+const suite = createRunner("digestion");
 
 // =========================================================================
 // DIGESTION TEST SUITE (Separate Main Body & Clone Gathering Pipeline)
@@ -21,39 +21,39 @@ suite.addTest(9, 4.72, false, "Total Digestion", "final");
 
 // Custom Skills & Level Tests (Without needing a chapter number)
 suite.addTest({
-    skills: { efficient_digestion: 2, passive_digestion: 1 },
-    playerLvl: 1,
-    expected: 2.38
+  skills: { efficient_digestion: 2, passive_digestion: 1 },
+  playerLvl: 1,
+  expected: 2.38
 });
 
 suite.addTest({
-    skills: { efficient_digestion: 3, passive_digestion: 1 },
-    playerLvl: 1,
-    expected: 2.61
+  skills: { efficient_digestion: 3, passive_digestion: 1 },
+  playerLvl: 1,
+  expected: 2.61
 });
 
 suite.addTest({
-    skills: { efficient_digestion: 4, passive_digestion: 1 },
-    playerLvl: 1,
-    expected: 2.87
+  skills: { efficient_digestion: 4, passive_digestion: 1 },
+  playerLvl: 1,
+  expected: 2.87
 });
 
 suite.addTest({
-    skills: { efficient_digestion: 5, passive_digestion: 1 },
-    playerLvl: 1,
-    expected: 3.16
+  skills: { efficient_digestion: 5, passive_digestion: 1 },
+  playerLvl: 1,
+  expected: 3.16
 });
 
 suite.addTest({
-    skills: { efficient_digestion: 5, passive_digestion: 2 },
-    playerLvl: 1,
-    expected: 3.44
+  skills: { efficient_digestion: 5, passive_digestion: 2 },
+  playerLvl: 1,
+  expected: 3.44
 });
 
 suite.addTest({
-    skills: { efficient_digestion: 6, passive_digestion: 2 },
-    playerLvl: 1,
-    expected: 3.78
+  skills: { efficient_digestion: 6, passive_digestion: 2 },
+  playerLvl: 1,
+  expected: 3.78
 });
 
 suite.addTest(12, 5.67, false);
@@ -61,15 +61,15 @@ suite.addTest(14, 6.22, false);
 suite.addTest(15, 8.38, false);
 suite.addTest(15, 8.38, false);
 suite.addTest(16, 10.05, false);
-suite.addTest(22, 13.2, false, "Update body", "stage5")
-suite.addTest(22, 15.84, false, "Update clones")
+suite.addTest(22, 13.2, false, "Update body", "stage5");
+suite.addTest(22, 15.84, false, "Update clones");
 suite.addTest(23, 14.64, false, "Trait Digestive Filter", "stage5");
 suite.addTest(23, 17.56, false, "Trait Digestive Filter");
 suite.addTest(27, 19.32, false);
 suite.addTest(28, 28.54, false);
-suite.addTest(33, 31.40, false);
-suite.addTest(47, 39.67, false)
-suite.addTest(47, 95.2, true)
+suite.addTest(33, 31.4, false);
+suite.addTest(47, 39.67, false);
+suite.addTest(47, 95.2, true);
 suite.addTest(54, 10.48, false, "", "enhanced");
 suite.addTest(54, 37.72, false, "", "subtotal");
 suite.addTest(54, 49.03, false);
@@ -78,4 +78,4 @@ suite.addTest(93, 260.0, false, "Ch 93 Total Neutral Digestion");
 suite.addTest(93, 780.0, true, "Ch 93 Combat Digestion (Hemolymphatic Tissue Lv 10)");
 
 // Run digestion tests if executed directly
-suite.run('DIGESTION');
+suite.run("DIGESTION");

@@ -13,8 +13,7 @@
       const script = document.createElement("script");
       script.id = "model-viewer-script";
       script.type = "module";
-      script.src =
-        "https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
+      script.src = "https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
       document.head.appendChild(script);
     }
     hasModelViewer = true;
@@ -68,11 +67,7 @@
         <div class="grid-floor"></div>
         <div class="light-beam"></div>
         <div class="hologram-frame">
-          <img
-            src="halon-avatar.png"
-            alt="Slime Hologram"
-            class="holo-slime-img"
-          />
+          <img src="halon-avatar.png" alt="Slime Hologram" class="holo-slime-img" />
           <div class="holo-scanlines"></div>
           <div class="holo-ring outer"></div>
           <div class="holo-ring inner"></div>
@@ -161,11 +156,7 @@
     height: 350px;
     position: relative;
     overflow: hidden;
-    background: radial-gradient(
-      circle,
-      rgba(1, 15, 30, 0.4) 0%,
-      rgba(0, 5, 10, 0.8) 100%
-    );
+    background: radial-gradient(circle, rgba(1, 15, 30, 0.4) 0%, rgba(0, 5, 10, 0.8) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -193,11 +184,7 @@
     bottom: 20px;
     width: 200px;
     height: 200px;
-    background-image: radial-gradient(
-      circle,
-      rgba(0, 240, 255, 0.15) 1px,
-      transparent 1px
-    );
+    background-image: radial-gradient(circle, rgba(0, 240, 255, 0.15) 1px, transparent 1px);
     background-size: 16px 16px;
     transform: rotateX(80deg);
     opacity: 0.6;
@@ -268,10 +255,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      rgba(18, 16, 16, 0) 50%,
-      rgba(0, 240, 255, 0.2) 50%
-    );
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 240, 255, 0.2) 50%);
     background-size: 100% 4px;
     pointer-events: none;
   }
