@@ -134,7 +134,7 @@ export const charactersCompendium = [
         classRarity: "Rare",
         age: null,
         bio: "A Legendary Spiritual Fox race and a Rare Illusion Weaver class. Elegant, strategic, and fiercely loyal to her chosen allies, she works closely with Halon to establish a powerhouse faction in Elysium.",
-        revealLink: false
+        revealLink: true
       }
     ]
   },
@@ -156,6 +156,15 @@ export const charactersCompendium = [
         age: 18,
         bio: "Heiress to the Vance Group megacorporation, which commands planetary governance, off-world colonies, and satellite networks on Eden 3. Distinguished by her natural red hair, flawless icy appearance, and cold, aristocratic demeanor.",
         revealLink: false
+      },
+      {
+        chapter: 37,
+        name: "Isabella Vance",
+        world: "Sectors",
+        role: "Corporate Heiress (Guild Leader)",
+        age: 18,
+        bio: "One of Lohan's classmates and heiress to the Vance Group megacorporation, which commands planetary governance, off-world colonies, and satellite networks on Eden 3. Distinguished by her natural red hair, flawless icy appearance, and cold, aristocratic demeanor.",
+        revealLink: true
       }
     ]
   },
