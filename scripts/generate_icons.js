@@ -1,11 +1,11 @@
-import sharp from 'sharp';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import sharp from "sharp";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const publicDir = path.resolve(__dirname, '../public');
+const publicDir = path.resolve(__dirname, "../public");
 
 // Base SVG with dark background for maskable and standard icons
 const createSvg = (size, paddingRatio = 0.1, withBg = true) => {
@@ -28,7 +28,7 @@ const createSvg = (size, paddingRatio = 0.1, withBg = true) => {
         </filter>
       </defs>
       
-      ${withBg ? `<rect width="${size}" height="${size}" rx="${size * 0.18}" fill="url(#bgGrad)"/>` : ''}
+      ${withBg ? `<rect width="${size}" height="${size}" rx="${size * 0.18}" fill="url(#bgGrad)"/>` : ""}
       
       <g transform="translate(${offset}, ${offset}) scale(${contentSize / 100})">
         <!-- Outer Slime Aura -->
@@ -59,37 +59,37 @@ const createSvg = (size, paddingRatio = 0.1, withBg = true) => {
 };
 
 async function generate() {
-  console.log('Generating PWA Icons in public/...');
+  console.log("Generating PWA Icons in public/...");
 
   // 192x192
   const svg192 = Buffer.from(createSvg(192, 0.08, true));
-  await sharp(svg192).png().toFile(path.join(publicDir, 'pwa-192x192.png'));
-  console.log('✓ Created pwa-192x192.png');
+  await sharp(svg192).png().toFile(path.join(publicDir, "pwa-192x192.png"));
+  console.log("✓ Created pwa-192x192.png");
 
   // 512x512
   const svg512 = Buffer.from(createSvg(512, 0.08, true));
-  await sharp(svg512).png().toFile(path.join(publicDir, 'pwa-512x512.png'));
-  console.log('✓ Created pwa-512x512.png');
+  await sharp(svg512).png().toFile(path.join(publicDir, "pwa-512x512.png"));
+  console.log("✓ Created pwa-512x512.png");
 
   // Maskable 512x512 (larger padding for safe zone)
   const svgMaskable = Buffer.from(createSvg(512, 0.18, true));
-  await sharp(svgMaskable).png().toFile(path.join(publicDir, 'pwa-maskable-512x512.png'));
-  console.log('✓ Created pwa-maskable-512x512.png');
+  await sharp(svgMaskable).png().toFile(path.join(publicDir, "pwa-maskable-512x512.png"));
+  console.log("✓ Created pwa-maskable-512x512.png");
 
   // Apple touch icon (180x180)
   const svgApple = Buffer.from(createSvg(180, 0.06, true));
-  await sharp(svgApple).png().toFile(path.join(publicDir, 'apple-touch-icon.png'));
-  console.log('✓ Created apple-touch-icon.png');
+  await sharp(svgApple).png().toFile(path.join(publicDir, "apple-touch-icon.png"));
+  console.log("✓ Created apple-touch-icon.png");
 
   // Favicon PNG (64x64)
   const svgFavicon = Buffer.from(createSvg(64, 0.05, false));
-  await sharp(svgFavicon).png().toFile(path.join(publicDir, 'favicon.png'));
-  console.log('✓ Created favicon.png');
+  await sharp(svgFavicon).png().toFile(path.join(publicDir, "favicon.png"));
+  console.log("✓ Created favicon.png");
 
-  console.log('All icons generated successfully!');
+  console.log("All icons generated successfully!");
 }
 
-generate().catch(err => {
-  console.error('Error generating icons:', err);
+generate().catch((err) => {
+  console.error("Error generating icons:", err);
   process.exit(1);
 });

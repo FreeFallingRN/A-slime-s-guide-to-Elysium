@@ -1,23 +1,24 @@
-import { defineConfig } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
-import { VitePWA } from 'vite-plugin-pwa'
+import { defineConfig } from "vite";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { VitePWA } from "vite-plugin-pwa";
 
-const basePath = process.env.BASE_PATH || (process.env.VERCEL ? '/' : '/A-slime-s-guide-to-Elysium/')
+const basePath =
+  process.env.BASE_PATH || (process.env.VERCEL ? "/" : "/A-slime-s-guide-to-Elysium/");
 
 export default defineConfig({
   base: basePath,
   plugins: [
     svelte(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: "autoUpdate",
       injectRegister: false,
       includeAssets: [
-        'favicon.svg',
-        'favicon.png',
-        'apple-touch-icon.png',
-        'pwa-192x192.png',
-        'pwa-512x512.png',
-        'pwa-maskable-512x512.png'
+        "favicon.svg",
+        "favicon.png",
+        "apple-touch-icon.png",
+        "pwa-192x192.png",
+        "pwa-512x512.png",
+        "pwa-maskable-512x512.png"
       ],
       workbox: {
         cleanupOutdatedCaches: true,
@@ -65,5 +66,4 @@ export default defineConfig({
       }
     })
   ]
-})
-
+});

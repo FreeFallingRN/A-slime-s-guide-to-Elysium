@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: CI & Build Checks
 
 on:
   push:
@@ -6,19 +6,17 @@ on:
       - dev
   pull_request:
     branches:
-      - master
       - dev
+      - master
   workflow_dispatch:
 
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-  validate:
-    name: Test & Build
+  validate-and-test:
+    name: Validate Data, Code & Build
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository 🛎️
         uses: actions/checkout@v4
@@ -26,14 +24,20 @@ jobs:
       - name: Set up Node.js ⚙️
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: 'npm'
+          node-version: 24
+          cache: "npm"
 
       - name: Install dependencies 🔧
         run: npm ci
 
-      - name: Run regression tests 🧪
-        run: npm run test
+      - name: Verify code style & formatting 💅
+        run: npm run format:check
 
-      - name: Build static bundle 📦
+      - name: Svelte component & type diagnostics 🩺
+        run: npm run check
+
+      - name: Run data validation & regression tests 🧪
+        run: npm test
+
+      - name: Verify production build 📦
         run: npm run build

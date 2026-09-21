@@ -1,4 +1,4 @@
-FROM node:20-slim
+FROM node:24-slim
 
 # Install git for source control tools inside the container
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*

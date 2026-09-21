@@ -17,6 +17,9 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   deploy:
     environment:
@@ -30,16 +33,19 @@ jobs:
       - name: Set up Node.js ⚙️
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: 'npm'
+          node-version: 24
+          cache: "npm"
 
       - name: Install dependencies 🔧
         run: npm ci
 
-      - name: Run data validation gate 🛡️
-        run: npm run validate:data
+      - name: Verify code style & formatting 💅
+        run: npm run format:check
 
-      - name: Run regression tests 🧪
+      - name: Svelte component & type diagnostics 🩺
+        run: npm run check
+
+      - name: Run data validation & regression tests 🧪
         run: npm run test
 
       - name: Build static files 📦
@@ -51,7 +57,7 @@ jobs:
       - name: Upload artifact 📤
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: "./dist"
 
       - name: Deploy to GitHub Pages 🚀
         id: deployment

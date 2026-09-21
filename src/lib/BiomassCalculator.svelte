@@ -1,9 +1,9 @@
 <script>
-  import { currentChapter } from './store.js';
-  import { Shield, Sparkles, TrendingUp } from 'lucide-svelte';
+  import { currentChapter } from "./store.js";
+  import { Shield, Sparkles, TrendingUp } from "lucide-svelte";
 
   let chapter = 5;
-  currentChapter.subscribe(val => {
+  currentChapter.subscribe((val) => {
     chapter = val;
   });
 
@@ -14,7 +14,7 @@
   ];
 
   // Filter tiers based on active chapter lock
-  $: evolutionTiers = allEvolutionTiers.filter(t => t.chapter <= chapter);
+  $: evolutionTiers = allEvolutionTiers.filter((t) => t.chapter <= chapter);
 
   let selectedTierIndex = 0;
 
@@ -24,11 +24,11 @@
       selectedTierIndex = Math.max(0, evolutionTiers.length - 1);
     }
   }
-  
+
   // Upgrades
   let coreLvl = 1;
   let coreTarget = 10;
-  
+
   let cellLvl = 1;
   let cellTarget = 10;
 
@@ -39,7 +39,7 @@
   // Formula: BaseCost * TierMultiplier * (1.12)^L
   function calculateUpgradeCost(lvl, targetLvl, baseCost, tierMult) {
     if (targetLvl <= lvl) return 0;
-    
+
     let totalCost = 0;
     for (let l = lvl; l < targetLvl; l++) {
       totalCost += Math.round(baseCost * tierMult * Math.pow(1.13, l - 1));
@@ -48,10 +48,20 @@
   }
 
   $: activeTier = evolutionTiers[selectedTierIndex];
-  
+
   $: coreCost = calculateUpgradeCost(coreLvl, coreTarget, activeTier.base, activeTier.multiplier);
-  $: cellCost = calculateUpgradeCost(cellLvl, cellTarget, activeTier.base * 0.8, activeTier.multiplier);
-  $: sensoryCost = calculateUpgradeCost(sensoryLvl, sensoryTarget, activeTier.base * 0.5, activeTier.multiplier);
+  $: cellCost = calculateUpgradeCost(
+    cellLvl,
+    cellTarget,
+    activeTier.base * 0.8,
+    activeTier.multiplier
+  );
+  $: sensoryCost = calculateUpgradeCost(
+    sensoryLvl,
+    sensoryTarget,
+    activeTier.base * 0.5,
+    activeTier.multiplier
+  );
 
   $: grandTotal = coreCost + cellCost + sensoryCost;
 
@@ -59,7 +69,7 @@
   function validateInput() {
     coreLvl = Math.max(1, Math.min(100, coreLvl));
     coreTarget = Math.max(coreLvl, Math.min(100, coreTarget));
-    
+
     cellLvl = Math.max(1, Math.min(100, cellLvl));
     cellTarget = Math.max(cellLvl, Math.min(100, cellTarget));
 
@@ -102,7 +112,13 @@
         <div class="arrow-divider">→</div>
         <div class="input-group">
           <label>TARGET</label>
-          <input type="number" bind:value={coreTarget} on:change={validateInput} min="2" max="100" />
+          <input
+            type="number"
+            bind:value={coreTarget}
+            on:change={validateInput}
+            min="2"
+            max="100"
+          />
         </div>
         <div class="cost-output">
           <label>BIOMASS COST</label>
@@ -125,7 +141,13 @@
         <div class="arrow-divider">→</div>
         <div class="input-group">
           <label>TARGET</label>
-          <input type="number" bind:value={cellTarget} on:change={validateInput} min="2" max="100" />
+          <input
+            type="number"
+            bind:value={cellTarget}
+            on:change={validateInput}
+            min="2"
+            max="100"
+          />
         </div>
         <div class="cost-output">
           <label>BIOMASS COST</label>
@@ -148,7 +170,13 @@
         <div class="arrow-divider">→</div>
         <div class="input-group">
           <label>TARGET</label>
-          <input type="number" bind:value={sensoryTarget} on:change={validateInput} min="2" max="100" />
+          <input
+            type="number"
+            bind:value={sensoryTarget}
+            on:change={validateInput}
+            min="2"
+            max="100"
+          />
         </div>
         <div class="cost-output">
           <label>BIOMASS COST</label>

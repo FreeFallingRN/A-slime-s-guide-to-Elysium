@@ -106,7 +106,7 @@
     aria-label="System Guide"
     tabindex="-1"
     on:click={completeOnboarding}
-    on:keydown={(e) => e.key === 'Escape' && completeOnboarding()}
+    on:keydown={(e) => e.key === "Escape" && completeOnboarding()}
   >
     <!-- Modal Container -->
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -180,7 +180,9 @@
               <span class="holo-tag">INTERACTIVE COMPANION</span>
               <h2 class="hero-title">A Slime's Guide to Elysium</h2>
               <p class="hero-subtitle">
-                Interactive companion app and stats tracker for <strong class="highlight-text">Slime Evolution</strong> by NunuXD.
+                Interactive companion app and stats tracker for <strong class="highlight-text"
+                  >Slime Evolution</strong
+                > by NunuXD.
               </p>
             </div>
 
@@ -189,7 +191,10 @@
                 <div class="card-icon cyan"><Sliders size={18} /></div>
                 <div class="card-info">
                   <h4>Global Chrono-Controller</h4>
-                  <p>Scrub through chapters 1 to 100+ to sync Halon's level, unlocked skills, and anatomical traits to that point in the novel.</p>
+                  <p>
+                    Scrub through chapters 1 to 100+ to sync Halon's level, unlocked skills, and
+                    anatomical traits to that point in the novel.
+                  </p>
                 </div>
               </div>
 
@@ -197,7 +202,10 @@
                 <div class="card-icon flame"><Gauge size={18} /></div>
                 <div class="card-info">
                   <h4>Stat Breakdown & Simulators</h4>
-                  <p>Mathematical calculations for digestion rates (g/min), viscous flow velocity (m/s), and internal mana capacity.</p>
+                  <p>
+                    Mathematical calculations for digestion rates (g/min), viscous flow velocity
+                    (m/s), and internal mana capacity.
+                  </p>
                 </div>
               </div>
 
@@ -205,7 +213,10 @@
                 <div class="card-icon purple"><Users size={18} /></div>
                 <div class="card-info">
                   <h4>Character Compendium & Lore</h4>
-                  <p>Inspect dual-world character profiles (Elysium vs. Sectors), unlockable illustrations, and flora/fauna encyclopedia entries.</p>
+                  <p>
+                    Inspect dual-world character profiles (Elysium vs. Sectors), unlockable
+                    illustrations, and flora/fauna encyclopedia entries.
+                  </p>
                 </div>
               </div>
 
@@ -213,20 +224,24 @@
                 <div class="card-icon green"><Download size={18} /></div>
                 <div class="card-info">
                   <h4>Installable Progressive Web App</h4>
-                  <p>Install on your phone, tablet, or desktop for a standalone full-screen experience with offline caching.</p>
+                  <p>
+                    Install on your phone, tablet, or desktop for a standalone full-screen
+                    experience with offline caching.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
-        <!-- SLIDE 1: Chrono-Controller & Simulator -->
+          <!-- SLIDE 1: Chrono-Controller & Simulator -->
         {:else if activeSlide === 1}
           <div class="slide slide-features fade-in">
             <div class="slide-header">
               <div class="category-tag">TIMELINE ENGINE</div>
               <h2 class="slide-title">Chrono-Controller & Calculations</h2>
               <p class="slide-desc">
-                All data across the app is synchronized to the active chapter in the global controller.
+                All data across the app is synchronized to the active chapter in the global
+                controller.
               </p>
             </div>
 
@@ -252,26 +267,29 @@
                 <div class="check-item">
                   <CheckCircle2 size={15} class="text-cyan" />
                   <div>
-                    <strong>Chapter-Locked Progression:</strong> Skills, ability tiers, and anatomical traits unlock and scale according to the active chapter.
+                    <strong>Chapter-Locked Progression:</strong> Skills, ability tiers, and anatomical
+                    traits unlock and scale according to the active chapter.
                   </div>
                 </div>
                 <div class="check-item">
                   <CheckCircle2 size={15} class="text-cyan" />
                   <div>
-                    <strong>Digestion & Speed Formulas:</strong> Real formulas from novel milestones calculating digestion time and velocity (m/s).
+                    <strong>Digestion & Speed Formulas:</strong> Real formulas from novel milestones calculating
+                    digestion time and velocity (m/s).
                   </div>
                 </div>
                 <div class="check-item">
                   <CheckCircle2 size={15} class="text-cyan" />
                   <div>
-                    <strong>Biomass Calculator:</strong> Estimate biomass point requirements to level up core, cellular, and sensory stats.
+                    <strong>Biomass Calculator:</strong> Estimate biomass point requirements to level
+                    up core, cellular, and sensory stats.
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-        <!-- SLIDE 2: Character Compendium & Lore -->
+          <!-- SLIDE 2: Character Compendium & Lore -->
         {:else if activeSlide === 2}
           <div class="slide slide-lore fade-in">
             <div class="slide-header">
@@ -286,31 +304,41 @@
               <div class="preview-tile">
                 <div class="tile-badge">SLIME / SECTOR 4 STUDENT</div>
                 <h3>Halon / Lohan Hayes</h3>
-                <p>A unique Mythical Slime (Class: Devourer) in Elysium, linked to Lohan Hayes living in the Lower Zone of Sector 4 on planet Eden 3.</p>
+                <p>
+                  A unique Mythical Slime (Class: Devourer) in Elysium, linked to Lohan Hayes living
+                  in the Lower Zone of Sector 4 on planet Eden 3.
+                </p>
               </div>
 
               <div class="preview-tile">
                 <div class="tile-badge">WHITE FOX / SECTOR 4 ELITE</div>
                 <h3>Lisa / Isabella Vance</h3>
-                <p>An intelligent telepathic white fox and leader of the White Lotus guild, linked to player Isabella Vance in Sector 4.</p>
+                <p>
+                  An intelligent telepathic white fox and leader of the White Lotus guild, linked to
+                  player Isabella Vance in Sector 4.
+                </p>
               </div>
 
               <div class="preview-tile">
                 <div class="tile-badge">FOREST FAIRIES</div>
                 <h3>Pip & Elle</h3>
-                <p>Luminescent fairies encountered in Chapter 95, guiding Halon through the fairy grove and amber tree canopy.</p>
+                <p>
+                  Luminescent fairies encountered in Chapter 95, guiding Halon through the fairy
+                  grove and amber tree canopy.
+                </p>
               </div>
             </div>
 
             <div class="encyclopedia-callout">
               <Sparkles size={16} class="text-cyan" />
               <span>
-                Browse the <strong>Lore Encyclopedia</strong> in the Characters tab to inspect Glass Beetles, Amber Trees, Basic Life Seeds, and map locations.
+                Browse the <strong>Lore Archive</strong> tab to inspect Races, Classes, Monsters, Factions,
+                Dungeons, and Tech/Items unlocked as you read.
               </span>
             </div>
           </div>
 
-        <!-- SLIDE 3: Install as App (PWA Guide) -->
+          <!-- SLIDE 3: Install as App (PWA Guide) -->
         {:else if activeSlide === 3}
           <div class="slide slide-install fade-in">
             <div class="slide-header">
@@ -338,7 +366,7 @@
             <div class="platform-selector">
               <button
                 class="platform-pill {selectedPlatform === 'brave-android' ? 'active' : ''}"
-                on:click={() => (selectedPlatform = 'brave-android')}
+                on:click={() => (selectedPlatform = "brave-android")}
               >
                 <Smartphone size={13} />
                 <span>Brave / Chrome</span>
@@ -346,7 +374,7 @@
 
               <button
                 class="platform-pill {selectedPlatform === 'ios-safari' ? 'active' : ''}"
-                on:click={() => (selectedPlatform = 'ios-safari')}
+                on:click={() => (selectedPlatform = "ios-safari")}
               >
                 <Smartphone size={13} />
                 <span>iOS Safari</span>
@@ -354,7 +382,7 @@
 
               <button
                 class="platform-pill {selectedPlatform === 'desktop' ? 'active' : ''}"
-                on:click={() => (selectedPlatform = 'desktop')}
+                on:click={() => (selectedPlatform = "desktop")}
               >
                 <Monitor size={13} />
                 <span>Desktop (PC / Mac)</span>
@@ -363,61 +391,78 @@
 
             <!-- Platform Instructions Card -->
             <div class="instruction-card">
-              {#if selectedPlatform === 'brave-android'}
+              {#if selectedPlatform === "brave-android"}
                 <div class="step-guide">
-
                   <div class="instruction-step">
                     <div class="step-number font-tech">1</div>
                     <div class="step-details">
-                      Tap the <strong>three dots menu</strong> (<MoreVertical size={13} style="display:inline; vertical-align:middle;" />) in Brave or Chrome.
+                      Tap the <strong>three dots menu</strong> (<MoreVertical
+                        size={13}
+                        style="display:inline; vertical-align:middle;"
+                      />) in Brave or Chrome.
                     </div>
                   </div>
                   <div class="instruction-step">
                     <div class="step-number font-tech">2</div>
                     <div class="step-details">
-                      Select <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong>.
+                      Select <strong>"Install app"</strong> or
+                      <strong>"Add to Home screen"</strong>.
                     </div>
                   </div>
                   <div class="instruction-step">
                     <div class="step-number font-tech">3</div>
                     <div class="step-details">
-                      Confirm <strong>Install</strong>. Launch Elysium from your home screen with zero browser bars!
+                      Confirm <strong>Install</strong>. Launch Elysium from your home screen with
+                      zero browser bars!
                     </div>
                   </div>
                 </div>
-              {:else if selectedPlatform === 'ios-safari'}
+              {:else if selectedPlatform === "ios-safari"}
                 <div class="step-guide">
                   <div class="instruction-step">
                     <div class="step-number font-tech">1</div>
                     <div class="step-details">
-                      In Safari, tap the <strong>Share</strong> button (<Share2 size={13} style="display:inline; vertical-align:middle;" />) in the bottom toolbar.
+                      In Safari, tap the <strong>Share</strong> button (<Share2
+                        size={13}
+                        style="display:inline; vertical-align:middle;"
+                      />) in the bottom toolbar.
                     </div>
                   </div>
                   <div class="instruction-step">
                     <div class="step-number font-tech">2</div>
                     <div class="step-details">
-                      Scroll down and tap <strong>"Add to Home Screen"</strong> (<PlusSquare size={13} style="display:inline; vertical-align:middle;" />).
+                      Scroll down and tap <strong>"Add to Home Screen"</strong> (<PlusSquare
+                        size={13}
+                        style="display:inline; vertical-align:middle;"
+                      />).
                     </div>
                   </div>
                   <div class="instruction-step">
                     <div class="step-number font-tech">3</div>
                     <div class="step-details">
-                      Tap <strong>Add</strong> in the top right. Launch from your home screen for fullscreen standalone mode!
+                      Tap <strong>Add</strong> in the top right. Launch from your home screen for fullscreen
+                      standalone mode!
                     </div>
                   </div>
                 </div>
-              {:else if selectedPlatform === 'desktop'}
+              {:else if selectedPlatform === "desktop"}
                 <div class="step-guide">
                   <div class="instruction-step">
                     <div class="step-number font-tech">1</div>
                     <div class="step-details">
-                      In Chrome, Edge, or Brave, look at the right side of the address bar for the <strong>Install icon</strong> (<Download size={13} style="display:inline; vertical-align:middle;" />).
+                      In Chrome, Edge, or Brave, look at the right side of the address bar for the <strong
+                        >Install icon</strong
+                      >
+                      (<Download size={13} style="display:inline; vertical-align:middle;" />).
                     </div>
                   </div>
                   <div class="instruction-step">
                     <div class="step-number font-tech">2</div>
                     <div class="step-details">
-                      Alternatively, click the browser menu (<MoreVertical size={13} style="display:inline; vertical-align:middle;" />) and choose <strong>"Install A Slime's Guide to Elysium..."</strong>.
+                      Alternatively, click the browser menu (<MoreVertical
+                        size={13}
+                        style="display:inline; vertical-align:middle;"
+                      />) and choose <strong>"Install A Slime's Guide to Elysium..."</strong>.
                     </div>
                   </div>
                   <div class="instruction-step">
@@ -431,7 +476,7 @@
             </div>
           </div>
 
-        <!-- SLIDE 4: Community, Discord & Links -->
+          <!-- SLIDE 4: Community, Discord & Links -->
         {:else if activeSlide === 4}
           <div class="slide slide-community fade-in">
             <div class="slide-header">
@@ -452,7 +497,9 @@
               >
                 <div class="link-icon-box discord">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                    <path
+                      d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"
+                    />
                   </svg>
                 </div>
                 <div class="link-info">
@@ -461,7 +508,9 @@
                     <span class="join-badge font-tech">JOIN SERVER</span>
                     <ExternalLink size={13} class="ext-icon" />
                   </div>
-                  <p class="link-desc">Chat with the community, discuss lore, and get chapter release notifications.</p>
+                  <p class="link-desc">
+                    Chat with the community, discuss lore, and get chapter release notifications.
+                  </p>
                 </div>
               </a>
 
@@ -480,7 +529,9 @@
                     <span class="link-title">GitHub Repository</span>
                     <ExternalLink size={13} class="ext-icon" />
                   </div>
-                  <p class="link-desc">Inspect calculation formulas, report lore corrections, or contribute updates.</p>
+                  <p class="link-desc">
+                    Inspect calculation formulas, report lore corrections, or contribute updates.
+                  </p>
                   <span class="link-badge font-tech">FreeFallingRN/A-slime-s-guide-to-Elysium</span>
                 </div>
               </a>
@@ -500,7 +551,9 @@
                     <span class="link-title">Read Slime Evolution</span>
                     <ExternalLink size={13} class="ext-icon" />
                   </div>
-                  <p class="link-desc">Support author NunuXD and read new chapters as they release on Webnovel.</p>
+                  <p class="link-desc">
+                    Support author NunuXD and read new chapters as they release on Webnovel.
+                  </p>
                   <span class="link-badge fire font-tech">OFFICIAL WEBNOVEL</span>
                 </div>
               </a>
@@ -574,15 +627,21 @@
   }
 
   @keyframes fadeInBg {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   /* Modal Card Container */
   .modal-card {
     background: linear-gradient(180deg, rgba(14, 20, 34, 0.98) 0%, rgba(7, 9, 15, 0.98) 100%);
     border: 1px solid rgba(0, 240, 255, 0.3);
-    box-shadow: 0 0 35px rgba(0, 240, 255, 0.15), 0 20px 50px rgba(0, 0, 0, 0.85);
+    box-shadow:
+      0 0 35px rgba(0, 240, 255, 0.15),
+      0 20px 50px rgba(0, 0, 0, 0.85);
     border-radius: 14px;
     width: 100%;
     max-width: 640px;
@@ -728,8 +787,14 @@
   }
 
   @keyframes fadeInContent {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   /* Slide Styles */
@@ -1158,7 +1223,7 @@
   }
 
   .link-card.discord-card:hover {
-    border-color: #5865F2;
+    border-color: #5865f2;
     box-shadow: 0 0 15px rgba(88, 101, 242, 0.35);
   }
 
@@ -1179,7 +1244,7 @@
   }
 
   .link-icon-box.discord {
-    background: #5865F2;
+    background: #5865f2;
     color: #fff;
     box-shadow: 0 0 10px rgba(88, 101, 242, 0.4);
   }
@@ -1209,7 +1274,7 @@
   .join-badge {
     font-size: 0.58rem;
     font-weight: 800;
-    background: #5865F2;
+    background: #5865f2;
     color: #fff;
     padding: 2px 6px;
     border-radius: 4px;

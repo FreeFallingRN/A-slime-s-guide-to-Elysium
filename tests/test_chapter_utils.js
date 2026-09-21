@@ -1,11 +1,11 @@
-import assert from 'assert/strict';
+import assert from "assert/strict";
 import {
   clampChapter,
   getChapterRange,
   getLevelMilestoneIndex,
   getLevelMilestones,
   getTimelineMarkers
-} from '../src/lib/chapterUtils.js';
+} from "../src/lib/chapterUtils.js";
 
 function runTest(name, fn) {
   try {
@@ -17,38 +17,34 @@ function runTest(name, fn) {
   }
 }
 
-console.log('==================================================');
-console.log('  CHAPTER CONTROLLER HELPER TESTS');
-console.log('==================================================\n');
+console.log("==================================================");
+console.log("  CHAPTER CONTROLLER HELPER TESTS");
+console.log("==================================================\n");
 
-runTest('chapter range is derived from unordered data', () => {
-  assert.deepEqual(
-    getChapterRange([
-      { index: 10 },
-      { index: 1 },
-      { index: 7 }
-    ]),
-    { minChapter: 1, maxChapter: 10 }
-  );
+runTest("chapter range is derived from unordered data", () => {
+  assert.deepEqual(getChapterRange([{ index: 10 }, { index: 1 }, { index: 7 }]), {
+    minChapter: 1,
+    maxChapter: 10
+  });
 });
 
-runTest('empty chapter range falls back safely', () => {
+runTest("empty chapter range falls back safely", () => {
   assert.deepEqual(getChapterRange([]), { minChapter: 1, maxChapter: 1 });
 });
 
-runTest('timeline markers span medium range without duplicates', () => {
+runTest("timeline markers span medium range without duplicates", () => {
   assert.deepEqual(getTimelineMarkers(1, 92, 5), [1, 24, 47, 69, 92]);
 });
 
-runTest('timeline markers span large range without duplicates', () => {
+runTest("timeline markers span large range without duplicates", () => {
   assert.deepEqual(getTimelineMarkers(1, 391, 5), [1, 99, 196, 294, 391]);
 });
 
-runTest('timeline markers avoid duplicates for small ranges', () => {
+runTest("timeline markers avoid duplicates for small ranges", () => {
   assert.deepEqual(getTimelineMarkers(1, 3, 5), [1, 2, 3]);
 });
 
-runTest('level milestones collapse repeated levels to first chapter', () => {
+runTest("level milestones collapse repeated levels to first chapter", () => {
   assert.deepEqual(
     getLevelMilestones([
       { index: 68, halonLvl: 3 },
@@ -64,7 +60,7 @@ runTest('level milestones collapse repeated levels to first chapter', () => {
   );
 });
 
-runTest('level milestones preserve non-sequential level jumps', () => {
+runTest("level milestones preserve non-sequential level jumps", () => {
   const milestones = getLevelMilestones([
     { index: 1, halonLvl: 1 },
     { index: 2, halonLvl: 1 },
@@ -81,18 +77,18 @@ runTest('level milestones preserve non-sequential level jumps', () => {
   assert.equal(getLevelMilestoneIndex(milestones, 14), 1);
 });
 
-runTest('chapter clamping rejects NaN and clamps to derived range', () => {
+runTest("chapter clamping rejects NaN and clamps to derived range", () => {
   const chapters = [{ index: 10 }, { index: 20 }];
 
-  assert.equal(clampChapter('not-a-number', chapters), 10);
+  assert.equal(clampChapter("not-a-number", chapters), 10);
   assert.equal(clampChapter(3, chapters), 10);
   assert.equal(clampChapter(12, chapters), 12);
   assert.equal(clampChapter(99, chapters), 20);
 });
 
 if (process.exitCode) {
-  console.error('\nTEST SUMMARY (CHAPTER UTILS): FAILED');
+  console.error("\nTEST SUMMARY (CHAPTER UTILS): FAILED");
   process.exit(process.exitCode);
 }
 
-console.log('\nTEST SUMMARY (CHAPTER UTILS): 8 PASSED, 0 FAILED');
+console.log("\nTEST SUMMARY (CHAPTER UTILS): 8 PASSED, 0 FAILED");

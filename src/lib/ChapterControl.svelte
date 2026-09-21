@@ -1,15 +1,10 @@
 <script>
-  import {
-    currentChapter,
-    activeChapterDetails,
-    chaptersData,
-    chapterRange,
-  } from "./store.js";
+  import { currentChapter, activeChapterDetails, chaptersData, chapterRange } from "./store.js";
   import {
     clampChapter,
     getLevelMilestoneIndex,
     getLevelMilestones,
-    getTimelineMarkers,
+    getTimelineMarkers
   } from "./chapterUtils.js";
   import {
     Shield,
@@ -18,7 +13,7 @@
     LockKeyholeOpen,
     Clock,
     User,
-    Flame,
+    Flame
   } from "lucide-svelte";
 
   let activeCh = 5;
@@ -30,10 +25,7 @@
   const timelineMarkers = getTimelineMarkers(minChapter, latestCh, 5);
   const levelMilestones = getLevelMilestones(chaptersData);
 
-  $: currentLevelMilestoneIndex = getLevelMilestoneIndex(
-    levelMilestones,
-    chDetails.halonLvl,
-  );
+  $: currentLevelMilestoneIndex = getLevelMilestoneIndex(levelMilestones, chDetails.halonLvl);
 
   currentChapter.subscribe((val) => {
     activeCh = val;
@@ -68,10 +60,7 @@
     if (currentLevelMilestoneIndex !== -1) {
       const nextIndex = Math.max(
         0,
-        Math.min(
-          levelMilestones.length - 1,
-          currentLevelMilestoneIndex + direction,
-        ),
+        Math.min(levelMilestones.length - 1, currentLevelMilestoneIndex + direction)
       );
       syncToLevel(levelMilestones[nextIndex].level);
     }
@@ -191,13 +180,9 @@
     <div class="modal-dialog hologram-panel" on:click|stopPropagation>
       <div class="modal-header">
         <h3 class="hologram-glow-text">SYSTEM CHAPTER SYNC</h3>
-        <button class="close-btn" on:click={() => (showModal = false)}
-          >&times;</button
-        >
+        <button class="close-btn" on:click={() => (showModal = false)}>&times;</button>
       </div>
-      <p class="modal-subheader">
-        Sync your timeline or manually pick a chapter below.
-      </p>
+      <p class="modal-subheader">Sync your timeline or manually pick a chapter below.</p>
 
       <div class="dialog-controls-stack">
         <!-- 1. Chapter Selection Dropdown -->
@@ -206,7 +191,7 @@
           <select
             id="modal-chapter-select"
             value={activeCh}
-            on:change={(e) => selectChapter(parseInt(e.target.value))}
+            on:change={(e) => selectChapter(parseInt(e.currentTarget.value))}
           >
             {#each chaptersData as ch}
               <option value={ch.index}>
@@ -218,13 +203,11 @@
 
         <!-- 2. Level sync Dropdown -->
         <div class="sync-dropdown-wrapper">
-          <label for="modal-level-select"
-            >SYNC BY CHARACTER LEVEL milestones:</label
-          >
+          <label for="modal-level-select">SYNC BY CHARACTER LEVEL milestones:</label>
           <select
             id="modal-level-select"
             on:change={(e) => {
-              const val = e.target.value;
+              const val = e.currentTarget.value;
               if (val) {
                 syncToLevel(parseInt(val));
               }
@@ -241,16 +224,10 @@
 
         <!-- 3. Action Buttons Row -->
         <div class="modal-actions-row">
-          <button
-            class="modal-btn reset-btn"
-            on:click={() => selectChapter(minChapter)}
-          >
+          <button class="modal-btn reset-btn" on:click={() => selectChapter(minChapter)}>
             RESET PROGRESS
           </button>
-          <button
-            class="modal-btn latest-btn"
-            on:click={() => selectChapter(latestCh)}
-          >
+          <button class="modal-btn latest-btn" on:click={() => selectChapter(latestCh)}>
             GO TO LATEST
           </button>
         </div>

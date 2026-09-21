@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import ChapterControl from "./lib/ChapterControl.svelte";
-  import Book from "./lib/Book.svelte";
+  import LoreEncyclopedia from "./lib/LoreEncyclopedia.svelte";
   import StatCalculator from "./lib/StatCalculator.svelte";
   import BiomassCalculator from "./lib/BiomassCalculator.svelte";
   import Map from "./lib/Map.svelte";
@@ -9,21 +9,9 @@
   import Characters from "./lib/Characters.svelte";
   import OnboardingModal from "./lib/OnboardingModal.svelte";
 
-  import {
-    BookOpen,
-    Gauge,
-    MapIcon,
-    Sparkles,
-    Shield,
-    Flame,
-    Download,
-    Users,
-    Image as ImageIcon,
-    HelpCircle,
-    Github
-  } from "lucide-svelte";
+  import { BookOpen, Gauge, Flame, Download, Users, HelpCircle, Github } from "lucide-svelte";
 
-  let currentTab = "stats"; // 'book', 'stats', 'biomass', 'map', '3d'
+  let currentTab = "stats"; // 'stats', 'characters', 'lore'
   let deferredPrompt = null;
   let installable = false;
 
@@ -129,13 +117,21 @@
 
     <div class="header-actions">
       <!-- Guide / Help Button -->
-      <button class="header-btn guide-btn font-tech" on:click={() => openGuide(0)} title="Open Guide & Tutorial">
+      <button
+        class="header-btn guide-btn font-tech"
+        on:click={() => openGuide(0)}
+        title="Open Guide & Tutorial"
+      >
         <HelpCircle size={14} />
         <span class="btn-text">GUIDE</span>
       </button>
 
       <!-- Install App Button -->
-      <button class="header-btn install-btn font-tech" on:click={installApp} title="Install Progressive Web App">
+      <button
+        class="header-btn install-btn font-tech"
+        on:click={installApp}
+        title="Install Progressive Web App"
+      >
         <Download size={14} />
         <span class="btn-text">INSTALL APP</span>
       </button>
@@ -182,6 +178,14 @@
         <Users size={16} />
         <span>Characters</span>
       </button>
+
+      <button
+        class="nav-tab {currentTab === 'lore' ? 'active' : ''}"
+        on:click={() => (currentTab = "lore")}
+      >
+        <BookOpen size={16} />
+        <span>Lore Archive</span>
+      </button>
     </nav>
 
     <!-- Main Viewport Router -->
@@ -191,6 +195,10 @@
       {:else if currentTab === "characters"}
         <div class="fade-in-wrapper">
           <Characters />
+        </div>
+      {:else if currentTab === "lore"}
+        <div class="fade-in-wrapper">
+          <LoreEncyclopedia />
         </div>
       {/if}
     </section>
@@ -241,7 +249,6 @@
   />
 </main>
 
-
 <style>
   .app-layout {
     min-height: 100vh;
@@ -281,11 +288,7 @@
   }
 
   .logo-box {
-    background: linear-gradient(
-      135deg,
-      var(--color-arson-fire) 0%,
-      #ff0000 100%
-    );
+    background: linear-gradient(135deg, var(--color-arson-fire) 0%, #ff0000 100%);
     width: 36px;
     height: 36px;
     border-radius: 8px;
@@ -564,7 +567,7 @@
   }
 
   .footer-link-a.discord-link:hover {
-    color: #5865F2;
+    color: #5865f2;
   }
 
   .sep {
@@ -634,7 +637,7 @@
       padding: 8px 10px;
       gap: 4px;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       justify-items: center;
       align-items: center;
       z-index: 1000;
@@ -679,4 +682,3 @@
     }
   }
 </style>
-

@@ -130,7 +130,10 @@
     if (!item || !item.state.unlockedImages || item.state.unlockedImages.length === 0) return;
     modalData = {
       item,
-      index: initialIdx !== undefined ? Math.min(initialIdx, item.state.unlockedImages.length - 1) : item.state.unlockedImages.length - 1
+      index:
+        initialIdx !== undefined
+          ? Math.min(initialIdx, item.state.unlockedImages.length - 1)
+          : item.state.unlockedImages.length - 1
     };
   }
 
@@ -174,7 +177,8 @@
   function getRarityClass(rarity) {
     if (!rarity) return "rarity-common";
     const r = rarity.toLowerCase();
-    if (r.includes("legendary") || r.includes("mythic") || r.includes("unique")) return "rarity-legendary";
+    if (r.includes("legendary") || r.includes("mythic") || r.includes("unique"))
+      return "rarity-legendary";
     if (r.includes("epic")) return "rarity-epic";
     if (r.includes("rare")) return "rarity-rare";
     if (r.includes("uncommon")) return "rarity-uncommon";
@@ -248,12 +252,19 @@
       {@const state = item.state}
       {@const isHighlighted = highlightedCharId === def.id}
       {@const images = state.unlockedImages || []}
-      {@const imgIdx = activeImageIndexes[def.id] !== undefined ? activeImageIndexes[def.id] : (images.length > 0 ? images.length - 1 : 0)}
+      {@const imgIdx =
+        activeImageIndexes[def.id] !== undefined
+          ? activeImageIndexes[def.id]
+          : images.length > 0
+            ? images.length - 1
+            : 0}
       {@const activeImg = images.length > 0 ? images[Math.min(imgIdx, images.length - 1)] : null}
 
       <div
         id="char-card-{def.id}"
-        class="character-card hologram-panel {state.isEncountered ? 'active' : 'classified'} {isHighlighted ? 'highlighted' : ''}"
+        class="character-card hologram-panel {state.isEncountered
+          ? 'active'
+          : 'classified'} {isHighlighted ? 'highlighted' : ''}"
       >
         {#if !state.isEncountered}
           <!-- Locked / Unencountered State -->
@@ -306,7 +317,8 @@
                     <ChevronLeft size={14} />
                   </button>
                   <span class="gallery-counter font-tech">
-                    <ImageIcon size={10} /> {Math.min(imgIdx + 1, images.length)} / {images.length}
+                    <ImageIcon size={10} />
+                    {Math.min(imgIdx + 1, images.length)} / {images.length}
                   </span>
                   <button
                     class="gallery-nav-btn"
@@ -333,7 +345,9 @@
                   <span class="attr-label">RACE:</span>
                   <span class="attr-val">{state.race}</span>
                   {#if state.raceRarity}
-                    <span class="rarity-tag {getRarityClass(state.raceRarity)}">{state.raceRarity}</span>
+                    <span class="rarity-tag {getRarityClass(state.raceRarity)}"
+                      >{state.raceRarity}</span
+                    >
                   {/if}
                 </div>
               {/if}
@@ -350,7 +364,9 @@
                   <span class="attr-label">CLASS:</span>
                   <span class="attr-val">{state.class}</span>
                   {#if state.classRarity}
-                    <span class="rarity-tag {getRarityClass(state.classRarity)}">{state.classRarity}</span>
+                    <span class="rarity-tag {getRarityClass(state.classRarity)}"
+                      >{state.classRarity}</span
+                    >
                   {/if}
                 </div>
               {/if}
@@ -366,7 +382,11 @@
                 on:click={() => toggleHistory(def.id)}
                 type="button"
               >
-                <span>{expandedHistory[def.id] ? '▼ HIDE PREVIOUS LOGS' : `► VIEW PAST LOGS (${state.stageHistory.length - 1})`}</span>
+                <span
+                  >{expandedHistory[def.id]
+                    ? "▼ HIDE PREVIOUS LOGS"
+                    : `► VIEW PAST LOGS (${state.stageHistory.length - 1})`}</span
+                >
               </button>
 
               {#if expandedHistory[def.id]}
@@ -396,7 +416,7 @@
                   class="link-action-btn"
                   on:click={() => focusLinkedCharacter(def.linkedCharacterId)}
                 >
-                  VIEW {state.world === 'Elysium' ? 'REAL WORLD' : 'ELYSIUM'} PERSONA:
+                  VIEW {state.world === "Elysium" ? "REAL WORLD" : "ELYSIUM"} PERSONA:
                   <strong>{item.linkedState.name}</strong>
                 </button>
               </div>
@@ -423,12 +443,7 @@
   {@const mImages = mState.unlockedImages || []}
   {@const activeModalImg = mImages[modalData.index]}
 
-  <div
-    class="modal-backdrop"
-    on:click={closeModal}
-    role="button"
-    tabindex="0"
-  >
+  <div class="modal-backdrop" on:click={closeModal} role="button" tabindex="0">
     <div class="modal-content hologram-panel" on:click|stopPropagation role="document">
       <button class="modal-close-btn" on:click={closeModal} aria-label="Close modal">
         <X size={20} />
@@ -439,11 +454,7 @@
         <div class="modal-left-col">
           {#if activeModalImg}
             {#if mImages.length > 1}
-              <button
-                class="modal-arrow-btn prev"
-                on:click={modalPrev}
-                aria-label="Previous Image"
-              >
+              <button class="modal-arrow-btn prev" on:click={modalPrev} aria-label="Previous Image">
                 <ChevronLeft size={24} />
               </button>
             {/if}
@@ -451,11 +462,7 @@
             <img src={activeModalImg.file} alt={mState.name} class="modal-img" />
 
             {#if mImages.length > 1}
-              <button
-                class="modal-arrow-btn next"
-                on:click={modalNext}
-                aria-label="Next Image"
-              >
+              <button class="modal-arrow-btn next" on:click={modalNext} aria-label="Next Image">
                 <ChevronRight size={24} />
               </button>
             {/if}
@@ -491,7 +498,9 @@
                   <span class="attr-label">RACE:</span>
                   <span class="attr-val">{mState.race}</span>
                   {#if mState.raceRarity}
-                    <span class="rarity-tag {getRarityClass(mState.raceRarity)}">{mState.raceRarity}</span>
+                    <span class="rarity-tag {getRarityClass(mState.raceRarity)}"
+                      >{mState.raceRarity}</span
+                    >
                   {/if}
                 </div>
               {/if}
@@ -508,7 +517,9 @@
                   <span class="attr-label">CLASS:</span>
                   <span class="attr-val">{mState.class}</span>
                   {#if mState.classRarity}
-                    <span class="rarity-tag {getRarityClass(mState.classRarity)}">{mState.classRarity}</span>
+                    <span class="rarity-tag {getRarityClass(mState.classRarity)}"
+                      >{mState.classRarity}</span
+                    >
                   {/if}
                 </div>
               {/if}
@@ -550,7 +561,7 @@
                 class="link-action-btn"
                 on:click={() => switchModalPersona(mDef.linkedCharacterId)}
               >
-                VIEW {mState.world === 'Elysium' ? 'REAL WORLD' : 'ELYSIUM'} PERSONA:
+                VIEW {mState.world === "Elysium" ? "REAL WORLD" : "ELYSIUM"} PERSONA:
                 <strong>{mItem.linkedState.name}</strong>
               </button>
             </div>
@@ -688,7 +699,9 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   .character-card.highlighted {
@@ -845,7 +858,9 @@
     height: 100%;
     object-fit: contain;
     object-position: center;
-    transition: transform 0.3s ease, filter 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      filter 0.3s ease;
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
   }
 
@@ -959,7 +974,7 @@
 
   .rarity-tag {
     margin-left: auto;
-    font-size: 0.60rem;
+    font-size: 0.6rem;
     font-weight: 800;
     padding: 1px 6px;
     border-radius: 3px;
