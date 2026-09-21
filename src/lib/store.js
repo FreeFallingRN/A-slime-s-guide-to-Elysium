@@ -1,17 +1,5 @@
 import { writable, derived } from 'svelte/store';
-
-// Get saved chapter from localStorage or default to 1
-const savedChapter = typeof window !== 'undefined' ? localStorage.getItem('slime_elysium_chapter') : null;
-const initialChapter = savedChapter ? parseInt(savedChapter, 10) : 1;
-
-// Global Chapter Lock Store (Default: 1 or User's Last Choice)
-export const currentChapter = writable(initialChapter);
-
-if (typeof window !== 'undefined') {
-  currentChapter.subscribe(value => {
-    localStorage.setItem('slime_elysium_chapter', value.toString());
-  });
-}
+import { clampChapter, getChapterRange } from './chapterUtils.js';
 
 // Chapters Timeline Database (Canon mapped dates and levels)
 export const chaptersData = [
@@ -86,8 +74,44 @@ export const chaptersData = [
   { index: 69, title: "Giant Snake", date: "Feb 25, 2026", halonLvl: 3 },
   { index: 70, title: "Giant Snake 2", date: "Feb 25, 2026", halonLvl: 3 },
   { index: 71, title: "Level 04!", date: "Feb 25, 2026", halonLvl: 4 },
-  { index: 72, title: "Normal Girl", date: "Feb 26, 2026", halonLvl: 4 }
+  { index: 72, title: "Normal Girl", date: "Feb 26, 2026", halonLvl: 4 },
+  { index: 73, title: "Company?", date: "Feb 26, 2026", halonLvl: 4 },
+  { index: 74, title: "Yrneha", date: "Feb 26, 2026", halonLvl: 4 },
+  { index: 75, title: "The Splendor of Thalendor!", date: "Feb 27, 2026", halonLvl: 4 },
+  { index: 76, title: "The Silver Crucible", date: "Feb 27, 2026", halonLvl: 4 },
+  { index: 77, title: "Fierce Negotiation", date: "Feb 28, 2026", halonLvl: 4 },
+  { index: 78, title: "Mana Stones", date: "Mar 01, 2026", halonLvl: 4 },
+  { index: 79, title: "Thief", date: "Mar 01, 2026", halonLvl: 4 },
+  { index: 80, title: "Two Level 11 Evolutions!", date: "Mar 02, 2026", halonLvl: 4 },
+  { index: 81, title: "Help", date: "Mar 02, 2026", halonLvl: 4 },
+  { index: 82, title: "Saving the Village", date: "Mar 03, 2026", halonLvl: 4 },
+  { index: 83, title: "Kroak Village", date: "Mar 03, 2026", halonLvl: 4 },
+  { index: 84, title: "Invitation", date: "Mar 04, 2026", halonLvl: 4 },
+  { index: 85, title: "Have They Forgotten?", date: "Mar 04, 2026", halonLvl: 4 },
+  { index: 86, title: "The Difference Between Common and Mythical", date: "Mar 04, 2026", halonLvl: 4 },
+  { index: 87, title: "Disappointment", date: "Mar 05, 2026", halonLvl: 4 },
+  { index: 88, title: "Riches!", date: "Mar 05, 2026", halonLvl: 4 },
+  { index: 89, title: "Spider-Slime Strikes Again!", date: "Mar 07, 2026", halonLvl: 4 },
+  { index: 90, title: "New Potential?", date: "Mar 08, 2026", halonLvl: 4 },
+  { index: 91, title: "Offended", date: "Mar 09, 2026", halonLvl: 4 },
+  { index: 92, title: "Hurry", date: "Mar 09, 2026", halonLvl: 8 }
 ];
+
+export const chapterRange = getChapterRange(chaptersData);
+
+// Get saved chapter from localStorage or default to the earliest known chapter.
+const savedChapter = typeof window !== 'undefined' ? localStorage.getItem('slime_elysium_chapter') : null;
+const initialChapter = clampChapter(savedChapter, chaptersData);
+
+// Global Chapter Lock Store (Default: earliest chapter or user's last valid choice)
+export const currentChapter = writable(initialChapter);
+
+if (typeof window !== 'undefined') {
+  currentChapter.subscribe(value => {
+    // Persist only valid chapter selections so stale saves cannot point beyond current data.
+    localStorage.setItem('slime_elysium_chapter', clampChapter(value, chaptersData).toString());
+  });
+}
 
 // Helper to calculate required EXP for a given level (doubles every level: 100 * 2^(level - 1))
 export function getRequiredExp(level) {
@@ -145,10 +169,17 @@ export const encyclopediaData = {
     { name: "Weaver Spider", description: "A Level 11 arachnid monster whose mana stone contains dense, high-grade magical residues.", chapter: 32 },
     { name: "Kobold", description: "Canine humanoid forest monsters that are slightly superior to Goblins and guard camp areas.", chapter: 39 },
     { name: "Gray Wolf", description: "A swift forest predator that coordinates and hunts in packs, ranging from Level 1 to 2.", chapter: 47 },
-    { name: "Bear", description: "A large forest beast ranging from Level 2 to 4, representing a significant source of experience.", chapter: 49 }
+    { name: "Bear", description: "A large forest beast ranging from Level 2 to 4, representing a significant source of experience.", chapter: 49 },
+    { name: "Shadow Serpent", description: "A cave serpent whose darkness-adapted body and digestive acid make it valuable and dangerous prey.", chapter: 67 },
+    { name: "Giant Shadow Serpent", description: "A larger Shadow Serpent encountered while digesting prey, dangerous enough to force Halon and Lisa into a high-risk attrition fight.", chapter: 69 },
+    { name: "Swamp Slug", description: "A swamp monster that saturates water with paralyzing poison and can be sold alive as an alchemical source.", chapter: 81 },
+    { name: "Swamp Toad", description: "Amphibious inhabitants of Kroak Village who use swamp terrain and slug poison to trap prey.", chapter: 83 },
+    { name: "Shadow Cougar", description: "An elite stealth predator associated with Thalendor's noble tamers.", chapter: 91 }
   ],
   factions: [
-    { name: "Vance Group", description: "An inter-planetary mega-corporation that controls colonies, satellites, patents, and hospitals.", chapter: 6 }
+    { name: "Vance Group", description: "An inter-planetary mega-corporation that controls colonies, satellites, patents, and hospitals.", chapter: 6 },
+    { name: "Elite Tamers", description: "A rising Thalendor class or social group associated with monster familiars and ceremonial whips.", chapter: 91 },
+    { name: "Hogue Group", description: "A rival real-world organization whose player team races to establish an official Open World guild.", chapter: 92 }
   ],
   dungeons: [],
   technology: [
@@ -159,7 +190,11 @@ export const encyclopediaData = {
     { name: "Flying Motorcycle", description: "A high-speed single-rider sky craft used by upper-zone citizens, often breaking altitude limits.", chapter: 20 },
     { name: "Dungeon Core", description: "A high-tier monster drop required for non-human races to establish recognized guilds in Elysium.", chapter: 36 },
     { name: "Sovereignty Seal", description: "A systemic key required to claim monster territories and obtain official faction status.", chapter: 36 },
-    { name: "Artificial Magic Core Harmonizer", description: "An organ that reduces casting latency by syncing Magic Core mana flow with physical needs.", chapter: 54 }
+    { name: "Artificial Magic Core Harmonizer", description: "An organ that reduces casting latency by syncing Magic Core mana flow with physical needs.", chapter: 54 },
+    { name: "Shadow Serpent Digestive Acid", description: "A valuable alchemical ingredient whose purified form commands a higher price at the Silver Crucible.", chapter: 76 },
+    { name: "Slug Poison", description: "A paralyzing toxin produced by Swamp Slugs and valued by alchemists when collected safely.", chapter: 84 },
+    { name: "Silver Coin", description: "A Thalendor trade coin valuable enough to convert into real-world money through the system.", chapter: 77 },
+    { name: "Minor Forest Spirit Mana Stone", description: "A light-element mana stone purchased for its potential to grant a size or speed-related monster skill.", chapter: 90 }
   ]
 };
 
@@ -216,7 +251,7 @@ export const characterData = {
       name: "Structural Stability",
       target: "none",
       value: 1.0,
-      chapter: 8,
+      chapter: 2,
       description: "Improves basic body control.",
       upgrades: [
         {
@@ -252,7 +287,7 @@ export const characterData = {
     { id: "memory_resonance", name: "Memory Resonance", target: "none", value: 0.0, chapter: 25, description: "By absorbing another creature’s brain or core, Memory Fragments and the creature’s instincts can be absorbed." },
     { id: "magic_core", name: "Magic Core", target: "mana", value: 0.10, chapter: 25, description: "The vital core undergoes a qualitative transmutation, becoming a magical energy engine. It emits constant pulses that saturate the cellular structure, forcing the opening of conductivity channels (Mana Paths) through the biomass to support, filter, and circulate raw energy throughout the organism.", effect: "Compounds ×1.10 per level on Mana." },
     { id: "ice_spike", name: "Ice Spike", target: "none", value: 0.15, chapter: 26, description: "Channels concentrated frozen mana to conjure and launch a crystalline ice projectile." },
-    { id: "chemosensory_aptitude", name: "Chemosensory Aptitude", target: "none", value: 0.0, chapter: 31, description: "The outer membrane can detect odor particles and mana residues in a much more refined way." },
+    { id: "chemosensory_aptitude", name: "Chemosensory Aptitude", target: "none", value: 0.0, chapter: 30, description: "The outer membrane can detect odor particles and mana residues in a much more refined way." },
     { id: "pigmentation_mimicry", name: "Pigmentation Mimicry", target: "none", value: 0.0, chapter: 41, description: "Rewires skin chromatophores to mirror surrounding textures as active camouflage." },
     { id: "pack_instinct", name: "Pack Instinct", target: "none", value: 0.0, chapter: 49, description: "The user’s consciousness projects beyond the main core, establishing a sensory and motor link with allied or subordinate units." },
     { id: "magic_harmonizer", name: "Magic Core Harmonizer", target: "none", value: 0.0, chapter: 54, description: "Synchronizes the Magic Core's mana output cadence with physical motor signals to reduce conversion loss during active skill usage." },
@@ -260,8 +295,11 @@ export const characterData = {
     { id: "heavy_weapons_affinity", name: "Affinity with Heavy Weapons", target: "none", value: 0.0, chapter: 55, description: "Assimilates muscle memory to handle heavy impact weapons and axes with enhanced balance and leverage." },
     { id: "static_shadow", name: "Static Shadow", target: "none", value: 0.0, chapter: 55, description: "Alters body pigmentation and density to blend seamlessly into shadows as long as the user remains completely motionless." },
     { id: "magic_weaving", name: "Magic Weaving", target: "none", value: 0.0, chapter: 61, description: "Produces biological threads fused with mana, creating highly adhesive webs capable of immobilizing targets and siphoning energy." },
-    { id: "thermographic_perception", name: "Thermographic Perception", target: "none", value: 0.0, chapter: 68, description: "Maps thermal signatures of living beings through the membrane's infrared sensitivity, detecting hidden or camouflaged targets in total darkness." },
-    { id: "threshold_mimicry", name: "Threshold Mimicry", target: "none", value: 0.0, chapter: 68, description: "While in shadowed or dark environments, the body passively absorbs ambient darkness to suppress its own visual signature against low-level detection." }
+    { id: "thermographic_perception", name: "Thermographic Perception", aliases: ["Thermal Perception"], target: "none", value: 0.0, chapter: 68, description: "Maps thermal signatures of living beings through the membrane's infrared sensitivity, detecting hidden or camouflaged targets in total darkness." },
+    { id: "threshold_mimicry", name: "Threshold Mimicry", target: "none", value: 0.0, chapter: 68, description: "While in shadowed or dark environments, the body passively absorbs ambient darkness to suppress its own visual signature against low-level detection." },
+    { id: "biological_elasticity", name: "Biological Elasticity", target: "none", value: 0.0, chapter: 80, description: "Improves biological compression and elastic recovery capacity." },
+    { id: "hydrophobic_coating", name: "Hydrophobic Coating", target: "none", value: 0.0, chapter: 80, description: "Reduces the dilution of gelatinous mass in contact with water." },
+    { id: "poison_production", name: "Poison Production", target: "none", value: 0.0, chapter: 88, description: "Consumes biomass to produce small amounts of poison." }
   ]
 };
 
@@ -320,9 +358,11 @@ export const abilityProgression = {
     { chapter: 28, level: 12 },
     { chapter: 31, level: 13 },
     { chapter: 41, level: 14 },
-    { chapter: 47, level: 16 }
+    { chapter: 47, level: 16 },
+    { chapter: 83, level: 18 }
   ],
   structural_stability: [
+    { chapter: 2, level: 1 },
     { chapter: 8, level: 2 },
     { chapter: 14, level: 3 },
     { chapter: 16, level: 4 },
@@ -345,7 +385,8 @@ export const abilityProgression = {
     { chapter: 9, level: 2 },
     { chapter: 15, level: 3 },
     { chapter: 22, level: 4 },
-    { chapter: 27, level: 5 }
+    { chapter: 27, level: 5 },
+    { chapter: 80, level: 6 }
   ],
   mass_expansion: [
     { chapter: 9, level: 1 },
@@ -362,7 +403,9 @@ export const abilityProgression = {
     { chapter: 16, level: 3 },
     { chapter: 22, level: 6 },
     { chapter: 30, level: 9 },
-    { chapter: 33, level: 10 }
+    { chapter: 33, level: 10 },
+    { chapter: 80, level: 11 },
+    { chapter: 87, level: 12 }
   ],
   instinctive_perception: [
     { chapter: 12, level: 1 },
@@ -372,7 +415,8 @@ export const abilityProgression = {
     { chapter: 27, level: 5 },
     { chapter: 33, level: 6 },
     { chapter: 55, level: 8 },
-    { chapter: 68, level: 9 }
+    { chapter: 68, level: 9 },
+    { chapter: 80, level: 11 }
   ],
   reinforced_exoskeleton: [
     { chapter: 11, level: 1 },
@@ -391,7 +435,8 @@ export const abilityProgression = {
     { chapter: 33, level: 5 },
     { chapter: 41, level: 6 },
     { chapter: 55, level: 7 },
-    { chapter: 68, level: 8 }
+    { chapter: 68, level: 8 },
+    { chapter: 83, level: 9 }
   ],
   partial_division: [
     { chapter: 16, level: 1 },
@@ -446,6 +491,15 @@ export const abilityProgression = {
   ],
   threshold_mimicry: [
     { chapter: 68, level: 1 }
+  ],
+  biological_elasticity: [
+    { chapter: 80, level: 1 }
+  ],
+  hydrophobic_coating: [
+    { chapter: 80, level: 1 }
+  ],
+  poison_production: [
+    { chapter: 88, level: 1 }
   ]
 };
 

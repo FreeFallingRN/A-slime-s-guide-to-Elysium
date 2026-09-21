@@ -40,6 +40,45 @@ export const charactersCompendium = [
         age: null,
         bio: "A unique Mythical Slime recognized for his sharp tactical mind, and mastery of clone control. Is powering up to serve as the vice guild leader of Lisa's guild.",
         revealLink: true
+      },
+      {
+        chapter: 71,
+        name: "Halon",
+        world: "Elysium",
+        role: "Level 04 Slime",
+        race: "Slime",
+        raceRarity: "Mythical",
+        class: "Devourer",
+        classRarity: "Mythical",
+        age: null,
+        bio: "After the Shadow Serpent battle, Halon reaches Level 04 and assimilates Obsidian Exoskeleton, adding a costly black defensive shell to his combat options.",
+        revealLink: true
+      },
+      {
+        chapter: 88,
+        name: "Halon",
+        world: "Elysium",
+        role: "Poison-Producing Slime",
+        race: "Slime",
+        raceRarity: "Mythical",
+        class: "Devourer",
+        classRarity: "Mythical",
+        age: null,
+        bio: "After hunting Swamp Slugs, Halon gains Poison Production and begins treating monster materials as both combat resources and trade goods.",
+        revealLink: true
+      },
+      {
+        chapter: 92,
+        name: "Halon",
+        world: "Elysium",
+        role: "Level 08 Guild Contender",
+        race: "Slime",
+        raceRarity: "Mythical",
+        class: "Devourer",
+        classRarity: "Mythical",
+        age: null,
+        bio: "Halon reaches Level 08 while he and Lisa hurry to claim the first official Open World guild before a rival corporate-backed group.",
+        revealLink: true
       }
     ]
   },
@@ -144,6 +183,32 @@ export const charactersCompendium = [
         classRarity: "Rare",
         age: null,
         bio: "A Legendary Spiritual Fox race and a Rare Illusion Weaver class. Elegant, strategic, and fiercely loyal to her chosen allies, she works closely with Halon to establish a powerhouse faction in Elysium.",
+        revealLink: false
+      },
+      {
+        chapter: 70,
+        name: "Lisa",
+        world: "Elysium",
+        role: "Level 04 Spirit Fox",
+        race: "Spiritual Fox",
+        raceRarity: "Legendary",
+        class: "Illusion Weaver",
+        classRarity: "Rare",
+        age: null,
+        bio: "During the Giant Shadow Serpent fight, Lisa's Level 04 agility lets her keep moving despite the danger and coordinate closely with Halon's mana-thread tactics.",
+        revealLink: false
+      },
+      {
+        chapter: 91,
+        name: "Lisa",
+        world: "Elysium",
+        role: "Legendary Spirit Fox Guild Leader",
+        race: "Spiritual Fox",
+        raceRarity: "Legendary",
+        class: "Illusion Weaver",
+        classRarity: "Rare",
+        age: null,
+        bio: "In Thalendor's Horizon Bazaar, Lisa's legendary presence is strong enough to intimidate Nero without a fight, reinforcing that her harmless appearance hides a much greater aura.",
         revealLink: false
       }
     ]
@@ -329,7 +394,9 @@ export const charactersCompendium = [
     linkedCharacterId: null,
     isPlayer: false,
     defaultWorld: "Elysium",
-    images: [],
+    images: [
+      { file: "yrneha-march12.png", chapter: 53  }
+    ],
     stages: [
       {
         chapter: 53,
@@ -342,6 +409,142 @@ export const charactersCompendium = [
         classRarity: "Epic",
         age: null,
         bio: "A renowned High Elven Archmage residing in the capital of Thalendor. Revered for her supreme mastery over arcana, she serves as the strict, exacting master and magic teacher to Aeliana, imposing rigorous lessons and endless homework infamous among Thalendor's nobility.",
+        revealLink: false
+      },
+      {
+        chapter: 74,
+        name: "Yrneha",
+        world: "Elysium",
+        role: "High Elven Archmage & Researcher",
+        race: "Elf",
+        raceRarity: "Rare",
+        class: "Elven Archmage",
+        classRarity: "Epic",
+        age: null,
+        bio: "Yrneha meets Halon directly and recognizes that the intelligent, mana-dense Slime is unusual enough to tempt scholarly investigation.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "intervar",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 76,
+        name: "Intervar",
+        world: "Elysium",
+        role: "Silver Crucible Merchant",
+        race: "Elf",
+        raceRarity: "Unknown",
+        class: "Merchant",
+        classRarity: "Unknown",
+        age: null,
+        bio: "An elven merchant at the Silver Crucible in Thalendor who evaluates and negotiates for Shadow Serpent Digestive Acid and other alchemical materials.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "gribbit",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 83,
+        name: "Gribbit",
+        world: "Elysium",
+        role: "Kroak Village Elder",
+        race: "Swamp Toad",
+        raceRarity: "Unknown",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "The elder of Kroak Village, first presenting himself as a grateful guide able to lead Halon and Lisa toward Swamp Slugs.",
+        revealLink: false
+      },
+      {
+        chapter: 85,
+        name: "Gribbit",
+        world: "Elysium",
+        role: "Kroak Village Ambusher",
+        race: "Swamp Toad",
+        raceRarity: "Unknown",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "Gribbit reveals that his friendly guide act was a lure, using Swamp Slug poison and his village's scouts to try to trap Halon and Lisa as prey.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "edgar",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 89,
+        name: "Edgar",
+        world: "Elysium",
+        role: "Mana Stone Seller",
+        race: "Unknown",
+        raceRarity: "Unknown",
+        class: "Merchant",
+        classRarity: "Unknown",
+        age: null,
+        bio: "A polite Mana Stone shopkeeper in Thalendor's Horizon Bazaar who treats Halon and Lisa as customers and becomes interested in monster absorption results.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "valerius",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 91,
+        name: "Valerius",
+        world: "Elysium",
+        role: "Elite Tamer",
+        race: "Elf",
+        raceRarity: "Unknown",
+        class: "Elite Tamer",
+        classRarity: "Unknown",
+        age: null,
+        bio: "A young noble elf and Elite Tamer who insults Halon and Lisa while visiting Edgar's Mana Stone shop.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "nero",
+    linkedCharacterId: "valerius",
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 91,
+        name: "Nero",
+        world: "Elysium",
+        role: "Shadow Cougar Familiar",
+        race: "Shadow Cougar",
+        raceRarity: "Unknown",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "Valerius's elite Shadow Cougar familiar, initially arrogant toward Lisa before reacting fearfully to her legendary aura.",
         revealLink: false
       }
     ]
