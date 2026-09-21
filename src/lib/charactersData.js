@@ -40,45 +40,6 @@ export const charactersCompendium = [
         age: null,
         bio: "A unique Mythical Slime recognized for his sharp tactical mind, and mastery of clone control. Is powering up to serve as the vice guild leader of Lisa's guild.",
         revealLink: true
-      },
-      {
-        chapter: 71,
-        name: "Halon",
-        world: "Elysium",
-        role: "Level 04 Slime",
-        race: "Slime",
-        raceRarity: "Mythical",
-        class: "Devourer",
-        classRarity: "Mythical",
-        age: null,
-        bio: "After the Shadow Serpent battle, Halon reaches Level 04 and assimilates Obsidian Exoskeleton, adding a costly black defensive shell to his combat options.",
-        revealLink: true
-      },
-      {
-        chapter: 88,
-        name: "Halon",
-        world: "Elysium",
-        role: "Poison-Producing Slime",
-        race: "Slime",
-        raceRarity: "Mythical",
-        class: "Devourer",
-        classRarity: "Mythical",
-        age: null,
-        bio: "After hunting Swamp Slugs, Halon gains Poison Production and begins treating monster materials as both combat resources and trade goods.",
-        revealLink: true
-      },
-      {
-        chapter: 92,
-        name: "Halon",
-        world: "Elysium",
-        role: "Level 08 Guild Contender",
-        race: "Slime",
-        raceRarity: "Mythical",
-        class: "Devourer",
-        classRarity: "Mythical",
-        age: null,
-        bio: "Halon reaches Level 08 while he and Lisa hurry to claim the first official Open World guild before a rival corporate-backed group.",
-        revealLink: true
       }
     ]
   },
@@ -183,32 +144,6 @@ export const charactersCompendium = [
         classRarity: "Rare",
         age: null,
         bio: "A Legendary Spiritual Fox race and a Rare Illusion Weaver class. Elegant, strategic, and fiercely loyal to her chosen allies, she works closely with Halon to establish a powerhouse faction in Elysium.",
-        revealLink: false
-      },
-      {
-        chapter: 70,
-        name: "Lisa",
-        world: "Elysium",
-        role: "Level 04 Spirit Fox",
-        race: "Spiritual Fox",
-        raceRarity: "Legendary",
-        class: "Illusion Weaver",
-        classRarity: "Rare",
-        age: null,
-        bio: "During the Giant Shadow Serpent fight, Lisa's Level 04 agility lets her keep moving despite the danger and coordinate closely with Halon's mana-thread tactics.",
-        revealLink: false
-      },
-      {
-        chapter: 91,
-        name: "Lisa",
-        world: "Elysium",
-        role: "Legendary Spirit Fox Guild Leader",
-        race: "Spiritual Fox",
-        raceRarity: "Legendary",
-        class: "Illusion Weaver",
-        classRarity: "Rare",
-        age: null,
-        bio: "In Thalendor's Horizon Bazaar, Lisa's legendary presence is strong enough to intimidate Nero without a fight, reinforcing that her harmless appearance hides a much greater aura.",
         revealLink: false
       }
     ]
