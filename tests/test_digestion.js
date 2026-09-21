@@ -73,6 +73,9 @@ suite.addTest(47, 95.2, true)
 suite.addTest(54, 10.48, false, "", "enhanced");
 suite.addTest(54, 37.72, false, "", "subtotal");
 suite.addTest(54, 49.03, false);
+suite.addTest(93, 36.52, false, "Ch 93 Base Digestion (Lv 8)", "enhanced");
+suite.addTest(93, 260.0, false, "Ch 93 Total Neutral Digestion");
+suite.addTest(93, 780.0, true, "Ch 93 Combat Digestion (Hemolymphatic Tissue Lv 10)");
 
 // Run digestion tests if executed directly
 suite.run('DIGESTION');

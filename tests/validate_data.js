@@ -43,6 +43,23 @@ function uniqueBy(items, keyFn, label) {
   }
 }
 
+function validateChapterDate(dateStr, label) {
+  if (!dateStr || typeof dateStr !== 'string') {
+    fail(`${label} is missing a publication date`);
+    return;
+  }
+  const trimmed = dateStr.trim();
+  const disallowedPlaceholders = ['tbd', 'todo', 'n/a', 'unknown', 'pending', 'null', 'undefined'];
+  if (disallowedPlaceholders.includes(trimmed.toLowerCase())) {
+    fail(`${label} has unfinalized placeholder date: "${dateStr}". A valid publication date is required before deployment.`);
+    return;
+  }
+  const parsed = Date.parse(trimmed);
+  if (Number.isNaN(parsed)) {
+    fail(`${label} has unparseable date format: "${dateStr}" (expected format e.g. "Feb 01, 2026")`);
+  }
+}
+
 uniqueBy(chaptersData, (ch) => ch.index, 'chaptersData');
 for (let i = 0; i < chaptersData.length; i += 1) {
   const ch = chaptersData[i];
@@ -53,6 +70,10 @@ for (let i = 0; i < chaptersData.length; i += 1) {
   if (!ch.title || typeof ch.title !== 'string') {
     fail(`chaptersData chapter ${ch.index} is missing a title`);
   }
+  if (!Number.isInteger(ch.halonLvl) || ch.halonLvl < 1) {
+    fail(`chaptersData chapter ${ch.index} has invalid halonLvl: ${ch.halonLvl}`);
+  }
+  validateChapterDate(ch.date, `chaptersData chapter ${ch.index}`);
 }
 
 uniqueBy(characterData.abilities, (ability) => ability.id, 'characterData.abilities');

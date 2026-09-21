@@ -94,7 +94,15 @@ export const chaptersData = [
   { index: 89, title: "Spider-Slime Strikes Again!", date: "Mar 07, 2026", halonLvl: 4 },
   { index: 90, title: "New Potential?", date: "Mar 08, 2026", halonLvl: 4 },
   { index: 91, title: "Offended", date: "Mar 09, 2026", halonLvl: 4 },
-  { index: 92, title: "Hurry", date: "Mar 09, 2026", halonLvl: 8 }
+  { index: 92, title: "Hurry", date: "Mar 10, 2026", halonLvl: 8 },
+  { index: 93, title: "Guild Base", date: "Mar 10, 2026", halonLvl: 8 },
+  { index: 94, title: "Wait!", date: "Mar 11, 2026", halonLvl: 8 },
+  { index: 95, title: "Elle and Pip", date: "Mar 11, 2026", halonLvl: 8 },
+  { index: 96, title: "Invading", date: "Mar 12, 2026", halonLvl: 8 },
+  { index: 97, title: "Coordination", date: "Mar 12, 2026", halonLvl: 8 },
+  { index: 98, title: "Blue Venom", date: "Mar 13, 2026", halonLvl: 8 },
+  { index: 99, title: "Living Armor", date: "Mar 13, 2026", halonLvl: 8 },
+  { index: 100, title: "Magic Evolution!", date: "Mar 14, 2026", halonLvl: 8 }
 ];
 
 export const chapterRange = getChapterRange(chaptersData);
@@ -148,7 +156,8 @@ export const encyclopediaData = {
     { name: "Werewolf", base: "Rare", description: "Another premium beast-human race high-level guilds pay fortunes for.", chapter: 1 },
     { name: "Spirit Fox", base: "Legendary", description: "A legendary beast race with high agility, stealth, spiritual affinity, and telepathic abilities.", chapter: 36 },
     { name: "High Elf", base: "Epic", description: "An ancient elven lineage characterized by deep mana connections, which built the capital Thalendor.", chapter: 45 },
-    { name: "Dark Elf", base: "Epic", description: "An elven lineage that split after the Great Rupture and isolated itself in the deep underground.", chapter: 45 }
+    { name: "Dark Elf", base: "Epic", description: "An elven lineage that split after the Great Rupture and isolated itself in the deep underground.", chapter: 45 },
+    { name: "Fairy", base: "Uncommon", description: "Small, palm-sized winged humanoids native to Mythlorien who act as invisible caretakers and gardeners of the forest's flora and vital mana balance.", chapter: 95 }
   ],
   classes: [
     { name: "Devourer", base: "Mythical", description: "Focuses on absorbing biological materials (Biomass) to grow, evolve, and assimilate enemy traits.", chapter: 1 },
@@ -174,14 +183,18 @@ export const encyclopediaData = {
     { name: "Giant Shadow Serpent", description: "A larger Shadow Serpent encountered while digesting prey, dangerous enough to force Halon and Lisa into a high-risk attrition fight.", chapter: 69 },
     { name: "Swamp Slug", description: "A swamp monster that saturates water with paralyzing poison and can be sold alive as an alchemical source.", chapter: 81 },
     { name: "Swamp Toad", description: "Amphibious inhabitants of Kroak Village who use swamp terrain and slug poison to trap prey.", chapter: 83 },
-    { name: "Shadow Cougar", description: "An elite stealth predator associated with Thalendor's noble tamers.", chapter: 91 }
+    { name: "Shadow Cougar", description: "An elite stealth predator associated with Thalendor's noble tamers.", chapter: 91 },
+    { name: "Glass Beetle", description: "A Level 10 arachnid-like insect monster inhabiting the Fossilized Amber Tree. Features hard, mirror-like glass carapaces and razor-sharp jointed legs.", chapter: 93 },
+    { name: "Glass Beetle Queen", description: "The Level 10+ dungeon boss at the top observatory of the Fossilized Amber Tree, controlling the hive mind and draining captured creatures' essence into mana cocoons.", chapter: 95 }
   ],
   factions: [
     { name: "Vance Group", description: "An inter-planetary mega-corporation that controls colonies, satellites, patents, and hospitals.", chapter: 6 },
     { name: "Elite Tamers", description: "A rising Thalendor class or social group associated with monster familiars and ceremonial whips.", chapter: 91 },
     { name: "Hogue Group", description: "A rival real-world organization whose player team races to establish an official Open World guild.", chapter: 92 }
   ],
-  dungeons: [],
+  dungeons: [
+    { name: "Fossilized Amber Tree", description: "A titan of amber and fossilized metal-hard wood serving as a Level 10 dungeon overrun by Glass Beetles, chosen by Lisa as the prospective Astralis Guild base.", chapter: 93 }
+  ],
   technology: [
     { name: "Neural Helmet", description: "Dystopian hardware enabling full-sensory immersion into Elysium. Highly expensive.", chapter: 1 },
     { name: "Nutritional Powder", description: "Rancid metal-tasting food paste eaten by citizens of the Lower Zone.", chapter: 1 },
@@ -194,7 +207,8 @@ export const encyclopediaData = {
     { name: "Shadow Serpent Digestive Acid", description: "A valuable alchemical ingredient whose purified form commands a higher price at the Silver Crucible.", chapter: 76 },
     { name: "Slug Poison", description: "A paralyzing toxin produced by Swamp Slugs and valued by alchemists when collected safely.", chapter: 84 },
     { name: "Silver Coin", description: "A Thalendor trade coin valuable enough to convert into real-world money through the system.", chapter: 77 },
-    { name: "Minor Forest Spirit Mana Stone", description: "A light-element mana stone purchased for its potential to grant a size or speed-related monster skill.", chapter: 90 }
+    { name: "Minor Forest Spirit Mana Stone", description: "A light-element mana stone purchased for its potential to grant a size or speed-related monster skill.", chapter: 90 },
+    { name: "Basic Life Seed", description: "A rare life-element seed item capable of triggering qualitative resonance and fusion evolutions when absorbed into a Magic Core.", chapter: 95 }
   ]
 };
 
@@ -262,7 +276,23 @@ export const characterData = {
         }
       ]
     },
-    { id: "hemolymphatic_tissue", name: "Hemolymphatic Tissue", target: "digestion", value: 0.20, chapter: 4, description: "Pulsating channels adapted from the larva react to pain and stress stimuli. During combat or under active damage, the conversion of absorbed matter into vital energy is accelerated.", effect: "(Combat Only) Multiplies Digestion by additional 20% × level." },
+    {
+      id: "hemolymphatic_tissue",
+      name: "Hemolymphatic Tissue",
+      target: "digestion",
+      value: 0.20,
+      chapter: 4,
+      description: "Pulsating channels adapted from the larva react to pain and stress stimuli. During combat or under active damage, the conversion of absorbed matter into vital energy is accelerated.",
+      effect: "(Combat Only) Multiplies Digestion by additional 20% × level.",
+      upgrades: [
+        {
+          chapter: 100,
+          type: "trait",
+          traitName: "Bio-Synthetic Mana Circulation",
+          traitDescription: "The hemolymphatic system becomes capable of channeling byproducts of accelerated molecular breakdown directly to the core. During the processing of biomass under combat stress, a percentage of the converted matter is refined into pure mana, replenishing the user’s reservoir proportionally to the digestion rate."
+        }
+      ]
+    },
     { id: "passive_digestion", name: "Passive Digestion", target: "digestion", value: 0.10, chapter: 5, description: "The body develops autonomous microprocesses of energy conversion, absorbing traces of mana and matter from the environment. It slowly generates Biomass even at rest.", effect: "Adds +10% × level to Digestion." },
     { id: "mass_expansion", name: "Mass Expansion", target: "digestion", value: 0.30, chapter: 9, description: "Increases maximum Bio-Mass capacity and body volume proportionally.", effect: "Adds +30% × level to Digestion (additive)." },
     { id: "membrane_reinforcement", name: "Membrane Reinforcement", target: "none", value: 1.0, chapter: 2, description: "Thickens the outer gelatinous membrane, increasing resistance to physical impacts and sharp edges." },
@@ -285,7 +315,23 @@ export const characterData = {
     { id: "body_density", name: "Body Density", target: "none", value: 0.10, chapter: 14, description: "Consumes Biomass to increase body density.", effect: "+10% × level to Body Density." },
     { id: "partial_division", name: "Partial Division", target: "digestion", value: 0.30, chapter: 16, description: "Consumes biomass to create a small extension to collect nearby matter.", effect: "Adds +10% × level to Digestion." },
     { id: "memory_resonance", name: "Memory Resonance", target: "none", value: 0.0, chapter: 25, description: "By absorbing another creature’s brain or core, Memory Fragments and the creature’s instincts can be absorbed." },
-    { id: "magic_core", name: "Magic Core", target: "mana", value: 0.10, chapter: 25, description: "The vital core undergoes a qualitative transmutation, becoming a magical energy engine. It emits constant pulses that saturate the cellular structure, forcing the opening of conductivity channels (Mana Paths) through the biomass to support, filter, and circulate raw energy throughout the organism.", effect: "Compounds ×1.10 per level on Mana." },
+    {
+      id: "magic_core",
+      name: "Magic Core",
+      target: "mana",
+      value: 0.10,
+      chapter: 25,
+      description: "The vital core undergoes a qualitative transmutation, becoming a magical energy engine. It emits constant pulses that saturate the cellular structure, forcing the opening of conductivity channels (Mana Paths) through the biomass to support, filter, and circulate raw energy throughout the organism.",
+      effect: "Compounds ×1.10 per level on Mana.",
+      upgrades: [
+        {
+          chapter: 100,
+          type: "trait",
+          traitName: "Parallel Processing Core",
+          traitDescription: "The vital core expands its internal architecture to support the opening of multiple independent mana paths operating simultaneously, allowing clones and main body to channel spells concurrently."
+        }
+      ]
+    },
     { id: "ice_spike", name: "Ice Spike", target: "none", value: 0.15, chapter: 26, description: "Channels concentrated frozen mana to conjure and launch a crystalline ice projectile." },
     { id: "chemosensory_aptitude", name: "Chemosensory Aptitude", target: "none", value: 0.0, chapter: 30, description: "The outer membrane can detect odor particles and mana residues in a much more refined way." },
     { id: "pigmentation_mimicry", name: "Pigmentation Mimicry", target: "none", value: 0.0, chapter: 41, description: "Rewires skin chromatophores to mirror surrounding textures as active camouflage." },
@@ -318,6 +364,8 @@ export const mapNodesData = [
   { id: "thalendor", name: "Thalendor Royal Capital", x: 85, y: 70, level: "Elven Capital", world: "Elysium", chapter: 45, details: "The high elven capital built over 30,000 years ago with suspended glowing vine bridges." },
   { id: "gray_wolf_forest", name: "Gray Wolf Woodlands", x: 62, y: 15, level: "Suggested Lv: 2-3", world: "Elysium", chapter: 47, details: "Territory of pack Gray Wolves where Halon coordinates his combat skills." },
   { id: "bear_grounds", name: "Bear Hunting Grounds", x: 50, y: 10, level: "Suggested Lv: 3-5", world: "Elysium", chapter: 49, details: "Deep woodlands inhabited by level 2-4 bears, used for cooperative grinding." },
+  { id: "amber_tree_dungeon", name: "Fossilized Amber Tree", x: 78, y: 58, level: "Suggested Lv: 8-10", world: "Elysium", chapter: 93, details: "A towering amber tree dungeon inhabited by Level 10 Glass Beetles, designated by Lisa as the future Guild Base." },
+  { id: "petal_village", name: "Petal Village", x: 72, y: 55, level: "Woodland Settlement", world: "Elysium", chapter: 95, details: "A secluded fairy village in Mythlorien where invisible forest gardeners maintain floral mana balance." },
 
   // Sectors World Nodes (Real World)
   { id: "operator_pod", name: "Lohan's Pod Room", x: 22, y: 45, level: "Lower Zone", world: "Sectors", chapter: 1, details: "Small operator cube pod housing Lohan's neural immersion tank and metal paste." },
@@ -359,7 +407,9 @@ export const abilityProgression = {
     { chapter: 31, level: 13 },
     { chapter: 41, level: 14 },
     { chapter: 47, level: 16 },
-    { chapter: 83, level: 18 }
+    { chapter: 83, level: 18 },
+    { chapter: 93, level: 23 },
+    { chapter: 98, level: 24 }
   ],
   structural_stability: [
     { chapter: 2, level: 1 },
@@ -370,7 +420,9 @@ export const abilityProgression = {
     { chapter: 22, level: 6 },
     { chapter: 30, level: 8 },
     { chapter: 33, level: 9 },
-    { chapter: 47, level: 11 }
+    { chapter: 47, level: 11 },
+    { chapter: 93, level: 17 },
+    { chapter: 98, level: 18 }
   ],
   hemolymphatic_tissue: [
     { chapter: 4, level: 1 },
@@ -378,7 +430,9 @@ export const abilityProgression = {
     { chapter: 14, level: 3 },
     { chapter: 22, level: 4 },
     { chapter: 41, level: 5 },
-    { chapter: 47, level: 7 }
+    { chapter: 47, level: 7 },
+    { chapter: 93, level: 10 },
+    { chapter: 100, level: 11 }
   ],
   passive_digestion: [
     { chapter: 5, level: 1 },
@@ -386,7 +440,8 @@ export const abilityProgression = {
     { chapter: 15, level: 3 },
     { chapter: 22, level: 4 },
     { chapter: 27, level: 5 },
-    { chapter: 80, level: 6 }
+    { chapter: 80, level: 6 },
+    { chapter: 93, level: 8 }
   ],
   mass_expansion: [
     { chapter: 9, level: 1 },
@@ -405,7 +460,9 @@ export const abilityProgression = {
     { chapter: 30, level: 9 },
     { chapter: 33, level: 10 },
     { chapter: 80, level: 11 },
-    { chapter: 87, level: 12 }
+    { chapter: 87, level: 12 },
+    { chapter: 93, level: 22 },
+    { chapter: 98, level: 23 }
   ],
   instinctive_perception: [
     { chapter: 12, level: 1 },
@@ -416,7 +473,8 @@ export const abilityProgression = {
     { chapter: 33, level: 6 },
     { chapter: 55, level: 8 },
     { chapter: 68, level: 9 },
-    { chapter: 80, level: 11 }
+    { chapter: 80, level: 11 },
+    { chapter: 93, level: 15 }
   ],
   reinforced_exoskeleton: [
     { chapter: 11, level: 1 },
@@ -426,7 +484,9 @@ export const abilityProgression = {
     { chapter: 55, level: 7 }
   ],
   obsidian_exoskeleton: [
-    { chapter: 71, level: 1 }
+    { chapter: 71, level: 1 },
+    { chapter: 93, level: 3 },
+    { chapter: 96, level: 4 }
   ],
   body_density: [
     { chapter: 14, level: 1 },
@@ -436,12 +496,14 @@ export const abilityProgression = {
     { chapter: 41, level: 6 },
     { chapter: 55, level: 7 },
     { chapter: 68, level: 8 },
-    { chapter: 83, level: 9 }
+    { chapter: 83, level: 9 },
+    { chapter: 96, level: 10 }
   ],
   partial_division: [
     { chapter: 16, level: 1 },
     { chapter: 22, level: 2 },
-    { chapter: 40, level: 3 }
+    { chapter: 40, level: 3 },
+    { chapter: 93, level: 7 }
   ],
   memory_resonance: [
     { chapter: 25, level: 1 },
@@ -452,7 +514,8 @@ export const abilityProgression = {
     { chapter: 25, level: 1 },
     { chapter: 26, level: 3 },
     { chapter: 40, level: 4 },
-    { chapter: 54, level: 7 }
+    { chapter: 54, level: 7 },
+    { chapter: 100, level: 11 }
   ],
   ice_spike: [
     { chapter: 26, level: 1 }
@@ -461,20 +524,25 @@ export const abilityProgression = {
     { chapter: 30, level: 1 },
     { chapter: 33, level: 2 },
     { chapter: 55, level: 5 },
-    { chapter: 68, level: 7 }
+    { chapter: 68, level: 7 },
+    { chapter: 93, level: 11 }
   ],
   pigmentation_mimicry: [
     { chapter: 41, level: 1 }
   ],
   pack_instinct: [
     { chapter: 49, level: 1 },
-    { chapter: 55, level: 3 }
+    { chapter: 55, level: 3 },
+    { chapter: 96, level: 10 }
   ],
   magic_harmonizer: [
-    { chapter: 54, level: 2 }
+    { chapter: 54, level: 2 },
+    { chapter: 93, level: 7 },
+    { chapter: 100, level: 8 }
   ],
   monocular_vision: [
-    { chapter: 55, level: 1 }
+    { chapter: 55, level: 1 },
+    { chapter: 93, level: 9 }
   ],
   heavy_weapons_affinity: [
     { chapter: 55, level: 1 }
@@ -483,23 +551,28 @@ export const abilityProgression = {
     { chapter: 55, level: 1 }
   ],
   magic_weaving: [
-    { chapter: 61, level: 1 }
+    { chapter: 61, level: 1 },
+    { chapter: 93, level: 3 }
   ],
   thermographic_perception: [
     { chapter: 68, level: 1 },
-    { chapter: 68, level: 4 }
+    { chapter: 68, level: 4 },
+    { chapter: 93, level: 9 }
   ],
   threshold_mimicry: [
     { chapter: 68, level: 1 }
   ],
   biological_elasticity: [
-    { chapter: 80, level: 1 }
+    { chapter: 80, level: 1 },
+    { chapter: 93, level: 5 }
   ],
   hydrophobic_coating: [
-    { chapter: 80, level: 1 }
+    { chapter: 80, level: 1 },
+    { chapter: 93, level: 3 }
   ],
   poison_production: [
-    { chapter: 88, level: 1 }
+    { chapter: 88, level: 1 },
+    { chapter: 93, level: 7 }
   ]
 };
 

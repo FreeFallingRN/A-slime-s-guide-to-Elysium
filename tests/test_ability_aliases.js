@@ -58,7 +58,8 @@ runTest('chapter-gated ability unlock remains Chapter 68', () => {
 runTest('progression remains unchanged at Chapter 68', () => {
   assert.deepEqual(abilityProgression.thermographic_perception, [
     { chapter: 68, level: 1 },
-    { chapter: 68, level: 4 }
+    { chapter: 68, level: 4 },
+    { chapter: 93, level: 9 }
   ]);
 });
 
