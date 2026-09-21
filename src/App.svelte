@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import ChapterControl from "./lib/ChapterControl.svelte";
-  import Book from "./lib/Book.svelte";
+  import LoreEncyclopedia from "./lib/LoreEncyclopedia.svelte";
   import StatCalculator from "./lib/StatCalculator.svelte";
   import BiomassCalculator from "./lib/BiomassCalculator.svelte";
   import Map from "./lib/Map.svelte";
@@ -182,6 +182,14 @@
         <Users size={16} />
         <span>Characters</span>
       </button>
+
+      <button
+        class="nav-tab {currentTab === 'lore' ? 'active' : ''}"
+        on:click={() => (currentTab = "lore")}
+      >
+        <BookOpen size={16} />
+        <span>Lore Archive</span>
+      </button>
     </nav>
 
     <!-- Main Viewport Router -->
@@ -191,6 +199,10 @@
       {:else if currentTab === "characters"}
         <div class="fade-in-wrapper">
           <Characters />
+        </div>
+      {:else if currentTab === "lore"}
+        <div class="fade-in-wrapper">
+          <LoreEncyclopedia />
         </div>
       {/if}
     </section>
@@ -634,7 +646,7 @@
       padding: 8px 10px;
       gap: 4px;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       justify-items: center;
       align-items: center;
       z-index: 1000;

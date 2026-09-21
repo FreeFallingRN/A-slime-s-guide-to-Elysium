@@ -305,7 +305,7 @@
             <div class="encyclopedia-callout">
               <Sparkles size={16} class="text-cyan" />
               <span>
-                Browse the <strong>Lore Encyclopedia</strong> in the Characters tab to inspect Glass Beetles, Amber Trees, Basic Life Seeds, and map locations.
+                Browse the <strong>Lore Archive</strong> tab to inspect Races, Classes, Monsters, Factions, Dungeons, and Tech/Items unlocked as you read.
               </span>
             </div>
           </div>

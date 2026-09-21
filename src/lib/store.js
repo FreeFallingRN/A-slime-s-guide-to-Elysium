@@ -295,8 +295,8 @@ export const characterData = {
     },
     { id: "passive_digestion", name: "Passive Digestion", target: "digestion", value: 0.10, chapter: 5, description: "The body develops autonomous microprocesses of energy conversion, absorbing traces of mana and matter from the environment. It slowly generates Biomass even at rest.", effect: "Adds +10% × level to Digestion." },
     { id: "mass_expansion", name: "Mass Expansion", target: "digestion", value: 0.30, chapter: 9, description: "Increases maximum Bio-Mass capacity and body volume proportionally.", effect: "Adds +30% × level to Digestion (additive)." },
-    { id: "membrane_reinforcement", name: "Membrane Reinforcement", target: "none", value: 1.0, chapter: 2, description: "Thickens the outer gelatinous membrane, increasing resistance to physical impacts and sharp edges." },
-    { id: "instinctive_perception", name: "Instinctive Perception", target: "none", value: 0.0, chapter: 8, description: "Detects nearby vibrations and movements." },
+    { id: "membrane_reinforcement", name: "Membrane Reinforcement", target: "none", value: 1.0, chapter: 2, description: "Thickens the outer gelatinous membrane, increasing resistance to physical impacts and sharp edges.", upgrades: [{ chapter: 80, type: "trait", traitName: "Non-Newtonian Resilience", traitDescription: "The membrane is now able to instantly change its molecular viscosity in response to kinetic force." }] },
+    { id: "instinctive_perception", name: "Instinctive Perception", target: "none", value: 0.0, chapter: 8, description: "Detects nearby vibrations and movements.", upgrades: [{chapter: 80, type: "trait", traitName: "Spatial Echo Location", traitDescription: "The core now interprets atmospheric and ground vibrations as a continuous three-dimensional mapping, independent of line of sight, limited to the distance of the target."}] },
     {
       id: "reinforced_exoskeleton",
       name: "Reinforced Exoskeleton",
