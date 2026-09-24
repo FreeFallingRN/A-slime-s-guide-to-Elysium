@@ -1,8 +1,5 @@
 import assert from "assert/strict";
-import {
-  LEVEL_11_BIOMASS_UNIT_SCALE,
-  calculateBiomassCost
-} from "../src/lib/biomassCalc.js";
+import { LEVEL_11_BIOMASS_UNIT_SCALE, calculateBiomassCost } from "../src/lib/biomassCalc.js";
 
 function runTest(name, fn) {
   try {

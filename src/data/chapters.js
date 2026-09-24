@@ -172,11 +172,21 @@ export const chaptersData = [
   { index: 157, title: "Rewards", date: "Apr 06, 2026", halonLvl: 9 },
   { index: 158, title: "New Members", date: "Apr 06, 2026", halonLvl: 9 },
   { index: 159, title: "Explosive Journey [GT BONUS]", date: "Apr 07, 2026", halonLvl: 9 },
-  { index: 160, title: "A Conversation in the Bathtub [GT BONUS]", date: "Apr 07, 2026", halonLvl: 9 },
+  {
+    index: 160,
+    title: "A Conversation in the Bathtub [GT BONUS]",
+    date: "Apr 07, 2026",
+    halonLvl: 9
+  },
   { index: 161, title: "Preparation", date: "Apr 08, 2026", halonLvl: 9 },
   { index: 162, title: "Gas", date: "Apr 08, 2026", halonLvl: 9 },
   { index: 163, title: "Explanation [Castle Gift Bonus]", date: "Apr 08, 2026", halonLvl: 9 },
-  { index: 164, title: "The Enemy of My Enemy Is My Friend [Castle Bonus]", date: "Apr 09, 2026", halonLvl: 9 },
+  {
+    index: 164,
+    title: "The Enemy of My Enemy Is My Friend [Castle Bonus]",
+    date: "Apr 09, 2026",
+    halonLvl: 9
+  },
   { index: 165, title: "Pieces Falling Into Place", date: "Apr 09, 2026", halonLvl: 9 },
   { index: 166, title: "Intense Gaze", date: "Apr 10, 2026", halonLvl: 9 },
   { index: 167, title: "Devon Baker [GT BONUS]", date: "Apr 11, 2026", halonLvl: 9 },
@@ -251,7 +261,12 @@ export const chaptersData = [
   { index: 236, title: "Chaos", date: "May 13, 2026", halonLvl: 11 },
   { index: 237, title: "Information", date: "May 14, 2026", halonLvl: 11 },
   { index: 238, title: "Is It Worth It? [GT BONUS]", date: "May 14, 2026", halonLvl: 11 },
-  { index: 239, title: "Surprise, it was a trap... [GT BONUS]", date: "May 14, 2026", halonLvl: 11 },
+  {
+    index: 239,
+    title: "Surprise, it was a trap... [GT BONUS]",
+    date: "May 14, 2026",
+    halonLvl: 11
+  },
   { index: 240, title: "Massacre", date: "May 15, 2026", halonLvl: 11 },
   { index: 241, title: "Resolution", date: "May 15, 2026", halonLvl: 11 },
   { index: 242, title: "A Change of Pace", date: "May 16, 2026", halonLvl: 11 },

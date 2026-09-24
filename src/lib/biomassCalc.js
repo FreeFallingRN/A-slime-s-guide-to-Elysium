@@ -7,8 +7,7 @@ export const BIOMASS_SKILLS = [
     chapter: 25,
     preLevel11BaseCost: 10,
     preLevel11Growth: 1.13,
-    notes:
-      "Magic Core Level 1 to 2 is established at 10 Biomass before the Level 11 refinement."
+    notes: "Magic Core Level 1 to 2 is established at 10 Biomass before the Level 11 refinement."
   },
   {
     id: "natural_energy_core",
@@ -36,8 +35,7 @@ export const BIOMASS_SKILLS = [
     preLevel11BaseCost: 1,
     preLevel11Growth: 1.13,
     postLevel11KnownRanges: [{ from: 20, to: 40, cost: 8.67 }],
-    notes:
-      "Chapter 262 establishes the exact refined-unit spend for Level 20 to Level 40."
+    notes: "Chapter 262 establishes the exact refined-unit spend for Level 20 to Level 40."
   },
   {
     id: "claw_projection",
@@ -151,7 +149,9 @@ export function calculateBiomassCost({ skillId, startLevel, targetLevel }) {
   const unresolvedReasons = [];
   const postLevel11Only =
     !skill.preLevel11BaseCost &&
-    Boolean((skill.postLevel11KnownRanges || []).length || (skill.postLevel11KnownStepCosts || []).length);
+    Boolean(
+      (skill.postLevel11KnownRanges || []).length || (skill.postLevel11KnownStepCosts || []).length
+    );
 
   if (startLevel < 11 && !postLevel11Only) {
     const preTarget = Math.min(targetLevel, 11);

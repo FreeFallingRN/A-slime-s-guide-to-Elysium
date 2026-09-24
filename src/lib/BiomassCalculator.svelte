@@ -91,11 +91,14 @@
           {#each result.segments as segment}
             <div class="stat-spec">
               <span>Lv {segment.from} -> Lv {segment.to}</span>
-              <span>{segment.cost.toLocaleString()} BM / {segment.status.replaceAll("_", " ")}</span>
+              <span>{segment.cost.toLocaleString()} BM / {segment.status.replaceAll("_", " ")}</span
+              >
             </div>
           {/each}
           <div class="stat-spec highlight">
-            <span>{result.status === "CONFIRMED" ? "Confirmed Total" : "Confirmed Partial Total"}</span>
+            <span
+              >{result.status === "CONFIRMED" ? "Confirmed Total" : "Confirmed Partial Total"}</span
+            >
             <span class="hologram-glow-text">{result.total.toLocaleString()} BM</span>
           </div>
         </div>

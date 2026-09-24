@@ -178,8 +178,7 @@ export const encyclopediaData = {
     {
       name: "Pugilist",
       base: "Unknown",
-      description:
-        "Alice Muller's close-combat class within Astralis Requiem's hired vanguard.",
+      description: "Alice Muller's close-combat class within Astralis Requiem's hired vanguard.",
       chapter: 181
     },
     {

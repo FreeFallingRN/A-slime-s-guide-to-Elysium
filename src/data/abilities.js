@@ -519,8 +519,7 @@ export const characterData = {
       target: "none",
       value: 0.0,
       chapter: 278,
-      description:
-        "An unlocked evolution tied to projecting lethal pressure and hostile intent."
+      description: "An unlocked evolution tied to projecting lethal pressure and hostile intent."
     }
   ]
 };

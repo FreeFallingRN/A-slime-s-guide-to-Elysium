@@ -15,7 +15,10 @@ const root = path.resolve(__dirname, "..");
 const publicDir = path.join(root, "public");
 const errors = [];
 const warnings = [];
-const allowedSameChapterAbilityMilestones = new Set(["thermographic_perception:68", "weaver_mother:118"]);
+const allowedSameChapterAbilityMilestones = new Set([
+  "thermographic_perception:68",
+  "weaver_mother:118"
+]);
 
 // Fail on broken references/schema; warn on unusual-but-possibly-canon data for human review.
 function fail(message) {
