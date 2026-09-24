@@ -1,211 +1,121 @@
 <script>
-  import { currentChapter } from "./store.js";
-  import { Shield, Sparkles, TrendingUp } from "lucide-svelte";
+  import { currentChapter, activeChapterDetails } from "./store.js";
+  import { BIOMASS_SKILLS, calculateBiomassCost } from "./biomassCalc.js";
+  import { AlertTriangle, CheckCircle2, Sparkles, TrendingUp } from "lucide-svelte";
 
-  let chapter = 5;
+  let chapter = 1;
+  let chapterDetails = {};
   currentChapter.subscribe((val) => {
     chapter = val;
   });
+  activeChapterDetails.subscribe((val) => {
+    chapterDetails = val;
+  });
 
-  // Evolution Tiers
-  const allEvolutionTiers = [
-    { name: "Stage 1: Mythical Slime", multiplier: 1.0, base: 50, chapter: 1 },
-    { name: "Stage 2: Elite Slime", multiplier: 1.8, base: 120, chapter: 13 }
-  ];
+  $: availableSkills = BIOMASS_SKILLS.filter((skill) => skill.chapter <= chapter);
+  let selectedSkillId = "magic_core";
+  let startLevel = 1;
+  let targetLevel = 2;
 
-  // Filter tiers based on active chapter lock
-  $: evolutionTiers = allEvolutionTiers.filter((t) => t.chapter <= chapter);
-
-  let selectedTierIndex = 0;
-
-  // Safe Index clamp to avoid out-of-bounds when active tiers shrink
   $: {
-    if (selectedTierIndex >= evolutionTiers.length) {
-      selectedTierIndex = Math.max(0, evolutionTiers.length - 1);
+    if (!availableSkills.some((skill) => skill.id === selectedSkillId)) {
+      selectedSkillId = availableSkills[0]?.id || "magic_core";
     }
   }
 
-  // Upgrades
-  let coreLvl = 1;
-  let coreTarget = 10;
-
-  let cellLvl = 1;
-  let cellTarget = 10;
-
-  let sensoryLvl = 1;
-  let sensoryTarget = 10;
-
-  // Formulas: Cost for upgrading from L to L+1
-  // Formula: BaseCost * TierMultiplier * (1.12)^L
-  function calculateUpgradeCost(lvl, targetLvl, baseCost, tierMult) {
-    if (targetLvl <= lvl) return 0;
-
-    let totalCost = 0;
-    for (let l = lvl; l < targetLvl; l++) {
-      totalCost += Math.round(baseCost * tierMult * Math.pow(1.13, l - 1));
-    }
-    return totalCost;
+  function clampLevels() {
+    startLevel = Math.max(1, Math.min(99, Number.parseInt(startLevel, 10) || 1));
+    targetLevel = Math.max(startLevel + 1, Math.min(100, Number.parseInt(targetLevel, 10) || 2));
   }
 
-  $: activeTier = evolutionTiers[selectedTierIndex];
+  $: clampLevels();
 
-  $: coreCost = calculateUpgradeCost(coreLvl, coreTarget, activeTier.base, activeTier.multiplier);
-  $: cellCost = calculateUpgradeCost(
-    cellLvl,
-    cellTarget,
-    activeTier.base * 0.8,
-    activeTier.multiplier
-  );
-  $: sensoryCost = calculateUpgradeCost(
-    sensoryLvl,
-    sensoryTarget,
-    activeTier.base * 0.5,
-    activeTier.multiplier
-  );
-
-  $: grandTotal = coreCost + cellCost + sensoryCost;
-
-  // Max cap input safety
-  function validateInput() {
-    coreLvl = Math.max(1, Math.min(100, coreLvl));
-    coreTarget = Math.max(coreLvl, Math.min(100, coreTarget));
-
-    cellLvl = Math.max(1, Math.min(100, cellLvl));
-    cellTarget = Math.max(cellLvl, Math.min(100, cellTarget));
-
-    sensoryLvl = Math.max(1, Math.min(100, sensoryLvl));
-    sensoryTarget = Math.max(sensoryLvl, Math.min(100, sensoryTarget));
-  }
+  $: result = availableSkills.length
+    ? calculateBiomassCost({ skillId: selectedSkillId, startLevel, targetLevel })
+    : null;
 </script>
 
 <div class="biomass-calc-container hologram-panel">
   <div class="panel-header">
     <div class="header-title">
       <Sparkles size={18} class="header-icon" />
-      <h3 class="hologram-glow-text">BIOMASS UPGRADE SIMULATOR</h3>
+      <h3 class="hologram-glow-text">BIOMASS UPGRADE CALCULATOR</h3>
     </div>
-    <span class="cost-badge">EST. BUDGET: {grandTotal.toLocaleString()} BM</span>
+    <span class:needs-review={result?.status !== "CONFIRMED"} class="cost-badge">
+      {result ? result.status.replaceAll("_", " ") : "LOCKED"}
+    </span>
   </div>
 
   <div class="calculator-body">
-    <!-- Evolution Tier Selection -->
-    <div class="config-row">
-      <label for="evo-tier">ACTIVE EVOLUTION TIER:</label>
-      <select id="evo-tier" bind:value={selectedTierIndex} on:change={validateInput}>
-        {#each evolutionTiers as tier, index}
-          <option value={index}>{tier.name} (Mult: x{tier.multiplier})</option>
-        {/each}
-      </select>
+    <div class="config-grid">
+      <div class="config-row">
+        <label for="biomass-skill">SKILL / MUTATION</label>
+        <select id="biomass-skill" bind:value={selectedSkillId}>
+          {#each availableSkills as skill}
+            <option value={skill.id}>{skill.name}</option>
+          {/each}
+        </select>
+      </div>
+
+      <div class="range-row">
+        <div class="input-group">
+          <label for="biomass-start">START</label>
+          <input id="biomass-start" type="number" bind:value={startLevel} min="1" max="99" />
+        </div>
+        <div class="arrow-divider">-></div>
+        <div class="input-group">
+          <label for="biomass-target">TARGET</label>
+          <input id="biomass-target" type="number" bind:value={targetLevel} min="2" max="100" />
+        </div>
+      </div>
     </div>
 
-    <!-- Core Upgrade Row -->
-    <div class="upgrade-row">
-      <div class="upgrade-info">
-        <span class="upgrade-name">Slime Core Energy</span>
-        <span class="upgrade-desc">Raises maximum mana capacity and spell efficiency.</span>
-      </div>
-      <div class="upgrade-inputs">
-        <div class="input-group">
-          <label>CURRENT</label>
-          <input type="number" bind:value={coreLvl} on:change={validateInput} min="1" max="99" />
-        </div>
-        <div class="arrow-divider">→</div>
-        <div class="input-group">
-          <label>TARGET</label>
-          <input
-            type="number"
-            bind:value={coreTarget}
-            on:change={validateInput}
-            min="2"
-            max="100"
-          />
+    {#if result}
+      <div class="upgrade-row">
+        <div class="upgrade-info">
+          <span class="upgrade-name">{result.skill.name}</span>
+          <span class="upgrade-desc">{result.skill.notes}</span>
         </div>
         <div class="cost-output">
-          <label>BIOMASS COST</label>
-          <span class="cost-val">{coreCost.toLocaleString()}</span>
+          <span class="output-label">KNOWN COST</span>
+          <span class="cost-val">{result.total.toLocaleString()} BM</span>
         </div>
       </div>
-    </div>
 
-    <!-- Cell Density Row -->
-    <div class="upgrade-row">
-      <div class="upgrade-info">
-        <span class="upgrade-name">Cell Membrane Density</span>
-        <span class="upgrade-desc">Improves base physical defensive rating and blunt defense.</span>
-      </div>
-      <div class="upgrade-inputs">
-        <div class="input-group">
-          <label>CURRENT</label>
-          <input type="number" bind:value={cellLvl} on:change={validateInput} min="1" max="99" />
+      <div class="projection-panel">
+        <div class="projection-header">
+          <TrendingUp size={16} />
+          <span>LEVEL {chapterDetails.halonLvl || 1} / CHAPTER {chapter}</span>
         </div>
-        <div class="arrow-divider">→</div>
-        <div class="input-group">
-          <label>TARGET</label>
-          <input
-            type="number"
-            bind:value={cellTarget}
-            on:change={validateInput}
-            min="2"
-            max="100"
-          />
-        </div>
-        <div class="cost-output">
-          <label>BIOMASS COST</label>
-          <span class="cost-val">{cellCost.toLocaleString()}</span>
+        <div class="projection-content">
+          {#each result.segments as segment}
+            <div class="stat-spec">
+              <span>Lv {segment.from} -> Lv {segment.to}</span>
+              <span>{segment.cost.toLocaleString()} BM / {segment.status.replaceAll("_", " ")}</span
+              >
+            </div>
+          {/each}
+          <div class="stat-spec highlight">
+            <span
+              >{result.status === "CONFIRMED" ? "Confirmed Total" : "Confirmed Partial Total"}</span
+            >
+            <span class="hologram-glow-text">{result.total.toLocaleString()} BM</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Sensory Nodes Row -->
-    <div class="upgrade-row">
-      <div class="upgrade-info">
-        <span class="upgrade-name">Sensory Receptors</span>
-        <span class="upgrade-desc">Boosts spatial awareness, evasion, and movement speeds.</span>
-      </div>
-      <div class="upgrade-inputs">
-        <div class="input-group">
-          <label>CURRENT</label>
-          <input type="number" bind:value={sensoryLvl} on:change={validateInput} min="1" max="99" />
+      {#if result.status !== "CONFIRMED"}
+        <div class="review-panel">
+          <AlertTriangle size={16} />
+          <span>{result.unresolvedReasons[0]}</span>
         </div>
-        <div class="arrow-divider">→</div>
-        <div class="input-group">
-          <label>TARGET</label>
-          <input
-            type="number"
-            bind:value={sensoryTarget}
-            on:change={validateInput}
-            min="2"
-            max="100"
-          />
+      {:else}
+        <div class="confirmed-panel">
+          <CheckCircle2 size={16} />
+          <span>{result.unitNote}</span>
         </div>
-        <div class="cost-output">
-          <label>BIOMASS COST</label>
-          <span class="cost-val">{sensoryCost.toLocaleString()}</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Projection Summary Panel -->
-    <div class="projection-panel">
-      <div class="projection-header">
-        <TrendingUp size={16} />
-        <span>EVOLUTIONARY COST ANALYSIS</span>
-      </div>
-      <div class="projection-content">
-        <div class="stat-spec">
-          <span>Core Base Multiplier</span>
-          <span>x{activeTier.multiplier.toFixed(2)}</span>
-        </div>
-        <div class="stat-spec">
-          <span>Scaling Coefficient</span>
-          <span>13% Exponential</span>
-        </div>
-        <div class="stat-spec highlight">
-          <span>Cumulative Biomass Required</span>
-          <span class="hologram-glow-text">{grandTotal.toLocaleString()} BM</span>
-        </div>
-      </div>
-    </div>
+      {/if}
+    {/if}
   </div>
 </div>
 
@@ -222,6 +132,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
   }
 
   .header-title {
@@ -237,38 +148,60 @@
   }
 
   .cost-badge {
-    background: rgba(255, 94, 0, 0.15);
-    border: 1px solid var(--color-arson-fire);
-    color: var(--color-arson-fire);
+    background: rgba(0, 240, 255, 0.12);
+    border: 1px solid var(--color-holo-primary);
+    color: var(--color-holo-primary);
     padding: 2px 10px;
     border-radius: 4px;
-    font-size: 0.8rem;
+    font-size: 0.76rem;
     font-weight: 800;
     letter-spacing: 0.05em;
-    text-shadow: 0 0 5px var(--color-arson-glow);
+    white-space: nowrap;
+  }
+
+  .cost-badge.needs-review {
+    background: rgba(255, 94, 0, 0.15);
+    border-color: var(--color-arson-fire);
+    color: var(--color-arson-fire);
   }
 
   .calculator-body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 18px;
   }
 
-  .config-row {
+  .config-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  @media (min-width: 768px) {
+    .config-grid {
+      grid-template-columns: 2fr 1fr;
+      align-items: end;
+    }
+  }
+
+  .config-row,
+  .input-group {
     display: flex;
     flex-direction: column;
     gap: 6px;
   }
 
-  .config-row label {
+  .config-row label,
+  .input-group label {
     font-size: 0.72rem;
     font-weight: bold;
     color: var(--color-holo-muted);
     letter-spacing: 0.05em;
   }
 
-  .config-row select {
+  .config-row select,
+  .input-group input {
     background: var(--color-space-bg);
     border: 1px solid var(--color-holo-border);
     color: #fff;
@@ -277,12 +210,24 @@
     outline: none;
     font-family: var(--font-sans);
     font-weight: bold;
-    transition: var(--transition-smooth);
-    cursor: pointer;
   }
 
-  .config-row select:focus {
+  .config-row select:focus,
+  .input-group input:focus {
     border-color: var(--color-holo-primary);
+  }
+
+  .range-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 10px;
+    align-items: end;
+  }
+
+  .arrow-divider {
+    color: var(--color-holo-muted);
+    font-weight: bold;
+    padding-bottom: 8px;
   }
 
   .upgrade-row {
@@ -297,7 +242,7 @@
 
   @media (min-width: 768px) {
     .upgrade-row {
-      grid-template-columns: 2fr 3fr;
+      grid-template-columns: 2fr auto;
       align-items: center;
     }
   }
@@ -317,61 +262,17 @@
   .upgrade-desc {
     font-size: 0.75rem;
     color: var(--color-holo-muted);
-  }
-
-  .upgrade-inputs {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    justify-content: flex-start;
-  }
-
-  .input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .input-group label {
-    font-size: 0.6rem;
-    font-weight: bold;
-    color: var(--color-holo-muted);
-    text-align: center;
-  }
-
-  .input-group input {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--color-holo-border);
-    color: #fff;
-    border-radius: 4px;
-    padding: 4px;
-    width: 60px;
-    text-align: center;
-    font-family: var(--font-sans);
-    outline: none;
-    transition: var(--transition-smooth);
-  }
-
-  .input-group input:focus {
-    border-color: var(--color-holo-primary);
-    box-shadow: 0 0 5px var(--color-holo-glow);
-  }
-
-  .arrow-divider {
-    color: var(--color-holo-muted);
-    font-weight: bold;
-    padding-top: 14px;
+    line-height: 1.4;
   }
 
   .cost-output {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    margin-left: auto;
     text-align: right;
   }
 
-  .cost-output label {
+  .output-label {
     font-size: 0.6rem;
     font-weight: bold;
     color: var(--color-holo-muted);
@@ -391,14 +292,19 @@
     padding: 16px;
   }
 
-  .projection-header {
+  .projection-header,
+  .review-panel,
+  .confirmed-panel {
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 0.72rem;
     font-weight: bold;
-    color: var(--color-holo-primary);
     letter-spacing: 0.05em;
+  }
+
+  .projection-header {
+    color: var(--color-holo-primary);
     margin-bottom: 12px;
   }
 
@@ -411,6 +317,7 @@
   .stat-spec {
     display: flex;
     justify-content: space-between;
+    gap: 14px;
     font-size: 0.8rem;
     color: var(--color-holo-muted);
   }
@@ -421,5 +328,36 @@
     font-weight: bold;
     font-size: 0.9rem;
     color: #fff;
+  }
+
+  .review-panel,
+  .confirmed-panel {
+    padding: 12px 14px;
+    border-radius: 6px;
+    line-height: 1.4;
+  }
+
+  .review-panel {
+    background: rgba(255, 94, 0, 0.08);
+    border: 1px solid rgba(255, 94, 0, 0.22);
+    color: var(--color-arson-fire);
+  }
+
+  .confirmed-panel {
+    background: rgba(0, 240, 255, 0.06);
+    border: 1px solid rgba(0, 240, 255, 0.18);
+    color: var(--color-holo-primary);
+  }
+
+  @media (max-width: 520px) {
+    .panel-header,
+    .stat-spec {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .cost-output {
+      text-align: left;
+    }
   }
 </style>

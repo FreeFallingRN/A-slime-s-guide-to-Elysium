@@ -12,6 +12,7 @@
     "test:digestion": "node tests/test_digestion.js",
     "test:mana": "node tests/test_mana.js",
     "test:speed": "node tests/test_speed.js",
+    "test:biomass": "node tests/test_biomass.js",
     "validate:data": "node tests/validate_data.js",
     "test:chapter-control": "node tests/test_chapter_utils.js",
     "test:ability-aliases": "node tests/test_ability_aliases.js",

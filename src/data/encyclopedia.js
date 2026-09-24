@@ -88,6 +88,27 @@ export const encyclopediaData = {
       description:
         "Small, palm-sized winged humanoids native to Mythlorien who act as invisible caretakers and gardeners of the forest's flora and vital mana balance.",
       chapter: 95
+    },
+    {
+      name: "Glass Beetle",
+      base: "Common",
+      description:
+        "Brynnear's original player race in Elysium, initially treated by her as unlucky until the Matriarch class lets her exploit the beetle nest's hierarchy.",
+      chapter: 109
+    },
+    {
+      name: "Beast-Man",
+      base: "Uncommon",
+      description:
+        "A humanoid beast race represented among the players captured by Brynnear and the Hogue Guild for forced Matriarch experiments.",
+      chapter: 227
+    },
+    {
+      name: "Lizardman",
+      base: "Rare",
+      description:
+        "Varkas's rare reptilian race, giving him a strong affinity with lizard-type monsters and making him the core combatant of his raiding trio.",
+      chapter: 253
     }
   ],
   classes: [
@@ -139,6 +160,54 @@ export const encyclopediaData = {
       description:
         "A stealth-oriented physical class that utilizes poisons and swift mobility skills.",
       chapter: 50
+    },
+    {
+      name: "Illusion Weaver",
+      base: "Rare",
+      description:
+        "Lisa's rare class, paired with her Legendary Spirit Fox race and suited to spiritual, deceptive, and control-oriented combat.",
+      chapter: 37
+    },
+    {
+      name: "Matriarch",
+      base: "Epic",
+      description:
+        "Brynnear's epic class, capable of controlling nests, weaving invasive threads, and enslaving or reshaping subordinate creatures.",
+      chapter: 109
+    },
+    {
+      name: "Pugilist",
+      base: "Unknown",
+      description: "Alice Muller's close-combat class within Astralis Requiem's hired vanguard.",
+      chapter: 181
+    },
+    {
+      name: "Druid",
+      base: "Unknown",
+      description:
+        "WyrmWood's nature-aligned class in Alice's group, associated with natural energy and support capabilities.",
+      chapter: 178
+    },
+    {
+      name: "Veil Hunter",
+      base: "Uncommon",
+      description:
+        "Justin's stealth-oriented class, part of a double Uncommon base with his Half-Elf race.",
+      chapter: 179
+    },
+    {
+      name: "Cold-Blooded Sovereign",
+      base: "Uncommon",
+      description:
+        "Brant's class, used to influence lower-level reptilian creatures in conjunction with Varkas's Lizardman race and Stig's support class.",
+      chapter: 253
+    },
+    {
+      name: "Synergy Link",
+      base: "Uncommon",
+      description:
+        "Stig's support class, capable of sharing passive and active effects among members of a linked group.",
+      chapter: 253
     }
   ],
   monsters: [
@@ -242,6 +311,36 @@ export const encyclopediaData = {
       description:
         "The Level 10+ dungeon boss at the top observatory of the Fossilized Amber Tree, controlling the hive mind and draining captured creatures' essence into mana cocoons.",
       chapter: 95
+    },
+    {
+      name: "Explosive Rabbit",
+      description:
+        "A volatile monster species whose speed, detonations, and elite variants force Halon to rely on traps, clones, and careful coordination instead of simple pursuit.",
+      chapter: 148
+    },
+    {
+      name: "Light Guardian",
+      description:
+        "A high-level light-aspected enemy whose mana stone becomes central to Halon's Sacred Light Core evolution.",
+      chapter: 171
+    },
+    {
+      name: "Gremlin",
+      description:
+        "A later Mythlorien monster type hunted by Astralis Requiem, dangerous enough to require coordinated group tactics and later guild-scale resource planning.",
+      chapter: 219
+    },
+    {
+      name: "Elite Kobold",
+      description:
+        "A higher-grade Kobold whose mana stone and combat memory lead Halon toward the rupture-mark combat style used around Level 12.",
+      chapter: 247
+    },
+    {
+      name: "Fire Lizard",
+      description:
+        "Reptilian monsters used in the attack on Petal Village under Varkas's control and support-class synergy.",
+      chapter: 253
     }
   ],
   factions: [
@@ -262,6 +361,39 @@ export const encyclopediaData = {
       description:
         "A rival real-world organization whose player team races to establish an official Open World guild.",
       chapter: 92
+    },
+    {
+      name: "Astralis Requiem",
+      ruler: "Lisa",
+      description:
+        "Lisa and Halon's guild, formally recognized after the Amber Tree dungeon victory. Its early strength comes from Lisa's leadership, Halon's rare Slime mechanics, and the strategic value of their captured base.",
+      chapter: 114
+    },
+    {
+      name: "Silver Lotus",
+      description:
+        "A Lower Zone group led by Skye, first seen protecting Oliver from local predators and later revealed through Devon as a possible pool of trustworthy Open World recruits.",
+      chapter: 124
+    },
+    {
+      name: "Ebony Chalice",
+      description:
+        "A cult connected to Dylan's hidden Elysium background, discovered through a hidden path after his Newbie Village family history turns out to be far darker than expected.",
+      chapter: 232
+    },
+    {
+      name: "Petal Village",
+      ruler: "Basil",
+      description:
+        "A fairy settlement in Mythlorien whose treatment of Pip and Elle exposes internal prejudice before Astralis Requiem intervenes during Varkas's attack.",
+      chapter: 250
+    },
+    {
+      name: "Hogue Guild",
+      ruler: "Ernesto Hogue",
+      description:
+        "Ernesto Hogue's Elysium organization after losing the first-guild race, later tied to Brynnear's Matriarch experiments in Silverport.",
+      chapter: 227
     }
   ],
   dungeons: [
@@ -270,6 +402,18 @@ export const encyclopediaData = {
       description:
         "A titan of amber and fossilized metal-hard wood serving as a Level 10 dungeon overrun by Glass Beetles, chosen by Lisa as the prospective Astralis Guild base.",
       chapter: 93
+    },
+    {
+      name: "Astralis Requiem Guild Base",
+      description:
+        "The claimed Amber Tree base after Astralis' official founding, used as the guild's strategic home, storage point, and later meeting hub.",
+      chapter: 115
+    },
+    {
+      name: "Cave of Hungry Roots",
+      description:
+        "A dangerous later hunting ground where Astralis Requiem and related groups confront ambushes and guild-scale tactical problems.",
+      chapter: 238
     }
   ],
   technology: [
@@ -349,6 +493,54 @@ export const encyclopediaData = {
       description:
         "A rare life-element seed item capable of triggering qualitative resonance and fusion evolutions when absorbed into a Magic Core.",
       chapter: 95
+    },
+    {
+      name: "Astral Chest",
+      description:
+        "A guild reward functioning like shared storage, allowing Halon to preserve monster corpses and solve his earlier resource-transport problem.",
+      chapter: 115
+    },
+    {
+      name: "Natural Energy Core",
+      description:
+        "A costly core evolution born from the Basic Life Seed, opening natural-energy pathways through Halon's body.",
+      chapter: 104
+    },
+    {
+      name: "Sacred Light Core",
+      description:
+        "A light-aspected core evolution formed when Holy Light successfully fuses with Halon's Natural Energy Core.",
+      chapter: 173
+    },
+    {
+      name: "Superior Magic Core",
+      description:
+        "The evolved form of Halon's Magic Core after High Elf evolution extraction, sharply improving mana perception and capacity.",
+      chapter: 200
+    },
+    {
+      name: "Ancient Magic Flower",
+      description:
+        "A plant material whose memories and structure help Halon explore later Sacred Light and natural-energy applications.",
+      chapter: 261
+    },
+    {
+      name: "Staff of Blood Desolation",
+      description:
+        "A significant later item connected to Halon's post-Level-11 equipment and magical development.",
+      chapter: 263
+    },
+    {
+      name: "Tear of Flowers",
+      description:
+        "An important Petal Village treasure sought during Varkas's raid, valuable enough to draw predatory player attention toward the fairy settlement.",
+      chapter: 258
+    },
+    {
+      name: "Aetheris Prime",
+      description:
+        "A high-end Upper Zone commercial district where Lohan directly experiences the social and material world Isabella can access.",
+      chapter: 284
     }
   ]
 };
