@@ -153,7 +153,16 @@ export const characterData = {
       value: 0.3,
       chapter: 9,
       description: "Increases maximum Bio-Mass capacity and body volume proportionally.",
-      effect: "Adds +30% × level to Digestion (additive)."
+      effect: "Adds +30% × level to Digestion (additive).",
+      upgrades: [
+        {
+          chapter: 117,
+          type: "trait",
+          traitName: "Super Mass Expansion",
+          traitDescription:
+            "The body can sustain a substantially larger slime mass, raising the volume available for biomass storage and digestion throughput."
+        }
+      ]
     },
     {
       id: "membrane_reinforcement",
@@ -249,6 +258,14 @@ export const characterData = {
           traitName: "Parallel Processing Core",
           traitDescription:
             "The vital core expands its internal architecture to support the opening of multiple independent mana paths operating simultaneously, allowing clones and main body to channel spells concurrently."
+        },
+        {
+          chapter: 200,
+          type: "evolution",
+          name: "Superior Magic Core",
+          level: 1,
+          description:
+            "The Magic Core is transmuted through High Elf evolution extraction, sharpening ambient mana perception and increasing mana density."
         }
       ]
     },
@@ -295,7 +312,17 @@ export const characterData = {
       value: 0.0,
       chapter: 54,
       description:
-        "Synchronizes the Magic Core's mana output cadence with physical motor signals to reduce conversion loss during active skill usage."
+        "Synchronizes the Magic Core's mana output cadence with physical motor signals to reduce conversion loss during active skill usage.",
+      upgrades: [
+        {
+          chapter: 200,
+          type: "evolution",
+          name: "Natural Magic Core Harmonizer",
+          level: 1,
+          description:
+            "The harmonizer evolves after synchronizing body data from an extracted evolution, helping stabilize Halon's Level 11 qualitative evolution."
+        }
+      ]
     },
     {
       id: "monocular_vision",
@@ -375,6 +402,125 @@ export const characterData = {
       value: 0.0,
       chapter: 88,
       description: "Consumes biomass to produce small amounts of poison."
+    },
+    {
+      id: "natural_energy_core",
+      name: "Natural Energy Core",
+      target: "none",
+      value: 0.0,
+      chapter: 104,
+      description:
+        "A qualitative core evolution produced from the Basic Life Seed, opening natural-energy pathways through Halon's biomass."
+    },
+    {
+      id: "weaver_mother",
+      name: "Weaver Mother",
+      target: "none",
+      value: 0.0,
+      chapter: 118,
+      description:
+        "An evolution extracted from the Weaver Mother that channels refined biomass and mana toward linked allies, reducing evolution bottlenecks."
+    },
+    {
+      id: "sharpened_instinct",
+      name: "Sharpened Instinct",
+      target: "none",
+      value: 0.05,
+      chapter: 137,
+      description:
+        "Assimilates elite feline predator reflexes, increasing reaction speed through sharper synaptic response."
+    },
+    {
+      id: "explosive_steps",
+      name: "Explosive Steps",
+      target: "none",
+      value: 0.0,
+      chapter: 151,
+      description:
+        "Channels mana through temporary limb structures to release kinetic force as explosive movement or impact."
+    },
+    {
+      id: "vacuum_detonation",
+      name: "Vacuum Detonation",
+      target: "none",
+      value: 0.0,
+      chapter: 156,
+      description:
+        "Compresses mana at the body's extremities to manipulate atmospheric pressure, pulling nearby targets into a sudden kinetic detonation."
+    },
+    {
+      id: "sacred_light_core",
+      name: "Sacred Light Core",
+      aliases: ["Core of Holy Light"],
+      target: "none",
+      value: 0.0,
+      chapter: 173,
+      description:
+        "A holy-light core evolution created when Natural Energy and Holy Light successfully fuse, giving Halon a persistent light-aligned energy source."
+    },
+    {
+      id: "uncontrolled_natural_injection",
+      name: "Uncontrolled Natural Injection",
+      target: "none",
+      value: 0.0,
+      chapter: 203,
+      description:
+        "A post-Level-11 class-evolution ability tied to Halon's deeper control over biological material and natural energy."
+    },
+    {
+      id: "colossus_charge",
+      name: "Colossus Charge",
+      target: "none",
+      value: 0.0,
+      chapter: 235,
+      description:
+        "A class evolution extracted through the Predator title after defeating a Level 11 player."
+    },
+    {
+      id: "claw_projection",
+      name: "Claw Projection",
+      target: "none",
+      value: 0.0,
+      chapter: 258,
+      description:
+        "Projects hardened claws from Halon's biomass, improving direct offensive options after predator extraction."
+    },
+    {
+      id: "synergy_link",
+      name: "Synergy Link",
+      target: "none",
+      value: 0.0,
+      chapter: 258,
+      description:
+        "A newly extracted evolution that helps coordinate compatible evolutions and combined effects."
+    },
+    {
+      id: "racial_command",
+      name: "Racial Command",
+      target: "none",
+      value: 0.0,
+      chapter: 258,
+      description:
+        "A predator-extracted evolution connected to commanding racial advantages and inherited instincts."
+    },
+    {
+      id: "mark_of_rupture",
+      name: "Mark of Rupture",
+      aliases: ["Stigma of Rupture"],
+      target: "none",
+      value: 0.0,
+      chapter: 247,
+      description:
+        "Applies a structural weak point that causes the next physical or magical hit on the marked spot to strike with doubled piercing force."
+    },
+    {
+      id: "killing_intent",
+      name: "Killing Intent",
+      target: "none",
+      value: 0.0,
+      chapter: 278,
+      description:
+        "An unlocked evolution tied to projecting lethal pressure and hostile intent."
     }
   ]
 };
@@ -397,7 +543,9 @@ export const abilityProgression = {
     { chapter: 28, level: 13 },
     { chapter: 33, level: 14 },
     { chapter: 47, level: 15 },
-    { chapter: 68, level: 16 }
+    { chapter: 68, level: 16 },
+    { chapter: 105, level: 20 },
+    { chapter: 262, level: 40 }
   ],
   viscous_flow: [
     { chapter: 2, level: 1 },
@@ -412,7 +560,10 @@ export const abilityProgression = {
     { chapter: 47, level: 16 },
     { chapter: 83, level: 18 },
     { chapter: 93, level: 23 },
-    { chapter: 98, level: 24 }
+    { chapter: 98, level: 24 },
+    { chapter: 150, level: 25 },
+    { chapter: 157, level: 27 },
+    { chapter: 204, level: 36 }
   ],
   structural_stability: [
     { chapter: 2, level: 1 },
@@ -435,7 +586,8 @@ export const abilityProgression = {
     { chapter: 41, level: 5 },
     { chapter: 47, level: 7 },
     { chapter: 93, level: 10 },
-    { chapter: 100, level: 11 }
+    { chapter: 100, level: 11 },
+    { chapter: 133, level: 15 }
   ],
   passive_digestion: [
     { chapter: 5, level: 1 },
@@ -444,7 +596,8 @@ export const abilityProgression = {
     { chapter: 22, level: 4 },
     { chapter: 27, level: 5 },
     { chapter: 80, level: 6 },
-    { chapter: 93, level: 8 }
+    { chapter: 93, level: 8 },
+    { chapter: 131, level: 11 }
   ],
   mass_expansion: [
     { chapter: 9, level: 1 },
@@ -455,7 +608,9 @@ export const abilityProgression = {
     { chapter: 35, level: 6 },
     { chapter: 47, level: 7 },
     { chapter: 55, level: 8 },
-    { chapter: 71, level: 9 }
+    { chapter: 71, level: 9 },
+    { chapter: 117, level: 13 },
+    { chapter: 200, level: 18 }
   ],
   membrane_reinforcement: [
     { chapter: 16, level: 3 },
@@ -506,7 +661,9 @@ export const abilityProgression = {
     { chapter: 16, level: 1 },
     { chapter: 22, level: 2 },
     { chapter: 40, level: 3 },
-    { chapter: 93, level: 7 }
+    { chapter: 93, level: 7 },
+    { chapter: 131, level: 11 },
+    { chapter: 204, level: 16 }
   ],
   memory_resonance: [
     { chapter: 25, level: 1 },
@@ -518,7 +675,13 @@ export const abilityProgression = {
     { chapter: 26, level: 3 },
     { chapter: 40, level: 4 },
     { chapter: 54, level: 7 },
-    { chapter: 100, level: 11 }
+    { chapter: 100, level: 11 },
+    { chapter: 133, level: 14 },
+    { chapter: 157, level: 21 },
+    { chapter: 200, level: 1 },
+    { chapter: 221, level: 2 },
+    { chapter: 249, level: 3 },
+    { chapter: 263, level: 5 }
   ],
   ice_spike: [{ chapter: 26, level: 1 }],
   chemosensory_aptitude: [
@@ -537,7 +700,10 @@ export const abilityProgression = {
   magic_harmonizer: [
     { chapter: 54, level: 2 },
     { chapter: 93, level: 7 },
-    { chapter: 100, level: 8 }
+    { chapter: 100, level: 8 },
+    { chapter: 139, level: 9 },
+    { chapter: 200, level: 1 },
+    { chapter: 262, level: 7 }
   ],
   monocular_vision: [
     { chapter: 55, level: 1 },
@@ -566,5 +732,45 @@ export const abilityProgression = {
   poison_production: [
     { chapter: 88, level: 1 },
     { chapter: 93, level: 7 }
-  ]
+  ],
+  natural_energy_core: [
+    { chapter: 104, level: 1 },
+    { chapter: 133, level: 2 },
+    { chapter: 157, level: 8 }
+  ],
+  weaver_mother: [
+    { chapter: 118, level: 1 },
+    { chapter: 118, level: 2 }
+  ],
+  sharpened_instinct: [
+    { chapter: 137, level: 1 },
+    { chapter: 152, level: 7 }
+  ],
+  explosive_steps: [
+    { chapter: 151, level: 1 },
+    { chapter: 152, level: 7 },
+    { chapter: 157, level: 14 }
+  ],
+  vacuum_detonation: [
+    { chapter: 156, level: 1 },
+    { chapter: 157, level: 2 },
+    { chapter: 158, level: 4 }
+  ],
+  sacred_light_core: [{ chapter: 173, level: 1 }],
+  uncontrolled_natural_injection: [{ chapter: 203, level: 1 }],
+  colossus_charge: [{ chapter: 235, level: 1 }],
+  mark_of_rupture: [{ chapter: 247, level: 1 }],
+  claw_projection: [
+    { chapter: 258, level: 1 },
+    { chapter: 262, level: 5 }
+  ],
+  synergy_link: [
+    { chapter: 258, level: 1 },
+    { chapter: 262, level: 5 }
+  ],
+  racial_command: [
+    { chapter: 258, level: 1 },
+    { chapter: 262, level: 5 }
+  ],
+  killing_intent: [{ chapter: 278, level: 1 }]
 };

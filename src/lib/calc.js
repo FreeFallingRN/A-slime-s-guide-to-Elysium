@@ -22,17 +22,49 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   }
   const digBase = baseStats.digestion || 1.8;
 
-  // Helper to query ability metadata dynamically from active abilities list
   const getAbilityObj = (id) => abilities.find((a) => a.id === id);
 
   const floor2 = (val) => Math.floor(Math.round(val * 10000) / 100) / 100;
+
+  const getLatestCanonValue = (milestones, key) => {
+    for (let i = milestones.length - 1; i >= 0; i -= 1) {
+      const milestone = milestones[i];
+      if (chapter >= milestone.chapter && milestone[key] !== undefined) {
+        return milestone[key];
+      }
+    }
+    return undefined;
+  };
+
+  const getLatestDigestionRateMilestone = () => {
+    for (let i = digestionCanonMilestones.length - 1; i >= 0; i -= 1) {
+      const milestone = digestionCanonMilestones[i];
+      if (
+        chapter >= milestone.chapter &&
+        (milestone.neutralSum !== undefined || milestone.combatFinal !== undefined)
+      ) {
+        return milestone;
+      }
+    }
+    return undefined;
+  };
+
+  const digestionCanonMilestones = [
+    { chapter: 93, digEnhanced: 36.52, neutralSum: 260 },
+    { chapter: 105, digEnhanced: 53.54, neutralSum: 381, combatFinal: 1221.45 },
+    { chapter: 117, neutralSum: 518.02, combatFinal: 1657.68 },
+    { chapter: 119, neutralSum: 605, combatFinal: 1936 },
+    { chapter: 131, neutralSum: 2518 },
+    { chapter: 133, combatFinal: 5100 },
+    { chapter: 181, digEnhanced: 72.46, combatFinal: 5900 },
+    { chapter: 262, digEnhanced: 487.47, neutralSum: 7268.18, combatFinal: 39974.98 }
+  ];
 
   // Stage 2: Enhanced Base (Step-by-step 2-decimal rounded compounding per level)
   const efficientAb = getAbilityObj("efficient_digestion");
   const efficientLvl = efficientAb ? efficientAb.level : 0;
   const efficientRate = efficientAb ? efficientAb.value : 0;
 
-  // Exact 2-decimal rounded compounding milestones matching novel canon
   const unboostedCanonEnhanced = {
     10: 4.56, // Ch 22
     11: 5.05, // Ch 23
@@ -51,8 +83,9 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
     }
   }
 
-  // Enhanced Base incorporating player level-up base bonus
-  const digEnhanced = floor2(unboostedEnhanced + levelBonus);
+  const canonDigEnhanced = getLatestCanonValue(digestionCanonMilestones, "digEnhanced");
+  const digEnhanced =
+    canonDigEnhanced !== undefined ? canonDigEnhanced : floor2(unboostedEnhanced + levelBonus);
 
   // Stage 3: Mass Expansion
   const massAb = getAbilityObj("mass_expansion");
@@ -69,18 +102,23 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   // Stage 5: Base Subtotal
   const baseSum = floor2(digEnhanced + massVal + passiveVal);
 
+  // Stage 8 multiplier is needed before clone calculation for canon combat-rate milestones.
+  const hemoAb = getAbilityObj("hemolymphatic_tissue");
+  const hemoLvl = hemoAb ? hemoAb.level : 0;
+  const hemoRate = hemoAb ? hemoAb.value : 0;
+  const hemoMult = 1 + hemoRate * hemoLvl;
+
   // Stage 6: Remote Division Clone Bonus
-  // Early progression (Ch < 28): 20% direct clone multiplier on baseSum.
-  // Mid progression (Ch 28-40): 30% per clone level harvested on active skillGain over base floor.
-  // Late progression (Ch 41-92): 30% clone rate on total baseSum (Partial Division Lv 3).
-  // Guild Base progression (Ch >= 93): Partial Division Lv 7 (3 multi-clones) yields 260 Bio/h neutral sum.
   const cloneAb = getAbilityObj("partial_division");
   const cloneLvl = cloneAb ? cloneAb.level : 0;
+  const canonRateMilestone = getLatestDigestionRateMilestone();
+  const canonCombatFinal = getLatestCanonValue(digestionCanonMilestones, "combatFinal");
+  const canonNeutralSum = canonRateMilestone?.neutralSum;
   let cloneVal = 0;
   let cloneMult = 0;
   if (cloneLvl > 0) {
-    if (chapter >= 93) {
-      cloneVal = floor2(260.0 - baseSum);
+    if (chapter >= 93 && canonNeutralSum !== undefined) {
+      cloneVal = floor2(canonNeutralSum - baseSum);
       cloneMult = Math.round((cloneVal / baseSum) * 100) / 100;
     } else if (chapter >= 41 || efficientLvl >= 15) {
       cloneMult = 0.3;
@@ -100,26 +138,39 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   const neutralSum = Math.round((baseSum + cloneVal) * 100) / 100;
 
   // Stage 8: Active Combat Flood Multiplier (Hemolymphatic Tissue)
-  const hemoAb = getAbilityObj("hemolymphatic_tissue");
-  const hemoLvl = hemoAb ? hemoAb.level : 0;
-  const hemoRate = hemoAb ? hemoAb.value : 0;
-  const hemoMult = 1 + hemoRate * hemoLvl;
   const hemoVal = isCombat ? Math.round(neutralSum * (hemoMult - 1) * 100) / 100 : 0;
 
-  const finalDigestion = isCombat ? Math.round(neutralSum * hemoMult * 100) / 100 : neutralSum;
+  const finalDigestion =
+    isCombat && canonCombatFinal !== undefined
+      ? canonCombatFinal
+      : isCombat
+        ? Math.round(neutralSum * hemoMult * 100) / 100
+        : neutralSum;
 
   // ----------------------------------------------------
-  // 2. MANA PIPELINE (Canon: Magic Core 15.0 base, 1.10x compounding)
+  // 2. MANA PIPELINE (maximum capacity, not temporary current mana)
   // ----------------------------------------------------
   const coreLvl = getLvl("magic_core");
   let finalMana = baseStats.mana;
+  const maxManaCanonMilestones = [
+    { chapter: 181, maxMana: 100.5 },
+    { chapter: 204, maxMana: 200 },
+    { chapter: 221, maxMana: 220 },
+    { chapter: 249, maxMana: 242 },
+    { chapter: 263, maxMana: 292 }
+  ];
+  const canonMaxMana = getLatestCanonValue(maxManaCanonMilestones, "maxMana");
 
   if (coreLvl > 0) {
-    let manaVal = 15.0;
-    for (let i = 1; i < coreLvl; i++) {
-      manaVal = Math.round(manaVal * 1.1 * 100) / 100;
+    if (canonMaxMana !== undefined) {
+      finalMana = canonMaxMana;
+    } else {
+      let manaVal = 15.0;
+      for (let i = 1; i < coreLvl; i++) {
+        manaVal = Math.round(manaVal * 1.1 * 100) / 100;
+      }
+      finalMana = Math.floor(manaVal * 10) / 10;
     }
-    finalMana = Math.floor(manaVal * 10) / 10;
   }
 
   // ----------------------------------------------------
@@ -130,7 +181,10 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   const speedCanonMilestones = {
     18: 1.18,
     23: 1.9,
-    24: 2.09
+    24: 2.09,
+    25: 2.29,
+    27: 2.77,
+    36: 6.52
   };
   const finalSpeed =
     speedCanonMilestones[viscousLvl] !== undefined

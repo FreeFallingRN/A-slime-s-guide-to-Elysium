@@ -116,6 +116,50 @@ export const mapNodesData = [
     details:
       "A secluded fairy village in Mythlorien where invisible forest gardeners maintain floral mana balance."
   },
+  {
+    id: "astralis_base",
+    name: "Astralis Requiem Guild Base",
+    x: 79,
+    y: 57,
+    level: "Guild Territory",
+    world: "Elysium",
+    chapter: 115,
+    details:
+      "The claimed Amber Tree guild headquarters after Lisa and Halon establish Astralis Requiem."
+  },
+  {
+    id: "silverport",
+    name: "Silverport",
+    x: 35,
+    y: 72,
+    level: "Human City",
+    world: "Elysium",
+    chapter: 129,
+    details:
+      "A human city where Brynnear respawns after death and later becomes tied to Hogue Guild activity."
+  },
+  {
+    id: "aethelgard",
+    name: "Aethelgard",
+    x: 42,
+    y: 82,
+    level: "Human City",
+    world: "Elysium",
+    chapter: 138,
+    details:
+      "A human city where Isaac Vance works through local noble bureaucracy to build Vance influence."
+  },
+  {
+    id: "cave_hungry_roots",
+    name: "Cave of Hungry Roots",
+    x: 66,
+    y: 50,
+    level: "Dungeon / Hunting Ground",
+    world: "Elysium",
+    chapter: 238,
+    details:
+      "A later Mythlorien combat zone associated with traps, ambushes, and Astralis Requiem's expanding tactical operations."
+  },
 
   // Sectors World Nodes (Real World)
   {
@@ -157,5 +201,38 @@ export const mapNodesData = [
     world: "Sectors",
     chapter: 20,
     details: "The transit skyline where flying motorcycles swerve around corporate buses."
+  },
+  {
+    id: "sector4_alley",
+    name: "Sector 4 Alley",
+    x: 34,
+    y: 50,
+    level: "Lower Zone",
+    world: "Sectors",
+    chapter: 124,
+    details:
+      "A Lower Zone alley where Lohan first encounters Skye and the Silver Lotus intervening against local predators."
+  },
+  {
+    id: "skyline_heaven",
+    name: "Skyline Heaven",
+    x: 68,
+    y: 42,
+    level: "Upper Zone Residence",
+    world: "Sectors",
+    chapter: 283,
+    details:
+      "Lohan's improved residence after leaving the Lower Zone, marking a major change in his real-world living conditions."
+  },
+  {
+    id: "aetheris_prime",
+    name: "Aetheris Prime",
+    x: 76,
+    y: 35,
+    level: "Upper Zone Commercial District",
+    world: "Sectors",
+    chapter: 284,
+    details:
+      "A high-end district visited by Lohan and Isabella, showing the scale of resources available outside Lohan's former Lower Zone life."
   }
 ];

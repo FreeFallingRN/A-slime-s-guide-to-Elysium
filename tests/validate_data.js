@@ -15,6 +15,7 @@ const root = path.resolve(__dirname, "..");
 const publicDir = path.join(root, "public");
 const errors = [];
 const warnings = [];
+const allowedSameChapterAbilityMilestones = new Set(["thermographic_perception:68", "weaver_mother:118"]);
 
 // Fail on broken references/schema; warn on unusual-but-possibly-canon data for human review.
 function fail(message) {
@@ -110,7 +111,10 @@ for (const [id, milestones] of Object.entries(abilityProgression)) {
         `abilityProgression ${id} reaches level ${milestone.level} before chapter ${ability.chapter} unlock`
       );
     }
-    if (byChapter.has(milestone.chapter)) {
+    if (
+      byChapter.has(milestone.chapter) &&
+      !allowedSameChapterAbilityMilestones.has(`${id}:${milestone.chapter}`)
+    ) {
       warn(`abilityProgression ${id} has multiple milestones in chapter ${milestone.chapter}`);
     }
     byChapter.set(milestone.chapter, milestone);
