@@ -160,7 +160,7 @@ export const characterData = {
           type: "trait",
           traitName: "Super Mass Expansion",
           traitDescription:
-            "The body can sustain a substantially larger slime mass, raising the volume available for biomass storage and digestion throughput."
+            "The body can expand beyond its usual limit by consuming biomass, sacrificing density to become larger and engulf targets."
         }
       ]
     },
@@ -456,7 +456,7 @@ export const characterData = {
       value: 0.0,
       chapter: 173,
       description:
-        "A holy-light core evolution created when Natural Energy and Holy Light successfully fuse, giving Halon a persistent light-aligned energy source."
+        "A holy-light core evolution created when light frequency integrates with Halon's Natural Energy Core."
     },
     {
       id: "uncontrolled_natural_injection",
@@ -465,7 +465,7 @@ export const characterData = {
       value: 0.0,
       chapter: 203,
       description:
-        "A post-Level-11 class-evolution ability tied to Halon's deeper control over biological material and natural energy."
+        "Injects an extreme burst of Natural Energy into a specific point, destabilizing the target's internal energy; targets with poor control risk petrification."
     },
     {
       id: "colossus_charge",
@@ -474,7 +474,7 @@ export const characterData = {
       value: 0.0,
       chapter: 235,
       description:
-        "A class evolution extracted through the Predator title after defeating a Level 11 player."
+        "Temporarily accumulates mana and biomass inside Halon's structure to increase inertial mass, making rolling or charging impacts heavier and denser."
     },
     {
       id: "claw_projection",
@@ -483,7 +483,7 @@ export const characterData = {
       value: 0.0,
       chapter: 258,
       description:
-        "Projects hardened claws from Halon's biomass, improving direct offensive options after predator extraction."
+        "Consumes energy to project claws from Halon's body, with claw durability scaling by the ability's level."
     },
     {
       id: "synergy_link",
@@ -492,7 +492,7 @@ export const characterData = {
       value: 0.0,
       chapter: 258,
       description:
-        "A newly extracted evolution that helps coordinate compatible evolutions and combined effects."
+        "Links compatible allies so Halon can lend his evolutions temporarily or borrow an ally's ability at a reduced effect."
     },
     {
       id: "racial_command",
@@ -501,7 +501,7 @@ export const characterData = {
       value: 0.0,
       chapter: 258,
       description:
-        "A predator-extracted evolution connected to commanding racial advantages and inherited instincts."
+        "Commands creatures of the same race regardless of large differences in strength or intellect."
     },
     {
       id: "mark_of_rupture",
@@ -511,7 +511,7 @@ export const characterData = {
       value: 0.0,
       chapter: 247,
       description:
-        "Applies a structural weak point that causes the next physical or magical hit on the marked spot to strike with doubled piercing force."
+        "Creates a structural weak point; the next physical or magical hit on the mark doubles kinetic piercing damage."
     },
     {
       id: "killing_intent",
@@ -519,7 +519,7 @@ export const characterData = {
       target: "none",
       value: 0.0,
       chapter: 278,
-      description: "An unlocked evolution tied to projecting lethal pressure and hostile intent."
+      description: "Projects killing intent as hostile pressure that can be felt by others."
     }
   ]
 };

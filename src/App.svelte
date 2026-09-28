@@ -9,9 +9,9 @@
   import Characters from "./lib/Characters.svelte";
   import OnboardingModal from "./lib/OnboardingModal.svelte";
 
-  import { BookOpen, Gauge, Flame, Download, Users, HelpCircle, Github } from "lucide-svelte";
+  import { BookOpen, Gauge, Flame, Download, Users, HelpCircle, Github, Sparkles } from "lucide-svelte";
 
-  let currentTab = "stats"; // 'stats', 'characters', 'lore'
+  let currentTab = "stats"; // 'stats', 'biomass', 'characters', 'lore'
   let deferredPrompt = null;
   let installable = false;
 
@@ -100,12 +100,26 @@
     onboardingSlide = slide;
     showOnboarding = true;
   }
+
+  function handleLogoKeydown(event) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openGuide(0);
+    }
+  }
 </script>
 
 <main class="app-layout">
   <!-- Brand Header -->
   <header class="brand-header">
-    <div class="logo-area" on:click={() => openGuide(0)} title="View System Overview">
+    <div
+      class="logo-area"
+      on:click={() => openGuide(0)}
+      on:keydown={handleLogoKeydown}
+      role="button"
+      tabindex="0"
+      title="View System Overview"
+    >
       <div class="logo-box">
         <Flame size={20} class="brand-flame" />
       </div>
@@ -172,6 +186,14 @@
       </button>
 
       <button
+        class="nav-tab {currentTab === 'biomass' ? 'active' : ''}"
+        on:click={() => (currentTab = "biomass")}
+      >
+        <Sparkles size={16} />
+        <span>Biomass</span>
+      </button>
+
+      <button
         class="nav-tab {currentTab === 'characters' ? 'active' : ''}"
         on:click={() => (currentTab = "characters")}
       >
@@ -192,6 +214,10 @@
     <section class="viewport-area">
       {#if currentTab === "stats"}
         <StatCalculator />
+      {:else if currentTab === "biomass"}
+        <div class="fade-in-wrapper">
+          <BiomassCalculator />
+        </div>
       {:else if currentTab === "characters"}
         <div class="fade-in-wrapper">
           <Characters />
@@ -637,7 +663,7 @@
       padding: 8px 10px;
       gap: 4px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       justify-items: center;
       align-items: center;
       z-index: 1000;

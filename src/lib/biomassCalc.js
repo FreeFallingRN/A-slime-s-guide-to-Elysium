@@ -1,67 +1,27 @@
-export const LEVEL_11_BIOMASS_UNIT_SCALE = 1000;
+import { BIOMASS_SKILL_COSTS, LEVEL_11_BIOMASS_UNIT_SCALE } from "../data/biomass.js";
+import { characterData } from "../data/abilities.js";
 
-export const BIOMASS_SKILLS = [
-  {
-    id: "magic_core",
-    name: "Magic Core / Superior Magic Core",
-    chapter: 25,
-    preLevel11BaseCost: 10,
-    preLevel11Growth: 1.13,
-    notes: "Magic Core Level 1 to 2 is established at 10 Biomass before the Level 11 refinement."
-  },
-  {
-    id: "natural_energy_core",
-    name: "Natural Energy Core",
-    chapter: 104,
-    preLevel11BaseCost: 200,
-    preLevel11Growth: 1.13,
-    notes:
-      "Natural Energy Core Level 1 to 2 is established at 200 Biomass before the Level 11 refinement."
-  },
-  {
-    id: "viscous_flow",
-    name: "Viscous Flow",
-    chapter: 2,
-    preLevel11BaseCost: 1,
-    preLevel11Growth: 1.13,
-    postLevel11KnownStepCosts: [{ from: 27, to: 28, cost: 0.2 }],
-    notes:
-      "Chapter 204 shows Viscous Flow Level 27 costing 0.2 refined Biomass units after Level 11."
-  },
-  {
-    id: "efficient_digestion",
-    name: "Efficient Digestion",
-    chapter: 2,
-    preLevel11BaseCost: 1,
-    preLevel11Growth: 1.13,
-    postLevel11KnownRanges: [{ from: 20, to: 40, cost: 8.67 }],
-    notes: "Chapter 262 establishes the exact refined-unit spend for Level 20 to Level 40."
-  },
-  {
-    id: "claw_projection",
-    name: "Claw Projection",
-    chapter: 258,
-    postLevel11KnownRanges: [{ from: 1, to: 5, cost: 11.44 }],
-    notes: "Chapter 262 establishes the exact refined-unit spend for Level 1 to Level 5."
-  },
-  {
-    id: "synergy_link",
-    name: "Synergy Link",
-    chapter: 258,
-    postLevel11KnownRanges: [{ from: 1, to: 5, cost: 29.22 }],
-    notes: "Chapter 262 establishes the exact refined-unit spend for Level 1 to Level 5."
-  },
-  {
-    id: "racial_command",
-    name: "Racial Command",
-    chapter: 258,
-    postLevel11KnownRanges: [{ from: 1, to: 5, cost: 17.54 }],
-    notes: "Chapter 262 establishes the exact refined-unit spend for Level 1 to Level 5."
-  }
-];
+export { LEVEL_11_BIOMASS_UNIT_SCALE } from "../data/biomass.js";
+
+const abilityById = new Map(characterData.abilities.map((ability) => [ability.id, ability]));
+
+function enrichBiomassSkill(skill) {
+  const ability = abilityById.get(skill.id);
+  return {
+    ...skill,
+    name: ability?.name || skill.id,
+    chapter: ability?.chapter || 1,
+    ability
+  };
+}
 
 export function getBiomassSkill(skillId) {
-  return BIOMASS_SKILLS.find((skill) => skill.id === skillId);
+  const skill = BIOMASS_SKILL_COSTS.find((entry) => entry.id === skillId);
+  return skill ? enrichBiomassSkill(skill) : undefined;
+}
+
+export function getAvailableBiomassSkills(chapter) {
+  return BIOMASS_SKILL_COSTS.map(enrichBiomassSkill).filter((skill) => skill.chapter <= chapter);
 }
 
 function assertLevel(value, label) {

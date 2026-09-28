@@ -402,18 +402,6 @@ export const encyclopediaData = {
       description:
         "A titan of amber and fossilized metal-hard wood serving as a Level 10 dungeon overrun by Glass Beetles, chosen by Lisa as the prospective Astralis Guild base.",
       chapter: 93
-    },
-    {
-      name: "Astralis Requiem Guild Base",
-      description:
-        "The claimed Amber Tree base after Astralis' official founding, used as the guild's strategic home, storage point, and later meeting hub.",
-      chapter: 115
-    },
-    {
-      name: "Cave of Hungry Roots",
-      description:
-        "A dangerous later hunting ground where Astralis Requiem and related groups confront ambushes and guild-scale tactical problems.",
-      chapter: 238
     }
   ],
   technology: [
@@ -501,24 +489,6 @@ export const encyclopediaData = {
       chapter: 115
     },
     {
-      name: "Natural Energy Core",
-      description:
-        "A costly core evolution born from the Basic Life Seed, opening natural-energy pathways through Halon's body.",
-      chapter: 104
-    },
-    {
-      name: "Sacred Light Core",
-      description:
-        "A light-aspected core evolution formed when Holy Light successfully fuses with Halon's Natural Energy Core.",
-      chapter: 173
-    },
-    {
-      name: "Superior Magic Core",
-      description:
-        "The evolved form of Halon's Magic Core after High Elf evolution extraction, sharply improving mana perception and capacity.",
-      chapter: 200
-    },
-    {
       name: "Ancient Magic Flower",
       description:
         "A plant material whose memories and structure help Halon explore later Sacred Light and natural-energy applications.",
@@ -535,12 +505,6 @@ export const encyclopediaData = {
       description:
         "An important Petal Village treasure sought during Varkas's raid, valuable enough to draw predatory player attention toward the fairy settlement.",
       chapter: 258
-    },
-    {
-      name: "Aetheris Prime",
-      description:
-        "A high-end Upper Zone commercial district where Lohan directly experiences the social and material world Isabella can access.",
-      chapter: 284
     }
   ]
 };

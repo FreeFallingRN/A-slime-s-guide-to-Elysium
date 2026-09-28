@@ -1,6 +1,6 @@
 <script>
   import { currentChapter, activeChapterDetails } from "./store.js";
-  import { BIOMASS_SKILLS, calculateBiomassCost } from "./biomassCalc.js";
+  import { calculateBiomassCost, getAvailableBiomassSkills } from "./biomassCalc.js";
   import { AlertTriangle, CheckCircle2, Sparkles, TrendingUp } from "lucide-svelte";
 
   let chapter = 1;
@@ -12,7 +12,7 @@
     chapterDetails = val;
   });
 
-  $: availableSkills = BIOMASS_SKILLS.filter((skill) => skill.chapter <= chapter);
+  $: availableSkills = getAvailableBiomassSkills(chapter);
   let selectedSkillId = "magic_core";
   let startLevel = 1;
   let targetLevel = 2;
