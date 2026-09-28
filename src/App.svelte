@@ -9,7 +9,16 @@
   import Characters from "./lib/Characters.svelte";
   import OnboardingModal from "./lib/OnboardingModal.svelte";
 
-  import { BookOpen, Gauge, Flame, Download, Users, HelpCircle, Github, Sparkles } from "lucide-svelte";
+  import {
+    BookOpen,
+    Gauge,
+    Flame,
+    Download,
+    Users,
+    HelpCircle,
+    Github,
+    Sparkles
+  } from "lucide-svelte";
 
   let currentTab = "stats"; // 'stats', 'biomass', 'characters', 'lore'
   let deferredPrompt = null;
