@@ -265,7 +265,7 @@ export const characterData = {
           name: "Superior Magic Core",
           level: 1,
           description:
-            "The Magic Core is transmuted through High Elf evolution extraction, sharpening ambient mana perception and increasing mana density."
+            "A superior vital core expanded further to support the opening of multiple independent mana paths operating simultaneously, allowing clones and main body to channel multiple spells concurrently."
         }
       ]
     },
