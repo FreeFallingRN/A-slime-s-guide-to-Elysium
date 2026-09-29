@@ -370,7 +370,7 @@
     font-size: 0.78rem;
   }
 
-  .file-icon {
+  .loaded-file :global(.file-icon) {
     color: var(--color-holo-primary);
   }
 

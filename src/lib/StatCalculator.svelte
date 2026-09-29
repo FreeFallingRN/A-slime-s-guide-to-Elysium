@@ -889,18 +889,6 @@
     border-color: rgba(0, 255, 170, 0.25);
   }
 
-  .mini-bonus-pill {
-    font-size: 0.76rem;
-    font-weight: 600;
-    color: #00f0ff;
-    background: rgba(0, 240, 255, 0.06);
-    border: 1px solid rgba(0, 240, 255, 0.2);
-    border-radius: 6px;
-    padding: 6px 10px;
-    margin-top: 6px;
-    text-align: center;
-    letter-spacing: 0.02em;
-  }
 
   .stat-row {
     display: grid;
@@ -1028,35 +1016,9 @@
     color: #ff4b4b;
   }
 
-  .step-formula {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.9rem;
-    font-family: monospace, sans-serif;
-  }
-
-  .formula-label {
-    color: var(--color-holo-muted);
-  }
-
-  .formula-value,
-  .formula-result {
-    font-weight: 700;
-    color: #fff;
-  }
-
   .final-value {
     font-size: 1.1rem;
     color: #00ffaa;
-  }
-
-  .step-note {
-    font-size: 0.78rem;
-    color: #00f0ff;
-    background: rgba(0, 240, 255, 0.06);
-    padding: 4px 8px;
-    border-radius: 4px;
   }
 
   .step-subitems {
@@ -1249,11 +1211,6 @@
     margin-top: 3px;
   }
 
-  .effect-content {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
 
   .effect-text {
     font-size: 0.72rem;
@@ -1310,13 +1267,6 @@
     margin: 0;
   }
 
-  .effect-current {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: 0.02em;
-    text-shadow: 0 0 6px var(--color-holo-glow);
-  }
 
   .stat-target {
     color: var(--color-book-gold);
@@ -1582,260 +1532,6 @@
     animation: pulse-slow 1.5s infinite;
   }
 
-  .combat-toggle-label:hover {
-    color: var(--color-arson-fire);
-  }
-
-  .combat-toggle-label input {
-    accent-color: var(--color-arson-fire);
-    cursor: pointer;
-  }
-
-  .combat-toggle-label input:checked ~ .toggle-text {
-    color: var(--color-arson-fire);
-    text-shadow: 0 0 5px var(--color-arson-glow);
-  }
-
-  /* --- VISUAL GRAPH / FLOWCHART STYLES --- */
-  .flowchart-container {
-    width: 100%;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-  }
-
-  .flowchart-grid {
-    display: grid;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-  }
-
-  .digestion-grid-vertical {
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-    max-width: 440px;
-    margin: 0 auto;
-  }
-
-  .mana-grid-vertical,
-  .speed-grid-vertical {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-  }
-
-  .span-cols-2 {
-    grid-column: span 2;
-    justify-self: center;
-  }
-
-  .justify-self-end {
-    justify-self: end;
-  }
-
-  .justify-self-start {
-    justify-self: start;
-  }
-
-  .width-node {
-    width: 100%;
-    max-width: 190px;
-  }
-
-  .width-large {
-    width: 100%;
-    max-width: 220px;
-  }
-
-  .vertical-branch-svg,
-  .vertical-merge-svg {
-    width: 200px;
-    height: 40px;
-  }
-
-  .flowchart-box-group {
-    background: rgba(2, 14, 26, 0.45);
-    border: 1px dashed var(--color-holo-border);
-    border-radius: 8px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .flowchart-group-title {
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: var(--color-holo-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 4px;
-    text-align: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding-bottom: 4px;
-  }
-
-  .flowchart-node {
-    background: rgba(2, 14, 26, 0.7);
-    border: 1px solid var(--color-holo-border);
-    border-radius: 6px;
-    padding: 8px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    text-align: center;
-    transition: var(--transition-smooth);
-    min-height: 58px;
-    justify-content: center;
-    position: relative;
-  }
-
-  .flowchart-node.glow-node {
-    border-color: rgba(0, 240, 255, 0.5);
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-  }
-
-  .flowchart-node.final-node {
-    border-color: var(--color-book-gold);
-    box-shadow: 0 0 15px var(--color-book-gold-glow);
-    background: rgba(194, 157, 83, 0.03);
-  }
-
-  .flowchart-node.active-buff {
-    border-color: rgba(0, 240, 255, 0.4);
-    background: rgba(0, 240, 255, 0.05);
-  }
-
-  .flowchart-node.active-combat {
-    border-color: var(--color-arson-fire);
-    background: rgba(255, 94, 0, 0.05);
-    box-shadow: 0 0 10px var(--color-arson-glow);
-  }
-
-  .flowchart-node.inactive-buff {
-    opacity: 0.5;
-    border-style: dotted;
-    background: rgba(255, 255, 255, 0.01);
-  }
-
-  .node-label {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--color-holo-muted);
-    letter-spacing: 0.02em;
-  }
-
-  .active-buff .node-label {
-    color: var(--color-holo-primary);
-  }
-
-  .active-combat .node-label {
-    color: var(--color-arson-fire);
-  }
-
-  .final-node .node-label {
-    color: var(--color-book-gold);
-  }
-
-  .node-value {
-    font-size: 0.92rem;
-    font-weight: bold;
-    color: #fff;
-  }
-
-  .glow-node-battle .node-value {
-    text-shadow: 0 0 8px var(--color-holo-primary);
-  }
-
-  .final-subnode .node-value {
-    color: var(--color-holo-primary);
-    text-shadow: 0 0 6px var(--color-holo-glow);
-  }
-
-  .mini-arrow {
-    font-size: 0.6rem;
-    color: var(--color-holo-border);
-    text-align: center;
-    line-height: 1;
-  }
-
-  .flowchart-arrow {
-    font-size: 0.75rem;
-    color: var(--color-holo-primary);
-    text-shadow: 0 0 4px var(--color-holo-glow);
-    text-align: center;
-    line-height: 1;
-    margin: 4px 0;
-  }
-
-  .connector-cell {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .connector-svg {
-    width: 100%;
-    height: 100%;
-    min-height: 40px;
-  }
-
-  /* Card stack styling for Neutral & Battle Sum */
-  .card-stack {
-    position: relative;
-    z-index: 10;
-  }
-
-  .card-stack::before {
-    content: "";
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    right: -4px;
-    bottom: -4px;
-    border: 1px solid var(--color-holo-border);
-    background: var(--color-holo-bg);
-    border-radius: 6px;
-    z-index: -1;
-  }
-
-  .card-stack::after {
-    content: "";
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    right: -8px;
-    bottom: -8px;
-    border: 1px solid rgba(0, 240, 255, 0.08);
-    background: rgba(2, 14, 26, 0.2);
-    border-radius: 6px;
-    z-index: -2;
-  }
-
-  .final-node::before {
-    border-color: rgba(194, 157, 83, 0.4);
-  }
-  .final-node::after {
-    border-color: rgba(194, 157, 83, 0.15);
-  }
-
-  .mini-bonuses {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    margin-top: 4px;
-    padding-top: 4px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .mini-bonus-text {
-    font-size: 0.6rem;
-    color: var(--color-holo-muted);
-  }
 
   /* --- SKILL SEARCH BAR --- */
   .skill-search-bar {
@@ -1962,12 +1658,6 @@
     font-weight: 400;
   }
 
-  .group-max-lv {
-    font-size: 0.7rem;
-    color: var(--color-book-gold);
-    font-weight: 700;
-    letter-spacing: 0.05em;
-  }
 
   .group-body {
     display: flex;
@@ -2094,9 +1784,6 @@
       font-size: 0.65rem;
     }
 
-    .flowchart-container {
-      padding: 12px 6px;
-    }
 
     .calc-breakdown-container {
       padding: 12px 6px;

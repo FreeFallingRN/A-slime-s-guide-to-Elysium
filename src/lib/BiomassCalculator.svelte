@@ -24,8 +24,8 @@
   }
 
   function clampLevels() {
-    startLevel = Math.max(1, Math.min(99, Number.parseInt(startLevel, 10) || 1));
-    targetLevel = Math.max(startLevel + 1, Math.min(100, Number.parseInt(targetLevel, 10) || 2));
+    startLevel = Math.max(1, Math.min(99, Number.parseInt(String(startLevel), 10) || 1));
+    targetLevel = Math.max(startLevel + 1, Math.min(100, Number.parseInt(String(targetLevel), 10) || 2));
   }
 
   $: clampLevels();

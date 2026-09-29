@@ -333,7 +333,7 @@
     box-shadow: 0 0 12px var(--color-arson-glow);
   }
 
-  .brand-flame {
+  .logo-box :global(.brand-flame) {
     color: #fff;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
   }
