@@ -1147,7 +1147,6 @@
     padding: 12px;
   }
 
-
   .step-guide {
     display: flex;
     flex-direction: column;

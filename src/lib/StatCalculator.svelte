@@ -889,7 +889,6 @@
     border-color: rgba(0, 255, 170, 0.25);
   }
 
-
   .stat-row {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -1211,7 +1210,6 @@
     margin-top: 3px;
   }
 
-
   .effect-text {
     font-size: 0.72rem;
     color: var(--color-holo-primary);
@@ -1266,7 +1264,6 @@
     line-height: 1.35;
     margin: 0;
   }
-
 
   .stat-target {
     color: var(--color-book-gold);
@@ -1532,7 +1529,6 @@
     animation: pulse-slow 1.5s infinite;
   }
 
-
   /* --- SKILL SEARCH BAR --- */
   .skill-search-bar {
     padding: 14px 20px 0;
@@ -1658,7 +1654,6 @@
     font-weight: 400;
   }
 
-
   .group-body {
     display: flex;
     flex-direction: column;
@@ -1783,7 +1778,6 @@
     .bonus-badge {
       font-size: 0.65rem;
     }
-
 
     .calc-breakdown-container {
       padding: 12px 6px;

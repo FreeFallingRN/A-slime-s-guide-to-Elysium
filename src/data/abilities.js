@@ -410,7 +410,7 @@ export const characterData = {
       value: 0.0,
       chapter: 104,
       description:
-        "The vital core undergoes a qualitative transmutation, becoming a Natural Energy engine. Emitting constant pulses that synchronize the cellular structure with the vital energy of nature, forcing the opening of Natural Energy Pathways through biomass to absorb, balance, and circulate the raw essence of the world through the organism.",
+        "The vital core undergoes a qualitative transmutation, becoming a Natural Energy engine. Emitting constant pulses that synchronize the cellular structure with the vital energy of nature, forcing the opening of Natural Energy Pathways through biomass to absorb, balance, and circulate the raw essence of the world through the organism."
     },
     {
       id: "weaver_mother",
@@ -529,7 +529,8 @@ export const characterData = {
       target: "none",
       value: 0.0,
       chapter: 278,
-      description: "The user is able to project Mana saturated with their predatory will. The target experiences an amplification of fear and atmospheric pressure based on the intensity of the user’s death wish against them."
+      description:
+        "The user is able to project Mana saturated with their predatory will. The target experiences an amplification of fear and atmospheric pressure based on the intensity of the user’s death wish against them."
     }
   ]
 };
