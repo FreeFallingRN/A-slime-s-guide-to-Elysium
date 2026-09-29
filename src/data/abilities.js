@@ -410,7 +410,7 @@ export const characterData = {
       value: 0.0,
       chapter: 104,
       description:
-        "A qualitative core evolution produced from the Basic Life Seed, opening natural-energy pathways through Halon's biomass."
+        "The vital core undergoes a qualitative transmutation, becoming a Natural Energy engine. Emitting constant pulses that synchronize the cellular structure with the vital energy of nature, forcing the opening of Natural Energy Pathways through biomass to absorb, balance, and circulate the raw essence of the world through the organism."
     },
     {
       id: "weaver_mother",
