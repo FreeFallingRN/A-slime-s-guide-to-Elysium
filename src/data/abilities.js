@@ -419,7 +419,9 @@ export const characterData = {
       value: 0.0,
       chapter: 118,
       description:
-        "An evolution extracted from the Weaver Mother that channels refined biomass and mana toward linked allies, reducing evolution bottlenecks."
+        "Allows the creation of biological threads fused with Mana. The filaments are extremely resistant and adhesive, capable of immobilizing targets and passively draining the magical energy of any living being in direct contact with the web.
+
+In addition to immobilizing and draining energy, the Mana-infused threads act as bidirectional conductors. This evolution allows for the direct injection of Mana and refined Biomass into the system of any being entangled by the web or in symbiotic contact with the user."
     },
     {
       id: "sharpened_instinct",
