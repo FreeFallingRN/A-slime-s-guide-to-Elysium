@@ -87,11 +87,11 @@ suite.addTest(131, 2518.0, false, "Passive Digestion Engine neutral digestion");
 suite.addTest(133, 5100.0, true, "Hemolymphatic Tissue Lv 15 combat digestion");
 suite.addTest(181, 72.46, false, "Level 10 base digestion", "enhanced");
 suite.addTest(181, 5900.0, true, "Level 10 combat digestion");
-suite.addTest(262, 487.47, false, "Efficient Digestion Lv 40 base rate", "enhanced");
-suite.addTest(262, 7268.18, false, "Efficient Digestion Lv 40 neutral digestion");
-suite.addTest(262, 39974.98, true, "Efficient Digestion Lv 40 combat digestion");
-suite.addTest(300, 7268.18, false, "Chapter 300 neutral digestion");
-suite.addTest(300, 39974.98, true, "Chapter 300 combat digestion");
+suite.addTest(262, 0.49, false, "Efficient Digestion Lv 40 base rate", "enhanced");
+suite.addTest(262, 7.27, false, "Efficient Digestion Lv 40 neutral digestion");
+suite.addTest(262, 39.97, true, "Efficient Digestion Lv 40 combat digestion");
+suite.addTest(300, 7.27, false, "Chapter 300 neutral digestion");
+suite.addTest(300, 39.97, true, "Chapter 300 combat digestion");
 
 // Run digestion tests if executed directly
 suite.run("DIGESTION");

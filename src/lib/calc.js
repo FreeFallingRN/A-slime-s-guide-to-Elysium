@@ -26,6 +26,20 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
 
   const floor2 = (val) => Math.floor(Math.round(val * 10000) / 100) / 100;
 
+  const isRefined = playerLvl >= 11 || chapter >= 201;
+  const digestionUnit = isRefined ? "Refined BM/h" : "BM/h";
+
+  const digestionCanonMilestones = [
+    { chapter: 93, digEnhanced: 36.52, neutralSum: 260 },
+    { chapter: 105, digEnhanced: 53.54, neutralSum: 381, combatFinal: 1221.45 },
+    { chapter: 117, neutralSum: 518.02, combatFinal: 1657.68 },
+    { chapter: 119, neutralSum: 605, combatFinal: 1936 },
+    { chapter: 131, neutralSum: 2518 },
+    { chapter: 133, combatFinal: 5100 },
+    { chapter: 181, digEnhanced: 72.46, combatFinal: 5900 },
+    { chapter: 262, digEnhanced: 0.49, neutralSum: 7.27, combatFinal: 39.97 }
+  ];
+
   const getLatestCanonValue = (milestones, key) => {
     for (let i = milestones.length - 1; i >= 0; i -= 1) {
       const milestone = milestones[i];
@@ -48,17 +62,6 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
     }
     return undefined;
   };
-
-  const digestionCanonMilestones = [
-    { chapter: 93, digEnhanced: 36.52, neutralSum: 260 },
-    { chapter: 105, digEnhanced: 53.54, neutralSum: 381, combatFinal: 1221.45 },
-    { chapter: 117, neutralSum: 518.02, combatFinal: 1657.68 },
-    { chapter: 119, neutralSum: 605, combatFinal: 1936 },
-    { chapter: 131, neutralSum: 2518 },
-    { chapter: 133, combatFinal: 5100 },
-    { chapter: 181, digEnhanced: 72.46, combatFinal: 5900 },
-    { chapter: 262, digEnhanced: 487.47, neutralSum: 7268.18, combatFinal: 39974.98 }
-  ];
 
   // Stage 2: Enhanced Base (Step-by-step 2-decimal rounded compounding per level)
   const efficientAb = getAbilityObj("efficient_digestion");
@@ -84,8 +87,12 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   }
 
   const canonDigEnhanced = getLatestCanonValue(digestionCanonMilestones, "digEnhanced");
-  const digEnhanced =
-    canonDigEnhanced !== undefined ? canonDigEnhanced : floor2(unboostedEnhanced + levelBonus);
+  let digEnhanced =
+    canonDigEnhanced !== undefined
+      ? canonDigEnhanced
+      : isRefined
+        ? floor2((unboostedEnhanced + levelBonus) / 1000)
+        : floor2(unboostedEnhanced + levelBonus);
 
   // Stage 3: Mass Expansion
   const massAb = getAbilityObj("mass_expansion");
@@ -119,12 +126,12 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   if (cloneLvl > 0) {
     if (chapter >= 93 && canonNeutralSum !== undefined) {
       cloneVal = floor2(canonNeutralSum - baseSum);
-      cloneMult = Math.round((cloneVal / baseSum) * 100) / 100;
+      cloneMult = baseSum > 0 ? Math.round((cloneVal / baseSum) * 100) / 100 : 0;
     } else if (chapter >= 41 || efficientLvl >= 15) {
       cloneMult = 0.3;
       cloneVal = floor2(baseSum * 0.3);
     } else if (chapter >= 28) {
-      const baseFloor = 1.24;
+      const baseFloor = isRefined ? 0.00124 : 1.24;
       const skillGain = Math.max(0, baseSum - baseFloor);
       cloneMult = cloneLvl * 0.3;
       cloneVal = floor2(skillGain * (0.3 * cloneLvl));
@@ -135,12 +142,19 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
   }
 
   // Stage 7: Neutral Total Rate
-  const neutralSum = Math.round((baseSum + cloneVal) * 100) / 100;
+  let neutralSum =
+    chapter >= 93 && canonNeutralSum !== undefined
+      ? canonNeutralSum
+      : Math.round((baseSum + cloneVal) * 100) / 100;
 
   // Stage 8: Active Combat Flood Multiplier (Hemolymphatic Tissue)
-  const hemoVal = isCombat ? Math.round(neutralSum * (hemoMult - 1) * 100) / 100 : 0;
+  const hemoVal = isCombat
+    ? canonCombatFinal !== undefined
+      ? Math.round((canonCombatFinal - neutralSum) * 100) / 100
+      : Math.round(neutralSum * (hemoMult - 1) * 100) / 100
+    : 0;
 
-  const finalDigestion =
+  let finalDigestion =
     isCombat && canonCombatFinal !== undefined
       ? canonCombatFinal
       : isCombat
@@ -193,7 +207,9 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
 
   return {
     digestion: {
-      base: digBase,
+      unit: digestionUnit,
+      isRefined,
+      base: isRefined ? Math.round((digBase / 1000) * 1000) / 1000 : digBase,
       efficientLvl,
       efficientRate,
       unboostedEnhanced,

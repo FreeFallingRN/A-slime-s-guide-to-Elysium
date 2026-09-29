@@ -253,7 +253,7 @@
       <div>
         <h3 class="hologram-glow-text">BIOMASS UPGRADE CALCULATOR</h3>
         <span class="header-subtext">
-          CHAPTER {chapter} · HALON LV {chapterDetails.halonLvl || 1} · {neutralRate.toLocaleString()} BM/H DIGESTION
+          CHAPTER {chapter} · HALON LV {chapterDetails.halonLvl || 1} · {neutralRate.toLocaleString()} {neutralCalc?.digestion?.unit || 'BM/h'} DIGESTION
         </span>
       </div>
     </div>
@@ -420,7 +420,7 @@
                       <span class="metric-label">ACTIVE DIGESTION</span>
                     </div>
                     <span class="metric-value">{singleTimeEstimate.activeFormatted}</span>
-                    <span class="metric-sub">{neutralRate.toLocaleString()} BM/h</span>
+                    <span class="metric-sub">{neutralRate.toLocaleString()} {neutralCalc?.digestion?.unit || "BM/h"}</span>
                   </div>
 
                   <div class="time-metric">
@@ -429,7 +429,7 @@
                       <span class="metric-label">COMBAT BURST</span>
                     </div>
                     <span class="metric-value">{singleCombatTimeEstimate?.activeFormatted || "N/A"}</span>
-                    <span class="metric-sub">{combatRate.toLocaleString()} BM/h</span>
+                    <span class="metric-sub">{combatRate.toLocaleString()} {combatCalc?.digestion?.unit || "BM/h"}</span>
                   </div>
 
                   <div class="time-metric">
@@ -439,7 +439,7 @@
                     </div>
                     <span class="metric-value">{singleTimeEstimate.passiveFormatted}</span>
                     <span class="metric-sub">
-                      {passiveRate > 0 ? `${passiveRate.toLocaleString()} BM/h` : "Not unlocked"}
+                      {passiveRate > 0 ? `${passiveRate.toLocaleString()} ${neutralCalc?.digestion?.unit || "BM/h"}` : "Not unlocked"}
                     </span>
                   </div>
                 </div>
@@ -679,7 +679,7 @@
               <Clock size={15} class="holo-orange" />
               <span>
                 TOTAL ESTIMATED ACCUMULATION TIME: <strong>{portfolioTimeEstimate.activeFormatted}</strong> Active
-                ({neutralRate.toLocaleString()} BM/h) · <strong>{portfolioCombatTimeEstimate.activeFormatted}</strong> Combat
+                ({neutralRate.toLocaleString()} {neutralCalc?.digestion?.unit || "BM/h"}) · <strong>{portfolioCombatTimeEstimate.activeFormatted}</strong> Combat
                 {#if passiveRate > 0}
                   · <strong>{portfolioTimeEstimate.passiveFormatted}</strong> Passive Rest
                 {/if}
@@ -697,9 +697,9 @@
         <span>ABOUT BIOMASS CONDENSATION & LEVEL 11 CHARACTER REFINEMENT</span>
       </div>
       <p class="refinement-desc">
-        When Halon reaches Character Level 11 (Chapter 201+ / Mythic Slime evolution), all stored biomass condenses at a
+        When Halon reaches Character Level 11 (Chapter 201+ / Mythic Slime evolution), all stored biomass and digestion throughput condense at a
         <strong>1,000 Standard BM &rarr; 1 Refined BM</strong> ratio.
-        Consequently, all upgrade costs and biomass balances in Chapter 201+ are scaled and paid in Refined Units, with zero mixed-unit splits.
+        Consequently, all upgrade costs, digestion throughput, and biomass balances in Chapter 201+ are scaled and paid in Refined Units, with zero mixed-unit splits.
       </p>
     </div>
   </div>

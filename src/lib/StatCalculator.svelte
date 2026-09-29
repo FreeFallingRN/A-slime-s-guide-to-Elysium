@@ -142,21 +142,22 @@
     const d = calcData.digestion;
     const m = calcData.mana;
     const s = calcData.speed;
+    const digUnit = d.unit || (d.isRefined ? "Refined BM/h" : "bio/h");
     return {
       efficient_digestion: (() => {
         const digBonus = Math.round((d.digEnhanced - d.base) * 100) / 100;
         if (chapter >= 33 && d.efficientLvl > 0) {
           const em = 1 + 0.01 * d.efficientLvl;
           const manaBonus = Math.round(m.final * (1 - 1 / em) * 100) / 100;
-          return `+${digBonus} bio/h  ·  +${manaBonus} mana`;
+          return `+${digBonus} ${digUnit}  ·  +${manaBonus} mana`;
         }
-        return `+${digBonus} bio/h`;
+        return `+${digBonus} ${digUnit}`;
       })(),
-      hemolymphatic_tissue: combatActive ? `+${d.hemoVal} bio/h` : `Toggle combat to view`,
+      hemolymphatic_tissue: combatActive ? `+${d.hemoVal} ${digUnit}` : `Toggle combat to view`,
       viscous_flow: `+${Math.round((s.final - s.base) * 100) / 100} m/s`,
-      passive_digestion: `+${d.passiveVal} bio/h`,
-      mass_expansion: `+${d.massVal} bio/h`,
-      partial_division: `+${d.cloneVal} bio/h`,
+      passive_digestion: `+${d.passiveVal} ${digUnit}`,
+      mass_expansion: `+${d.massVal} ${digUnit}`,
+      partial_division: `+${d.cloneVal} ${digUnit}`,
       magic_core: `+${Math.round((m.final - m.base) * 100) / 100} mana`
     };
   })();
@@ -230,14 +231,14 @@
               {finalStats[stat]}
               {#if stat === "speed"}
                 m/s{:else if stat === "digestion"}
-                bio/h{/if}
+                {calcData.digestion.unit || "bio/h"}{/if}
             </span>
           </div>
           {#if stat === "digestion" && calcData.digestion && calcData.digestion.cloneLvl > 0}
             <div class="clone-split-subrow">
-              <span class="subrow-pill">Body: {calcData.digestion.mainBody} bio/h</span>
+              <span class="subrow-pill">Body: {calcData.digestion.baseSum} {calcData.digestion.unit || "bio/h"}</span>
               <span class="subrow-pill clone-pill"
-                >Clone: +{calcData.digestion.cloneOutput} bio/h</span
+                >Clone: +{calcData.digestion.cloneOutput} {calcData.digestion.unit || "bio/h"}</span
               >
             </div>
           {/if}
@@ -464,7 +465,7 @@
               <div class="subitem-row">
                 <span class="subitem-name">Base Absorption Capacity:</span>
                 <span class="subitem-calc">Base Stat</span>
-                <span class="subitem-value">{calcData.digestion.base} bio/h</span>
+                <span class="subitem-value">{calcData.digestion.base} {calcData.digestion.unit || "bio/h"}</span>
               </div>
             </div>
           </div>
@@ -485,14 +486,14 @@
                     >{calcData.digestion.base} × (1 + 10% ^ {calcData.digestion.efficientLvl})</span
                   >
                   <span class="subitem-value"
-                    >{calcData.digestion.unboostedEnhanced || calcData.digestion.digEnhanced} bio/h</span
+                    >{calcData.digestion.unboostedEnhanced || calcData.digestion.digEnhanced} {calcData.digestion.unit || "bio/h"}</span
                   >
                 </div>
                 {#if calcData.digestion.levelBonus > 0}
                   <div class="subitem-row">
                     <span class="subitem-name">+ Halon Level-Up Bonus (Lv {activeLvl}):</span>
                     <span class="subitem-calc">+(Level - 1) × 1.0 bio/h</span>
-                    <span class="subitem-value">+{calcData.digestion.levelBonus} bio/h</span>
+                    <span class="subitem-value">+{calcData.digestion.levelBonus} {calcData.digestion.unit || "bio/h"}</span>
                   </div>
                 {/if}
               </div>
@@ -516,7 +517,7 @@
                       >{calcData.digestion.unboostedEnhanced || calcData.digestion.digEnhanced} × (30%
                       × {calcData.digestion.massLvl})</span
                     >
-                    <span class="subitem-value">+{calcData.digestion.massVal} bio/h</span>
+                    <span class="subitem-value">+{calcData.digestion.massVal} {calcData.digestion.unit || "bio/h"}</span>
                   </div>
                 {/if}
                 {#if calcData.digestion.passiveLvl > 0}
@@ -528,7 +529,7 @@
                       >{calcData.digestion.unboostedEnhanced || calcData.digestion.digEnhanced} × (10%
                       × {calcData.digestion.passiveLvl})</span
                     >
-                    <span class="subitem-value">+{calcData.digestion.passiveVal} bio/h</span>
+                    <span class="subitem-value">+{calcData.digestion.passiveVal} {calcData.digestion.unit || "bio/h"}</span>
                   </div>
                 {/if}
               </div>
@@ -555,7 +556,7 @@
                     {#if calcData.digestion.levelBonus > 0}
                       + {calcData.digestion.levelBonus} (Level Bonus){/if}
                   </span>
-                  <span class="subitem-value">{calcData.digestion.baseSum} bio/h</span>
+                  <span class="subitem-value">{calcData.digestion.baseSum} {calcData.digestion.unit || "bio/h"}</span>
                 </div>
               </div>
             </div>
@@ -584,7 +585,7 @@
                       {calcData.digestion.baseSum} (Main Body) × 20%
                     {/if}
                   </span>
-                  <span class="subitem-value">+{calcData.digestion.cloneVal} bio/h</span>
+                  <span class="subitem-value">+{calcData.digestion.cloneVal} {calcData.digestion.unit || "bio/h"}</span>
                 </div>
               </div>
             </div>
@@ -603,7 +604,7 @@
                   <span class="subitem-calc"
                     >{calcData.digestion.baseSum} (Subtotal) + {calcData.digestion.cloneVal} (Clones)</span
                   >
-                  <span class="subitem-value">{calcData.digestion.neutralSum} bio/h</span>
+                  <span class="subitem-value">{calcData.digestion.neutralSum} {calcData.digestion.unit || "bio/h"}</span>
                 </div>
               </div>
             </div>
@@ -625,7 +626,7 @@
                     >{calcData.digestion.baseSum} (Main Body) × (20% × {calcData.digestion
                       .hemoLvl})</span
                   >
-                  <span class="subitem-value">+{calcData.digestion.hemoVal} bio/h</span>
+                  <span class="subitem-value">+{calcData.digestion.hemoVal} {calcData.digestion.unit || "bio/h"}</span>
                 </div>
               </div>
             </div>
@@ -646,7 +647,7 @@
                   {#if calcData.digestion.cloneLvl > 0}
                     + {calcData.digestion.cloneOutput} (Clones){/if}
                 </span>
-                <span class="subitem-value final-value">{calcData.digestion.final} bio/h</span>
+                <span class="subitem-value final-value">{calcData.digestion.final} {calcData.digestion.unit || "bio/h"}</span>
               </div>
             </div>
           </div>
