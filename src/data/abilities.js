@@ -320,7 +320,7 @@ export const characterData = {
           name: "Natural Magic Core Harmonizer",
           level: 1,
           description:
-            "The harmonizer evolves after synchronizing body data from an extracted evolution, helping stabilize Halon's Level 11 qualitative evolution."
+            "A natural organ that synchronizes control over the magic core’s Mana with the body’s motor needs is more efficient than an artificial one. This synchronization reduces the delay between thought and the execution of magic, increasing the efficiency and control of Mana usage at each level."
         }
       ]
     },
