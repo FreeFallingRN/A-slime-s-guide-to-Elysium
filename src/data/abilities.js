@@ -410,7 +410,7 @@ export const characterData = {
       value: 0.0,
       chapter: 104,
       description:
-        "The vital core undergoes a qualitative transmutation, becoming a Natural Energy engine. Emitting constant pulses that synchronize the cellular structure with the vital energy of nature, forcing the opening of Natural Energy Pathways through biomass to absorb, balance, and circulate the raw essence of the world through the organism."
+        "The vital core undergoes a qualitative transmutation, becoming a Natural Energy engine. Emitting constant pulses that synchronize the cellular structure with the vital energy of nature, forcing the opening of Natural Energy Pathways through biomass to absorb, balance, and circulate the raw essence of the world through the organism.",
     },
     {
       id: "weaver_mother",
@@ -419,9 +419,7 @@ export const characterData = {
       value: 0.0,
       chapter: 118,
       description:
-        "Allows the creation of biological threads fused with Mana. The filaments are extremely resistant and adhesive, capable of immobilizing targets and passively draining the magical energy of any living being in direct contact with the web.
-
-In addition to immobilizing and draining energy, the Mana-infused threads act as bidirectional conductors. This evolution allows for the direct injection of Mana and refined Biomass into the system of any being entangled by the web or in symbiotic contact with the user."
+        "Allows the creation of biological threads fused with Mana. The filaments are extremely resistant and adhesive, capable of immobilizing targets and passively draining the magical energy of any living being in direct contact with the web. In addition to immobilizing and draining energy, the Mana-infused threads act as bidirectional conductors. This evolution allows for the direct injection of Mana and refined Biomass into the system of any being entangled by the web or in symbiotic contact with the user."
     },
     {
       id: "sharpened_instinct",
@@ -430,7 +428,7 @@ In addition to immobilizing and draining energy, the Mana-infused threads act as
       value: 0.05,
       chapter: 137,
       description:
-        "Assimilates elite feline predator reflexes, increasing reaction speed through sharper synaptic response."
+        "The organism assimilates the synaptic patterns and nervous reflexes of an elite feline predator, increasing reaction speed by 5% per level."
     },
     {
       id: "explosive_steps",
@@ -439,7 +437,7 @@ In addition to immobilizing and draining energy, the Mana-infused threads act as
       value: 0.0,
       chapter: 151,
       description:
-        "Channels mana through temporary limb structures to release kinetic force as explosive movement or impact."
+        "By channeling Mana through the ligaments and tendons of the leg, it accumulates great kinetic force which, when released, results in a powerful explosion at the point of impact."
     },
     {
       id: "vacuum_detonation",
@@ -448,7 +446,16 @@ In addition to immobilizing and draining energy, the Mana-infused threads act as
       value: 0.0,
       chapter: 156,
       description:
-        "Compresses mana at the body's extremities to manipulate atmospheric pressure, pulling nearby targets into a sudden kinetic detonation."
+        "Allows for the extreme compression of Mana at the extremities of the body to manipulate atmospheric pressure through high-frequency physical movements. By striking the air or the ground with explosive force, the user is able to collapse ambient pressure, creating a sudden vacuum that pulls everything around it, resulting in a kinetic detonation."
+    },
+    {
+      id: "holy_light",
+      name: "Holy Light",
+      target: "none",
+      value: 0.0,
+      chapter: 173,
+      description:
+        "Consumes energy to produce Holy Light capable of healing wounds and harming Void Creatures."
     },
     {
       id: "sacred_light_core",
@@ -458,7 +465,8 @@ In addition to immobilizing and draining energy, the Mana-infused threads act as
       value: 0.0,
       chapter: 173,
       description:
-        "A holy-light core evolution created when light frequency integrates with Halon's Natural Energy Core."
+        "Emitting constant pulses that synchronize cellular structure with the energy of nature’s Sacred Light.",
+      absorbs: ["natural_energy_core", "holy_light"]
     },
     {
       id: "uncontrolled_natural_injection",
@@ -467,7 +475,7 @@ In addition to immobilizing and draining energy, the Mana-infused threads act as
       value: 0.0,
       chapter: 203,
       description:
-        "Injects an extreme burst of Natural Energy into a specific point, destabilizing the target's internal energy; targets with poor control risk petrification."
+        "Allows for the extreme injection of Natural Energy into a specific point, causing an energy imbalance in the target’s body. If the target’s control is low, there is a high possibility of turning to stone."
     },
     {
       id: "colossus_charge",
@@ -476,7 +484,7 @@ In addition to immobilizing and draining energy, the Mana-infused threads act as
       value: 0.0,
       chapter: 235,
       description:
-        "Temporarily accumulates mana and biomass inside Halon's structure to increase inertial mass, making rolling or charging impacts heavier and denser."
+        "Accumulate Mana and Biomass within your internal structure to drastically increase your inertial mass for a short period. When rolling or charging at an enemy, the impact becomes more powerful and dense."
     },
     {
       id: "claw_projection",
@@ -485,7 +493,7 @@ In addition to immobilizing and draining energy, the Mana-infused threads act as
       value: 0.0,
       chapter: 258,
       description:
-        "Consumes energy to project claws from Halon's body, with claw durability scaling by the ability's level."
+        "Allows the user to consume energy to project claws onto their body, with the claws' durability being proportional to the skill's level."
     },
     {
       id: "synergy_link",
@@ -494,7 +502,7 @@ In addition to immobilizing and draining energy, the Mana-infused threads act as
       value: 0.0,
       chapter: 258,
       description:
-        "Links compatible allies so Halon can lend his evolutions temporarily or borrow an ally's ability at a reduced effect."
+        "Forms a synergy link between two targets, sharing one's ability with the other with a slightly reduced effect."
     },
     {
       id: "racial_command",
@@ -503,7 +511,7 @@ In addition to immobilizing and draining energy, the Mana-infused threads act as
       value: 0.0,
       chapter: 258,
       description:
-        "Commands creatures of the same race regardless of large differences in strength or intellect."
+        "Allows the user to command creatures of the same race, regardless of significant differences in strength or intelligence."
     },
     {
       id: "mark_of_rupture",
@@ -521,7 +529,7 @@ In addition to immobilizing and draining energy, the Mana-infused threads act as
       target: "none",
       value: 0.0,
       chapter: 278,
-      description: "Projects killing intent as hostile pressure that can be felt by others."
+      description: "The user is able to project Mana saturated with their predatory will. The target experiences an amplification of fear and atmospheric pressure based on the intensity of the user’s death wish against them."
     }
   ]
 };
@@ -757,6 +765,7 @@ export const abilityProgression = {
     { chapter: 157, level: 2 },
     { chapter: 158, level: 4 }
   ],
+  holy_light: [{ chapter: 173, level: 1 }],
   sacred_light_core: [{ chapter: 173, level: 1 }],
   uncontrolled_natural_injection: [{ chapter: 203, level: 1 }],
   colossus_charge: [{ chapter: 235, level: 1 }],

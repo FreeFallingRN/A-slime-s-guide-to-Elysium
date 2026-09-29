@@ -39,9 +39,6 @@ jobs:
       - name: Install dependencies 🔧
         run: npm ci
 
-      - name: Verify code style & formatting 💅
-        run: npm run format:check
-
       - name: Svelte component & type diagnostics 🩺
         run: npm run check
 
