@@ -52,9 +52,14 @@
   // Single Skill Calculator State
   let selectedSkillId = "magic_core";
   let levelsToAdd = 1;
+  let skillDropdownOpen = false;
+  let skillSearchTerm = "";
+  let skillDropdownEl;
 
   // Available skills unlocked at or before current chapter
   $: availableSkills = getAvailableBiomassSkills(chapter);
+  $: selectedSkill = availableSkills.find((skill) => skill.id === selectedSkillId);
+  $: filteredAvailableSkills = filterSkills(availableSkills, skillSearchTerm);
 
   // Fallback to first available skill if selected becomes invalid
   $: {
@@ -105,20 +110,10 @@
 
   // Digestion Time Estimations
   $: singleTimeEstimate = singleResult
-    ? estimateDigestionTime(
-        singleResult.total,
-        neutralRate,
-        passiveRate,
-        singleResult.isRefined
-      )
+    ? estimateDigestionTime(singleResult.total, neutralRate, passiveRate, singleResult.isRefined)
     : null;
   $: singleCombatTimeEstimate = singleResult
-    ? estimateDigestionTime(
-        singleResult.total,
-        combatRate,
-        0,
-        singleResult.isRefined
-      )
+    ? estimateDigestionTime(singleResult.total, combatRate, 0, singleResult.isRefined)
     : null;
 
   // =========================================================================
@@ -128,11 +123,16 @@
   let plannedAbilities = [];
   let plannerSelectedSkillId = "";
   let plannerInitialLevels = 1;
+  let plannerDropdownOpen = false;
+  let plannerSearchTerm = "";
+  let plannerDropdownEl;
 
   // Available skills not yet in the planner
   $: unaddedSkills = availableSkills.filter(
     (skill) => !plannedAbilities.some((p) => p.id === skill.id)
   );
+  $: selectedPlannerSkill = unaddedSkills.find((skill) => skill.id === plannerSelectedSkillId);
+  $: filteredUnaddedSkills = filterSkills(unaddedSkills, plannerSearchTerm);
 
   // Keep plannerSelectedSkillId valid
   $: {
@@ -179,9 +179,62 @@
     plannedAbilities = [];
   }
 
+  function filterSkills(skills, searchTerm) {
+    const term = searchTerm.trim().toLowerCase();
+    if (!term) return skills;
+    return skills.filter((skill) => {
+      const name = skill.name?.toLowerCase() || "";
+      const id = skill.id?.replaceAll("_", " ").toLowerCase() || "";
+      const target = skill.ability?.target?.toLowerCase() || "";
+      return name.includes(term) || id.includes(term) || target.includes(term);
+    });
+  }
+
+  function closeSkillDropdown(event) {
+    if (!skillDropdownEl?.contains(event.relatedTarget)) {
+      skillDropdownOpen = false;
+      skillSearchTerm = "";
+    }
+  }
+
+  function closePlannerDropdown(event) {
+    if (!plannerDropdownEl?.contains(event.relatedTarget)) {
+      plannerDropdownOpen = false;
+      plannerSearchTerm = "";
+    }
+  }
+
+  function selectSkill(skillId) {
+    selectedSkillId = skillId;
+    skillDropdownOpen = false;
+    skillSearchTerm = "";
+  }
+
+  function selectPlannerSkill(skillId) {
+    plannerSelectedSkillId = skillId;
+    plannerDropdownOpen = false;
+    plannerSearchTerm = "";
+  }
+
+  function handleDropdownKeydown(event, dropdown) {
+    if (event.key === "Escape") {
+      if (dropdown === "single") {
+        skillDropdownOpen = false;
+        skillSearchTerm = "";
+      } else {
+        plannerDropdownOpen = false;
+        plannerSearchTerm = "";
+      }
+    }
+  }
+
   // Calculate costs for each planned ability from current level to requested level
   $: plannedItemsCalculated = plannedAbilities.map((item) => {
-    const skill = availableSkills.find((s) => s.id === item.id) || { id: item.id, name: item.id, chapter: 1 };
+    const skill = availableSkills.find((s) => s.id === item.id) || {
+      id: item.id,
+      name: item.id,
+      chapter: 1
+    };
     const start = Math.max(1, getAbilityLevelAtChapter(item.id, chapter) || 1);
     const target = start + Math.max(1, item.levelsToAdd);
     let calc = null;
@@ -253,7 +306,8 @@
       <div>
         <h3 class="hologram-glow-text">BIOMASS UPGRADE CALCULATOR</h3>
         <span class="header-subtext">
-          CHAPTER {chapter} · HALON LV {chapterDetails.halonLvl || 1} · {neutralRate.toLocaleString()} {neutralCalc?.digestion?.unit || 'BM/h'} DIGESTION
+          CHAPTER {chapter} · HALON LV {chapterDetails.halonLvl || 1} · {neutralRate.toLocaleString()}
+          {neutralCalc?.digestion?.unit || "BM/h"} DIGESTION
         </span>
       </div>
     </div>
@@ -296,16 +350,78 @@
             <!-- Ability Selection -->
             <div class="config-row">
               <div class="label-with-meta">
-                <label for="biomass-skill">CHOOSE ABILITY</label>
-                <span class="skill-count-meta">{availableSkills.length} Unlocked at Ch. {chapter}</span>
+                <span id="biomass-skill-label" class="field-label">CHOOSE ABILITY</span>
+                <span class="skill-count-meta"
+                  >{availableSkills.length} Unlocked at Ch. {chapter}</span
+                >
               </div>
-              <select id="biomass-skill" bind:value={selectedSkillId}>
-                {#each availableSkills as skill}
-                  <option value={skill.id}>
-                    {skill.name} (Unlocked Ch. {skill.chapter})
-                  </option>
-                {/each}
-              </select>
+              <div
+                class="custom-skill-select"
+                role="presentation"
+                bind:this={skillDropdownEl}
+                on:focusout={closeSkillDropdown}
+                on:keydown={(event) => handleDropdownKeydown(event, "single")}
+              >
+                <button
+                  id="biomass-skill"
+                  class="skill-select-trigger"
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded={skillDropdownOpen}
+                  aria-labelledby="biomass-skill-label selected-biomass-skill"
+                  on:click={() => (skillDropdownOpen = !skillDropdownOpen)}
+                  disabled={availableSkills.length === 0}
+                >
+                  <span id="selected-biomass-skill" class="skill-trigger-main">
+                    {selectedSkill?.name || "No unlocked abilities"}
+                  </span>
+                  <span class="skill-trigger-meta">
+                    {selectedSkill ? `Unlocked Ch. ${selectedSkill.chapter}` : "Advance chapter"}
+                  </span>
+                </button>
+
+                {#if skillDropdownOpen}
+                  <div class="skill-select-popover">
+                    <input
+                      class="skill-search-input"
+                      type="search"
+                      placeholder="Search unlocked abilities..."
+                      bind:value={skillSearchTerm}
+                      aria-label="Search unlocked biomass abilities"
+                    />
+                    <div
+                      class="skill-option-list"
+                      role="listbox"
+                      aria-labelledby="biomass-skill-label"
+                    >
+                      {#if filteredAvailableSkills.length === 0}
+                        <div class="skill-empty-option">
+                          No unlocked ability matches this search.
+                        </div>
+                      {:else}
+                        {#each filteredAvailableSkills as skill}
+                          <button
+                            class:selected={skill.id === selectedSkillId}
+                            class="skill-option"
+                            type="button"
+                            role="option"
+                            aria-selected={skill.id === selectedSkillId}
+                            on:click={() => selectSkill(skill.id)}
+                          >
+                            <span class="skill-option-name">{skill.name}</span>
+                            <span class="skill-option-meta">
+                              Ch. {skill.chapter}
+                              {#if skill.ability?.target && skill.ability.target !== "none"}
+                                · {skill.ability.target}
+                              {/if}
+                            </span>
+                          </button>
+                        {/each}
+                      {/if}
+                    </div>
+                  </div>
+                {/if}
+              </div>
             </div>
 
             <!-- Current Level Box (Locked Starting Point) -->
@@ -333,7 +449,8 @@
                     id="levels-add-input"
                     type="number"
                     bind:value={levelsToAdd}
-                    on:input={(e) => setLevelsToAdd(Number.parseInt(e.currentTarget.value, 10) || 1)}
+                    on:input={(e) =>
+                      setLevelsToAdd(Number.parseInt(e.currentTarget.value, 10) || 1)}
                     min="1"
                     max={Math.max(1, 100 - currentSkillLevel)}
                   />
@@ -352,19 +469,34 @@
 
               <!-- Quick Level Presets -->
               <div class="quick-preset-buttons">
-                <button class="preset-btn {levelsToAdd === 1 ? 'active' : ''}" on:click={() => setLevelsToAdd(1)}>
+                <button
+                  class="preset-btn {levelsToAdd === 1 ? 'active' : ''}"
+                  on:click={() => setLevelsToAdd(1)}
+                >
                   +1 Level
                 </button>
-                <button class="preset-btn {levelsToAdd === 2 ? 'active' : ''}" on:click={() => setLevelsToAdd(2)}>
+                <button
+                  class="preset-btn {levelsToAdd === 2 ? 'active' : ''}"
+                  on:click={() => setLevelsToAdd(2)}
+                >
                   +2 Levels
                 </button>
-                <button class="preset-btn {levelsToAdd === 5 ? 'active' : ''}" on:click={() => setLevelsToAdd(5)}>
+                <button
+                  class="preset-btn {levelsToAdd === 5 ? 'active' : ''}"
+                  on:click={() => setLevelsToAdd(5)}
+                >
                   +5 Levels
                 </button>
-                <button class="preset-btn {levelsToAdd === 10 ? 'active' : ''}" on:click={() => setLevelsToAdd(10)}>
+                <button
+                  class="preset-btn {levelsToAdd === 10 ? 'active' : ''}"
+                  on:click={() => setLevelsToAdd(10)}
+                >
                   +10 Levels
                 </button>
-                <button class="preset-btn {levelsToAdd === 20 ? 'active' : ''}" on:click={() => setLevelsToAdd(20)}>
+                <button
+                  class="preset-btn {levelsToAdd === 20 ? 'active' : ''}"
+                  on:click={() => setLevelsToAdd(20)}
+                >
                   +20 Levels
                 </button>
               </div>
@@ -386,14 +518,20 @@
                 <div class="skill-name-row">
                   <span class="result-skill-name">{singleResult.skill.name}</span>
                   {#if singleResult.skill.ability?.target}
-                    <span class="stat-target-badge {getTargetStatBadgeClass(singleResult.skill.ability.target)}">
+                    <span
+                      class="stat-target-badge {getTargetStatBadgeClass(
+                        singleResult.skill.ability.target
+                      )}"
+                    >
                       {singleResult.skill.ability.target.toUpperCase()}
                     </span>
                   {/if}
                 </div>
                 <span class="result-level-range">
                   Level {singleResult.startLevel} &rarr; Level {singleResult.targetLevel}
-                  <span class="delta-tag">+{levelsToAdd} {levelsToAdd === 1 ? 'Level' : 'Levels'}</span>
+                  <span class="delta-tag"
+                    >+{levelsToAdd} {levelsToAdd === 1 ? "Level" : "Levels"}</span
+                  >
                 </span>
               </div>
 
@@ -420,7 +558,9 @@
                       <span class="metric-label">ACTIVE DIGESTION</span>
                     </div>
                     <span class="metric-value">{singleTimeEstimate.activeFormatted}</span>
-                    <span class="metric-sub">{neutralRate.toLocaleString()} {neutralCalc?.digestion?.unit || "BM/h"}</span>
+                    <span class="metric-sub"
+                      >{neutralRate.toLocaleString()} {neutralCalc?.digestion?.unit || "BM/h"}</span
+                    >
                   </div>
 
                   <div class="time-metric">
@@ -428,8 +568,12 @@
                       <Swords size={13} class="holo-fire" />
                       <span class="metric-label">COMBAT BURST</span>
                     </div>
-                    <span class="metric-value">{singleCombatTimeEstimate?.activeFormatted || "N/A"}</span>
-                    <span class="metric-sub">{combatRate.toLocaleString()} {combatCalc?.digestion?.unit || "BM/h"}</span>
+                    <span class="metric-value"
+                      >{singleCombatTimeEstimate?.activeFormatted || "N/A"}</span
+                    >
+                    <span class="metric-sub"
+                      >{combatRate.toLocaleString()} {combatCalc?.digestion?.unit || "BM/h"}</span
+                    >
                   </div>
 
                   <div class="time-metric">
@@ -439,7 +583,9 @@
                     </div>
                     <span class="metric-value">{singleTimeEstimate.passiveFormatted}</span>
                     <span class="metric-sub">
-                      {passiveRate > 0 ? `${passiveRate.toLocaleString()} ${neutralCalc?.digestion?.unit || "BM/h"}` : "Not unlocked"}
+                      {passiveRate > 0
+                        ? `${passiveRate.toLocaleString()} ${neutralCalc?.digestion?.unit || "BM/h"}`
+                        : "Not unlocked"}
                     </span>
                   </div>
                 </div>
@@ -465,7 +611,8 @@
 
                     <div class="segment-right">
                       <span class="segment-cost">
-                        {segment.cost.toLocaleString()} {segment.unit}
+                        {segment.cost.toLocaleString()}
+                        {segment.unit}
                       </span>
                     </div>
                   </div>
@@ -476,9 +623,9 @@
         {/if}
       </div>
 
-    <!-- ========================================================================= -->
-    <!-- TAB 2: MULTI-ABILITY UPGRADE PLANNER (Pick & Add Abilities)               -->
-    <!-- ========================================================================= -->
+      <!-- ========================================================================= -->
+      <!-- TAB 2: MULTI-ABILITY UPGRADE PLANNER (Pick & Add Abilities)               -->
+      <!-- ========================================================================= -->
     {:else if activeTab === "planner"}
       <div class="planner-view">
         <!-- Add Ability to Plan Bar -->
@@ -490,23 +637,77 @@
 
           <div class="planner-add-controls">
             <div class="planner-select-box">
-              <label for="planner-ability-select">SELECT ABILITY</label>
-              <select
-                id="planner-ability-select"
-                bind:value={plannerSelectedSkillId}
-                disabled={unaddedSkills.length === 0}
+              <span id="planner-ability-select-label" class="field-label">SELECT ABILITY</span>
+              <div
+                class="custom-skill-select"
+                role="presentation"
+                bind:this={plannerDropdownEl}
+                on:focusout={closePlannerDropdown}
+                on:keydown={(event) => handleDropdownKeydown(event, "planner")}
               >
-                {#if unaddedSkills.length === 0}
-                  <option value="">All available abilities added to plan</option>
-                {:else}
-                  {#each unaddedSkills as skill}
-                    {@const curLvl = Math.max(1, getAbilityLevelAtChapter(skill.id, chapter) || 1)}
-                    <option value={skill.id}>
-                      {skill.name} (Current: Lv {curLvl})
-                    </option>
-                  {/each}
+                <button
+                  id="planner-ability-select"
+                  class="skill-select-trigger"
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded={plannerDropdownOpen}
+                  aria-labelledby="planner-ability-select-label selected-planner-skill"
+                  on:click={() => (plannerDropdownOpen = !plannerDropdownOpen)}
+                  disabled={unaddedSkills.length === 0}
+                >
+                  <span id="selected-planner-skill" class="skill-trigger-main">
+                    {selectedPlannerSkill?.name || "All available abilities added"}
+                  </span>
+                  <span class="skill-trigger-meta">
+                    {selectedPlannerSkill
+                      ? `Current Lv ${Math.max(1, getAbilityLevelAtChapter(selectedPlannerSkill.id, chapter) || 1)}`
+                      : "No remaining unlocked abilities"}
+                  </span>
+                </button>
+
+                {#if plannerDropdownOpen}
+                  <div class="skill-select-popover">
+                    <input
+                      class="skill-search-input"
+                      type="search"
+                      placeholder="Search abilities to add..."
+                      bind:value={plannerSearchTerm}
+                      aria-label="Search abilities to add to the biomass plan"
+                    />
+                    <div
+                      class="skill-option-list"
+                      role="listbox"
+                      aria-labelledby="planner-ability-select-label"
+                    >
+                      {#if filteredUnaddedSkills.length === 0}
+                        <div class="skill-empty-option">
+                          No remaining unlocked ability matches this search.
+                        </div>
+                      {:else}
+                        {#each filteredUnaddedSkills as skill}
+                          {@const curLvl = Math.max(
+                            1,
+                            getAbilityLevelAtChapter(skill.id, chapter) || 1
+                          )}
+                          <button
+                            class:selected={skill.id === plannerSelectedSkillId}
+                            class="skill-option"
+                            type="button"
+                            role="option"
+                            aria-selected={skill.id === plannerSelectedSkillId}
+                            on:click={() => selectPlannerSkill(skill.id)}
+                          >
+                            <span class="skill-option-name">{skill.name}</span>
+                            <span class="skill-option-meta"
+                              >Current Lv {curLvl} · Ch. {skill.chapter}</span
+                            >
+                          </button>
+                        {/each}
+                      {/if}
+                    </div>
+                  </div>
                 {/if}
-              </select>
+              </div>
             </div>
 
             <div class="planner-levels-box">
@@ -565,7 +766,8 @@
               <ListPlus size={32} class="empty-icon" />
               <span class="empty-title">No Abilities Added Yet</span>
               <p class="empty-subtext">
-                Select an ability from the dropdown above and click <strong>"Add to Plan"</strong> to calculate multi-ability upgrade costs.
+                Select an ability from the dropdown above and click <strong>"Add to Plan"</strong> to
+                calculate multi-ability upgrade costs.
               </p>
             </div>
           {:else}
@@ -577,13 +779,18 @@
                     <div class="planned-item-title-row">
                       <span class="planned-skill-name">{item.skill.name}</span>
                       {#if item.skill.ability?.target}
-                        <span class="stat-target-badge {getTargetStatBadgeClass(item.skill.ability.target)}">
+                        <span
+                          class="stat-target-badge {getTargetStatBadgeClass(
+                            item.skill.ability.target
+                          )}"
+                        >
                           {item.skill.ability.target.toUpperCase()}
                         </span>
                       {/if}
                     </div>
                     <span class="planned-range-text">
-                      Starting Lv <strong>{item.startLevel}</strong> &rarr; Target Lv <strong>{item.targetLevel}</strong>
+                      Starting Lv <strong>{item.startLevel}</strong> &rarr; Target Lv
+                      <strong>{item.targetLevel}</strong>
                     </span>
                   </div>
 
@@ -620,7 +827,11 @@
                           {item.calc ? item.calc.total.toLocaleString() : "0"}
                         </span>
                         <span class="planned-cost-unit">
-                          {item.calc ? item.calc.unit : (portfolioResult.isRefined ? "Refined BM" : "BM")}
+                          {item.calc
+                            ? item.calc.unit
+                            : portfolioResult.isRefined
+                              ? "Refined BM"
+                              : "BM"}
                         </span>
                       </div>
                     </div>
@@ -657,7 +868,9 @@
 
               <div class="planner-metric-box">
                 <span class="metric-box-label">TOTAL LEVELS ADDED</span>
-                <span class="metric-box-val">+{plannedItemsCalculated.reduce((sum, p) => sum + p.levelsAdded, 0)} Levels</span>
+                <span class="metric-box-val"
+                  >+{plannedItemsCalculated.reduce((sum, p) => sum + p.levelsAdded, 0)} Levels</span
+                >
               </div>
 
               <div class="planner-metric-box">
@@ -670,7 +883,8 @@
               <div class="planner-metric-box highlight">
                 <span class="metric-box-label">TOTAL BIOMASS REQUIRED</span>
                 <span class="metric-box-val neon-cyan">
-                  {portfolioResult.total.toLocaleString()} {portfolioResult.unit}
+                  {portfolioResult.total.toLocaleString()}
+                  {portfolioResult.unit}
                 </span>
               </div>
             </div>
@@ -678,8 +892,13 @@
             <div class="portfolio-time-strip">
               <Clock size={15} class="holo-orange" />
               <span>
-                TOTAL ESTIMATED ACCUMULATION TIME: <strong>{portfolioTimeEstimate.activeFormatted}</strong> Active
-                ({neutralRate.toLocaleString()} {neutralCalc?.digestion?.unit || "BM/h"}) · <strong>{portfolioCombatTimeEstimate.activeFormatted}</strong> Combat
+                TOTAL ESTIMATED ACCUMULATION TIME: <strong
+                  >{portfolioTimeEstimate.activeFormatted}</strong
+                >
+                Active ({neutralRate.toLocaleString()}
+                {neutralCalc?.digestion?.unit || "BM/h"}) ·
+                <strong>{portfolioCombatTimeEstimate.activeFormatted}</strong>
+                Combat
                 {#if passiveRate > 0}
                   · <strong>{portfolioTimeEstimate.passiveFormatted}</strong> Passive Rest
                 {/if}
@@ -697,9 +916,11 @@
         <span>ABOUT BIOMASS CONDENSATION & LEVEL 11 CHARACTER REFINEMENT</span>
       </div>
       <p class="refinement-desc">
-        When Halon reaches Character Level 11 (Chapter 201+ / Mythic Slime evolution), all stored biomass and digestion throughput condense at a
-        <strong>1,000 Standard BM &rarr; 1 Refined BM</strong> ratio.
-        Consequently, all upgrade costs, digestion throughput, and biomass balances in Chapter 201+ are scaled and paid in Refined Units, with zero mixed-unit splits.
+        When Halon reaches Character Level 11 (Chapter 201+ / Mythic Slime evolution), all stored
+        biomass and digestion throughput condense at a
+        <strong>1,000 Standard BM &rarr; 1 Refined BM</strong> ratio. Consequently, all upgrade costs,
+        digestion throughput, and biomass balances in Chapter 201+ are scaled and paid in Refined Units,
+        with zero mixed-unit splits.
       </p>
     </div>
   </div>
@@ -873,9 +1094,9 @@
     align-items: center;
   }
 
-  .config-row label,
+  .config-row .field-label,
   .levels-to-add-card label,
-  .planner-select-box label,
+  .planner-select-box .field-label,
   .planner-levels-box label {
     font-size: 0.68rem;
     font-weight: 800;
@@ -889,24 +1110,150 @@
     font-weight: 700;
   }
 
-  .config-row select,
-  .planner-select-box select {
+  .custom-skill-select {
+    position: relative;
+  }
+
+  .skill-select-trigger,
+  .skill-search-input {
     background: #090d16;
     border: 1px solid var(--color-holo-border);
     color: #fff;
-    padding: 10px 12px;
     border-radius: 6px;
     outline: none;
     font-family: var(--font-sans);
+  }
+
+  .skill-select-trigger {
+    width: 100%;
+    min-height: 46px;
+    padding: 8px 12px;
     font-weight: 700;
     font-size: 0.85rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    text-align: left;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s,
+      background 0.2s;
   }
 
-  .config-row select:focus,
-  .planner-select-box select:focus {
+  .skill-select-trigger:hover:not(:disabled),
+  .skill-select-trigger:focus {
     border-color: var(--color-holo-primary);
     box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+  }
+
+  .skill-select-trigger:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
+  .skill-trigger-main {
+    color: #fff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .skill-trigger-meta {
+    color: var(--color-holo-primary);
+    font-size: 0.66rem;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .skill-select-popover {
+    position: absolute;
+    z-index: 40;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: rgba(7, 12, 20, 0.98);
+    border: 1px solid var(--color-holo-border);
+    border-radius: 8px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    padding: 8px;
+  }
+
+  .skill-search-input {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .skill-search-input:focus {
+    border-color: var(--color-holo-primary);
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.25);
+  }
+
+  .skill-option-list {
+    max-height: 260px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .skill-option {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+    color: #cbd5e1;
+    border-radius: 5px;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    text-align: left;
+    transition:
+      border-color 0.18s,
+      background 0.18s,
+      color 0.18s;
+  }
+
+  .skill-option:hover,
+  .skill-option:focus,
+  .skill-option.selected {
+    background: rgba(0, 240, 255, 0.1);
+    border-color: rgba(0, 240, 255, 0.35);
+    color: #fff;
+  }
+
+  .skill-option.selected .skill-option-name {
+    color: var(--color-holo-primary);
+  }
+
+  .skill-option-name {
+    font-size: 0.8rem;
+    font-weight: 800;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .skill-option-meta {
+    color: var(--color-holo-muted);
+    font-size: 0.64rem;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .skill-empty-option {
+    padding: 14px 10px;
+    color: var(--color-holo-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
   }
 
   /* Current Level Card */

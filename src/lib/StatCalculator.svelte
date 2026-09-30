@@ -236,7 +236,9 @@
           </div>
           {#if stat === "digestion" && calcData.digestion && calcData.digestion.cloneLvl > 0}
             <div class="clone-split-subrow">
-              <span class="subrow-pill">Body: {calcData.digestion.baseSum} {calcData.digestion.unit || "bio/h"}</span>
+              <span class="subrow-pill"
+                >Body: {calcData.digestion.baseSum} {calcData.digestion.unit || "bio/h"}</span
+              >
               <span class="subrow-pill clone-pill"
                 >Clone: +{calcData.digestion.cloneOutput} {calcData.digestion.unit || "bio/h"}</span
               >
@@ -465,7 +467,9 @@
               <div class="subitem-row">
                 <span class="subitem-name">Base Absorption Capacity:</span>
                 <span class="subitem-calc">Base Stat</span>
-                <span class="subitem-value">{calcData.digestion.base} {calcData.digestion.unit || "bio/h"}</span>
+                <span class="subitem-value"
+                  >{calcData.digestion.base} {calcData.digestion.unit || "bio/h"}</span
+                >
               </div>
             </div>
           </div>
@@ -486,14 +490,17 @@
                     >{calcData.digestion.base} × (1 + 10% ^ {calcData.digestion.efficientLvl})</span
                   >
                   <span class="subitem-value"
-                    >{calcData.digestion.unboostedEnhanced || calcData.digestion.digEnhanced} {calcData.digestion.unit || "bio/h"}</span
+                    >{calcData.digestion.unboostedEnhanced || calcData.digestion.digEnhanced}
+                    {calcData.digestion.unit || "bio/h"}</span
                   >
                 </div>
                 {#if calcData.digestion.levelBonus > 0}
                   <div class="subitem-row">
                     <span class="subitem-name">+ Halon Level-Up Bonus (Lv {activeLvl}):</span>
                     <span class="subitem-calc">+(Level - 1) × 1.0 bio/h</span>
-                    <span class="subitem-value">+{calcData.digestion.levelBonus} {calcData.digestion.unit || "bio/h"}</span>
+                    <span class="subitem-value"
+                      >+{calcData.digestion.levelBonus} {calcData.digestion.unit || "bio/h"}</span
+                    >
                   </div>
                 {/if}
               </div>
@@ -517,7 +524,9 @@
                       >{calcData.digestion.unboostedEnhanced || calcData.digestion.digEnhanced} × (30%
                       × {calcData.digestion.massLvl})</span
                     >
-                    <span class="subitem-value">+{calcData.digestion.massVal} {calcData.digestion.unit || "bio/h"}</span>
+                    <span class="subitem-value"
+                      >+{calcData.digestion.massVal} {calcData.digestion.unit || "bio/h"}</span
+                    >
                   </div>
                 {/if}
                 {#if calcData.digestion.passiveLvl > 0}
@@ -529,7 +538,9 @@
                       >{calcData.digestion.unboostedEnhanced || calcData.digestion.digEnhanced} × (10%
                       × {calcData.digestion.passiveLvl})</span
                     >
-                    <span class="subitem-value">+{calcData.digestion.passiveVal} {calcData.digestion.unit || "bio/h"}</span>
+                    <span class="subitem-value"
+                      >+{calcData.digestion.passiveVal} {calcData.digestion.unit || "bio/h"}</span
+                    >
                   </div>
                 {/if}
               </div>
@@ -556,7 +567,9 @@
                     {#if calcData.digestion.levelBonus > 0}
                       + {calcData.digestion.levelBonus} (Level Bonus){/if}
                   </span>
-                  <span class="subitem-value">{calcData.digestion.baseSum} {calcData.digestion.unit || "bio/h"}</span>
+                  <span class="subitem-value"
+                    >{calcData.digestion.baseSum} {calcData.digestion.unit || "bio/h"}</span
+                  >
                 </div>
               </div>
             </div>
@@ -585,7 +598,9 @@
                       {calcData.digestion.baseSum} (Main Body) × 20%
                     {/if}
                   </span>
-                  <span class="subitem-value">+{calcData.digestion.cloneVal} {calcData.digestion.unit || "bio/h"}</span>
+                  <span class="subitem-value"
+                    >+{calcData.digestion.cloneVal} {calcData.digestion.unit || "bio/h"}</span
+                  >
                 </div>
               </div>
             </div>
@@ -604,7 +619,9 @@
                   <span class="subitem-calc"
                     >{calcData.digestion.baseSum} (Subtotal) + {calcData.digestion.cloneVal} (Clones)</span
                   >
-                  <span class="subitem-value">{calcData.digestion.neutralSum} {calcData.digestion.unit || "bio/h"}</span>
+                  <span class="subitem-value"
+                    >{calcData.digestion.neutralSum} {calcData.digestion.unit || "bio/h"}</span
+                  >
                 </div>
               </div>
             </div>
@@ -626,7 +643,9 @@
                     >{calcData.digestion.baseSum} (Main Body) × (20% × {calcData.digestion
                       .hemoLvl})</span
                   >
-                  <span class="subitem-value">+{calcData.digestion.hemoVal} {calcData.digestion.unit || "bio/h"}</span>
+                  <span class="subitem-value"
+                    >+{calcData.digestion.hemoVal} {calcData.digestion.unit || "bio/h"}</span
+                  >
                 </div>
               </div>
             </div>
@@ -647,7 +666,9 @@
                   {#if calcData.digestion.cloneLvl > 0}
                     + {calcData.digestion.cloneOutput} (Clones){/if}
                 </span>
-                <span class="subitem-value final-value">{calcData.digestion.final} {calcData.digestion.unit || "bio/h"}</span>
+                <span class="subitem-value final-value"
+                  >{calcData.digestion.final} {calcData.digestion.unit || "bio/h"}</span
+                >
               </div>
             </div>
           </div>

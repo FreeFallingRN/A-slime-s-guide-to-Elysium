@@ -304,11 +304,7 @@ export function formatDuration(hours) {
  * @param {number} [params.characterLevel=1]
  * @param {number} [params.chapter=1]
  */
-export function calculatePortfolioCost({
-  upgrades,
-  characterLevel = 1,
-  chapter = 1
-}) {
+export function calculatePortfolioCost({ upgrades, characterLevel = 1, chapter = 1 }) {
   const isRefined = characterLevel >= 11 || chapter >= 201;
   const unit = isRefined ? "Refined BM" : "BM";
   const results = [];

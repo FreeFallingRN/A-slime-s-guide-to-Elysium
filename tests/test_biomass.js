@@ -102,20 +102,23 @@ runTest("known post-Level-11 extracted evolutions use source examples", () => {
   );
 });
 
-runTest("skill upgrades beyond level 11 in early chapters remain in standard BM with no mixed splits", () => {
-  const result = calculateBiomassCost({
-    skillId: "magic_core",
-    startLevel: 8,
-    targetLevel: 13,
-    characterLevel: 5,
-    chapter: 50
-  });
+runTest(
+  "skill upgrades beyond level 11 in early chapters remain in standard BM with no mixed splits",
+  () => {
+    const result = calculateBiomassCost({
+      skillId: "magic_core",
+      startLevel: 8,
+      targetLevel: 13,
+      characterLevel: 5,
+      chapter: 50
+    });
 
-  assert.equal(result.isRefined, false);
-  assert.equal(result.unit, "BM");
-  assert.equal(result.segments.length, 1);
-  assert.equal(result.segments[0].unit, "BM");
-});
+    assert.equal(result.isRefined, false);
+    assert.equal(result.unit, "BM");
+    assert.equal(result.segments.length, 1);
+    assert.equal(result.segments[0].unit, "BM");
+  }
+);
 
 runTest("post-refinement skill upgrades scale by 1,000 into Refined BM", () => {
   const result = calculateBiomassCost({
@@ -194,33 +197,36 @@ runTest("digestion time estimation handles both standard and refined biomass", (
   assert.equal(formatDuration(25.5), "1d 1h");
 });
 
-runTest("multi-skill portfolio planner computes aggregate totals correctly in active chapter unit", () => {
-  const prePortfolio = calculatePortfolioCost({
-    upgrades: [
-      { skillId: "magic_core", startLevel: 1, targetLevel: 2 },
-      { skillId: "viscous_flow", startLevel: 1, targetLevel: 3 }
-    ],
-    characterLevel: 1,
-    chapter: 1
-  });
+runTest(
+  "multi-skill portfolio planner computes aggregate totals correctly in active chapter unit",
+  () => {
+    const prePortfolio = calculatePortfolioCost({
+      upgrades: [
+        { skillId: "magic_core", startLevel: 1, targetLevel: 2 },
+        { skillId: "viscous_flow", startLevel: 1, targetLevel: 3 }
+      ],
+      characterLevel: 1,
+      chapter: 1
+    });
 
-  assert.equal(prePortfolio.unit, "BM");
-  assert.equal(prePortfolio.isRefined, false);
-  assert.equal(prePortfolio.total, 12.13); // 10 (Magic Core) + 1 + 1.13 (Viscous Flow)
+    assert.equal(prePortfolio.unit, "BM");
+    assert.equal(prePortfolio.isRefined, false);
+    assert.equal(prePortfolio.total, 12.13); // 10 (Magic Core) + 1 + 1.13 (Viscous Flow)
 
-  const postPortfolio = calculatePortfolioCost({
-    upgrades: [
-      { skillId: "claw_projection", startLevel: 1, targetLevel: 5 },
-      { skillId: "racial_command", startLevel: 1, targetLevel: 5 }
-    ],
-    characterLevel: 12,
-    chapter: 262
-  });
+    const postPortfolio = calculatePortfolioCost({
+      upgrades: [
+        { skillId: "claw_projection", startLevel: 1, targetLevel: 5 },
+        { skillId: "racial_command", startLevel: 1, targetLevel: 5 }
+      ],
+      characterLevel: 12,
+      chapter: 262
+    });
 
-  assert.equal(postPortfolio.unit, "Refined BM");
-  assert.equal(postPortfolio.isRefined, true);
-  assert.equal(postPortfolio.total, 28.98); // 11.44 + 17.54
-});
+    assert.equal(postPortfolio.unit, "Refined BM");
+    assert.equal(postPortfolio.isRefined, true);
+    assert.equal(postPortfolio.total, 28.98); // 11.44 + 17.54
+  }
+);
 
 if (process.exitCode) {
   console.error("\nTEST SUMMARY (BIOMASS): FAILED");

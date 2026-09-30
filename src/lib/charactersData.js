@@ -115,6 +115,15 @@ export const charactersCompendium = [
         revealLink: true
       },
       {
+        chapter: 278,
+        name: "Lohan Hayes",
+        world: "Sectors",
+        role: "Lower Zone Survivor",
+        age: 18,
+        bio: "After confirming Oscar enabled the attack on his apartment and sold his location, Lohan stops treating Sector 4 as a place he can simply endure. The landlord conflict shows his Elysium-honed power and colder pragmatism crossing fully into the real world: he protects his route to Elysium, secures the means to leave, and accepts that survival in the Sectors may require decisive violence rather than passive endurance.",
+        revealLink: true
+      },
+      {
         chapter: 283,
         name: "Lohan Hayes",
         world: "Sectors",
@@ -139,6 +148,15 @@ export const charactersCompendium = [
         role: "Sector 4 Landlord",
         age: 52,
         bio: "The heavy-set landlord of Lohan's suburban Sector 4 apartment building. Decked in gaudy gold jewelry with a glowing holographic eyepiece over his left eye, he is a rude, money-driven individual who strictly collects rent payments from impoverished Lower Zone tenants.",
+        revealLink: false
+      },
+      {
+        chapter: 278,
+        name: "Oscar V. Malcolm",
+        world: "Sectors",
+        role: "Eliminated Sector 4 Landlord",
+        age: 52,
+        bio: "Oscar is revealed as a more dangerous exploiter than a rent collector: he disables Lohan's apartment protections, hires attackers, and sells Lohan's location to outside interests. His attempt to treat Lohan as disposable prey makes him the final Sector 4 threat Lohan resolves before leaving for the Upper Zone.",
         revealLink: false
       }
     ]
