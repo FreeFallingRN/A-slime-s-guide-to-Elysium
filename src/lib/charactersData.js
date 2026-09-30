@@ -30,13 +30,52 @@ export const charactersCompendium = [
         chapter: 37,
         name: "Halon",
         world: "Elysium",
-        role: "Guild Vice President",
+        role: "Prospective Guild Partner",
         race: "Slime",
         raceRarity: "Mythical",
         class: "Devourer",
         classRarity: "Mythical",
         age: null,
-        bio: "A unique Mythical Slime recognized for his sharp tactical mind, and mastery of clone control. Is powering up to serve as the vice guild leader of Lisa's guild.",
+        bio: "A unique Mythical Slime recognized for his sharp tactical mind and mastery of clone control. Is powering up to help build Lisa's planned guild.",
+        revealLink: true
+      },
+      {
+        chapter: 115,
+        name: "Halon",
+        world: "Elysium",
+        role: "Astralis Requiem Vice Guild Master",
+        race: "Slime",
+        raceRarity: "Mythical",
+        class: "Devourer",
+        classRarity: "Mythical",
+        age: null,
+        bio: "The vice guild master of Astralis Requiem after the fossilized tree becomes the guild's first official base. His small Slime body conceals the player behind Elysium's first open-world PK and the guild's tactical core.",
+        revealLink: true
+      },
+      {
+        chapter: 201,
+        name: "Halon",
+        world: "Elysium",
+        role: "Evolved Mythical Slime",
+        race: "Slime",
+        raceRarity: "Mythical",
+        class: "Devourer",
+        classRarity: "Mythical",
+        age: null,
+        bio: "A Slime whose Level 11 qualitative evolution forces the system to reconcile a Mythical race, Mythical class, and multiple internal cores. His body becomes clearer, denser, and far more precise while retaining the same Slime identity.",
+        revealLink: true
+      },
+      {
+        chapter: 293,
+        name: "Halon",
+        world: "Elysium",
+        role: "Astralis Requiem Strategist",
+        race: "Slime",
+        raceRarity: "Mythical",
+        class: "Devourer",
+        classRarity: "Mythical",
+        age: null,
+        bio: "Astralis Requiem's vice president and strategic voice, arguing for an elite recruitment model built around trustworthy, high-potential members rather than raw numbers.",
         revealLink: true
       }
     ]
@@ -56,6 +95,42 @@ export const charactersCompendium = [
         age: 18,
         bio: "A former bedridden invalid who reincarnated into the body of an impoverished Sector 4 student on planet Eden 3. Struggling under crushing debt, poor physical health, and moldy living conditions in the Lower Zone, he possesses an indomitable willpower and relies on Elysium immersion to reshape his destiny.",
         revealLink: true
+      },
+      {
+        chapter: 120,
+        name: "Lohan Hayes",
+        world: "Sectors",
+        role: "Elysium-Strengthened Student",
+        age: 18,
+        bio: "After Halon reaches Level 9, Lohan's real body begins showing the benefits of Elysium progression. The once-frail Lower Zone student now has noticeably improved strength, vitality, and physical control.",
+        revealLink: true
+      },
+      {
+        chapter: 264,
+        name: "Lohan Hayes",
+        world: "Sectors",
+        role: "Debt-Free Guild Vice President",
+        age: 18,
+        bio: "Guild earnings and Lisa's payment through Alice end the debt that defined Lohan's life in Sector 4. He remains cautious, but his material situation is no longer that of a trapped Lower Zone debtor.",
+        revealLink: true
+      },
+      {
+        chapter: 278,
+        name: "Lohan Hayes",
+        world: "Sectors",
+        role: "Lower Zone Survivor",
+        age: 18,
+        bio: "After confirming Oscar enabled the attack on his apartment and sold his location, Lohan stops treating Sector 4 as a place he can simply endure. The landlord conflict shows his Elysium-honed power and colder pragmatism crossing fully into the real world: he protects his route to Elysium, secures the means to leave, and accepts that survival in the Sectors may require decisive violence rather than passive endurance.",
+        revealLink: true
+      },
+      {
+        chapter: 283,
+        name: "Lohan Hayes",
+        world: "Sectors",
+        role: "Upper Zone Resident",
+        age: 18,
+        bio: "Lohan leaves the moldy Sector 4 apartment behind and moves into a protected Upper Zone penthouse arranged through Isabella, marking a dramatic change in his real-world living conditions.",
+        revealLink: true
       }
     ]
   },
@@ -73,6 +148,15 @@ export const charactersCompendium = [
         role: "Sector 4 Landlord",
         age: 52,
         bio: "The heavy-set landlord of Lohan's suburban Sector 4 apartment building. Decked in gaudy gold jewelry with a glowing holographic eyepiece over his left eye, he is a rude, money-driven individual who strictly collects rent payments from impoverished Lower Zone tenants.",
+        revealLink: false
+      },
+      {
+        chapter: 278,
+        name: "Oscar V. Malcolm",
+        world: "Sectors",
+        role: "Eliminated Sector 4 Landlord",
+        age: 52,
+        bio: "Oscar is revealed as a more dangerous exploiter than a rent collector: he disables Lohan's apartment protections, hires attackers, and sells Lohan's location to outside interests. His attempt to treat Lohan as disposable prey makes him the final Sector 4 threat Lohan resolves before leaving for the Upper Zone.",
         revealLink: false
       }
     ]
@@ -124,6 +208,19 @@ export const charactersCompendium = [
         revealLink: false
       },
       {
+        chapter: 36,
+        name: "Spirit Fox",
+        world: "Elysium",
+        role: "Prospective Guild Leader",
+        race: "Spirit Fox",
+        raceRarity: "Unknown",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "A Spirit Fox whose innate telepathy reflects her race's spiritual affinity. She explains enough about races and potential for Halon to understand that she is not an ordinary fox.",
+        revealLink: false
+      },
+      {
         chapter: 37,
         name: "Lisa",
         world: "Elysium",
@@ -134,6 +231,58 @@ export const charactersCompendium = [
         classRarity: "Rare",
         age: null,
         bio: "A Legendary Spiritual Fox race and a Rare Illusion Weaver class. Elegant, strategic, and fiercely loyal to her chosen allies, she works closely with Halon to establish a powerhouse faction in Elysium.",
+        revealLink: false
+      },
+      {
+        chapter: 115,
+        name: "Lisa",
+        world: "Elysium",
+        role: "Astralis Requiem Guild Master",
+        race: "Spiritual Fox",
+        raceRarity: "Legendary",
+        class: "Illusion Weaver",
+        classRarity: "Rare",
+        age: null,
+        bio: "The guild master of Astralis Requiem after the fossilized tree becomes an official guild base. She combines corporate training, caution, and trust in Halon to turn their partnership into a formal organization.",
+        revealLink: false
+      },
+      {
+        chapter: 140,
+        name: "Lisa",
+        world: "Elysium",
+        role: "Astralis Requiem Guild Master",
+        race: "Spiritual Fox",
+        raceRarity: "Legendary",
+        class: "Illusion Weaver",
+        classRarity: "Rare",
+        age: null,
+        bio: "The reader can now connect Lisa's Elysium identity with Isabella Vance, reframing the composed Spirit Fox as both Halon's guild partner and his real-world classmate.",
+        revealLink: true
+      },
+      {
+        chapter: 195,
+        name: "Lisa",
+        world: "Elysium",
+        role: "Two-Tailed Spirit Fox",
+        race: "Spiritual Fox",
+        raceRarity: "Legendary",
+        class: "Illusion Weaver",
+        classRarity: "Rare",
+        age: null,
+        bio: "After reaching Level 11, Lisa undergoes a qualitative evolution into a larger, two-tailed Spirit Fox. The change makes her more openly confident in her own combat presence rather than relying on Halon for every decisive action.",
+        revealLink: true
+      },
+      {
+        chapter: 293,
+        name: "Lisa",
+        world: "Elysium",
+        role: "Astralis Requiem President",
+        race: "Spiritual Fox",
+        raceRarity: "Legendary",
+        class: "Illusion Weaver",
+        classRarity: "Rare",
+        age: null,
+        bio: "Astralis Requiem's president, using her Vance upbringing and Elysium experience to plan a selective guild expansion while preserving the quality and security of the organization.",
         revealLink: true
       }
     ]
@@ -158,12 +307,30 @@ export const charactersCompendium = [
         revealLink: false
       },
       {
-        chapter: 37,
+        chapter: 140,
         name: "Isabella Vance",
         world: "Sectors",
         role: "Corporate Heiress (Guild Leader)",
         age: 18,
         bio: "One of Lohan's classmates and heiress to the Vance Group megacorporation, which commands planetary governance, off-world colonies, and satellite networks on Eden 3. Distinguished by her natural red hair, flawless icy appearance, and cold, aristocratic demeanor.",
+        revealLink: true
+      },
+      {
+        chapter: 184,
+        name: "Isabella Vance",
+        world: "Sectors",
+        role: "Classmate and Guild President",
+        age: 18,
+        bio: "The real-world identity behind Lisa is now understood by Lohan, while Isabella also recognizes that Lohan is Halon. Their school life and Elysium partnership begin to overlap directly.",
+        revealLink: true
+      },
+      {
+        chapter: 283,
+        name: "Isabella Vance",
+        world: "Sectors",
+        role: "Vance Heiress and Lohan's Patron",
+        age: 18,
+        bio: "Isabella uses her Upper Zone resources to help Lohan leave his unsafe Sector 4 apartment, bringing the protection and privilege of the Vance world directly into his daily life.",
         revealLink: true
       }
     ]
@@ -365,7 +532,7 @@ export const charactersCompendium = [
         world: "Elysium",
         role: "Silver Crucible Merchant",
         race: "Elf",
-        raceRarity: "Unknown",
+        raceRarity: "rare",
         class: "Merchant",
         classRarity: "Unknown",
         age: null,
@@ -444,7 +611,7 @@ export const charactersCompendium = [
         world: "Elysium",
         role: "Elite Tamer",
         race: "Elf",
-        raceRarity: "Unknown",
+        raceRarity: "rare",
         class: "Elite Tamer",
         classRarity: "Unknown",
         age: null,
@@ -489,10 +656,36 @@ export const charactersCompendium = [
         role: "Mythlorien Gardener / Wood Sprite",
         race: "Fairy",
         raceRarity: "Uncommon",
-        class: "Gardener",
+        class: "Unknown",
         classRarity: "Common",
         age: null,
         bio: "A gentle, palm-sized fairy from Petal Village with translucent butterfly wings resembling flower petals. Responsible for painting rare flora and maintaining forest mana balance, she seeks Halon and Lisa's help to rescue her captured brother Pip from the Fossilized Amber Tree.",
+        revealLink: false
+      },
+      {
+        chapter: 111,
+        name: "Elle",
+        world: "Elysium",
+        role: "Astralis Requiem Ally",
+        race: "Fairy",
+        raceRarity: "Uncommon",
+        class: "Unknown",
+        classRarity: "Common",
+        age: null,
+        bio: "After Pip's rescue and the founding of Astralis Requiem, Elle remains connected to the fossilized tree and to the people who protected her brother.",
+        revealLink: false
+      },
+      {
+        chapter: 294,
+        name: "Elle",
+        world: "Elysium",
+        role: "Fairy Under Astralis Training",
+        race: "Fairy",
+        raceRarity: "Uncommon",
+        class: "Unknown",
+        classRarity: "Common",
+        age: null,
+        bio: "Elle begins being treated as someone Astralis Requiem can actively train and protect, no longer only as a vulnerable fairy dependent on rescue.",
         revealLink: false
       }
     ]
@@ -512,9 +705,636 @@ export const charactersCompendium = [
         race: "Fairy",
         raceRarity: "Uncommon",
         class: "Unknown",
-        classRarity: "Unknown",
+        classRarity: "Common",
         age: null,
         bio: "Elle's younger brother, a playful and carefree fairy who was ambushed by Glass Beetles while polishing seeds of light near the Amber Tree and trapped in a mana cocoon.",
+        revealLink: false
+      },
+      {
+        chapter: 111,
+        name: "Pip",
+        world: "Elysium",
+        role: "Rescued Petal Village Sprite",
+        race: "Fairy",
+        raceRarity: "Uncommon",
+        class: "Unknown",
+        classRarity: "Common",
+        age: null,
+        bio: "Freed from Brynnear's cocoon, Pip becomes directly tied to Halon, Lisa, and the new Astralis Requiem base rather than remaining only a helpless captive.",
+        revealLink: false
+      },
+      {
+        chapter: 228,
+        name: "Pip",
+        world: "Elysium",
+        role: "Strengthened Fairy Protector",
+        race: "Fairy",
+        raceRarity: "Uncommon",
+        class: "Unknown",
+        classRarity: "Common",
+        age: null,
+        bio: "Pip accepts Halon's careful strengthening and openly wants power to protect Elle, Halon, and Lisa. His growth reframes him from rescued child to emerging guardian.",
+        revealLink: false
+      },
+      {
+        chapter: 250,
+        name: "Pip",
+        world: "Elysium",
+        role: "Exiled Fairy Guardian",
+        race: "Fairy",
+        raceRarity: "Uncommon",
+        class: "Unknown",
+        classRarity: "Common",
+        age: null,
+        bio: "Pip refuses to crawl back to Petal Village after being treated as a burden. He identifies his new home with Halon, Lisa, Elle, and Astralis Requiem instead.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "skye_silver_lotus",
+    linkedCharacterId: "skye_elysium",
+    isPlayer: true,
+    defaultWorld: "Sectors",
+    images: [{ file: "skye-march16.png", chapter: 124 }],
+    stages: [
+      {
+        chapter: 124,
+        name: "Skye",
+        world: "Sectors",
+        role: "Silver Lotus Leader",
+        age: null,
+        bio: "A bold Lower Zone rider leading the Silver Lotus group. She protects vulnerable people from local predators and sees Elysium as a path for her crew to become strong enough to change their lives.",
+        revealLink: false
+      },
+      {
+        chapter: 300,
+        name: "Skye",
+        world: "Sectors",
+        role: "Silver Lotus Leader & Coordinator",
+        age: null,
+        bio: "Skye leads the real-world Silver Lotus network in Sector 4 and manages their collective push into the Open World, earning deep loyalty from Lower Zone players.",
+        revealLink: true
+      }
+    ]
+  },
+  {
+    id: "skye_elysium",
+    linkedCharacterId: "skye_silver_lotus",
+    isPlayer: true,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 124,
+        name: "Skye (Avatar)",
+        world: "Elysium",
+        role: "Silver Lotus Player",
+        race: "Unknown",
+        raceRarity: "Unknown",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "The Elysium player avatar of Skye, grinding alongside her Silver Lotus comrades to escape Lower Zone poverty.",
+        revealLink: false
+      },
+      {
+        chapter: 300,
+        name: "Skye (Avatar)",
+        world: "Elysium",
+        role: "Silver Lotus Open World Vanguard",
+        race: "Unknown",
+        raceRarity: "Epic",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "An Epic-race player who advanced into the Open World with Silver Lotus, making her group a serious and high-potential recruitment target for Astralis Requiem.",
+        revealLink: true
+      }
+    ]
+  },
+  {
+    id: "brynnear",
+    linkedCharacterId: null,
+    isPlayer: true,
+    defaultWorld: "Elysium",
+    images: [{ file: "brynn-march18.png", chapter: 109 }],
+    stages: [
+      {
+        chapter: 109,
+        name: "Brynnear",
+        world: "Elysium",
+        role: "Glass Beetle Matriarch",
+        race: "Glass Beetle",
+        raceRarity: "Common",
+        class: "Matriarch",
+        classRarity: "Epic",
+        age: null,
+        bio: "A player who began as a Common Glass Beetle but used an Epic Matriarch class to seize control of the beetle nest, command high-level beetles, and turn the fossilized tree into her dungeon-like stronghold.",
+        revealLink: false
+      },
+      {
+        chapter: 129,
+        name: "Brynnear",
+        world: "Elysium",
+        role: "Reborn Matriarch",
+        race: "Human",
+        raceRarity: "Common",
+        class: "Matriarch",
+        classRarity: "Epic",
+        age: null,
+        bio: "After death and rebirth, Brynnear loses the beetle body but retains her Matriarch class. Her humiliation by Halon turns into a personal vendetta.",
+        revealLink: false
+      },
+      {
+        chapter: 227,
+        name: "Brynnear",
+        world: "Elysium",
+        role: "Hogue Guild Matriarch",
+        race: "Human",
+        raceRarity: "Common",
+        class: "Matriarch",
+        classRarity: "Epic",
+        age: null,
+        bio: "Working with Ernesto Hogue, Brynnear uses the Matriarch class in a cruel attempt to manufacture power through captive players and warped mana.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "ernesto_hogue_sectors",
+    linkedCharacterId: "ernesto_hogue",
+    isPlayer: true,
+    defaultWorld: "Sectors",
+    images: [],
+    stages: [
+      {
+        chapter: 116,
+        name: "Ernesto Hogue",
+        world: "Sectors",
+        role: "Hogue Group Heir",
+        age: null,
+        bio: "Heir of the rival Hogue Group megacorporation on Eden 3, intensely competing against the Vance Group across planetary corporate sectors and Elysium.",
+        revealLink: true
+      },
+      {
+        chapter: 227,
+        name: "Ernesto Hogue",
+        world: "Sectors",
+        role: "Hogue Megacorp Executive",
+        age: null,
+        bio: "Ernesto directs Hogue Group corporate resources and syndicate assets to fuel his faction's aggressive push in Elysium.",
+        revealLink: true
+      }
+    ]
+  },
+  {
+    id: "ernesto_hogue",
+    linkedCharacterId: "ernesto_hogue_sectors",
+    isPlayer: true,
+    defaultWorld: "Elysium",
+    images: [{ file: "hernesto_hogue-april2.png", chapter: 116 }],
+    stages: [
+      {
+        chapter: 116,
+        name: "Ernesto Hogue",
+        world: "Elysium",
+        role: "Hogue Group Guild Aspirant",
+        race: "Unknown",
+        raceRarity: "Unknown",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "The leader of the Hogue Group effort in Elysium, directing organized Level 11 players and reacting furiously when Halon and Astralis Requiem take the first-guild achievement.",
+        revealLink: true
+      },
+      {
+        chapter: 227,
+        name: "Ernesto Hogue",
+        world: "Elysium",
+        role: "Hogue Guild Leader",
+        race: "Unknown",
+        raceRarity: "Unknown",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "Ernesto's rivalry with Astralis Requiem hardens into a darker alliance with Brynnear, driven by greed, status anxiety, and impatience with coming in second.",
+        revealLink: true
+      }
+    ]
+  },
+  {
+    id: "isaac_vance",
+    linkedCharacterId: "newton",
+    isPlayer: true,
+    defaultWorld: "Sectors",
+    images: [],
+    stages: [
+      {
+        chapter: 116,
+        name: "Isaac Vance",
+        world: "Sectors",
+        role: "Vance Group Heir",
+        age: null,
+        bio: "One of Evelyn Vance's children and a prominent Vance Group heir. Managing corporate interests on Eden 3 and overseeing elite player squads deployed into Elysium.",
+        revealLink: true
+      },
+      {
+        chapter: 138,
+        name: "Isaac Vance",
+        world: "Sectors",
+        role: "Vance Corporate Strategist",
+        age: null,
+        bio: "Isaac coordinates Vance corporate resources and investments from the Upper Zone, tracking major Open World developments to maintain corporate dominance.",
+        revealLink: true
+      }
+    ]
+  },
+  {
+    id: "newton",
+    linkedCharacterId: "isaac_vance",
+    isPlayer: true,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 116,
+        name: "Newton",
+        world: "Elysium",
+        role: "Vance Group Faction Leader",
+        race: "Human",
+        raceRarity: "Common",
+        class: "Unknown",
+        classRarity: "Epic",
+        age: null,
+        bio: "The reported Elysium player identity of Isaac Vance. Confirmed to possess an Epic-rarity base as one of Evelyn Vance's children, his faction is closely monitored by rival corporations like the Hogue Group.",
+        revealLink: true
+      },
+      {
+        chapter: 138,
+        name: "Newton",
+        world: "Elysium",
+        role: "Vance Faction Leader in Aethelgard",
+        race: "Human",
+        raceRarity: "Common",
+        class: "Unknown",
+        classRarity: "Epic",
+        age: null,
+        bio: "Operating in the major city of Aethelgard with top-tier Vance corporate backing and an Epic base, Newton commands a premier corporate guild presence in the Open World.",
+        revealLink: true
+      }
+    ]
+  },
+  {
+    id: "evelyn_vance",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Sectors",
+    images: [{ file: "evelyn-march24.png", chapter: 141 }],
+    stages: [
+      {
+        chapter: 141,
+        name: "Evelyn Vance",
+        world: "Sectors",
+        role: "Vance Family Matriarch",
+        age: null,
+        bio: "The powerful head of the Vance family and mother of Isabella, Isaac, and their sibling. Her presence reveals the family pressure and affection surrounding Isabella's position.",
+        revealLink: false
+      },
+      {
+        chapter: 289,
+        name: "Evelyn Vance",
+        world: "Sectors",
+        role: "Protective Vance Matriarch",
+        age: null,
+        bio: "Evelyn remains closely involved with Isabella's life and choices, showing that the Vance family's influence is personal as well as corporate.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "alice_muller",
+    linkedCharacterId: "alice_elysium",
+    isPlayer: true,
+    defaultWorld: "Sectors",
+    images: [{ file: "alice-april6.png", chapter: 178 }],
+    stages: [
+      {
+        chapter: 178,
+        name: "Alice Muller",
+        world: "Sectors",
+        role: "Isabella's Best Friend",
+        age: 18,
+        bio: "Isabella Vance's energetic and fiercely loyal best friend in the Upper Zone. Her warm, lively personality balances Isabella's icy composure, and she serves as a key personal confidante and real-world liaison.",
+        revealLink: true
+      },
+      {
+        chapter: 264,
+        name: "Alice Muller",
+        world: "Sectors",
+        role: "Astralis Real-World Liaison",
+        age: 18,
+        bio: "Alice assists Isabella in managing financial transfers and real-world logistics for Astralis Requiem, including safely handling Lohan's payments.",
+        revealLink: true
+      }
+    ]
+  },
+  {
+    id: "alice_elysium",
+    linkedCharacterId: "alice_muller",
+    isPlayer: true,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 178,
+        name: "Alice",
+        world: "Elysium",
+        role: "Astralis Combat Squad Leader",
+        race: "Unknown",
+        raceRarity: "Unknown",
+        class: "Pugilist",
+        classRarity: "Unknown",
+        age: null,
+        bio: "Lisa's energetic best friend and the frontline leader of the hired player group joining Astralis Requiem, utilizing physical Pugilist combat.",
+        revealLink: true
+      },
+      {
+        chapter: 293,
+        name: "Alice",
+        world: "Elysium",
+        role: "Astralis Requiem Group Leader",
+        race: "Unknown",
+        raceRarity: "Unknown",
+        class: "Pugilist",
+        classRarity: "Unknown",
+        age: null,
+        bio: "Alice leads one of Astralis Requiem's main player groups and remains one of Lisa's most trusted allies as the guild plans its selective expansion.",
+        revealLink: true
+      }
+    ]
+  },
+  {
+    id: "devon_baker",
+    linkedCharacterId: "devon_elysium",
+    isPlayer: true,
+    defaultWorld: "Sectors",
+    images: [],
+    stages: [
+      {
+        chapter: 167,
+        name: "Devon Baker",
+        world: "Sectors",
+        role: "Lower Zone Classmate",
+        age: 18,
+        bio: "A quiet classmate from the Lower Zone who notices Lohan's Elysium-linked changes and approaches him privately as another player trying to survive the same social reality.",
+        revealLink: false
+      },
+      {
+        chapter: 300,
+        name: "Devon Baker",
+        world: "Sectors",
+        role: "Silver Lotus Contact",
+        age: 18,
+        bio: "Devon approaches Lohan as a liaison for the Silver Lotus group, sharing details of their Open World standing and opening the possibility of cooperation with Astralis Requiem.",
+        revealLink: true
+      }
+    ]
+  },
+  {
+    id: "devon_elysium",
+    linkedCharacterId: "devon_baker",
+    isPlayer: true,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 167,
+        name: "Devon (Avatar)",
+        world: "Elysium",
+        role: "Low Zone Player",
+        race: "Unknown",
+        raceRarity: "Unknown",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "Devon's player avatar in Elysium, cautiously leveling in early territories to help build his future.",
+        revealLink: false
+      },
+      {
+        chapter: 300,
+        name: "Devon (Avatar)",
+        world: "Elysium",
+        role: "Silver Lotus Player",
+        race: "Unknown",
+        raceRarity: "Rare",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "A player possessing a Rare base race who has broken through into the Open World as part of the Silver Lotus network.",
+        revealLink: true
+      }
+    ]
+  },
+  {
+    id: "dylan_sectors",
+    linkedCharacterId: "dylan",
+    isPlayer: true,
+    defaultWorld: "Sectors",
+    images: [],
+    stages: [
+      {
+        chapter: 229,
+        name: "Dylan",
+        world: "Sectors",
+        role: "Upper Zone Childhood Friend",
+        age: 18,
+        bio: "The third member of Isabella Vance and Alice Muller's close childhood trio from the Upper Zone. Charismatic, intelligent, and socially adept, he shares long-standing ties with their families.",
+        revealLink: true
+      },
+      {
+        chapter: 293,
+        name: "Dylan",
+        world: "Sectors",
+        role: "Astralis Real-World Strategist",
+        age: 18,
+        bio: "Dylan works alongside Isabella and Alice in planning organizational structures and social strategies for Astralis Requiem from the real world.",
+        revealLink: true
+      }
+    ]
+  },
+  {
+    id: "dylan",
+    linkedCharacterId: "dylan_sectors",
+    isPlayer: true,
+    defaultWorld: "Elysium",
+    images: [{ file: "dylan-may1.png", chapter: 229 }],
+    stages: [
+      {
+        chapter: 229,
+        name: "Dylan",
+        world: "Elysium",
+        role: "Lisa and Alice's Childhood Friend",
+        race: "Unknown",
+        raceRarity: "Unknown",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "The third member of Lisa and Alice's inseparable childhood trio. His arrival in Thalendor makes Halon confront how much of Lisa's life still belongs to a social world he barely knows.",
+        revealLink: true
+      },
+      {
+        chapter: 232,
+        name: "Dylan",
+        world: "Elysium",
+        role: "Ebony Chalice Survivor",
+        race: "Dhampir",
+        raceRarity: "Rare",
+        class: "Blood Aristocrat",
+        classRarity: "Rare",
+        age: null,
+        bio: "Dylan explains that his Elysium path involved the Ebony Chalice and a hidden cult, giving him a darker and stranger background with a Rare Dhampir race and Rare Blood Aristocrat class.",
+        revealLink: true
+      },
+      {
+        chapter: 293,
+        name: "Dylan",
+        world: "Elysium",
+        role: "Astralis Requiem Organizer",
+        race: "Dhampir",
+        raceRarity: "Rare",
+        class: "Blood Aristocrat",
+        classRarity: "Rare",
+        age: null,
+        bio: "Dylan contributes real-world organizational instincts and unique Dhampir powers to Astralis Requiem's expansion planning, supporting Halon's preference for quality and discipline over mass recruitment.",
+        revealLink: true
+      }
+    ]
+  },
+  {
+    id: "kora",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 206,
+        name: "Kora",
+        world: "Elysium",
+        role: "Thalendor Craftswoman",
+        race: "Unknown",
+        raceRarity: "Unknown",
+        class: "Craftswoman",
+        classRarity: "Unknown",
+        age: null,
+        bio: "A blunt Thalendor craftswoman whose experience with monster materials makes Halon and Lisa unusually interesting to her.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "basil_petal_village",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 253,
+        name: "Basil",
+        world: "Elysium",
+        role: "Petal Village Elder",
+        race: "Fairy",
+        raceRarity: "Unknown",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "The elder and chief of Petal Village, initially seen trying to defend the village during Varkas's attack.",
+        revealLink: false
+      },
+      {
+        chapter: 256,
+        name: "Basil",
+        world: "Elysium",
+        role: "Petal Village Chief",
+        race: "Fairy",
+        raceRarity: "Unknown",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "Basil publicly rebukes Petal Village's prejudice against Pip and Elle, acknowledging the siblings' courage and the village's hypocrisy.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "peoni",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 250,
+        name: "Peoni",
+        world: "Elysium",
+        role: "Petal Village Fairy",
+        race: "Fairy",
+        raceRarity: "Unknown",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "A Petal Village fairy who treats Pip's new strength as something the village can demand after previously rejecting him, exposing the prejudice Pip and Elle endured.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "varkas",
+    linkedCharacterId: null,
+    isPlayer: true,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 253,
+        name: "Varkas",
+        world: "Elysium",
+        role: "Lizardman Raider",
+        race: "Lizardman",
+        raceRarity: "Rare",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "A Low Zone player with a Rare Lizardman race who attacks Petal Village with Brant and Stig, using reptile-command tactics in pursuit of power and escape from his former life.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "astraea",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [{ file: "astraea-march12.png", chapter: 112 }],
+    stages: [
+      {
+        chapter: 112,
+        name: "Astraea",
+        world: "Elysium",
+        role: "Goddess of Elysium",
+        age: null,
+        bio: "A divine figure associated with Elysium's system, watching events around Halon, Lisa, and the world from a much higher layer of reality.",
+        revealLink: false
+      },
+      {
+        chapter: 296,
+        name: "Astraea",
+        world: "Elysium",
+        role: "Overworked System Goddess",
+        age: null,
+        bio: "Astraea's handling of Brynnear's player-boss audit reveals that even divine system administration can make mistakes with delayed consequences for Halon and Lisa.",
         revealLink: false
       }
     ]

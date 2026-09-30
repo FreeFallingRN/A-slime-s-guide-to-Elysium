@@ -99,7 +99,10 @@ npm run test:speed
 
 If you'd like to add or update content from latest novel chapters:
 
-- **Chapters & Stat Formulas:** `src/lib/store.js`
+- **Chapter Timeline:** `src/data/chapters.js`
+- **Ability Data & Progression:** `src/data/abilities.js`
+- **Encyclopedia & Lore:** `src/data/encyclopedia.js`
+- **Map Nodes:** `src/data/mapNodes.js`
 - **Calculation Engine:** `src/lib/calc.js`
 - **Character Data & Lore:** `src/lib/charactersData.js`
 - **Regression Tests:** `tests/`

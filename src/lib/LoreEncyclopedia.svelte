@@ -313,17 +313,7 @@
         {@const canExpand = isUnlocked && isExpandable(entry)}
         {@const isExpanded = canExpand && expandedEntryKey === entry.uniqueId}
 
-        <div
-          class="lore-card hologram-panel {isUnlocked ? 'unlocked' : 'locked'} {isFreshUnlock
-            ? 'fresh-unlock'
-            : ''} {canExpand ? 'is-expandable' : ''}"
-          on:click={() => canExpand && toggleExpand(entry.uniqueId)}
-          on:keydown={(e) =>
-            canExpand && (e.key === "Enter" || e.key === " ") && toggleExpand(entry.uniqueId)}
-          tabindex={canExpand ? 0 : undefined}
-          role={canExpand ? "button" : undefined}
-          aria-expanded={canExpand ? isExpanded : undefined}
-        >
+        {#snippet cardInner(entry, isUnlocked, isFreshUnlock, catMeta, canExpand, isExpanded)}
           <!-- Card Header Bar -->
           <div class="card-header">
             <div class="card-badges">
@@ -424,7 +414,35 @@
               {/if}
             </div>
           {/if}
-        </div>
+        {/snippet}
+
+        {#if canExpand}
+          <div
+            class="lore-card hologram-panel {isUnlocked ? 'unlocked' : 'locked'} {isFreshUnlock
+              ? 'fresh-unlock'
+              : ''} is-expandable"
+            on:click={() => toggleExpand(entry.uniqueId)}
+            on:keydown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                toggleExpand(entry.uniqueId);
+              }
+            }}
+            role="button"
+            tabindex="0"
+            aria-expanded={isExpanded}
+          >
+            {@render cardInner(entry, isUnlocked, isFreshUnlock, catMeta, canExpand, isExpanded)}
+          </div>
+        {:else}
+          <div
+            class="lore-card hologram-panel {isUnlocked ? 'unlocked' : 'locked'} {isFreshUnlock
+              ? 'fresh-unlock'
+              : ''}"
+          >
+            {@render cardInner(entry, isUnlocked, isFreshUnlock, catMeta, canExpand, isExpanded)}
+          </div>
+        {/if}
       {/each}
     </div>
   {/if}
@@ -705,13 +723,13 @@
     background: rgba(2, 14, 26, 0.95);
   }
 
-  .search-icon {
+  .search-input-box :global(.search-icon) {
     color: #79a5b3;
     flex-shrink: 0;
     transition: color 0.2s ease;
   }
 
-  .search-input-box:focus-within .search-icon {
+  .search-input-box:focus-within :global(.search-icon) {
     color: #00f0ff;
   }
 

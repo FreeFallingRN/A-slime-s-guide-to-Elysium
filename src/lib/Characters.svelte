@@ -443,8 +443,21 @@
   {@const mImages = mState.unlockedImages || []}
   {@const activeModalImg = mImages[modalData.index]}
 
-  <div class="modal-backdrop" on:click={closeModal} role="button" tabindex="0">
-    <div class="modal-content hologram-panel" on:click|stopPropagation role="document">
+  <div
+    class="modal-backdrop"
+    on:click={closeModal}
+    on:keydown={(e) => e.key === "Escape" && closeModal()}
+    role="presentation"
+  >
+    <div
+      class="modal-content hologram-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-label="{mState.name} Dossier"
+      tabindex="-1"
+      on:click|stopPropagation
+      on:keydown|stopPropagation
+    >
       <button class="modal-close-btn" on:click={closeModal} aria-label="Close modal">
         <X size={20} />
       </button>

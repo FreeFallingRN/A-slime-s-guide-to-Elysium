@@ -304,19 +304,19 @@
     outline: none;
   }
 
-  .pin-svg {
+  .map-pin-btn :global(.pin-svg) {
     color: var(--color-holo-primary);
     filter: drop-shadow(0 0 4px var(--color-holo-glow));
     transition: var(--transition-smooth);
   }
 
-  .map-pin-btn:hover .pin-svg {
+  .map-pin-btn:hover :global(.pin-svg) {
     color: #fff;
     transform: scale(1.2);
     filter: drop-shadow(0 0 8px var(--color-holo-primary));
   }
 
-  .map-pin-btn.selected .pin-svg {
+  .map-pin-btn.selected :global(.pin-svg) {
     color: var(--color-arson-fire);
     filter: drop-shadow(0 0 8px var(--color-arson-glow));
     transform: scale(1.1);
