@@ -176,8 +176,21 @@
 
 <!-- CHAPTER SELECTOR DIALOG (MODAL) -->
 {#if showModal}
-  <div class="modal-overlay" on:click={() => (showModal = false)}>
-    <div class="modal-dialog hologram-panel" on:click|stopPropagation>
+  <div
+    class="modal-overlay"
+    on:click={() => (showModal = false)}
+    on:keydown={(e) => e.key === "Escape" && (showModal = false)}
+    role="presentation"
+  >
+    <div
+      class="modal-dialog hologram-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-label="System Chapter Sync"
+      tabindex="-1"
+      on:click|stopPropagation
+      on:keydown|stopPropagation
+    >
       <div class="modal-header">
         <h3 class="hologram-glow-text">SYSTEM CHAPTER SYNC</h3>
         <button class="close-btn" on:click={() => (showModal = false)}>&times;</button>
@@ -266,16 +279,16 @@
     font-family: var(--font-sans);
   }
 
-  .lock-icon {
+  .glow-indicator :global(.lock-icon) {
     transition: var(--transition-smooth);
   }
 
-  .lock-icon.locked {
+  .glow-indicator :global(.lock-icon.locked) {
     color: var(--color-arson-fire);
     filter: drop-shadow(0 0 5px var(--color-arson-glow));
   }
 
-  .lock-icon.unlocked {
+  .glow-indicator :global(.lock-icon.unlocked) {
     color: var(--color-holo-primary);
     filter: drop-shadow(0 0 5px var(--color-holo-glow));
   }
@@ -471,19 +484,6 @@
     text-shadow: 0 0 5px var(--color-holo-glow);
   }
 
-  .spoiler-warning {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.72rem;
-    color: var(--color-holo-muted);
-    font-family: var(--font-sans);
-  }
-
-  :global(.warning-icon) {
-    color: var(--color-book-gold);
-  }
-
   /* --- MOBILE STICKY HEADER --- */
   .mobile-header {
     position: fixed;
@@ -514,7 +514,7 @@
     text-shadow: 0 0 5px var(--color-arson-glow);
   }
 
-  .brand-flame {
+  .mobile-logo :global(.brand-flame) {
     color: var(--color-arson-fire);
     filter: drop-shadow(0 0 3px var(--color-arson-glow));
   }

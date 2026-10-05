@@ -12,6 +12,7 @@
     "test:digestion": "node tests/test_digestion.js",
     "test:mana": "node tests/test_mana.js",
     "test:speed": "node tests/test_speed.js",
+    "test:biomass": "node tests/test_biomass.js",
     "validate:data": "node tests/validate_data.js",
     "test:chapter-control": "node tests/test_chapter_utils.js",
     "test:ability-aliases": "node tests/test_ability_aliases.js",
@@ -22,17 +23,17 @@
   "dependencies": {
     "@google/model-viewer": "^4.0.0",
     "lucide-svelte": "^0.435.0",
-    "svelte": "^4.2.19"
+    "svelte": "^5.57.1"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^3.1.1",
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
     "@types/node": "^26.6.2",
     "prettier": "^3.9.8",
     "prettier-plugin-svelte": "^3.5.2",
     "svelte-check": "^4.7.6",
     "typescript": "^6.0.3",
-    "vite": "^5.4.2",
-    "vite-plugin-pwa": "^0.20.1",
+    "vite": "^8.3.1",
+    "vite-plugin-pwa": "^1.3.0",
     "workbox-build": "^7.3.0"
   }
 }

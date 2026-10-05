@@ -1147,17 +1147,6 @@
     padding: 12px;
   }
 
-  .note-box {
-    background: rgba(255, 94, 0, 0.1);
-    border-left: 3px solid #ff5e00;
-    padding: 6px 8px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    color: #fed7aa;
-    margin-bottom: 10px;
-    line-height: 1.3;
-  }
-
   .step-guide {
     display: flex;
     flex-direction: column;
@@ -1281,12 +1270,12 @@
     letter-spacing: 0.05em;
   }
 
-  .ext-icon {
+  .link-title-row :global(.ext-icon) {
     margin-left: auto;
     color: #64748b;
   }
 
-  .link-card:hover .ext-icon {
+  .link-card:hover :global(.ext-icon) {
     color: #fff;
   }
 
