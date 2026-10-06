@@ -1,0 +1,42 @@
+name: "✨ Feature Request"
+description: Suggest a new feature, UI enhancement, or tool for the companion app
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea for a new feature or improvement? Let us know!
+  - type: input
+    id: title
+    attributes:
+      label: Feature Title
+      description: A short, descriptive title for the feature request.
+      placeholder: e.g., Add ability comparison modal between different evolution stages
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Motivation
+      description: What problem does this solve, or what motivated this request?
+      placeholder: e.g., Currently it's hard to compare how stats scale between Stage 2 and Stage 3...
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution / Design
+      description: Describe the solution or feature you'd like to see implemented.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any alternative solutions or features you've considered?
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context / Mockups
+      description: Add any sketches, UI references, or additional context here.
