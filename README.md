@@ -103,8 +103,9 @@ If you'd like to add or update content from latest novel chapters:
 - **Ability Data & Progression:** `src/data/abilities.js`
 - **Encyclopedia & Lore:** `src/data/encyclopedia.js`
 - **Map Nodes:** `src/data/mapNodes.js`
-- **Calculation Engine:** `src/lib/calc.js`
-- **Character Data & Lore:** `src/lib/charactersData.js`
+- **Calculation Engine:** `src/calculators/calc.js`
+- **Biomass Math Engine:** `src/calculators/biomassCalc.js`
+- **Character Data & Lore:** `src/data/characters.js`
 - **Regression Tests:** `tests/`
 
 ---

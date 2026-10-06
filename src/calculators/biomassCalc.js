@@ -63,7 +63,7 @@ export function getAbilityLevelAtChapter(skillId, chapter) {
   const progression = abilityProgression[skillId];
   if (!progression || progression.length === 0) {
     const ability = abilityById.get(skillId);
-    return ability && ability.chapter <= chapter ? 1 : 0;
+    return ability && (ability.category === "evolution" || !ability.category) && ability.chapter <= chapter ? 1 : 0;
   }
 
   let currentLevel = 0;
@@ -77,7 +77,7 @@ export function getAbilityLevelAtChapter(skillId, chapter) {
 
   if (currentLevel === 0) {
     const ability = abilityById.get(skillId);
-    if (ability && ability.chapter <= chapter) {
+    if (ability && (ability.category === "evolution" || !ability.category) && ability.chapter <= chapter) {
       currentLevel = 1;
     }
   }

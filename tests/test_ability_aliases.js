@@ -1,5 +1,5 @@
 import assert from "assert/strict";
-import { abilityProgression, characterData, getAbilitiesForChapter } from "../src/lib/store.js";
+import { abilityProgression, characterData, getAbilitiesForChapter } from "../src/calculators/store.js";
 
 function runTest(name, fn) {
   try {
@@ -51,11 +51,12 @@ runTest("chapter-gated ability unlock remains Chapter 68", () => {
   );
 });
 
-runTest("progression remains unchanged at Chapter 68", () => {
+runTest("progression includes canonical milestones", () => {
   assert.deepEqual(abilityProgression.thermographic_perception, [
     { chapter: 68, level: 1 },
     { chapter: 68, level: 4 },
-    { chapter: 93, level: 9 }
+    { chapter: 93, level: 9 },
+    { chapter: 375, level: 11 }
   ]);
 });
 

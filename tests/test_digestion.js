@@ -92,6 +92,8 @@ suite.addTest(262, 7.27, false, "Efficient Digestion Lv 40 neutral digestion");
 suite.addTest(262, 39.97, true, "Efficient Digestion Lv 40 combat digestion");
 suite.addTest(300, 7.27, false, "Chapter 300 neutral digestion");
 suite.addTest(300, 39.97, true, "Chapter 300 combat digestion");
+suite.addTest(400, 7.27, false, "Chapter 400 neutral digestion");
+suite.addTest(400, 39.97, true, "Chapter 400 combat digestion");
 
 // Run digestion tests if executed directly
 suite.run("DIGESTION");

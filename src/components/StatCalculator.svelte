@@ -6,9 +6,9 @@
     getAbilityLevel,
     getAbilitiesForChapter,
     getRequiredExp
-  } from "./store.js";
+  } from "../calculators/store.js";
   import { Shield, HelpCircle, ArrowRight, Flame, Sparkles } from "lucide-svelte";
-  import { runCalculation } from "./calc.js";
+  import { runCalculation } from "../calculators/calc.js";
 
   let character = characterData;
   let chapter = 5;
@@ -44,20 +44,29 @@
   }
 
   const GROUP_LABELS = {
-    mana: "Mana",
-    speed: "Speed",
-    digestion: "Digestion",
-    none: "Other"
+    mana: "Mana Evolutions",
+    speed: "Speed Evolutions",
+    digestion: "Digestion Evolutions",
+    body: "Physical & Biological Evolutions",
+    skills: "Magic & Combat Skills"
   };
 
-  const DESIRED_GROUP_ORDER = ["mana", "speed", "digestion", "none"];
+  const DESIRED_GROUP_ORDER = ["mana", "speed", "digestion", "body", "skills"];
 
-  // Derive ordered groups from localAbilities according to explicit order: Mana, Speed, Digestion, Other
+  function getAbilityGroupKey(ab) {
+    if (ab.category === "skill") return "skills";
+    if (ab.target === "mana") return "mana";
+    if (ab.target === "speed") return "speed";
+    if (ab.target === "digestion") return "digestion";
+    return "body";
+  }
+
+  // Derive ordered groups from localAbilities according to explicit order: Mana, Speed, Digestion, Body, Skills
   let groupedAbilities = [];
   $: {
     const groupMap = {};
     for (const ab of localAbilities) {
-      const key = ab.target || "none";
+      const key = getAbilityGroupKey(ab);
       if (!groupMap[key]) groupMap[key] = [];
       groupMap[key].push(ab);
     }
@@ -68,6 +77,7 @@
       target: key,
       label: GROUP_LABELS[key] || key,
       abilities: groupMap[key],
+      isSkillGroup: key === "skills",
       maxLevel: Math.max(...groupMap[key].map((a) => a.level || 0))
     }));
   }
@@ -97,8 +107,10 @@
     const mappedAbilities = getAbilitiesForChapter(chapter);
 
     localAbilities = mappedAbilities.sort((a, b) => {
-      const orderA = DESIRED_GROUP_ORDER.indexOf(a.target || "none");
-      const orderB = DESIRED_GROUP_ORDER.indexOf(b.target || "none");
+      const keyA = getAbilityGroupKey(a);
+      const keyB = getAbilityGroupKey(b);
+      const orderA = DESIRED_GROUP_ORDER.indexOf(keyA);
+      const orderB = DESIRED_GROUP_ORDER.indexOf(keyB);
 
       const priorityA = orderA === -1 ? DESIRED_GROUP_ORDER.length : orderA;
       const priorityB = orderB === -1 ? DESIRED_GROUP_ORDER.length : orderB;
@@ -106,9 +118,11 @@
       if (priorityA !== priorityB) {
         return priorityA - priorityB; // lower index = higher priority group
       }
-      // Within the same group, sort by level descending
-      if (b.level !== a.level) {
-        return b.level - a.level;
+      // Within the same group, sort by level descending if present
+      const lvlA = a.level || 0;
+      const lvlB = b.level || 0;
+      if (lvlB !== lvlA) {
+        return lvlB - lvlA;
       }
       // Finally, fallback to chapter order
       return a.chapter - b.chapter;
@@ -365,7 +379,7 @@
               >
               <span class="group-label">{group.label}</span>
               <span class="group-count"
-                >{group.abilities.length} skill{group.abilities.length !== 1 ? "s" : ""}</span
+                >{group.abilities.length} {group.isSkillGroup ? (group.abilities.length !== 1 ? "skills" : "skill") : (group.abilities.length !== 1 ? "evolutions" : "evolution")}</span
               >
             </div>
           </button>
@@ -389,8 +403,24 @@
                       <div class="title-row">
                         <h4>{ab.name}</h4>
                         <div class="title-badges">
-                          {#if isUnlocked}
+                          {#if isUnlocked && ab.level !== null && ab.level !== undefined}
                             <span class="active-badge">Lv {ab.level}</span>
+                          {:else if isUnlocked && ab.category === 'skill'}
+                            <span class="active-badge skill-type-badge">
+                              {#if ab.subCategory === 'magic'}
+                                Magic Skill
+                              {:else if ab.subCategory === 'combat'}
+                                Combat Skill
+                              {:else if ab.subCategory === 'stealth'}
+                                Stealth Skill
+                              {:else if ab.subCategory === 'aura'}
+                                Aura Skill
+                              {:else if ab.subCategory === 'technique'}
+                                Technique
+                              {:else}
+                                Skill
+                              {/if}
+                            </span>
                           {/if}
                           {#if isUnlocked && abilityBonusMap[ab.id]}
                             <span class="bonus-badge">{abilityBonusMap[ab.id]}</span>
@@ -1116,6 +1146,17 @@
     border-radius: 4px;
     text-shadow: 0 0 5px var(--color-holo-glow);
     letter-spacing: 0.05em;
+  }
+
+  .skill-type-badge {
+    background: rgba(168, 85, 247, 0.15);
+    color: #c084fc;
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    text-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   .ability-card.locked {

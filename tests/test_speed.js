@@ -17,6 +17,8 @@ suite.addTest(157, 2.77, false, "Ch 157 Viscous Flow Lv 27");
 suite.addTest(204, 6.52, false, "Ch 204 Viscous Flow Lv 36");
 suite.addTest(218, 6.52, false, "Ch 218 base speed confirmation");
 suite.addTest(300, 6.52, false, "Ch 300 latest confirmed Viscous Flow speed");
+suite.addTest(338, 24.76, false, "Ch 338 Viscous Flow Lv 50");
+suite.addTest(400, 24.76, false, "Ch 400 latest confirmed Viscous Flow speed");
 
 // Run speed tests if executed directly
 suite.run("SPEED");

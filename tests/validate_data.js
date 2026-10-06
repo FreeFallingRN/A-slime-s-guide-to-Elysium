@@ -7,8 +7,8 @@ import {
   characterData,
   encyclopediaData,
   mapNodesData
-} from "../src/lib/store.js";
-import { charactersCompendium } from "../src/lib/charactersData.js";
+} from "../src/calculators/store.js";
+import { charactersCompendium } from "../src/data/characters.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
