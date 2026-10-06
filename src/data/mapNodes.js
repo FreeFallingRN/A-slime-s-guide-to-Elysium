@@ -65,7 +65,7 @@ export const mapNodesData = [
   },
   {
     id: "thalendor",
-    name: "Thalendor Royal Capital",
+    name: "Thalendor Capital",
     x: 85,
     y: 70,
     level: "Elven Capital",
@@ -274,5 +274,25 @@ export const mapNodesData = [
     world: "Elysium",
     chapter: 390,
     details: "Prominent tavern in Aethelgard used for guild negotiations, recruitments, and undercover meetings."
+  },
+  {
+    id: "thalendor_northern_rift",
+    name: "Thalendor Northern Gorge Rift",
+    x: 42,
+    y: 72,
+    level: "Hazard Zone / Void Leak",
+    world: "Elysium",
+    chapter: 410,
+    details: "A dark rocky gorge north of Thalendor where Broken Suns installed a fraudulent rune containment over a volatile void mana rift."
+  },
+  {
+    id: "horizon_fountain_plaza",
+    name: "Horizon Fountain Plaza",
+    x: 46,
+    y: 75,
+    level: "Thalendor Residential District",
+    world: "Elysium",
+    chapter: 422,
+    details: "A tranquil circular plaza near the Horizon Bazaar featuring a crystal fountain that sprays nourishing mana mist over exotic flower gardens."
   }
 ];

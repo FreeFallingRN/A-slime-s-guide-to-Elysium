@@ -354,6 +354,19 @@ export const charactersCompendium = [
         age: null,
         bio: "A Level 15 Legendary Spirit Fox and the supreme leader of Astralis Requiem. Clad in an aura of refined spiritual authority, she commands profound mental and illusion magic, expertly directing the guild's elite vanguards and strategic expansion from the Silent Star Garden.",
         revealLink: true
+      },
+      {
+        chapter: 438,
+        name: "Lisa",
+        world: "Elysium",
+        role: "Level 16 Spirit Fox Leader",
+        race: "Spiritual Fox",
+        raceRarity: "Legendary",
+        class: "Illusion Weaver",
+        classRarity: "Rare",
+        age: null,
+        bio: "A majestic, pure-white two-tailed Spirit Fox radiating refined spiritual heat and golden mana flames, possessing sharp golden eyes and imposing predatory elegance. As the president and visionary co-founder of Astralis Requiem, she directs the guild's elite expansion, member logistics, and high-stakes diplomatic alliances from the Amber Tree in Mythlorien. Calm, strategic, and fiercely protective of her inner circle, Lisa combines aristocratic corporate leadership with tactical decisiveness. A Level 16 Legendary combatant whose physical muscle fibers, agility, and spiritual core have been permanently reinforced through daily refined biomass infusions, she wields supercharged illusion weaving, spiritual flames, and amplified baseline stat scaling.",
+        revealLink: true
       }
     ]
   },
@@ -419,6 +432,15 @@ export const charactersCompendium = [
         role: "Allied Heiress & Close Companion",
         age: 18,
         bio: "The brilliant red-haired heiress of the Vance Group megacorporation and co-founder of Astralis Requiem. Balancing immense family influence with independent ambition, she acts as Lohan's closest confidante, patron, and equal partner in the Upper Zone, commanding vast corporate intelligence networks and top-tier logistics.",
+        revealLink: true
+      },
+      {
+        chapter: 444,
+        name: "Isabella Vance",
+        world: "Sectors",
+        role: "Awakened Vance Heiress",
+        age: 18,
+        bio: "An 18-year-old student and heiress distinguished by striking crimson-red hair, pale flawless skin, refined athletic posture, and emerging Spirit Fox sensory traits in the physical world. Residing in Sector 4's Upper Zone as the sole heiress to the Vance Group megacorporation, she commands vast corporate intelligence, advanced neural immersion hardware, and executive resources. Sharp, reserved, and fiercely loyal to Lohan, she conceals her identity as Lisa while managing corporate affairs and investing heavily in their joint guild venture. Backed by elite full-dive immersion and direct real-world cellular biomass transfers from Lohan, she possesses enhanced physical reflexes, heightened senses, and accelerating cross-dimensional evolution.",
         revealLink: true
       }
     ]
@@ -508,13 +530,13 @@ export const charactersCompendium = [
         chapter: 50,
         name: "Vulre",
         world: "Elysium",
-        role: "Royal Elven Bodyguard",
+        role: "Noble Elven Guardian",
         race: "Elf",
         raceRarity: "Rare",
         class: "Swordsman",
         classRarity: "Common",
         age: null,
-        bio: "A distinguished high-elven royal guard and master swordsman charged with protecting Thalendor's young nobility. Possesses the refined, aristocratic poise of an elite royal butler, commands centuries of refined swordsmanship, and holds deep respect for Lady Aeliana.",
+        bio: "A distinguished high-elven guardian and master swordsman charged with protecting Thalendor's young nobility. Possesses the refined, aristocratic poise of an elite retainer, commands centuries of refined swordsmanship, and holds deep respect for Lady Aeliana.",
         revealLink: false
       }
     ]
@@ -530,7 +552,7 @@ export const charactersCompendium = [
         chapter: 50,
         name: "Elara",
         world: "Elysium",
-        role: "Royal Elven Bodyguard",
+        role: "Noble Elven Guardian",
         race: "Elf",
         raceRarity: "Rare",
         class: "Archer",
@@ -542,7 +564,7 @@ export const charactersCompendium = [
     ]
   },
   {
-    id: "elven_princess",
+    id: "lyraethas",
     linkedCharacterId: null,
     isPlayer: false,
     defaultWorld: "Elysium",
@@ -552,7 +574,7 @@ export const charactersCompendium = [
         chapter: 50,
         name: "Noble High-Elven Girl",
         world: "Elysium",
-        role: "High-Elven Royalty",
+        role: "Young Noble Elf",
         race: "Elf",
         raceRarity: "Rare",
         class: "Unknown",
@@ -560,11 +582,24 @@ export const charactersCompendium = [
         age: null,
         bio: "A cheerful young noble high-elf girl from Thalendor featuring long white hair and an ornate green gown of silk and colorful leaves. Fearless and expressive, she affectionately calls Aeliana 'Lia' and bondlessly laughs over shared dread of Archmage Yrneha's homework.",
         revealLink: false
+      },
+      {
+        chapter: 425,
+        name: "Lyraethas",
+        world: "Elysium",
+        role: "Young High Elf",
+        race: "Elf",
+        raceRarity: "Rare",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "A joyful young High Elf girl featuring delicate pointed ears beneath silky white hair, expressive eyes, and a fine dress of silk and leaf patterns under a dark traveling cloak. A young noble of high standing in the capital city of Thalendor, she is guarded by imperial knight Siria alongside her brother Vaelthas and frequently visits the city's gardens to play. Sweet, affectionate, and imaginative, Lyraethas perceives the world with pure wonder, idolizing Halon as a radiant emerald jewel and placing absolute faith in friendly spirit beasts. Possessing innate Elven mana sensitivity, she receives foundational noble education in Thalendor.",
+        revealLink: false
       }
     ]
   },
   {
-    id: "elven_prince",
+    id: "vaelthas",
     linkedCharacterId: null,
     isPlayer: false,
     defaultWorld: "Elysium",
@@ -574,13 +609,26 @@ export const charactersCompendium = [
         chapter: 50,
         name: "Noble High-Elven Boy",
         world: "Elysium",
-        role: "High-Elven Royalty",
+        role: "Young Noble Elf",
         race: "Elf",
         raceRarity: "Rare",
         class: "Unknown",
         classRarity: "Unknown",
         age: null,
-        bio: "A young white-haired noble high-elf boy from Thalendor traveling under royal guard protection. Naturally curious and wide-eyed, he is fascinated by unique creatures and takes an instant liking to Halon's glowing blue slime form.",
+        bio: "A young white-haired noble high-elf boy from Thalendor traveling under high-elven guard protection. Naturally curious and wide-eyed, he is fascinated by unique creatures and takes an instant liking to Halon's glowing blue slime form.",
+        revealLink: false
+      },
+      {
+        chapter: 425,
+        name: "Vaelthas",
+        world: "Elysium",
+        role: "Young High Elf",
+        race: "Elf",
+        raceRarity: "Rare",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "A spirited young High Elf boy featuring bright curious eyes, pointed ears, flowing white hair, and a dark traveling cloak worn over fine elven clothes. Moving through Thalendor under the vigilant protection of imperial knight Siria alongside his sister Lyraethas, he holds prominent standing among the city's nobility. Playful, outspoken, and fiercely loyal to his saviors, Vaelthas openly champions Halon and Lisa, proudly defending them against skeptical city guards. Endowed with innate Elven mana heritage, he is in the foundational stages of noble education in Thalendor.",
         revealLink: false
       }
     ]
@@ -596,7 +644,7 @@ export const charactersCompendium = [
         chapter: 53,
         name: "Yrneha",
         world: "Elysium",
-        role: "High Elven Archmage & Royal Instructor",
+        role: "High Elven Archmage & Master Instructor",
         race: "Elf",
         raceRarity: "Rare",
         class: "Elven Archmage",
@@ -623,12 +671,25 @@ export const charactersCompendium = [
         name: "Yrneha Ylasys",
         world: "Elysium",
         role: "Archmage of Thalendor",
-        race: "High Elf",
-        raceRarity: "Epic",
+        race: "Elf",
+        raceRarity: "Rare",
         class: "Archmage",
         classRarity: "Legendary",
         age: null,
         bio: "The supreme High Elven Archmage of Thalendor, commanding Legendary-tier arcana and boundless authority across the realm. Endowed with near-omnipresent mana perception, she observes the escalating global shifts in Elysium, recognizing Halon's terrifying growth, Level 16 evolution, and Sacred Light aura as power rivaling ancient entities.",
+        revealLink: false
+      },
+      {
+        chapter: 430,
+        name: "Yrneha Ylasys",
+        world: "Elysium",
+        role: "Archmage of Thalendor",
+        race: "Elf",
+        raceRarity: "Rare",
+        class: "Archmage",
+        classRarity: "Legendary",
+        age: null,
+        bio: "An ancient, regal High Elven Archmage clad in ceremonial azure and gold arcane robes, wielding a crystalline staff that channels dense spatial mana. Standing as the supreme Archmage and leading scholarly authority of Thalendor, she oversees the city's high magic tower, municipal council defenses, and arcane research. Pragmatic, exacting, and intellectually demanding, Yrneha values uncompromising integrity, rewarding proven loyalty and exceptional capability with prestigious honors. Commands Legendary-tier spatial compression arcana capable of instantly collapsing dimensional ruptures, alongside omniscient mana perception across the realm.",
         revealLink: false
       }
     ]
@@ -800,6 +861,19 @@ export const charactersCompendium = [
         classRarity: "Common",
         age: null,
         bio: "A cherished member and resident botanical caretaker of Astralis Requiem. No longer a vulnerable village sprite, Elle actively tends to the blooming mana gardens of the Silent Star Garden, supported and protected by the guild's frontline fighters while contributing to guild herbalism and ambient forest purification.",
+        revealLink: false
+      },
+      {
+        chapter: 403,
+        name: "Elle",
+        world: "Elysium",
+        role: "Astralis Requiem Receptionist",
+        race: "Fairy",
+        raceRarity: "Uncommon",
+        class: "Unknown",
+        classRarity: "Common",
+        age: null,
+        bio: "A gentle, palm-sized wood fairy with translucent, petal-like butterfly wings that scatter radiant trails of blue and golden mana sparks as she flits through the air. Living safely alongside her younger brother Pip under Astralis Requiem's protection, Elle serves as the resident botanist and welcoming receptionist at the living Amber Tree headquarters in Mythlorien. Cheerful, bubbly, and fearless, she radiates warm hospitality, intuitively sensing the spiritual depth and mana currents of visiting players. A Level 9–10 sprite, she utilizes acute environmental mana attunement to tend the guild's blooming gardens and guide prospective recruits.",
         revealLink: false
       }
     ]
@@ -2068,6 +2142,72 @@ export const charactersCompendium = [
         age: null,
         bio: "A Level 12 Spearman in Astralis Requiem, celebrated for his precision martial technique and unshakeable composure under fire. Stationed in Mythlorien, Jay trains alongside guild veterans to master advanced polearm arts and prepare for future class advancements.",
         revealLink: true
+      }
+    ]
+  },
+  {
+    id: "dan_warlock",
+    linkedCharacterId: null,
+    isPlayer: true,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 404,
+        name: "Dan",
+        world: "Elysium",
+        role: "Astralis Requiem Vanguard",
+        race: "Unknown",
+        raceRarity: "Epic",
+        class: "Warlock",
+        classRarity: "Unknown",
+        age: null,
+        bio: "A scarred, hooded warlock wielding a black wooden staff, worn leather boots, and a ragged dark cloak with a deep cowl shielding his peeling skin and clouded eyes. Born in the impoverished Lower Zone on Eden-3 alongside his younger brother Sam, he endured harsh social ostracization and rejection by corporate guilds before traveling for weeks across Elysium to join Astralis Requiem as an elite vanguard recruit. Cautious, humble, and fiercely protective of his brother, Dan values mutual respect and tactical discipline over superficial corporate marketing. Backed by a Level 15 Epic base with deep mana reserves, he specializes in crowd-control curses that rot monster armor and vitality to sustain protracted attrition warfare.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "sam_spirit",
+    linkedCharacterId: null,
+    isPlayer: true,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 404,
+        name: "Sam",
+        world: "Elysium",
+        role: "Astralis Requiem Scout",
+        race: "Unknown",
+        raceRarity: "Epic",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "An intangible, ghostly spirit entity radiating a luminous bluish spectral glow that flickers and shifts in harmony with his emotions and forest breezes. Originating from the impoverished Lower Zone on Eden-3, Sam journeyed alongside his older brother Dan to Mythlorien, overcoming pervasive prejudice from corporate recruiters to join Astralis Requiem as a dedicated tactical scout. Observant, empathetic, and gentle-spirited, Sam communicates through direct mental telepathy and shares an unbreakable bond of loyalty with his brother. Endowed with a Level 15 Epic base, he leverages ethereal intangibility, broad sensory reconnaissance, and an innate spirit possession ability that invades beasts' minds to paralyze foes or incite internal chaos among enemy ranks.",
+        revealLink: false
+      }
+    ]
+  },
+  {
+    id: "siria_knight",
+    linkedCharacterId: null,
+    isPlayer: false,
+    defaultWorld: "Elysium",
+    images: [],
+    stages: [
+      {
+        chapter: 424,
+        name: "Siria",
+        world: "Elysium",
+        role: "Thalendor Imperial Guard",
+        race: "Elf",
+        raceRarity: "Rare",
+        class: "Imperial Guard Knight",
+        classRarity: "Rare",
+        age: null,
+        bio: "A tall, athletic High Elf knight with sharp purple eyes, beautiful elven features, polished silver plate armor bearing the imperial emblem of Thalendor, and a long sword inscribed with glowing magical runes. A veteran centenarian soldier in Thalendor's imperial guard, Siria serves as the commander of the personal protection detail for the young nobles Vaelthas and Lyraethas. Highly disciplined, vigilant, and bound by strict martial duty and safety protocols, she remains quick to show sincere reverence and respect toward proven protectors of the realm. Backed by centuries of imperial military service, she commands refined swordsmanship, acute perception, and active runic spellcraft.",
+        revealLink: false
       }
     ]
   }

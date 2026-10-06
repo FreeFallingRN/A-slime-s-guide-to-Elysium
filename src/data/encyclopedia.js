@@ -238,6 +238,18 @@ export const encyclopediaData = {
       base: "Uncommon",
       description: "A wilderness and analytical scouting class with enhanced motion and terminal investigation capabilities.",
       chapter: 385
+    },
+    {
+      name: "Warlock",
+      base: "Unknown",
+      description: "A spellcasting class specializing in debilitation curses, crowd-control magic, and deteriorating enemy vitality and armor.",
+      chapter: 405
+    },
+    {
+      name: "Imperial Guard Knight",
+      base: "Rare",
+      description: "An elite High Elven imperial guard class trained in combining disciplined martial swordsmanship with protective runic wards.",
+      chapter: 424
     }
   ],
   monsters: [
@@ -396,6 +408,11 @@ export const encyclopediaData = {
       name: "Wind Tiger",
       description: "A fearsome Level 15 Elite beast residing in the Ice Mountains, targeted by high-level corporate guilds.",
       chapter: 309
+    },
+    {
+      name: "Psionic Patriarch",
+      description: "A Level 23 psychic monstrosity whose enlarged brain protrudes beyond its skull, capable of overwhelming mental manipulation and psychic crushing.",
+      chapter: 430
     }
   ],
   factions: [
@@ -456,6 +473,11 @@ export const encyclopediaData = {
       ruler: "Garius",
       description: "An aggressive corporate guild in Aethelgard that imposes strict circulation taxes on independent players.",
       chapter: 380
+    },
+    {
+      name: "Thalendor City Council",
+      description: "The governing municipal authority of the elven capital, responsible for enforcing trade laws, certifying guild containment contracts, and maintaining city wards.",
+      chapter: 410
     }
   ],
   dungeons: [
@@ -597,6 +619,11 @@ export const encyclopediaData = {
       name: "Syn Tactical Full-Dive Helmets",
       description: "Premium immersion helmets distributed to the Silver Lotus crew, ending their time-sharing limitations and enabling simultaneous squad logins.",
       chapter: 350
+    },
+    {
+      name: "Syn-Grade Neural Immersion Capsule",
+      description: "Top-of-the-line corporate full-dive capsule featuring advanced tactile, thermal, and olfactory neural simulation with physical fatigue clearing systems.",
+      chapter: 421
     }
   ]
 };
