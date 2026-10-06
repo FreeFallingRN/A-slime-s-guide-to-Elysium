@@ -7,7 +7,7 @@ import {
   estimateDigestionTime,
   calculatePortfolioCost,
   formatDuration
-} from "../src/lib/biomassCalc.js";
+} from "../src/calculators/biomassCalc.js";
 
 function runTest(name, fn) {
   try {
@@ -159,11 +159,20 @@ runTest("expanded canonical abilities are available and unlocked per chapter", (
   assert.ok(ch2Skills.some((s) => s.id === "structural_stability"));
 
   const ch300Skills = getAvailableBiomassSkills(300);
-  assert.ok(ch300Skills.length >= 30);
-  assert.ok(ch300Skills.some((s) => s.id === "killing_intent"));
+  assert.ok(ch300Skills.length >= 25);
+  assert.ok(ch300Skills.some((s) => s.id === "mark_of_rupture"));
+  assert.ok(ch300Skills.some((s) => s.id === "claw_projection"));
+  // Verify magic/combat/utility skills without biomass progression are excluded
+  assert.ok(!ch300Skills.some((s) => s.id === "ice_spike"));
+  assert.ok(!ch300Skills.some((s) => s.id === "wind_blade"));
+  assert.ok(!ch300Skills.some((s) => s.id === "heavy_weapons_affinity"));
+  assert.ok(!ch300Skills.some((s) => s.id === "static_shadow"));
+  assert.ok(!ch300Skills.some((s) => s.id === "pigmentation_mimicry"));
+  assert.ok(!ch300Skills.some((s) => s.id === "threshold_mimicry"));
+  assert.ok(!ch300Skills.some((s) => s.id === "uncontrolled_natural_injection"));
 });
 
-runTest("chapter progression helpers resolve canonical levels without level resets", () => {
+runTest("chapter progression helpers resolve canonical levels across chapters", () => {
   const lvlCh20 = getAbilityLevelAtChapter("efficient_digestion", 20);
   assert.equal(lvlCh20, 10);
 
@@ -174,10 +183,16 @@ runTest("chapter progression helpers resolve canonical levels without level rese
   assert.equal(coreCh157, 21);
 
   const coreCh200 = getAbilityLevelAtChapter("magic_core", 200);
-  assert.equal(coreCh200, 21);
+  assert.equal(coreCh200, 1);
 
   const coreCh263 = getAbilityLevelAtChapter("magic_core", 263);
-  assert.equal(coreCh263, 25);
+  assert.equal(coreCh263, 5);
+
+  const coreCh338 = getAbilityLevelAtChapter("magic_core", 338);
+  assert.equal(coreCh338, 10);
+
+  const coreCh374 = getAbilityLevelAtChapter("magic_core", 374);
+  assert.equal(coreCh374, 11);
 });
 
 runTest("digestion time estimation handles both standard and refined biomass", () => {

@@ -1,15 +1,16 @@
 import { writable, derived } from "svelte/store";
 import { clampChapter, getChapterRange } from "./chapterUtils.js";
 
-// Modular Data Re-exports (100% Backwards Compatible)
+// Modular Data Re-exports
 export { chaptersData } from "../data/chapters.js";
 export { encyclopediaData } from "../data/encyclopedia.js";
-export { characterData, charactersData, abilityProgression } from "../data/abilities.js";
+export { characterData, abilityProgression } from "../data/abilities.js";
 export { mapNodesData } from "../data/mapNodes.js";
+export { charactersCompendium, getCharacterState } from "../data/characters.js";
 
 // Internal imports for reactive stores and helper methods
 import { chaptersData } from "../data/chapters.js";
-import { characterData, charactersData, abilityProgression } from "../data/abilities.js";
+import { characterData, abilityProgression } from "../data/abilities.js";
 import { mapNodesData } from "../data/mapNodes.js";
 
 export const chapterRange = getChapterRange(chaptersData);
@@ -57,8 +58,11 @@ export const activeMapNodes = derived([currentChapter], ([$ch]) =>
 
 // Expose a helper to dynamically fetch locked skill level matching current chapter progression
 export function getAbilityLevel(id, ch) {
-  const milestones = abilityProgression[id] || [];
-  let currentLevel = 1;
+  const milestones = abilityProgression[id];
+  if (!milestones || milestones.length === 0) {
+    return null;
+  }
+  let currentLevel = null;
   for (const m of milestones) {
     if (ch >= m.chapter) {
       currentLevel = m.level;
@@ -68,13 +72,13 @@ export function getAbilityLevel(id, ch) {
 }
 
 // Expose a helper to fetch active character abilities mapped with level progression for a given chapter
-export function getAbilitiesForChapter(characterKey, ch) {
-  let targetCh = ch;
+export function getAbilitiesForChapter(characterOrChapter, maybeChapter) {
+  let targetCh = maybeChapter;
   let character = characterData;
-  if (typeof characterKey === "number") {
-    targetCh = characterKey;
-  } else if (typeof characterKey === "string" && charactersData[characterKey]) {
-    character = charactersData[characterKey];
+  if (typeof characterOrChapter === "number") {
+    targetCh = characterOrChapter;
+  } else if (characterOrChapter && typeof characterOrChapter === "object") {
+    character = characterOrChapter;
   }
   if (!character || !character.abilities) return [];
 

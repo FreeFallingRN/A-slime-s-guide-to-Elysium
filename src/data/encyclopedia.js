@@ -109,6 +109,12 @@ export const encyclopediaData = {
       description:
         "Varkas's rare reptilian race, giving him a strong affinity with lizard-type monsters and making him the core combatant of his raiding trio.",
       chapter: 253
+    },
+    {
+      name: "Draconian",
+      base: "Legendary",
+      description: "A formidable dragon-humanoid race with natural impenetrable red scales and devastating breath abilities.",
+      chapter: 387
     }
   ],
   classes: [
@@ -208,6 +214,42 @@ export const encyclopediaData = {
       description:
         "Stig's support class, capable of sharing passive and active effects among members of a linked group.",
       chapter: 253
+    },
+    {
+      name: "Medusa",
+      base: "Rare",
+      description: "A class reminiscent of the Greek mythological creature with the ability to petrify others with her gaze.",
+      chapter: 311
+    },
+    {
+      name: "Ogre",
+      base: "Rare",
+      description: "A brute-force class being treated as 'dumb muscle' by the guilds.",
+      chapter: 311
+    },
+    {
+      name: "Berserker",
+      base: "Rare",
+      description: "A class focused exclusively on combat, primarily enhancing combat instincts and allowing one to ignore the pain of battle to channel that sensation in exchange for more power.",
+      chapter: 127
+    },
+    {
+      name: "Tracker",
+      base: "Uncommon",
+      description: "A wilderness and analytical scouting class with enhanced motion and terminal investigation capabilities.",
+      chapter: 385
+    },
+    {
+      name: "Warlock",
+      base: "Unknown",
+      description: "A spellcasting class specializing in debilitation curses, crowd-control magic, and deteriorating enemy vitality and armor.",
+      chapter: 405
+    },
+    {
+      name: "Imperial Guard Knight",
+      base: "Rare",
+      description: "An elite High Elven imperial guard class trained in combining disciplined martial swordsmanship with protective runic wards.",
+      chapter: 424
     }
   ],
   monsters: [
@@ -341,6 +383,36 @@ export const encyclopediaData = {
       description:
         "Reptilian monsters used in the attack on Petal Village under Varkas's control and support-class synergy.",
       chapter: 253
+    },
+    {
+      name: "Arboreal Guardian",
+      description: "A Level 15 Dungeon Boss in the Whispering Cavern possessing catastrophic physical slams and symbiotic insects.",
+      chapter: 324
+    },
+    {
+      name: "Sentinel of Rot",
+      description: "A Level 15 wooden construct guarding the Whispering Cavern, utilizing corrosive acidic bursts and vacuum detonations.",
+      chapter: 317
+    },
+    {
+      name: "Black Core Watcher",
+      description: "Level 15 Elite gatekeepers connected by pulsating mana vines that project protective energy barriers.",
+      chapter: 322
+    },
+    {
+      name: "Litho-Crabs",
+      description: "Level 11-12 armored crustaceans inhabiting stony terrain, with ironshell defense vulnerable to ice and wind blades.",
+      chapter: 365
+    },
+    {
+      name: "Wind Tiger",
+      description: "A fearsome Level 15 Elite beast residing in the Ice Mountains, targeted by high-level corporate guilds.",
+      chapter: 309
+    },
+    {
+      name: "Psionic Patriarch",
+      description: "A Level 23 psychic monstrosity whose enlarged brain protrudes beyond its skull, capable of overwhelming mental manipulation and psychic crushing.",
+      chapter: 430
     }
   ],
   factions: [
@@ -371,8 +443,9 @@ export const encyclopediaData = {
     },
     {
       name: "Silver Lotus",
+      ruler: "Skye",
       description:
-        "A Lower Zone group led by Skye, first seen protecting Oliver from local predators and later revealed through Devon as a possible pool of trustworthy Open World recruits.",
+        "A tight-knit youth gang operating out of a decommissioned drone maintenance hangar in Sector 4 (Eden-3 Lower Zone), recognizable by their silver jackets and white sports hover-motorcycles bearing a silver lotus flower emblem. Originally founded for mutual protection against corrupt street syndicates (Asphyxia Gang) and predatory corporations, they shared a single stolen Elysium immersion helmet in rotation. Following a hardware loan and partnership agreement with Lohan Hayes (Halon) and Isabella Vance, the 7-player squad (Skye/Lotus, Devon/Vonde, Jenny, Zach, Kai/Kaicent, Sara, and Jay) integrated into Astralis Requiem as an elite tactical vanguard unit based at the Silent Star Garden in Mythlorien.",
       chapter: 124
     },
     {
@@ -394,6 +467,17 @@ export const encyclopediaData = {
       description:
         "Ernesto Hogue's Elysium organization after losing the first-guild race, later tied to Brynnear's Matriarch experiments in Silverport.",
       chapter: 227
+    },
+    {
+      name: "Broken Suns",
+      ruler: "Garius",
+      description: "An aggressive corporate guild in Aethelgard that imposes strict circulation taxes on independent players.",
+      chapter: 380
+    },
+    {
+      name: "Thalendor City Council",
+      description: "The governing municipal authority of the elven capital, responsible for enforcing trade laws, certifying guild containment contracts, and maintaining city wards.",
+      chapter: 410
     }
   ],
   dungeons: [
@@ -402,6 +486,11 @@ export const encyclopediaData = {
       description:
         "A titan of amber and fossilized metal-hard wood serving as a Level 10 dungeon overrun by Glass Beetles, chosen by Lisa as the prospective Astralis Guild base.",
       chapter: 93
+    },
+    {
+      name: "Whispering Cavern",
+      description: "A treacherous subterranean Level 15 dungeon in Mythlorien saturated with rot and acidic corruption, conquered first by Astralis Requiem.",
+      chapter: 303
     }
   ],
   technology: [
@@ -505,6 +594,36 @@ export const encyclopediaData = {
       description:
         "An important Petal Village treasure sought during Varkas's raid, valuable enough to draw predatory player attention toward the fairy settlement.",
       chapter: 258
+    },
+    {
+      name: "Stellar Lament",
+      description: "Astralis Requiem's Guild Sovereignty Skill granting +15% to +20% to all stats and regeneration for 5 minutes, followed by 15 minutes of astral exhaustion.",
+      chapter: 327
+    },
+    {
+      name: "Star Walking",
+      description: "Astralis Requiem passive ability granting +10% agility and reduced stamina consumption for out-of-combat grouped members.",
+      chapter: 331
+    },
+    {
+      name: "Hybrid Level 15 Dungeon Core",
+      description: "The evolved heart of Astralis headquarters created by the Level 10 Amber Tree core digesting the Level 15 Whispering Cavern core, unlocking base Level 2 bonuses.",
+      chapter: 336
+    },
+    {
+      name: "Armored Aerocar",
+      description: "A high-end personal aircraft equipped with cyan-glowing rear turbines and heavy armor, gifted by Isabella to Lohan for safe travel across sectors.",
+      chapter: 346
+    },
+    {
+      name: "Syn Tactical Full-Dive Helmets",
+      description: "Premium immersion helmets distributed to the Silver Lotus crew, ending their time-sharing limitations and enabling simultaneous squad logins.",
+      chapter: 350
+    },
+    {
+      name: "Syn-Grade Neural Immersion Capsule",
+      description: "Top-of-the-line corporate full-dive capsule featuring advanced tactile, thermal, and olfactory neural simulation with physical fatigue clearing systems.",
+      chapter: 421
     }
   ]
 };

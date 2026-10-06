@@ -19,6 +19,8 @@ suite.addTest(221, 220, false, "Superior Magic Core Lv 2 max mana");
 suite.addTest(248, 220, false, "Level 12 mana");
 suite.addTest(249, 242, false, "Superior Magic Core Lv 3 max mana");
 suite.addTest(263, 292, false, "Superior Magic Core Lv 5 max mana");
+suite.addTest(338, 470, false, "Superior Magic Core Lv 10 max mana");
+suite.addTest(374, 517, false, "Superior Magic Core Lv 11 max mana");
 
 // Run mana tests if executed directly
 suite.run("MANA");

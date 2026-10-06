@@ -19,3 +19,11 @@ Thumbs.db
 *.ntvsca*
 .agents/
 chapters/*
+*.epub
+
+# Temporary scratch, extraction tools, and analysis dumps
+scratch/
+temp/
+tools/temp/
+*.dump
+*dump*.txt

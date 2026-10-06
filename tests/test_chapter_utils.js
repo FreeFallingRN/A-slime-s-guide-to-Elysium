@@ -5,7 +5,7 @@ import {
   getLevelMilestoneIndex,
   getLevelMilestones,
   getTimelineMarkers
-} from "../src/lib/chapterUtils.js";
+} from "../src/calculators/chapterUtils.js";
 
 function runTest(name, fn) {
   try {

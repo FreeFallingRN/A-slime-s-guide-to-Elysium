@@ -1,13 +1,13 @@
 <script>
   import { onMount } from "svelte";
-  import ChapterControl from "./lib/ChapterControl.svelte";
-  import LoreEncyclopedia from "./lib/LoreEncyclopedia.svelte";
-  import StatCalculator from "./lib/StatCalculator.svelte";
-  import BiomassCalculator from "./lib/BiomassCalculator.svelte";
-  import Map from "./lib/Map.svelte";
-  import Visual3D from "./lib/Visual3D.svelte";
-  import Characters from "./lib/Characters.svelte";
-  import OnboardingModal from "./lib/OnboardingModal.svelte";
+  import ChapterControl from "./components/ChapterControl.svelte";
+  import LoreEncyclopedia from "./components/LoreEncyclopedia.svelte";
+  import StatCalculator from "./components/StatCalculator.svelte";
+  import BiomassCalculator from "./components/BiomassCalculator.svelte";
+  import Map from "./components/Map.svelte";
+  import Visual3D from "./components/Visual3D.svelte";
+  import Characters from "./components/Characters.svelte";
+  import OnboardingModal from "./components/OnboardingModal.svelte";
 
   import {
     BookOpen,

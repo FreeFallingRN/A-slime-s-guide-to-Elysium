@@ -65,7 +65,7 @@ export const mapNodesData = [
   },
   {
     id: "thalendor",
-    name: "Thalendor Royal Capital",
+    name: "Thalendor Capital",
     x: 85,
     y: 70,
     level: "Elven Capital",
@@ -234,5 +234,65 @@ export const mapNodesData = [
     chapter: 284,
     details:
       "A high-end district visited by Lohan and Isabella, showing the scale of resources available outside Lohan's former Lower Zone life."
+  },
+  {
+    id: "whispering_cavern",
+    name: "Whispering Cavern",
+    x: 70,
+    y: 55,
+    level: "Suggested Lv: 14-15",
+    world: "Elysium",
+    chapter: 303,
+    details: "Subterranean cavern system beneath Mythlorien, home to the Level 15 Arboreal Sovereign and acidic corruption."
+  },
+  {
+    id: "aethelgard_city",
+    name: "Aethelgard City",
+    x: 30,
+    y: 75,
+    level: "Major City Zone",
+    world: "Elysium",
+    chapter: 358,
+    details: "Sprawling settlement where player guilds like Broken Suns enforce harsh circulation taxes."
+  },
+  {
+    id: "sector_4_skyline_penthouse",
+    name: "Skyline Heaven Penthouse",
+    x: 35,
+    y: 60,
+    level: "Upper Zone Residence",
+    world: "Sectors",
+    chapter: 301,
+    details: "Lohan's luxury penthouse in Skyline Heaven with high-grade air purification and Syn terminal."
+  },
+  {
+    id: "bronze_oak_tavern",
+    name: "The Bronze Oak",
+    x: 32,
+    y: 78,
+    level: "Aethelgard Outpost",
+    world: "Elysium",
+    chapter: 390,
+    details: "Prominent tavern in Aethelgard used for guild negotiations, recruitments, and undercover meetings."
+  },
+  {
+    id: "thalendor_northern_rift",
+    name: "Thalendor Northern Gorge Rift",
+    x: 42,
+    y: 72,
+    level: "Hazard Zone / Void Leak",
+    world: "Elysium",
+    chapter: 410,
+    details: "A dark rocky gorge north of Thalendor where Broken Suns installed a fraudulent rune containment over a volatile void mana rift."
+  },
+  {
+    id: "horizon_fountain_plaza",
+    name: "Horizon Fountain Plaza",
+    x: 46,
+    y: 75,
+    level: "Thalendor Residential District",
+    world: "Elysium",
+    chapter: 422,
+    details: "A tranquil circular plaza near the Horizon Bazaar featuring a crystal fountain that sprays nourishing mana mist over exotic flower gardens."
   }
 ];

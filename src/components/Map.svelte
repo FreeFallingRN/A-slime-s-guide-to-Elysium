@@ -1,5 +1,5 @@
 <script>
-  import { currentChapter, activeMapNodes } from "./store.js";
+  import { currentChapter, activeMapNodes } from "../calculators/store.js";
   import { MapPin, EyeOff, Radio, Locate, Compass } from "lucide-svelte";
 
   let activeWorld = "Elysium"; // 'Elysium' or 'Sectors'

@@ -1,6 +1,6 @@
 <script>
-  import { currentChapter } from "./store.js";
-  import { charactersCompendium, getCharacterState } from "./charactersData.js";
+  import { currentChapter } from "../calculators/store.js";
+  import { charactersCompendium, getCharacterState } from "../data/characters.js";
   import {
     Users,
     Globe,

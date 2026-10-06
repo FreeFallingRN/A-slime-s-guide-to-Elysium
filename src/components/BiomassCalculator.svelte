@@ -4,8 +4,8 @@
     activeChapterDetails,
     characterData,
     getAbilitiesForChapter
-  } from "./store.js";
-  import { runCalculation } from "./calc.js";
+  } from "../calculators/store.js";
+  import { runCalculation } from "../calculators/calc.js";
   import {
     calculateBiomassCost,
     getAvailableBiomassSkills,
@@ -13,7 +13,7 @@
     estimateDigestionTime,
     calculatePortfolioCost,
     LEVEL_11_BIOMASS_UNIT_SCALE
-  } from "./biomassCalc.js";
+  } from "../calculators/biomassCalc.js";
   import {
     Sparkles,
     AlertTriangle,

@@ -1,5 +1,5 @@
 <script>
-  import { currentChapter, encyclopediaData } from "./store.js";
+  import { currentChapter, encyclopediaData } from "../calculators/store.js";
   import {
     BookOpen,
     Search,
