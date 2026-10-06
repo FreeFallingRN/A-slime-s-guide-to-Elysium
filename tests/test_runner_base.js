@@ -1,5 +1,5 @@
-import { runCalculation } from "../src/lib/calc.js";
-import { getAbilitiesForChapter, characterData, chaptersData } from "../src/lib/store.js";
+import { runCalculation } from "../src/calculators/calc.js";
+import { getAbilitiesForChapter, characterData, chaptersData } from "../src/calculators/store.js";
 
 const baseStats = characterData.baseStats;
 

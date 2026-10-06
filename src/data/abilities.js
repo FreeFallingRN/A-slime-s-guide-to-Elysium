@@ -43,6 +43,8 @@
  * @property {string} id - Unique identifier for the ability
  * @property {string} name - Display name
  * @property {string[]} [aliases] - Alternative canonical search/match terms
+ * @property {"evolution"|"skill"} [category] - Evolution vs Active/Passive Skill
+ * @property {"magic"|"combat"|"stealth"|"technique"|"aura"} [subCategory] - Skill subclassification
  * @property {"digestion"|"mana"|"speed"|"none"} target - Stat axis modified
  * @property {number} [value] - Stat calculation multiplier or factor
  * @property {number} chapter - Chapter in which the ability is unlocked
@@ -93,6 +95,7 @@ export const characterData = {
     {
       id: "efficient_digestion",
       name: "Efficient Digestion",
+      category: "evolution",
       target: "digestion",
       value: 0.1,
       chapter: 2,
@@ -131,6 +134,7 @@ export const characterData = {
     {
       id: "viscous_flow",
       name: "Viscous Flow",
+      category: "evolution",
       target: "speed",
       value: 0.1,
       chapter: 2,
@@ -161,16 +165,19 @@ export const characterData = {
         { chapter: 98, level: 24 },
         { chapter: 150, level: 25 },
         { chapter: 157, level: 27 },
-        { chapter: 204, level: 36 }
+        { chapter: 204, level: 36 },
+        { chapter: 338, level: 50 }
       ],
       biomass: {
         baseCost: 1,
-        knownSteps: [{ from: 27, to: 28, cost: 0.2 }]
+        knownSteps: [{ from: 27, to: 28, cost: 0.2 }],
+        knownRanges: [{ from: 36, to: 50, cost: 59.2 }]
       }
     },
     {
       id: "structural_stability",
       name: "Structural Stability",
+      category: "evolution",
       target: "none",
       value: 1.0,
       chapter: 2,
@@ -204,6 +211,7 @@ export const characterData = {
     {
       id: "hemolymphatic_tissue",
       name: "Hemolymphatic Tissue",
+      category: "evolution",
       target: "digestion",
       value: 0.2,
       chapter: 4,
@@ -237,6 +245,7 @@ export const characterData = {
     {
       id: "passive_digestion",
       name: "Passive Digestion",
+      category: "evolution",
       target: "digestion",
       value: 0.1,
       chapter: 5,
@@ -260,6 +269,7 @@ export const characterData = {
     {
       id: "mass_expansion",
       name: "Mass Expansion",
+      category: "evolution",
       target: "digestion",
       value: 0.3,
       chapter: 9,
@@ -294,6 +304,7 @@ export const characterData = {
     {
       id: "membrane_reinforcement",
       name: "Membrane Reinforcement",
+      category: "evolution",
       target: "none",
       value: 1.0,
       chapter: 2,
@@ -325,6 +336,7 @@ export const characterData = {
     {
       id: "instinctive_perception",
       name: "Instinctive Perception",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 8,
@@ -357,6 +369,7 @@ export const characterData = {
     {
       id: "reinforced_exoskeleton",
       name: "Reinforced Exoskeleton",
+      category: "evolution",
       target: "none",
       chapter: 11,
       description: "Consumes Biomass to generate a resistant Exoskeleton around the body.",
@@ -374,6 +387,7 @@ export const characterData = {
     {
       id: "obsidian_exoskeleton",
       name: "Obsidian Exoskeleton",
+      category: "evolution",
       target: "none",
       chapter: 71,
       replaces: "reinforced_exoskeleton",
@@ -382,15 +396,18 @@ export const characterData = {
       progression: [
         { chapter: 71, level: 1 },
         { chapter: 93, level: 3 },
-        { chapter: 96, level: 4 }
+        { chapter: 96, level: 4 },
+        { chapter: 338, level: 21 }
       ],
       biomass: {
-        baseCost: 20
+        baseCost: 20,
+        knownRanges: [{ from: 14, to: 21, cost: 103.05 }]
       }
     },
     {
       id: "body_density",
       name: "Body Density",
+      category: "evolution",
       target: "none",
       value: 0.1,
       chapter: 14,
@@ -414,6 +431,7 @@ export const characterData = {
     {
       id: "partial_division",
       name: "Partial Division",
+      category: "evolution",
       target: "digestion",
       value: 0.3,
       chapter: 16,
@@ -434,6 +452,7 @@ export const characterData = {
     {
       id: "memory_resonance",
       name: "Memory Resonance",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 25,
@@ -451,6 +470,7 @@ export const characterData = {
     {
       id: "magic_core",
       name: "Magic Core",
+      category: "evolution",
       target: "mana",
       value: 0.1,
       chapter: 25,
@@ -469,9 +489,15 @@ export const characterData = {
           chapter: 200,
           type: "evolution",
           name: "Superior Magic Core",
-          level: 1,
           description:
             "A superior vital core expanded further to support the opening of multiple independent mana paths operating simultaneously, allowing clones and main body to channel multiple spells concurrently."
+        },
+        {
+          chapter: 374,
+          type: "trait",
+          traitName: "Ethereal Resonance",
+          traitDescription:
+            "Mana now flows at a vibrational frequency that allows the user to detect hidden magical signatures within a fifty meter radius, acting as a passive, high fidelity sonar."
         }
       ],
       progression: [
@@ -482,31 +508,33 @@ export const characterData = {
         { chapter: 100, level: 11 },
         { chapter: 133, level: 14 },
         { chapter: 157, level: 21 },
-        { chapter: 200, level: 21 },
-        { chapter: 221, level: 22 },
-        { chapter: 249, level: 23 },
-        { chapter: 263, level: 25 }
+        { chapter: 200, level: 1 },
+        { chapter: 221, level: 2 },
+        { chapter: 249, level: 3 },
+        { chapter: 263, level: 5 },
+        { chapter: 338, level: 10 },
+        { chapter: 374, level: 11 }
       ],
       biomass: {
-        baseCost: 10
+        baseCost: 10,
+        knownRanges: [{ from: 25, to: 30, cost: 10.1 }]
       }
     },
     {
       id: "ice_spike",
       name: "Ice Spike",
+      category: "skill",
+      subCategory: "magic",
       target: "none",
       value: 0.15,
       chapter: 26,
       description:
         "Channels concentrated frozen mana to conjure and launch a crystalline ice projectile.",
-      progression: [{ chapter: 26, level: 1 }],
-      biomass: {
-        baseCost: 5
-      }
     },
     {
       id: "chemosensory_aptitude",
       name: "Chemosensory Aptitude",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 30,
@@ -526,19 +554,18 @@ export const characterData = {
     {
       id: "pigmentation_mimicry",
       name: "Pigmentation Mimicry",
+      category: "skill",
+      subCategory: "magic",
       target: "none",
       value: 0.0,
       chapter: 41,
       description:
         "Rewires skin chromatophores to mirror surrounding textures as active camouflage.",
-      progression: [{ chapter: 41, level: 1 }],
-      biomass: {
-        baseCost: 1
-      }
     },
     {
       id: "pack_instinct",
       name: "Pack Instinct",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 49,
@@ -556,6 +583,7 @@ export const characterData = {
     {
       id: "magic_harmonizer",
       name: "Magic Core Harmonizer",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 54,
@@ -566,9 +594,15 @@ export const characterData = {
           chapter: 200,
           type: "evolution",
           name: "Natural Magic Core Harmonizer",
-          level: 1,
           description:
             "A natural organ that synchronizes control over the magic core’s Mana with the body’s motor needs is more efficient than an artificial one. This synchronization reduces the delay between thought and the execution of magic, increasing the efficiency and control of Mana usage at each level."
+        },
+        {
+          chapter: 374,
+          type: "trait",
+          traitName: "Instant Flow",
+          traitDescription:
+            "Synaptic processing has been optimized so that low cost spells no longer require a channeling time, allowing instant casting while moving without loss of precision."
         }
       ],
       progression: [
@@ -576,8 +610,9 @@ export const characterData = {
         { chapter: 93, level: 7 },
         { chapter: 100, level: 8 },
         { chapter: 139, level: 9 },
-        { chapter: 200, level: 9 },
-        { chapter: 262, level: 15 }
+        { chapter: 200, level: 1 },
+        { chapter: 262, level: 7 },
+        { chapter: 374, level: 11 }
       ],
       biomass: {
         baseCost: 20
@@ -586,14 +621,25 @@ export const characterData = {
     {
       id: "monocular_vision",
       name: "Telescopic Vision",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 55,
       description:
         "Narrows peripheral focus into a precise long-range zoom, improving spatial reaction time.",
+      upgrades: [
+        {
+          chapter: 374,
+          type: "trait",
+          traitName: "Identification Lens",
+          traitDescription:
+            "The user can now see the base level and rarity of nearby items or creatures without needing another active Inspection Skill."
+        }
+      ],
       progression: [
         { chapter: 55, level: 1 },
-        { chapter: 93, level: 9 }
+        { chapter: 93, level: 9 },
+        { chapter: 374, level: 11 }
       ],
       biomass: {
         baseCost: 1
@@ -602,32 +648,29 @@ export const characterData = {
     {
       id: "heavy_weapons_affinity",
       name: "Affinity with Heavy Weapons",
+      category: "skill",
+      subCategory: "combat",
       target: "none",
       value: 0.0,
       chapter: 55,
       description:
         "Assimilates muscle memory to handle heavy impact weapons and axes with enhanced balance and leverage.",
-      progression: [{ chapter: 55, level: 1 }],
-      biomass: {
-        baseCost: 1
-      }
     },
     {
       id: "static_shadow",
       name: "Static Shadow",
+      category: "skill",
+      subCategory: "stealth",
       target: "none",
       value: 0.0,
       chapter: 55,
       description:
         "Alters body pigmentation and density to blend seamlessly into shadows as long as the user remains completely motionless.",
-      progression: [{ chapter: 55, level: 1 }],
-      biomass: {
-        baseCost: 1
-      }
     },
     {
       id: "magic_weaving",
       name: "Magic Weaving",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 61,
@@ -645,16 +688,27 @@ export const characterData = {
     {
       id: "thermographic_perception",
       name: "Thermographic Perception",
+      category: "evolution",
       aliases: ["Thermal Perception"],
       target: "none",
       value: 0.0,
       chapter: 68,
       description:
         "Maps thermal signatures of living beings through the membrane's infrared sensitivity, detecting hidden or camouflaged targets in total darkness.",
+      upgrades: [
+        {
+          chapter: 375,
+          type: "trait",
+          traitName: "Penetrating Vision",
+          traitDescription:
+            "The user can now detect heat signatures even through thin walls or shallow ground, mapping the position of living beings even in fully enclosed environments."
+        }
+      ],
       progression: [
         { chapter: 68, level: 1 },
         { chapter: 68, level: 4 },
-        { chapter: 93, level: 9 }
+        { chapter: 93, level: 9 },
+        { chapter: 375, level: 11 }
       ],
       biomass: {
         baseCost: 1
@@ -663,26 +717,35 @@ export const characterData = {
     {
       id: "threshold_mimicry",
       name: "Threshold Mimicry",
+      category: "skill",
+      subCategory: "magic",
       target: "none",
       value: 0.0,
       chapter: 68,
       description:
         "While in shadowed or dark environments, the body passively absorbs ambient darkness to suppress its own visual signature against low-level detection.",
-      progression: [{ chapter: 68, level: 1 }],
-      biomass: {
-        baseCost: 1
-      }
     },
     {
       id: "biological_elasticity",
       name: "Biological Elasticity",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 80,
       description: "Improves biological compression and elastic recovery capacity.",
+      upgrades: [
+        {
+          chapter: 374,
+          type: "trait",
+          traitName: "Internal Non-Newtonian Reaction",
+          traitDescription:
+            "The Slime’s internal structure can suddenly become dense on impact, protecting the vital core against deep punctures even if the outer membrane is breached."
+        }
+      ],
       progression: [
         { chapter: 80, level: 1 },
-        { chapter: 93, level: 5 }
+        { chapter: 93, level: 5 },
+        { chapter: 374, level: 11 }
       ],
       biomass: {
         baseCost: 1
@@ -691,13 +754,24 @@ export const characterData = {
     {
       id: "hydrophobic_coating",
       name: "Hydrophobic Coating",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 80,
       description: "Reduces the dilution of gelatinous mass in contact with water.",
+      upgrades: [
+        {
+          chapter: 375,
+          type: "trait",
+          traitName: "Ionic Navigation",
+          traitDescription:
+            "The Slime can now glide across the surface of water at high speed, reducing molecular friction and allowing aquatic movement as fluid as movement on land."
+        }
+      ],
       progression: [
         { chapter: 80, level: 1 },
-        { chapter: 93, level: 3 }
+        { chapter: 93, level: 3 },
+        { chapter: 375, level: 11 }
       ],
       biomass: {
         baseCost: 1
@@ -706,13 +780,24 @@ export const characterData = {
     {
       id: "poison_production",
       name: "Poison Production",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 88,
       description: "Consumes biomass to produce small amounts of poison.",
+      upgrades: [
+        {
+          chapter: 375,
+          type: "trait",
+          traitName: "Solar Toxin",
+          traitDescription:
+            "The venom produced now carries traces of sacred light, making it effective even against undead creatures or demons that would normally be immune to biological venoms."
+        }
+      ],
       progression: [
         { chapter: 88, level: 1 },
-        { chapter: 93, level: 7 }
+        { chapter: 93, level: 7 },
+        { chapter: 375, level: 11 }
       ],
       biomass: {
         baseCost: 1
@@ -721,6 +806,7 @@ export const characterData = {
     {
       id: "natural_energy_core",
       name: "Natural Energy Core",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 104,
@@ -738,30 +824,54 @@ export const characterData = {
     {
       id: "weaver_mother",
       name: "Weaver Mother",
+      category: "evolution",
+      aliases: ["Vital Pulse Injection"],
       target: "none",
       value: 0.0,
       chapter: 118,
       description:
         "Allows the creation of biological threads fused with Mana. The filaments are extremely resistant and adhesive, capable of immobilizing targets and passively draining the magical energy of any living being in direct contact with the web. In addition to immobilizing and draining energy, the Mana-infused threads act as bidirectional conductors. This evolution allows for the direct injection of Mana and refined Biomass into the system of any being entangled by the web or in symbiotic contact with the user.",
+      upgrades: [
+        {
+          chapter: 338,
+          type: "trait",
+          traitName: "Vital Pulse Injection",
+          traitDescription:
+            "Allows the user to send instant bursts of Mana and Vitality through threads or direct contact that penetrate the target’s skin, enabling emergency healing much faster than external injection."
+        }
+      ],
       progression: [
-        { chapter: 118, level: 1 },
-        { chapter: 118, level: 2 }
+        { chapter: 118, level: 2 },
+        { chapter: 315, level: 6 },
+        { chapter: 338, level: 13 }
       ],
       biomass: {
-        baseCost: 150
+        baseCost: 150,
+        knownRanges: [{ from: 6, to: 13, cost: 101.63 }]
       }
     },
     {
       id: "sharpened_instinct",
       name: "Sharpened Instinct",
+      category: "evolution",
       target: "none",
       value: 0.05,
       chapter: 137,
       description:
         "The organism assimilates the synaptic patterns and nervous reflexes of an elite feline predator, increasing reaction speed by 5% per level.",
+      upgrades: [
+        {
+          chapter: 374,
+          type: "trait",
+          traitName: "Impact Prediction",
+          traitDescription:
+            "The user’s reflexes can now pick up on minimal changes in air pressure, allowing them to anticipate the trajectory of physical projectiles within fractions of a second."
+        }
+      ],
       progression: [
         { chapter: 137, level: 1 },
-        { chapter: 152, level: 7 }
+        { chapter: 152, level: 7 },
+        { chapter: 374, level: 11 }
       ],
       biomass: {
         baseCost: 10
@@ -770,6 +880,7 @@ export const characterData = {
     {
       id: "explosive_steps",
       name: "Explosive Steps",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 151,
@@ -787,15 +898,27 @@ export const characterData = {
     {
       id: "vacuum_detonation",
       name: "Vacuum Detonation",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 156,
       description:
         "Allows for the extreme compression of Mana at the extremities of the body to manipulate atmospheric pressure through high-frequency physical movements. By striking the air or the ground with explosive force, the user is able to collapse ambient pressure, creating a sudden vacuum that pulls everything around it, resulting in a kinetic detonation.",
+      upgrades: [
+        {
+          chapter: 375,
+          type: "trait",
+          traitName: "Prolonged Collapse",
+          traitDescription:
+            "The generated vacuum now keeps the suction point active for three seconds before detonating, pulling distant enemies toward the center of the impact with doubled gravitational force."
+        }
+      ],
       progression: [
         { chapter: 156, level: 1 },
         { chapter: 157, level: 2 },
-        { chapter: 158, level: 4 }
+        { chapter: 158, level: 4 },
+        { chapter: 322, level: 3 },
+        { chapter: 375, level: 11 }
       ],
       biomass: {
         baseCost: 20
@@ -804,6 +927,7 @@ export const characterData = {
     {
       id: "holy_light",
       name: "Holy Light",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 173,
@@ -817,14 +941,29 @@ export const characterData = {
     {
       id: "sacred_light_core",
       name: "Sacred Light Core",
-      aliases: ["Core of Holy Light"],
+      category: "evolution",
+      aliases: ["Core of Holy Light", "Holy Light Core"],
       target: "none",
       value: 0.0,
       chapter: 173,
       description:
         "Emitting constant pulses that synchronize cellular structure with the energy of nature’s Sacred Light.",
       absorbs: ["natural_energy_core", "holy_light"],
-      progression: [{ chapter: 173, level: 1 }],
+      upgrades: [
+        {
+          chapter: 375,
+          type: "trait",
+          traitName: "Active Purification",
+          traitDescription:
+            "The light aura now automatically purifies any external venom or curse attempting to penetrate the user’s membrane, acting as a magical and spiritual immune system."
+        }
+      ],
+      progression: [
+        { chapter: 173, level: 1 },
+        { chapter: 312, level: 2 },
+        { chapter: 337, level: 4 },
+        { chapter: 375, level: 11 }
+      ],
       biomass: {
         baseCost: 300
       }
@@ -832,19 +971,18 @@ export const characterData = {
     {
       id: "uncontrolled_natural_injection",
       name: "Uncontrolled Natural Injection",
+      category: "skill",
+      subCategory: "technique",
       target: "none",
       value: 0.0,
       chapter: 203,
       description:
         "Allows for the extreme injection of Natural Energy into a specific point, causing an energy imbalance in the target’s body. If the target’s control is low, there is a high possibility of turning to stone.",
-      progression: [{ chapter: 203, level: 1 }],
-      biomass: {
-        baseCost: 50
-      }
     },
     {
       id: "colossus_charge",
       name: "Colossus Charge",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 235,
@@ -858,13 +996,27 @@ export const characterData = {
     {
       id: "mark_of_rupture",
       name: "Mark of Rupture",
-      aliases: ["Stigma of Rupture"],
+      category: "evolution",
+      aliases: ["Stigma of Rupture", "Rupture Mark"],
       target: "none",
       value: 0.0,
       chapter: 247,
       description:
         "Creates a structural weak point; the next physical or magical hit on the mark doubles kinetic piercing damage.",
-      progression: [{ chapter: 247, level: 1 }],
+      upgrades: [
+        {
+          chapter: 374,
+          type: "trait",
+          traitName: "Chain Rupture",
+          traitDescription:
+            "Upon striking a marked point, the piercing damage now spreads to the target’s nearest joints, drastically hindering their movement."
+        }
+      ],
+      progression: [
+        { chapter: 247, level: 1 },
+        { chapter: 324, level: 5 },
+        { chapter: 374, level: 11 }
+      ],
       biomass: {
         baseCost: 50
       }
@@ -872,6 +1024,7 @@ export const characterData = {
     {
       id: "claw_projection",
       name: "Claw Projection",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 258,
@@ -889,6 +1042,7 @@ export const characterData = {
     {
       id: "synergy_link",
       name: "Synergy Link",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 258,
@@ -906,6 +1060,7 @@ export const characterData = {
     {
       id: "racial_command",
       name: "Racial Command",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 258,
@@ -923,6 +1078,7 @@ export const characterData = {
     {
       id: "killing_intent",
       name: "Killing Intent",
+      category: "evolution",
       target: "none",
       value: 0.0,
       chapter: 278,
@@ -932,28 +1088,38 @@ export const characterData = {
       biomass: {
         baseCost: 50
       }
+    },
+    {
+      id: "wind_blade",
+      name: "Wind Blade",
+      category: "skill",
+      subCategory: "magic",
+      target: "none",
+      value: 0.0,
+      chapter: 360,
+      description:
+        "Control the wind element to form a thin blade of wind capable of cutting enemies.",
     }
   ]
 };
 
-export const charactersData = {
-  halon: characterData
-};
 
 /**
- * Derived map of ability level milestones by ability ID
+ * Derived map of ability level milestones by ability ID (Evolutions with level progression)
  * @type {Record<string, ProgressionMilestone[]>}
  */
 export const abilityProgression = Object.fromEntries(
-  characterData.abilities.map((ability) => [ability.id, ability.progression || []])
+  characterData.abilities
+    .filter((ability) => ability.progression && ability.progression.length > 0)
+    .map((ability) => [ability.id, ability.progression])
 );
 
 /**
- * Derived array of ability biomass cost configurations
+ * Derived array of ability biomass cost configurations (Evolutions with biomass scaling)
  * @type {Array<AbilityBiomassConfig & { id: string }>}
  */
 export const BIOMASS_SKILL_COSTS = characterData.abilities
-  .filter((ability) => ability.biomass)
+  .filter((ability) => (ability.category === "evolution" || !ability.category) && ability.biomass)
   .map((ability) => ({
     id: ability.id,
     ...(ability.biomass || {})

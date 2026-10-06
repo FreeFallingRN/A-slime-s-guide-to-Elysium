@@ -60,9 +60,13 @@ The app's data is organized into modular files:
 | **Chapters Timeline**     | `src/data/chapters.js`      | Chronological list of novel chapters, titles, release dates, and Halon levels.           |
 | **Abilities & Skills**    | `src/data/abilities.js`     | Halon's base abilities, traits, and chapter level milestones.                            |
 | **Lore Encyclopedia**     | `src/data/encyclopedia.js`  | Races, classes, monsters, factions, dungeons, and technology records.                    |
-| **Characters Compendium** | `src/lib/charactersData.js` | Character stage progression, roles, descriptions, linked personas, and image milestones. |
-| **Map Coordinates**       | `src/data/mapNodes.js`      | Elysium and Sector world coordinate pins and zone details.                               |
-| **Math Engine**           | `src/lib/calc.js`           | Digestion, speed, and mana mathematical scaling calculations.                            |
+| **Characters Compendium** | `src/data/characters.js`    | Character stage progression, roles, descriptions, linked personas, and image milestones. |
+| **Map Coordinates**       | `src/data/mapNodes.js`        | Elysium and Sector world coordinate pins and zone details.                               |
+| **Math & Stat Engine**    | `src/calculators/calc.js`     | Digestion, speed, and mana mathematical scaling calculations.                            |
+| **Biomass Calculations**  | `src/calculators/biomassCalc.js` | Biomass cost formulas, level ranges, and portfolio planner math.                      |
+
+> **Note on Extraction Scripts:** Temporary scraping scripts, chapter text extractors, or debug dumps used during chapter analysis must be placed in `scratch/` (or `temp/`), which are excluded from git tracking. The `tests/` directory is reserved strictly for permanent regression and unit test suites.
+
 
 ---
 

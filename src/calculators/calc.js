@@ -171,7 +171,9 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
     { chapter: 204, maxMana: 200 },
     { chapter: 221, maxMana: 220 },
     { chapter: 249, maxMana: 242 },
-    { chapter: 263, maxMana: 292 }
+    { chapter: 263, maxMana: 292 },
+    { chapter: 338, maxMana: 470 },
+    { chapter: 374, maxMana: 517 }
   ];
   const canonMaxMana = getLatestCanonValue(maxManaCanonMilestones, "maxMana");
 
@@ -198,7 +200,8 @@ export function runCalculation(baseStats, abilities, playerLvl, isCombat, chapte
     24: 2.09,
     25: 2.29,
     27: 2.77,
-    36: 6.52
+    36: 6.52,
+    50: 24.76
   };
   const finalSpeed =
     speedCanonMilestones[viscousLvl] !== undefined

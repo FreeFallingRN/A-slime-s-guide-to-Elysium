@@ -1,11 +1,11 @@
 <script>
-  import { currentChapter, activeChapterDetails, chaptersData, chapterRange } from "./store.js";
+  import { currentChapter, activeChapterDetails, chaptersData, chapterRange } from "../calculators/store.js";
   import {
     clampChapter,
     getLevelMilestoneIndex,
     getLevelMilestones,
     getTimelineMarkers
-  } from "./chapterUtils.js";
+  } from "../calculators/chapterUtils.js";
   import {
     Shield,
     ShieldAlert,
