@@ -47,6 +47,10 @@ function uniqueBy(items, keyFn, label) {
 }
 
 function validateChapterDate(dateStr, label) {
+  if (dateStr === "") {
+    warn(`${label} publication date is pending manual entry`);
+    return;
+  }
   if (!dateStr || typeof dateStr !== "string") {
     fail(`${label} is missing a publication date`);
     return;

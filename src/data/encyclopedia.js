@@ -254,6 +254,21 @@ export const encyclopediaData = {
   ],
   monsters: [
     {
+      name: "Elder Whisper of the Abyss",
+      description: "The system identifies the captive elder's digested matter as Elder Whisper of the Abyss and grades it Epic.",
+      chapter: 474
+    },
+    {
+      name: "Oracle Spider",
+      description: "The spider seen in the Mana Stone's recovered memories is identified by the system as an Oracle Spider. Its digested matter is graded Epic.",
+      chapter: 483
+    },
+    {
+      name: "Whisper of the Abyss",
+      description: "A creature whose newborn form is identified at Level 11.",
+      chapter: 465
+    },
+    {
       name: "Larva",
       description:
         "A slimy, translucent forest insect that clings to hosts and drains their biomass. Sucks vital energy.",
@@ -416,6 +431,21 @@ export const encyclopediaData = {
     }
   ],
   factions: [
+    {
+      name: "Astralis Requiem Banking Service",
+      description: "Astralis Requiem members can deposit Elysium coins at guild headquarters and withdraw them as gold or real-world credits. Credit withdrawals convert at twice the standard rate during the 30-day probation period and three times the standard rate after probation.",
+      chapter: 434
+    },
+    {
+      name: "Thalendor's Eastern Defense",
+      description: "Thalendor's Council summons Players to the east walls at noon after scouts report an unidentified creature approaching from the eastern border with a growing host of monsters.",
+      chapter: 504
+    },
+    {
+      name: "Astralis Requiem Joins the Eastern Defense",
+      description: "Astralis Requiem agrees to join the eastern defense. Dylan organizes the formation, with healers in the rear and Halon's clones maintaining communication.",
+      chapter: 505
+    },
     {
       name: "Vance Group",
       description:
