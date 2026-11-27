@@ -486,6 +486,12 @@ export const characterData = {
             "The vital core expands its internal architecture to support the opening of multiple independent mana paths operating simultaneously, allowing clones and main body to channel spells concurrently."
         },
         {
+          chapter: 479,
+          type: "trait",
+          traitName: "Parallel Processing Core",
+          traitDescription: "Each independent consciousness operates at full capacity without dividing its processing efficiency."
+        },
+        {
           chapter: 200,
           type: "evolution",
           name: "Superior Magic Core",
@@ -1088,6 +1094,33 @@ export const characterData = {
       biomass: {
         baseCost: 50
       }
+    },
+    {
+      id: "mental_pressure", name: "Mental Pressure", category: "evolution", target: "none", value: 0.0, chapter: 474,
+      description: "Projects short-range psychic pressure that can disorient, confuse, or briefly paralyze weaker minds. Resistance depends on mental strength.",
+      progression: [{ chapter: 474, level: 1 }]
+    },
+    {
+      id: "mental_voice", name: "Mental Voice", category: "evolution", target: "none", value: 0.0, chapter: 474,
+      description: "Projects thoughts and words directly into conscious minds within range without a prior bond. The user can influence a target's mind depending on the difference in mental power. Stronger minds can resist or block the projection and commands. Initial range is 20 meters.",
+      progression: [{ chapter: 474, level: 1 }, { chapter: 475, level: 11 }],
+      upgrades: [{ chapter: 475, type: "trait", traitName: "Mental Voice Lv 11", traitDescription: "At Level 11, range reaches 35 meters and projection can carry emotion to multiple targets." }]
+    },
+    {
+      id: "abyssal_clarity", name: "Abyssal Clarity", category: "evolution", target: "none", value: 0.0, chapter: 474,
+      description: "Lets the user sustain parallel thoughts, process information faster, tire less mentally, and better resist mental intrusion, possession, and illusions.",
+      progression: [{ chapter: 474, level: 1 }, { chapter: 475, level: 11 }],
+      upgrades: [{ chapter: 475, type: "trait", traitName: "Abyssal Clarity Lv 11", traitDescription: "At Level 11, processing quickens further and parts of the mind can be isolated." }]
+    },
+    {
+      id: "mental_perception", name: "Mental Perception", category: "evolution", target: "none", value: 0.0, chapter: 474,
+      description: "Senses conscious beings and their general emotions within 50 meters, including through obstacles. Stronger minds are clearer.",
+      progression: [{ chapter: 474, level: 1 }]
+    },
+    {
+      id: "telekinesis", name: "Telekinesis", category: "evolution", target: "none", value: 0.0, chapter: 483,
+      description: "Moves objects by mental force, initially up to 3 kg. Weight limit and precision scale with mental power.",
+      progression: [{ chapter: 483, level: 1 }]
     },
     {
       id: "wind_blade",

@@ -103,6 +103,32 @@ export const charactersCompendium = [
         age: null,
         bio: "A Level 16 Mythical Slime and supreme combat strategist of Astralis Requiem. Sporting a dense, radiant cyan form, he wields an elite suite of evolved traits including Active Purification, Ethereal Resonance, Instant Flow, and Penetrating Vision, standing as one of Elysium's most versatile and terrifying powerhouses.",
         revealLink: true
+      },
+      {
+        chapter: 475,
+        name: "Halon",
+        world: "Elysium",
+        role: "Astralis Requiem Strategist",
+        race: "Slime",
+        raceRarity: "Mythical",
+        class: "Devourer",
+        classRarity: "Mythical",
+        age: null,
+        revealLink: true,
+        bio: "After honoring the captive elder's final request, Halon questions how casually he takes lives. A later test leaves him resolving to acknowledge the life he takes, even when his purpose is to learn what an ability can do.",
+      },
+      {
+        chapter: 479,
+        name: "Halon",
+        world: "Elysium",
+        role: "Astralis Requiem Strategist",
+        race: "Slime",
+        raceRarity: "Mythical",
+        class: "Devourer",
+        classRarity: "Mythical",
+        age: null,
+        revealLink: true,
+        bio: "After his Level 21 race evolution, Halon's layered membrane serves different defensive functions. His Superior Magic Core and Sacred Light Core circulate energy in coordination while keeping mana and light distinct. His separate Devourer evolution permanently increases the chance of extracting rare evolutions from non-player prey by an additional 20% (Trait Extraction). With Abyssal Storage II, his biomass reservoir can compress five times as much biomass within the same external volume.",
       }
     ]
   },
@@ -175,6 +201,14 @@ export const charactersCompendium = [
         age: 18,
         bio: "A Level 16 integrated fighter in the real world. Possessing extraordinary superhuman physical strength, flawless stamina, and hyper-acute sensory perception bled over from his Mythical avatar, Lohan is a quiet, formidable force in the Sectors, coordinating high-stakes operations while shielding his identity.",
         revealLink: true
+      },
+      {
+        chapter: 477,
+        name: "Lohan Hayes",
+        world: "Sectors",
+        role: "Astralis Requiem Co-founder",
+        revealLink: true,
+        bio: "Outside Elysium, Lohan discovers that the changes to his thinking persist. When concentrating produces a faint glow beneath his skin, he considers learning to control it before Isabella notices.",
       }
     ]
   },
@@ -366,6 +400,19 @@ export const charactersCompendium = [
         classRarity: "Rare",
         age: null,
         bio: "A majestic, pure-white two-tailed Spirit Fox radiating refined spiritual heat and golden mana flames, possessing sharp golden eyes and imposing predatory elegance. As the president and visionary co-founder of Astralis Requiem, she directs the guild's elite expansion, member logistics, and high-stakes diplomatic alliances from the Amber Tree in Mythlorien. Calm, strategic, and fiercely protective of her inner circle, Lisa combines aristocratic corporate leadership with tactical decisiveness. A Level 16 Legendary combatant whose physical muscle fibers, agility, and spiritual core have been permanently reinforced through daily refined biomass infusions, she wields supercharged illusion weaving, spiritual flames, and amplified baseline stat scaling.",
+        revealLink: true
+      },
+      {
+        chapter: 501,
+        name: "Lisa",
+        world: "Elysium",
+        role: "Astralis Requiem President",
+        race: "Spiritual Fox",
+        raceRarity: "Legendary",
+        class: "Illusion Weaver",
+        classRarity: "Rare",
+        age: null,
+        bio: "After her third tail grows, Lisa worries that her emerging flames could hurt her mother or the household staff if they manifest outside Elysium. She sets that concern aside when an urgent guild matter arises and heads back to headquarters with Halon.",
         revealLink: true
       }
     ]
@@ -875,6 +922,19 @@ export const charactersCompendium = [
         age: null,
         bio: "A gentle, palm-sized wood fairy with translucent, petal-like butterfly wings that scatter radiant trails of blue and golden mana sparks as she flits through the air. Living safely alongside her younger brother Pip under Astralis Requiem's protection, Elle serves as the resident botanist and welcoming receptionist at the living Amber Tree headquarters in Mythlorien. Cheerful, bubbly, and fearless, she radiates warm hospitality, intuitively sensing the spiritual depth and mana currents of visiting players. A Level 9–10 sprite, she utilizes acute environmental mana attunement to tend the guild's blooming gardens and guide prospective recruits.",
         revealLink: false
+      },
+      {
+        chapter: 477,
+        name: "Elle",
+        world: "Elysium",
+        role: "Astralis Requiem Gardener",
+        race: "Natural Fairy",
+        raceRarity: "Uncommon",
+        class: "Blooming Guardian",
+        classRarity: "Uncommon",
+        age: null,
+        revealLink: false,
+        bio: "Elle evolves into a Natural Fairy and her class becomes Blooming Guardian. Astralis Requiem's garden is already her home, and she shares the joy of her transformation with Pip and the guild members who gathered around her.",
       }
     ]
   },
@@ -2156,13 +2216,26 @@ export const charactersCompendium = [
         chapter: 404,
         name: "Dan",
         world: "Elysium",
-        role: "Astralis Requiem Vanguard",
+        role: "Astralis Requiem Applicant",
         race: "Unknown",
         raceRarity: "Epic",
         class: "Warlock",
         classRarity: "Unknown",
         age: null,
-        bio: "A scarred, hooded warlock wielding a black wooden staff, worn leather boots, and a ragged dark cloak with a deep cowl shielding his peeling skin and clouded eyes. Born in the impoverished Lower Zone on Eden-3 alongside his younger brother Sam, he endured harsh social ostracization and rejection by corporate guilds before traveling for weeks across Elysium to join Astralis Requiem as an elite vanguard recruit. Cautious, humble, and fiercely protective of his brother, Dan values mutual respect and tactical discipline over superficial corporate marketing. Backed by a Level 15 Epic base with deep mana reserves, he specializes in crowd-control curses that rot monster armor and vitality to sustain protracted attrition warfare.",
+        bio: "Repeated rejection has made Dan wary of guild recruiters. He and his younger brother Sam reach Astralis Requiem hoping their abilities will be judged on their merits.",
+        revealLink: false
+      },
+      {
+        chapter: 407,
+        name: "Dan",
+        world: "Elysium",
+        role: "Astralis Requiem Recruit",
+        race: "Unknown",
+        raceRarity: "Epic",
+        class: "Warlock",
+        classRarity: "Unknown",
+        age: null,
+        bio: "Lisa accepts Dan and his brother after they explain how they fight together and agree to follow the guild's tactical leadership. Dan brings experience using curses to weaken enemies during prolonged fights.",
         revealLink: false
       }
     ]
@@ -2178,13 +2251,26 @@ export const charactersCompendium = [
         chapter: 404,
         name: "Sam",
         world: "Elysium",
-        role: "Astralis Requiem Scout",
-        race: "Unknown",
+        role: "Astralis Requiem Applicant",
+        race: "Ghost",
         raceRarity: "Epic",
         class: "Unknown",
         classRarity: "Unknown",
         age: null,
-        bio: "An intangible, ghostly spirit entity radiating a luminous bluish spectral glow that flickers and shifts in harmony with his emotions and forest breezes. Originating from the impoverished Lower Zone on Eden-3, Sam journeyed alongside his older brother Dan to Mythlorien, overcoming pervasive prejudice from corporate recruiters to join Astralis Requiem as a dedicated tactical scout. Observant, empathetic, and gentle-spirited, Sam communicates through direct mental telepathy and shares an unbreakable bond of loyalty with his brother. Endowed with a Level 15 Epic base, he leverages ethereal intangibility, broad sensory reconnaissance, and an innate spirit possession ability that invades beasts' minds to paralyze foes or incite internal chaos among enemy ranks.",
+        bio: "Sam remains hopeful that he and his older brother Dan can find a guild that values them. He scouts for Dan during their journey and welcomes Elle's kindness.",
+        revealLink: false
+      },
+      {
+        chapter: 407,
+        name: "Sam",
+        world: "Elysium",
+        role: "Astralis Requiem Recruit",
+        race: "Ghost",
+        raceRarity: "Epic",
+        class: "Unknown",
+        classRarity: "Unknown",
+        age: null,
+        bio: "Lisa accepts Sam and his brother after they explain how they fight together and agree to follow the guild's tactical leadership. Sam can scout through physical obstacles as a Ghost.",
         revealLink: false
       }
     ]
